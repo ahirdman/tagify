@@ -2,6 +2,7 @@ import { properties } from '../config';
 
 const fetchJson = async (path, token, trackId) => {
 
+  // Second parameter is used for more than just trackId
   const body = {
     token: token,
     trackId: trackId,

@@ -3,6 +3,8 @@ import './Player.scss';
 import fetchJson from '../httpClient';
 
 export const Player = ({ accessToken }) => {
+
+  const [devideId, setDevideId] = useState('');
   const [player, setPlayer] = useState(undefined);
   const [isPaused, setPaused] = useState(false);
   const [isActive, setActive] = useState(false);
@@ -14,13 +16,9 @@ export const Player = ({ accessToken }) => {
     artists: [{ name: '' }],
   });
 
-  // const getTrack = async () => {
-  //   const track = await fetchJson('/track', accessToken, '7jvCeWOSnJs2N3spqobWnO')
-  //   setTrack({
-  //     url: track.preview_url,
-  //     image: track.album.images[0].url,
-  //   })
-  // }
+  const saveTrack = (ids) => fetchJson('/save', accessToken, ids.id)
+
+  const startSession = async (sdkId) => fetchJson('/start', accessToken, sdkId)
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -40,17 +38,20 @@ export const Player = ({ accessToken }) => {
 
       setPlayer(player);
 
+      player.addListener('ready', ({ device_id }) => {
+        setDevideId(device_id);
+    });
+
       player.connect();
 
       player.addListener('player_state_changed', state => {
-        if (!state) {
-          return;
-        }
+        if (!state) return;
 
         setCurrentTrack(state.track_window.current_track);
         setPaused(state.paused);
 
-        player.getCurrentState().then(state => {
+        player.getCurrentState()
+          .then(state => {
           !state ? setActive(false) : setActive(true);
         });
       });
@@ -61,12 +62,8 @@ export const Player = ({ accessToken }) => {
     return (
       <>
         <div className="container">
-          <div className="main-wrapper">
-            <b>
-              {' '}
-              Instance not active. Transfer your playback using your Spotify app{' '}
-            </b>
-          </div>
+        <button className="btn-spotify" onClick={() => {startSession(devideId)}}>Start</button>
+            <p>Instance not active. Transfer your playback using your Spotify app</p>
         </div>
       </>
     );
@@ -74,48 +71,24 @@ export const Player = ({ accessToken }) => {
     return (
       <>
         <div className="container">
-          <div className="main-wrapper">
+ 
+          
             <img
               src={currentTrack.album.images[0].url}
-              className="now-playing__cover"
-              alt=""
-            />
-
-            <div className="now-playing__side">
-              <div className="now-playing__name">{currentTrack.name}</div>
-
-              <div className="now-playing__artist">
-                {currentTrack.artists[0].name}
-              </div>
-            </div>
+              className="now-playing__cover"/>
+            <section className="now-playing__side">
+              <h4 className="now-playing__name">{currentTrack.name}</h4>
+              <p className="now-playing__artist">{currentTrack.artists[0].name}</p>
+            </section>
           </div>
-        </div>
-        <button
-          className="btn-spotify"
-          onClick={() => {
-            player.previousTrack();
-          }}
-        >
-          &lt;&lt;
-        </button>
-
-        <button
-          className="btn-spotify"
-          onClick={() => {
-            player.togglePlay();
-          }}
-        >
+        <button className="btn-spotify" onClick={() => {player.nextTrack();}}>X</button>
+        <button className="btn-spotify" onClick={() => {player.togglePlay();}}>
           {isPaused ? 'PLAY' : 'PAUSE'}
         </button>
-
-        <button
-          className="btn-spotify"
-          onClick={() => {
-            player.nextTrack();
-          }}
-        >
-          &gt;&gt;
-        </button>
+        <button className="btn-spotify" onClick={() => {
+          saveTrack(currentTrack)
+          player.nextTrack()
+        }}>Love</button>
       </>
     );
   }

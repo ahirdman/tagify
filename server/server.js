@@ -1,11 +1,10 @@
 import cookieParser from 'cookie-parser';
-import querystring from 'querystring';
 import bodyParser from 'body-parser';
 import express from 'express';
 import fetch from 'node-fetch';
+import cors from 'cors';
 import { scope, generateRandomString } from './spotify.js';
 import 'dotenv/config';
-import cors from 'cors';
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -27,27 +26,26 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.json('Hello Motherflowers!');
 });
 
-app.get('/login', (req, res) => {
+app.get('/login', (_, res) => {
   const state = generateRandomString(16);
 
   const authParams = new URLSearchParams({
     response_type: 'code',
     client_id: clientId,
-    scope: scope,
+    scope,
     redirect_uri: redirectUri,
-    state: state,
+    state,
   });
 
   res
     .clearCookie('access')
-    .clearCookie('refresh')
     .cookie(stateKey, state)
     .redirect(
-      'https://accounts.spotify.com/authorize?' + authParams.toString()
+      `https://accounts.spotify.com/authorize?${authParams.toString()}`,
     );
 });
 
@@ -57,7 +55,7 @@ app.get('/callback', async (req, res) => {
   const storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null || state !== storedState) {
-    res.send('state mismatch');
+    res.json('state mismatch');
   }
 
   const form = new URLSearchParams();
@@ -71,7 +69,7 @@ app.get('/callback', async (req, res) => {
       body: form,
       headers: {
         Authorization: `Basic ${Buffer.from(
-          `${clientId}:${clientSecret}`
+          `${clientId}:${clientSecret}`,
         ).toString('base64')}`,
       },
     });
@@ -80,10 +78,8 @@ app.get('/callback', async (req, res) => {
     res
       .clearCookie(stateKey)
       .cookie('access', data.access_token)
-      .cookie('refresh', data.refresh_token)
       .redirect('http://localhost:3000');
   } catch (error) {
-    console.error(error);
     res.sendStatus(500);
   }
 });
@@ -91,35 +87,82 @@ app.get('/callback', async (req, res) => {
 app.post('/user', async (req, res) => {
   try {
     const results = await fetch('https://api.spotify.com/v1/me', {
-      headers: { Authorization: 'Bearer ' + req.body.token },
+      headers: { Authorization: `Bearer ${req.body.token}` },
     });
     const data = await results.json();
     res.send(data);
   } catch (error) {
-    console.error(error);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
 
 app.post('/track', async (req, res) => {
-  const token = req.body.token;
-  const trackId = req.body.trackId;
+  const { token } = req.body;
+  const { trackId } = req.body;
 
   try {
     const results = await fetch(
       `https://api.spotify.com/v1/tracks/${trackId}`,
       {
-        headers: { Authorization: 'Bearer ' + token },
-      }
+        headers: { Authorization: `Bearer ${token}` },
+      },
     );
     const data = await results.json();
     res.send(data);
   } catch (error) {
-    console.error(error);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
+
+app.post('/save', async (req, res) => {
+  const { token } = req.body;
+  const { trackId } = req.body
+
+  try {
+    await fetch(
+      `https://api.spotify.com/v1/me/tracks?ids=${trackId}`,
+      {
+        method: 'put',
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+    res.json('track saved');
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+
+app.post('/start', async (req, res) => {
+  const { token } = req.body;
+  const deviceId = req.body.trackId
+  
+  const body = {
+    "device_ids": [deviceId],
+    "play": "true"
+  }
+
+  try {
+    await fetch(
+      `https://api.spotify.com/v1/me/player`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    res.json('playing now');
+  } catch (error) {
+    res.sendStatus(500);
+  }
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+// Set starting playlist to country radio = 37i9dQZF1EQmPV0vrce2QZ
+
+// Endpoint	https://api.spotify.com/v1/playlists/{playlist_id}
+// HTTP Method	GET

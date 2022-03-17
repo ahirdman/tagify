@@ -6,7 +6,6 @@ import { Profile } from '../Profile/Profile';
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState('');
-  const [refreshToken, setrefreshToken] = useState('');
 
   const eraseCookie = name => {
     document.cookie = name + '=; Max-Age=-99999999;';
@@ -19,16 +18,9 @@ const App = () => {
         .find(row => row.startsWith('access='))
         .split('=')[1];
 
-      const refreshCookie = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('refresh='))
-        .split('=')[1];
-
       setLoggedIn(true);
       setAccessToken(accCookie);
-      setrefreshToken(refreshCookie);
       eraseCookie('access');
-      eraseCookie('refresh');
     }
   }, []);
 
