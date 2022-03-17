@@ -4,8 +4,6 @@ import fetchJson from '../httpClient'
 
 export const Profile = ({ accessToken }) => {
 
-  // const Spotify = window.spotify
-
   const [user, setUser] = useState({})
 
   const getUser = async () => {
@@ -24,8 +22,10 @@ export const Profile = ({ accessToken }) => {
   return (
     <section className='profile'>
       <img src={user.image} alt='profile' className='profile__image' />
+      <section className='profile__info'>
       <p className='profile__name'>{user.name}</p>
-      <p className='profile__followers'>{user.followers}</p>
+      <p className='profile__followers'>{user.followers} followers</p>
+      </section>
     </section>
   )
 }

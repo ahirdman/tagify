@@ -1,18 +1,29 @@
 .profile {
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  align-items: center;
+  background-color: black;
+  padding: 1.5em;
+  font-weight: bolder;
+  font-size: smaller;
 
   &__image {
-    width: 4em;
-    height: 4em;
+    width: 3em;
+    height: 3em;
     border-radius: 50%;
   }
 
+  &__info {
+    padding-left: 1em;
+  }
+
   &__name {
-    color: red;
+    margin-top: 0;
+    margin-bottom: .5em;
   }
 
   &__followers {
-    color: blue
+    margin-top: .5em;
+    margin-bottom: 0;
   }
 }

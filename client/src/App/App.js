@@ -29,23 +29,22 @@ const App = () => {
   };
 
   return (
-    <section className="App">
-      <header className="header">Welcome to Tinderify!</header>
-      <main className="main-wrapper">
+    <>
         {!loggedIn && (
-          <button onClick={handleLogIn} className="login-button">
-            Log In!
-          </button>
+      <main className="login-wrapper">
+        <header className="header">Welcome to Tinderify!</header>
+        <button onClick={handleLogIn} className="login-button">
+        Log In!
+        </button>
+      </main>
         )}
         {loggedIn && (
-          <>
+          <main className='player-wrapper'>
             <Profile accessToken={accessToken} />
             <Player accessToken={accessToken} />
-          </>
+          </main>
         )}
-      </main>
-      <footer className="footer">By Alexander Hirdman</footer>
-    </section>
+    </>
   );
 };
 

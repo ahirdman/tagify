@@ -1,24 +1,21 @@
-.App {
-  display: flex;
-  flex-direction: column;
-}
+@use '../base';
 
 .header {
   text-align: center;
   width: 100%;
-  padding-bottom: 2em;
-  background-color: darkgray;
+  padding: 2.5em;
+  background-color: black;
+  font-weight: bolder;
+  font-size: smaller;
 }
 
-.footer {
-  text-align: center;
-  width: 100%;
-  padding-bottom: 2em;
-  background-color: darkgray;
+.login-button {
+  @include base.ctaButton;
 }
 
-// .main-wrapper {
-//   display: flex;
-//   // flex-wrap: wrap;
-//   justify-content: center;
-// }
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
