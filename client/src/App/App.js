@@ -25,7 +25,7 @@ const App = () => {
   }, []);
 
   const handleLogIn = () => {
-    window.location.href = 'http://localhost:8080/login';
+    window.location.href = 'http://localhost:8080/auth/';
   };
 
   return (

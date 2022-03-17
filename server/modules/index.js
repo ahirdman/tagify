@@ -14,5 +14,3 @@ export {
   scope,
   generateRandomString,
 };
-
-// const authUrl = state => `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scope}&redirect_uri=https%3A%2F%2Flocalhost%3A8080%2Fcallback&state=${state}`;

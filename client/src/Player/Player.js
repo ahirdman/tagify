@@ -21,14 +21,14 @@ export const Player = ({ accessToken }) => {
   });
 
   const saveTrack = (ids) => {
-    fetchJson('/save', accessToken, ids.id)
+    fetchJson('/playback/save', accessToken, ids.id)
     document.querySelector('.addLove').classList.add('addLove--visible')
     setTimeout(() => {
       document.querySelector('.addLove').classList.remove('addLove--visible')
     }, 2000)
   }
 
-  const startSession = async (sdkId) => fetchJson('/start', accessToken, sdkId)
+  const startSession = async (sdkId) => fetchJson('/playback', accessToken, sdkId)
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -39,7 +39,7 @@ export const Player = ({ accessToken }) => {
 
     window.onSpotifyWebPlaybackSDKReady = () => {
       const player = new window.Spotify.Player({
-        name: 'Tinerify',
+        name: 'Tinderify',
         getOAuthToken: cb => {
           cb(accessToken);
         },
