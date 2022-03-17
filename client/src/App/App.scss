@@ -1,0 +1,24 @@
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  width: 100%;
+  padding-bottom: 2em;
+  background-color: darkgray;
+}
+
+.footer {
+  text-align: center;
+  width: 100%;
+  padding-bottom: 2em;
+  background-color: darkgray;
+}
+
+// .main-wrapper {
+//   display: flex;
+//   // flex-wrap: wrap;
+//   justify-content: center;
+// }
