@@ -2,9 +2,9 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'cors';
-import auth from './routes/auth.js'
-import user from './routes/user.js'
-import playback from './routes/playback.js'
+import auth from './routes/auth.js';
+import user from './routes/user.js';
+import playback from './routes/playback.js';
 
 const PORT = 8080;
 
@@ -31,5 +31,6 @@ app.use('/user', user);
 app.use('/playback', playback);
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server listening on port ${PORT}`);
 });

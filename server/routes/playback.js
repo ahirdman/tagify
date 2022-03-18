@@ -1,20 +1,20 @@
-import express from 'express'
+import express from 'express';
 import fetch from 'node-fetch';
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { token } = req.body;
-  const deviceId = req.body.trackId
-  
+  const deviceId = req.body.trackId;
+
   const body = {
-    "device_ids": [deviceId],
-    "play": "true"
-  }
+    device_ids: [deviceId],
+    play: 'true',
+  };
 
   try {
     await fetch(
-      `https://api.spotify.com/v1/me/player`,
+      'https://api.spotify.com/v1/me/player',
       {
         method: 'PUT',
         body: JSON.stringify(body),
@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
   } catch (error) {
     res.sendStatus(500);
   }
-})
+});
 
 router.post('/track', async (req, res) => {
   const { token } = req.body;
@@ -49,7 +49,7 @@ router.post('/track', async (req, res) => {
 
 router.post('/save', async (req, res) => {
   const { token } = req.body;
-  const { trackId } = req.body
+  const { trackId } = req.body;
 
   try {
     await fetch(
@@ -64,6 +64,5 @@ router.post('/save', async (req, res) => {
     res.sendStatus(500);
   }
 });
-
 
 export { router as default };

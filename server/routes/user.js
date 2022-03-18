@@ -1,4 +1,4 @@
-import express from 'express'
+import express from 'express';
 import fetch from 'node-fetch';
 
 const router = express.Router();
@@ -14,6 +14,5 @@ router.post('/', async (req, res) => {
     res.sendStatus(500);
   }
 });
-
 
 export { router as default };

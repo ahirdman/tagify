@@ -43,6 +43,7 @@
 .btn-playback {
   background: none;
   border: none;
+  cursor: pointer;
   
   &--play,
   &--pause {
@@ -53,6 +54,10 @@
       -webkit-filter: base.$button-shadow;
       filter: base.$button-shadow;
     }
+
+    &:active {
+      filter: none;
+    }
   }
 }
 
@@ -60,10 +65,15 @@
 .btn-love {
   background: none;
   border: none;
+  cursor: pointer;
 
   &:hover {
     -webkit-filter: base.$button-shadow;
     filter: base.$button-shadow;
+  }
+
+  &:active {
+    filter: none;
   }
 }
 

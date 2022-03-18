@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import './Player.scss';
-import fetchJson from '../httpClient';
+import { useState, useEffect } from 'react';
+import { saveTrack, startSession, trackObject } from "./modules.js";
 import PlayButton from '../assets/play.svg'
 import PauseButton from '../assets/pause.svg'
 import Love from '../assets/love.svg'
 import Dislike from '../assets/dislike.svg'
+import './Player.scss';
 
 export const Player = ({ accessToken }) => {
 
@@ -12,23 +12,7 @@ export const Player = ({ accessToken }) => {
   const [player, setPlayer] = useState(undefined);
   const [isPaused, setPaused] = useState(false);
   const [isActive, setActive] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState({
-    name: '',
-    album: {
-      images: [{ url: '' }],
-    },
-    artists: [{ name: '' }],
-  });
-
-  const saveTrack = (ids) => {
-    fetchJson('/playback/save', accessToken, ids.id)
-    document.querySelector('.addLove').classList.add('addLove--visible')
-    setTimeout(() => {
-      document.querySelector('.addLove').classList.remove('addLove--visible')
-    }, 2000)
-  }
-
-  const startSession = async (sdkId) => fetchJson('/playback', accessToken, sdkId)
+  const [currentTrack, setCurrentTrack] = useState(trackObject);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -66,13 +50,13 @@ export const Player = ({ accessToken }) => {
         });
       });
     };
-  }, []);
+  }, [accessToken]);
 
   if (!isActive) {
     return (
       <>
         <section className="container">
-          <button className="container__start" onClick={() => {startSession(devideId)}}>Start Matching</button>
+          <button className="container__start" onClick={() => {startSession(devideId, accessToken)}}>Start Matching</button>
         </section>
       </>
     );
@@ -81,7 +65,8 @@ export const Player = ({ accessToken }) => {
       <>
         <section className="now-playing">
             <img
-              src={currentTrack.album.images[0].url}
+            src={currentTrack.album.images[0].url}
+            alt='album cover'
               className="now-playing__cover"/>
             <section className="now-playing__info">
               <h4 className="now-playing__name">{currentTrack.name}</h4>
@@ -90,20 +75,20 @@ export const Player = ({ accessToken }) => {
         <section className='now-playing__control'>
           <button className="btn-dislike"
             onClick={() => { player.nextTrack(); }}>
-            <img src={Dislike} />
+            <img src={Dislike} alt='X'/>
           </button>
           <button className="btn-playback"
             onClick={() => { player.togglePlay(); }}>
             {isPaused
-              ? <img className="btn-playback--play" src={PlayButton} />
-              : <img className="btn-playback--pause" src={PauseButton} />}
+              ? <img className="btn-playback--play" alt='PLAY' src={PlayButton} />
+              : <img className="btn-playback--pause" alt='PAUSE' src={PauseButton} />}
           </button>
           <button className="btn-love"
             onClick={() => {
-              saveTrack(currentTrack)
+              saveTrack(currentTrack, accessToken)
               player.nextTrack()
             }}>
-            <img src={Love} /></button>
+            <img src={Love} alt='LOVE'/></button>
           </section>
           <footer className='addLove'>It's a match! Added to libary</footer>
         </section>
@@ -111,3 +96,5 @@ export const Player = ({ accessToken }) => {
     );
   }
 };
+
+export default Player;
