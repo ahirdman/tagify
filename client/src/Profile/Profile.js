@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import './Profile.scss'
 import fetchJson from '../httpClient'
+import './Profile.scss'
 
 export const Profile = ({ accessToken }) => {
 

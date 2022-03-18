@@ -1,40 +1,31 @@
-import './App.scss';
-import React, { useEffect, useState } from 'react';
+import { eraseCookie, handleLogIn, findCookie } from "./modules.js";
+import { useEffect, useState } from 'react';
 import { Player } from '../Player/Player';
 import { Profile } from '../Profile/Profile';
+import LoginSVG from '../assets/login.svg'
+import './App.scss';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState('');
 
-  const eraseCookie = name => {
-    document.cookie = name + '=; Max-Age=-99999999;';
-  };
-
   useEffect(() => {
     if (document.cookie) {
-      const accCookie = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('access='))
-        .split('=')[1];
-
+      const accessCookie = findCookie('access')
       setLoggedIn(true);
-      setAccessToken(accCookie);
+      setAccessToken(accessCookie);
       eraseCookie('access');
     }
   }, []);
-
-  const handleLogIn = () => {
-    window.location.href = 'http://localhost:8080/auth/';
-  };
 
   return (
     <>
         {!loggedIn && (
       <main className="login-wrapper">
-        <header className="header">Welcome to Tinderify!</header>
+        <header className="header">TINDERIFY</header>
         <button onClick={handleLogIn} className="login-button">
-        Log In!
+            <img className='login-button--icon' src={LoginSVG} alt='' />
+            Login
         </button>
       </main>
         )}

@@ -11,6 +11,11 @@
 
 .login-button {
   @include base.ctaButton;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-right: 2em;
+  padding-left: 1.5em;
 }
 
 .login-wrapper {

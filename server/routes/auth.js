@@ -1,12 +1,12 @@
-import express from 'express'
-import { scope, generateRandomString } from '../modules/index.js';
+import express from 'express';
 import fetch from 'node-fetch';
+import { scope, generateRandomString } from '../modules/index.js';
 import 'dotenv/config';
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectUri = process.env.REDIRECT_URI;
-const stateKey = 'spotify_auth_state';
+const stateName = 'spotify_auth_state';
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.get('/', (_, res) => {
 
   res
     .clearCookie('access')
-    .cookie(stateKey, state)
+    .cookie(stateName, state)
     .redirect(
       `https://accounts.spotify.com/authorize?${authParams.toString()}`,
     );
@@ -32,7 +32,7 @@ router.get('/', (_, res) => {
 router.get('/callback', async (req, res) => {
   const code = req.query.code || null;
   const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies[stateKey] : null;
+  const storedState = req.cookies ? req.cookies[stateName] : null;
 
   if (state === null || state !== storedState) {
     res.json('state mismatch');
@@ -56,7 +56,7 @@ router.get('/callback', async (req, res) => {
 
     const data = await response.json();
     res
-      .clearCookie(stateKey)
+      .clearCookie(stateName)
       .cookie('access', data.access_token)
       .redirect('http://localhost:3000');
   } catch (error) {
