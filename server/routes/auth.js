@@ -55,6 +55,7 @@ router.get('/callback', async (req, res) => {
     });
 
     const data = await response.json();
+
     res
       .clearCookie(stateName)
       .cookie('access', data.access_token)
