@@ -1,4 +1,4 @@
-import { eraseCookie, handleLogIn, findCookie } from "./modules.js";
+import { eraseCookie, handleLogIn, findCookie } from "./modules";
 import { useEffect, useState } from 'react';
 import { Player } from '../Player/Player';
 import { Profile } from '../Profile/Profile';

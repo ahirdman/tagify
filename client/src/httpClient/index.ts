@@ -1,4 +1,4 @@
-const fetchJson = async (path, token, trackId) => {
+const fetchJson = async (path:string, token:string, trackId:string) => {
 
   // Second parameter is used for more than just trackId
   const body = {

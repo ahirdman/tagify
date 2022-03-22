@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import fetchJson from '../httpClient'
+import { IUser } from '../interface'
 import './Profile.scss'
 
 export const Profile = ({ accessToken }) => {
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState<IUser>({})
 
   const getUser = async () => {
     const user = await fetchJson('/user', accessToken)

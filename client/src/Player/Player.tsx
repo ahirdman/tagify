@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { saveTrack, startSession, trackObject } from "./modules.js";
+import { saveTrack, startSession, trackObject } from "./modules.ts";
 import PlayButton from '../assets/play.svg'
 import PauseButton from '../assets/pause.svg'
 import Love from '../assets/love.svg'
