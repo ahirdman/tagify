@@ -1,7 +1,7 @@
 interface IUser {
-  image: 'string',
-  name: 'string',
-  followers: 'string'
+  image: string,
+  name: string,
+  followers: string
 }
 
 interface ITrack {
@@ -33,7 +33,12 @@ interface ITrack {
   uri: string
 }
 
+interface IAccessProp {
+  accessToken: string
+}
+
 export type {
   IUser,
-  ITrack
+  ITrack,
+  IAccessProp
 }

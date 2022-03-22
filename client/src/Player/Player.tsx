@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { saveTrack, startSession, trackObject } from "./modules.ts";
+import { saveTrack, startSession, trackObject } from "./modules";
 import PlayButton from '../assets/play.svg'
 import PauseButton from '../assets/pause.svg'
 import Love from '../assets/love.svg'
 import Dislike from '../assets/dislike.svg'
 import './Player.scss';
+import * as React from 'react';
+import { IAccessProp } from '../interface';
 
-export const Player = ({ accessToken }) => {
+export const Player = ({ accessToken }: IAccessProp) => {
 
   const [devideId, setDevideId] = useState('');
   const [player, setPlayer] = useState(undefined);
@@ -24,7 +26,7 @@ export const Player = ({ accessToken }) => {
     window.onSpotifyWebPlaybackSDKReady = () => {
       const player = new window.Spotify.Player({
         name: 'Tinderify',
-        getOAuthToken: cb => {
+        getOAuthToken: (cb) => {
           cb(accessToken);
         },
         volume: 0.5,

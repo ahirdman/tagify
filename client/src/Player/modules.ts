@@ -1,7 +1,15 @@
 import fetchJson from '../httpClient/index';
 import { ITrack } from '../interface';
 
-const saveTrack = async (track:ITrack, token:string) => {
+interface ISDKTrack {
+  name: string,
+  album: {
+    images: [{ url: string }]
+  },
+  artists: [{ name: string }]
+}
+
+const saveTrack = async (track:any, token:string) => {
   console.log(track)
   document.querySelector('.addLove').classList.add('addLove--visible')
   await fetchJson('/playback/save', token, track.id)

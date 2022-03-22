@@ -4,6 +4,7 @@ import { Player } from '../Player/Player';
 import { Profile } from '../Profile/Profile';
 import LoginSVG from '../assets/login.svg'
 import './App.scss';
+import * as React from "react";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
