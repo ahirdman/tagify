@@ -2,9 +2,7 @@ const eraseCookie = (name: string) => {
   document.cookie = name + '=; Max-Age=-99999999;';
 };
 
-const handleLogIn = () => window.location.href = 'https://spotifymoody.herokuapp.com/auth/'
-
-// const handleLogIn = () => window.location.href = 'http://localhost:8080/auth/'
+const handleLogIn = () => window.location.href = 'http://localhost:8080/auth/'
 
 const findCookie = (name: string) => document.cookie
   .split('; ')
