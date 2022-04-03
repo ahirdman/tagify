@@ -1,6 +1,4 @@
-import { properties } from '../config';
-
-const fetchJson = async (path, token, trackId) => {
+const fetchJson = async (path: string, token: string, trackId?: string) => {
 
   // Second parameter is used for more than just trackId
   const body = {
@@ -8,7 +6,7 @@ const fetchJson = async (path, token, trackId) => {
     trackId: trackId,
   }
 
-  const results = await fetch(`${properties.host}${path}`, {
+  const results = await fetch(path, {
     method: 'post',
     body: JSON.stringify(body),
     headers: {

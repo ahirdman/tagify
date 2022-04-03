@@ -1,6 +1,6 @@
 {
   "extends": "salt",
   "rules": {
-    // your overrides
+    "import/extensions": 0
   }
 }
