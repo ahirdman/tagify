@@ -6,7 +6,7 @@ import auth from './routes/auth.js';
 import user from './routes/user.js';
 import playback from './routes/playback.js';
 
-const PORT = 8080;
+const port = process.env.PORT || 8080;
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use('/auth', auth);
 app.use('/user', user);
 app.use('/playback', playback);
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   // eslint-disable-next-line no-console
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`Server listening on port ${port}`);
 });
