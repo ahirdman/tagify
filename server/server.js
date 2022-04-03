@@ -56,5 +56,5 @@ app.use('/playback', playback);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server listening on port ${port} and process is: ${process.env}`);
 });
