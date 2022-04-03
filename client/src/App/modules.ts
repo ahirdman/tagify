@@ -5,7 +5,7 @@ const eraseCookie = (name: string) => {
 const handleLogIn = () => window.location.href = 'https://spotifymoody.herokuapp.com/auth/'
 
 const getAccess = async () => {
-    await fetch('/auth')
+    await fetch('https://spotifymoody.herokuapp.com/auth')
 }
 
 const findCookie = (name:string) => document.cookie
