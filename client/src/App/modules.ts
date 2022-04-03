@@ -4,11 +4,9 @@ const eraseCookie = (name: string) => {
 
 const handleLogIn = () => window.location.href = 'https://spotifymoody.herokuapp.com/auth/'
 
-const getAccess = async () => {
-    await fetch('https://spotifymoody.herokuapp.com/auth')
-}
+// const handleLogIn = () => window.location.href = 'http://localhost:8080/auth/'
 
-const findCookie = (name:string) => document.cookie
+const findCookie = (name: string) => document.cookie
   .split('; ')
   .find(row => row.startsWith(`${name}=`))
   .split('=')[1];
@@ -17,5 +15,4 @@ export {
   eraseCookie,
   handleLogIn,
   findCookie,
-  getAccess
 }

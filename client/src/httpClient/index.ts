@@ -16,8 +16,6 @@ const fetchJson = async (path: string, token: string, trackId?: string) => {
     }
   });
 
-  console.log(results)
-
   const data = await results.json()
   return data;
 }

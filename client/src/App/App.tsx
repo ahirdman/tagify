@@ -1,4 +1,4 @@
-import { eraseCookie, handleLogIn, findCookie, getAccess } from "./modules";
+import { eraseCookie, handleLogIn, findCookie } from "./modules";
 import { useEffect, useState } from 'react';
 import { Player } from '../Player/Player';
 import { Profile } from '../Profile/Profile';
@@ -24,7 +24,7 @@ const App = () => {
         {!loggedIn && (
       <main className="login-wrapper">
         <header className="header">TINDERIFY</header>
-        <button onClick={getAccess} className="login-button">
+        <button onClick={handleLogIn} className="login-button">
             <img className='login-button--icon' src={LoginSVG} alt='' />
             Login
         </button>

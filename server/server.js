@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 
 app.use(demoLogger)
 
-app.get('/', (_, res) => {
+app.get('/test', (_, res) => {
   res.json('Hello Motherflowers!');
 });
 
