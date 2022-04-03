@@ -6,7 +6,7 @@ const fetchJson = async (path: string, token: string, trackId?: string) => {
     trackId: trackId,
   }
 
-  const results = await fetch(path, {
+  const results = await fetch(`http://localhost:8080/${path}`, {
     method: 'post',
     body: JSON.stringify(body),
     headers: {
