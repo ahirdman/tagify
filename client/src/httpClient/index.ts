@@ -6,7 +6,7 @@ const fetchJson = async (path: string, token: string, trackId?: string) => {
     trackId: trackId,
   }
 
-  const results = await fetch(`http://localhost:8080/${path}`, {
+  const results = await fetch(`http://localhost:8080${path}`, {
     method: 'post',
     body: JSON.stringify(body),
     headers: {
@@ -14,6 +14,8 @@ const fetchJson = async (path: string, token: string, trackId?: string) => {
       'Accept': 'application/json'
     }
   });
+
+  console.log(results)
 
   const data = await results.json()
   return data;
