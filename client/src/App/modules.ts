@@ -1,8 +1,12 @@
-const eraseCookie = (name:string) => {
+const eraseCookie = (name: string) => {
   document.cookie = name + '=; Max-Age=-99999999;';
 };
 
 const handleLogIn = () => window.location.href = 'https://spotifymoody.herokuapp.com/auth/'
+
+const getAccess = async () => {
+    await fetch('/auth')
+}
 
 const findCookie = (name:string) => document.cookie
   .split('; ')
@@ -12,5 +16,6 @@ const findCookie = (name:string) => document.cookie
 export {
   eraseCookie,
   handleLogIn,
-  findCookie
+  findCookie,
+  getAccess
 }
