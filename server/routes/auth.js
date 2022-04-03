@@ -10,7 +10,8 @@ const stateName = 'spotify_auth_state';
 
 const router = express.Router();
 
-router.get('/', (_, res) => {
+router.get('/', (req, res) => {
+  console.log('request:', req)
   const state = generateRandomString(16);
 
   const authParams = new URLSearchParams({
