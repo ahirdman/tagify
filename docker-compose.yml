@@ -6,5 +6,6 @@ services:
      - 3000:3000
   api:
    build: ./server
+   env_file: ./server/.env
    ports:
      - 8080:8080
