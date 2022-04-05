@@ -8,6 +8,10 @@ const clientSecret = process.env.CLIENT_SECRET;
 const redirectUri = process.env.REDIRECT_URI;
 const stateName = 'spotify_auth_state';
 
+const baseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://spotifymoody.herokuapp.com/'
+  : 'http://localhost:3000'
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -59,7 +63,7 @@ router.get('/callback', async (req, res) => {
     res
       .clearCookie(stateName)
       .cookie('access', data.access_token)
-      .redirect('http://localhost:3000');
+      .redirect(baseUrl);
   } catch (error) {
     res.sendStatus(500);
   }
