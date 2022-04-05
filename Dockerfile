@@ -10,7 +10,7 @@ COPY client/. .
 
 RUN npm run build
 
-WORKDIR /modify/server
+WORKDIR /moodify/server
 
 COPY server/package*.json ./
 
