@@ -21,8 +21,6 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
-
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
@@ -38,6 +36,7 @@ app.use('/user', user);
 app.use('/playback', playback);
 
 if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
   app.get('*', (_, res) => {
     res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));

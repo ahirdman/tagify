@@ -2,7 +2,11 @@ const eraseCookie = (name: string) => {
   document.cookie = name + '=; Max-Age=-99999999;';
 };
 
-const handleLogIn = () => window.location.href = 'http://localhost:8080/auth/'
+// const handleLogIn = () => window.location.href = 'http://localhost:8080/auth/'
+
+// const handleLogIn = () => {
+//   fetch('http://localhost:8080/auth/')
+// }
 
 const findCookie = (name: string) => document.cookie
   .split('; ')
@@ -11,6 +15,6 @@ const findCookie = (name: string) => document.cookie
 
 export {
   eraseCookie,
-  handleLogIn,
+  // handleLogIn,
   findCookie,
 }
