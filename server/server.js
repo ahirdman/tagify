@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/test', (_, res) => {
-  res.json('Hello Motherflowers!');
+  res.json('Server responds!');
 });
 
 app.use('/auth', auth);
