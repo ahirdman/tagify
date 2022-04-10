@@ -5,8 +5,9 @@ const eraseCookie = (name: string) => {
 const handleLogIn = () => {
   if (process.env.NODE_ENV === 'production') {
     window.location.href = '/auth'
+  } else {
+    window.location.href = 'http://localhost:8080/auth'
   }
-  window.location.href = 'http://localhost:8080/auth'
 }
 
 const findCookie = (name: string) => document.cookie
