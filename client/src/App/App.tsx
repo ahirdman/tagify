@@ -25,10 +25,9 @@ const App = () => {
       <main className="login-wrapper">
         <header className="header">TINDERIFY</header>
         <button onClick={handleLogIn} className="login-button">
-            <img className='login-button--icon' src={LoginSVG} alt='' />
+            <img className='login-button--icon' src={LoginSVG} alt='login' />
             Login
         </button>
-          {/* <a href="/auth">Login</a> */}
       </main>
         )}
         {loggedIn && (

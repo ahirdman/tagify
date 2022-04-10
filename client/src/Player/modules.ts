@@ -1,7 +1,6 @@
 import { post } from '../httpClient/index';
 
 const saveTrack = async (track:any, token:string): Promise<void> => {
-  console.log(track);
   document.querySelector('.addLove').classList.add('addLove--visible')
   await post('/playback/save', { token, trackId: track.id })
   setTimeout(() => {
