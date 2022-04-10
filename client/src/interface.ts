@@ -37,8 +37,17 @@ interface IAccessProp {
   accessToken: string
 }
 
+interface ISDKTrack {
+  name: string,
+  album: {
+    images: [{ url: string }]
+  },
+  artists: [{ name: string }]
+}
+
 export type {
   IUser,
   ITrack,
-  IAccessProp
+  IAccessProp,
+  ISDKTrack
 }

@@ -10,7 +10,7 @@ import { IAccessProp } from '../interface';
 
 export const Player = ({ accessToken }: IAccessProp) => {
 
-  const [devideId, setDevideId] = useState('');
+  const [deviceId, setDeviceId] = useState('');
   const [player, setPlayer] = useState(undefined);
   const [isPaused, setPaused] = useState(false);
   const [isActive, setActive] = useState(false);
@@ -35,7 +35,7 @@ export const Player = ({ accessToken }: IAccessProp) => {
       setPlayer(player);
 
       player.addListener('ready', ({ device_id }) => {
-        setDevideId(device_id);
+        setDeviceId(device_id);
     });
 
       player.connect();
@@ -58,7 +58,7 @@ export const Player = ({ accessToken }: IAccessProp) => {
     return (
       <>
         <section className="container">
-          <button className="container__start" onClick={() => {startSession(devideId, accessToken)}}>Start Matching</button>
+          <button className="container__start" onClick={() => {startSession(deviceId, accessToken)}}>Start Matching</button>
         </section>
       </>
     );

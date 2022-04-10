@@ -1,24 +1,17 @@
-import fetchJson from '../httpClient/index';
-import { ITrack } from '../interface';
+import { post } from '../httpClient/index';
 
-interface ISDKTrack {
-  name: string,
-  album: {
-    images: [{ url: string }]
-  },
-  artists: [{ name: string }]
-}
-
-const saveTrack = async (track:any, token:string) => {
-  console.log(track)
+const saveTrack = async (track:any, token:string): Promise<void> => {
+  console.log(track);
   document.querySelector('.addLove').classList.add('addLove--visible')
-  await fetchJson('/playback/save', token, track.id)
+  await post('/playback/save', { token, trackId: track.id })
   setTimeout(() => {
     document.querySelector('.addLove').classList.remove('addLove--visible')
   }, 2000)
 }
 
-const startSession = async (devideId:string, token:string) => fetchJson('/playback', token, devideId)
+const startSession = async (deviceId:string, token:string): Promise<void> => {
+  await post('/playback', { token, deviceId })
+};
 
 const trackObject = {
   name: '',

@@ -10,11 +10,11 @@ const stateName = 'spotify_auth_state';
 
 const baseUrl = process.env.NODE_ENV === 'production'
   ? 'https://spotifymoody.herokuapp.com/'
-  : 'http://localhost:3000'
+  : 'http://localhost:3000';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', (_, res) => {
   const state = generateRandomString(16);
 
   const authParams = new URLSearchParams({

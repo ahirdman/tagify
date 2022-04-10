@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import fetchJson from '../httpClient'
+import { post } from '../httpClient'
 import { IAccessProp, IUser } from '../interface'
 import './Profile.scss'
-
 
 export const Profile = ({ accessToken }: IAccessProp ) => {
 
@@ -14,7 +13,7 @@ export const Profile = ({ accessToken }: IAccessProp ) => {
   })
 
   const getUser = async () => {
-    const user = await fetchJson('/user', accessToken)
+    const user = await post('/user', { token: accessToken })
     setUser({
       name: user.display_name,
       image: user.images[0].url,

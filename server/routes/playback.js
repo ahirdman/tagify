@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { token } = req.body;
-  const deviceId = req.body.trackId;
+  const { deviceId } = req.body;
 
   const body = {
     device_ids: [deviceId],
