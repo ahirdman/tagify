@@ -3,10 +3,10 @@ import fetch from 'node-fetch';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', async ({ body: { token } }, res) => {
   try {
     const results = await fetch('https://api.spotify.com/v1/me', {
-      headers: { Authorization: `Bearer ${req.body.token}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
     const data = await results.json();
     res.send(data);

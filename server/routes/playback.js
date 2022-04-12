@@ -3,11 +3,8 @@ import fetch from 'node-fetch';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-  const { token } = req.body;
-  const { deviceId } = req.body;
-
-  const body = {
+router.post('/', async ({ body: { token, deviceId } }, res) => {
+  const putBody = {
     device_ids: [deviceId],
     play: 'true',
   };
@@ -17,7 +14,7 @@ router.post('/', async (req, res) => {
       'https://api.spotify.com/v1/me/player',
       {
         method: 'PUT',
-        body: JSON.stringify(body),
+        body: JSON.stringify(putBody),
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -29,10 +26,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/track', async (req, res) => {
-  const { token } = req.body;
-  const { trackId } = req.body;
-
+router.post('/track', async ({ body: { token, trackId } }, res) => {
   try {
     const results = await fetch(
       `https://api.spotify.com/v1/tracks/${trackId}`,
@@ -47,10 +41,7 @@ router.post('/track', async (req, res) => {
   }
 });
 
-router.post('/save', async (req, res) => {
-  const { token } = req.body;
-  const { trackId } = req.body;
-
+router.post('/save', async ({ body: { token, trackId } }, res) => {
   try {
     await fetch(
       `https://api.spotify.com/v1/me/tracks?ids=${trackId}`,
