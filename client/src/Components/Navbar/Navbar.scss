@@ -1,0 +1,32 @@
+@use '../../styles';
+
+.navbar {
+  max-width: 300px;
+  background-color: styles.$component-background;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include styles.navbarLinks;
+
+  &__row {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 1em;
+    text-decoration: none;
+
+    &:hover {
+      color: styles.$spotify-green;
+    }
+
+    &--avatar {
+      width: 3em;
+      height: 3em;
+      border-radius: 50%;
+    }
+
+    &--icon {
+      margin-right: 1em;
+    }
+  }
+}

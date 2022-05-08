@@ -15,4 +15,19 @@ router.post('/', async ({ body: { token } }, res) => {
   }
 });
 
+router.post('/saved', async ({ body: { token } }, res) => {
+  try {
+    const results = await fetch(
+      'https://api.spotify.com/v1/me/tracks?market=ES&limit=50&offset=0',
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await results.json();
+    res.send(data);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+
 export { router as default };

@@ -1,0 +1,37 @@
+$background: linear-gradient(
+  112.87deg,
+  #212121 0%,
+  #3e3e3e 41.93%,
+  #3e3e3e 64.84%,
+  #212121 100%,
+  #212121 100%
+);
+$component-background: #212121;
+$highlighted: #ffffff;
+$spotify-green: #1bd760;
+$component-grey: rgba(255, 255, 255, 0.5);
+$row-hover: #4a4a4a;
+$grey-1: #c4c4c4;
+
+@mixin navbarLinks {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+@mixin card {
+  width: 500px;
+  height: 668px;
+  border-radius: 15px;
+  background-color: $component-background;
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin cardContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}

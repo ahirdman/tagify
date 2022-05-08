@@ -1,0 +1,5 @@
+@use '../../styles';
+
+.select {
+  @include styles.card;
+}
