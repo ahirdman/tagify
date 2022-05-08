@@ -1,20 +1,13 @@
 import * as React from 'react';
-import { ISavedTrack } from '../../utils/interface';
+import { ISavedObject } from '../../utils/interface';
 import './SelectTrack.scss';
 
 interface ISavedTracks {
-  savedTracks: ISavedTrack[];
+  savedTracks: ISavedObject[];
+  setSelectedTrack: any;
 }
 
-const SelectTrack = ({ savedTracks }: ISavedTracks) => {
-  const formatTrack = (trackArr: ISavedTrack[]) =>
-    trackArr.map((track: ISavedTrack) => ({
-      artwork: track.track.album.images[2].url,
-      title: track.track.name,
-      artist: track.track.artists[0].name,
-      id: track.added_at,
-    }));
-
+const SelectTrack = ({ savedTracks, setSelectedTrack }: ISavedTracks) => {
   return (
     <section className="select">
       <header className="select__title">Saved Tracks</header>
@@ -23,17 +16,23 @@ const SelectTrack = ({ savedTracks }: ISavedTracks) => {
         <p className="select__header--title">TITLE & ARTIST</p>
       </section>
       <ul className="track-list">
-        {formatTrack(savedTracks).map(track => {
+        {savedTracks.map((track, index) => {
           return (
-            <li key={track.id} className="track-list__row">
+            <li
+              onClick={() => setSelectedTrack(track.track)}
+              key={index}
+              className="track-list__row"
+            >
               <img
-                src={track.artwork}
+                src={track.track.album.images[2].url}
                 alt="album"
                 className="track-list__album"
               />
               <section className="track-list__details">
-                <p className="track-list__details--title">{track.title}</p>
-                <p className="track-list__details--artist">{track.artist}</p>
+                <p className="track-list__details--title">{track.track.name}</p>
+                <p className="track-list__details--artist">
+                  {track.track.artists[0].name}
+                </p>
               </section>
             </li>
           );

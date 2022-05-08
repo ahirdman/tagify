@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react';
-import {
-  saveTrack,
-  startSession,
-  trackObject,
-} from '../../utils/modules/playerModules';
+import { trackObject } from '../../utils/modules/playerModules';
 import PlayButton from '../../assets/playback/play-white.svg';
 import PauseButton from '../../assets/playback/pause-white.svg';
 import Next from '../../assets/playback/next.svg';
 import Previous from '../../assets/playback/previous.svg';
 import './Player.scss';
 import * as React from 'react';
-import { IAccessProp } from '../../utils/interface';
 
-export const Player = ({ accessToken }: IAccessProp) => {
-  const [deviceId, setDeviceId] = useState('');
+interface IAccessProp {
+  accessToken?: string;
+  setDeviceId: any;
+}
+
+export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
   const [player, setPlayer] = useState(undefined);
   const [isPaused, setPaused] = useState(false);
   const [isActive, setActive] = useState(false);
@@ -60,33 +59,24 @@ export const Player = ({ accessToken }: IAccessProp) => {
     return (
       <>
         <section className="container">
-          <button
-            className="container__start"
-            onClick={() => {
-              startSession(deviceId, accessToken);
-            }}
-          >
-            Start Matching
-          </button>
+          <p>Something</p>
         </section>
       </>
     );
   } else {
     return (
       <>
-        <section className="now-playing">
+        <section className="player">
           <img
             src={currentTrack.album.images[0].url}
             alt="album cover"
-            className="now-playing__cover"
+            className="player__artwork"
           />
-          <section className="now-playing__info">
-            <h4 className="now-playing__name">{currentTrack.name}</h4>
-            <p className="now-playing__artist">
-              {currentTrack.artists[0].name}
-            </p>
+          <section className="player__info">
+            <h4 className="player__name">{currentTrack.name}</h4>
+            <p className="player__artist">{currentTrack.artists[0].name}</p>
           </section>
-          <section className="now-playing__control">
+          <section className="player__control">
             <button
               className="btn-dislike"
               onClick={() => {
@@ -118,7 +108,6 @@ export const Player = ({ accessToken }: IAccessProp) => {
             <button
               className="btn-love"
               onClick={() => {
-                saveTrack(currentTrack, accessToken);
                 player.nextTrack();
               }}
             >

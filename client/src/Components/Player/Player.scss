@@ -10,16 +10,14 @@
   }
 }
 
-.now-playing {
+.player {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 300px;
-  margin-top: 1.5em;
 
-  // &__cover {
-  //   box-shadow: 0px 0px 15px rgb(0, 0, 0);
-  // }
+  &__artwork {
+    max-width: 300px;
+  }
 
   &__info {
     margin-top: 2em;

@@ -10,15 +10,17 @@ import Navbar from '../Navbar';
 import './App.scss';
 import SelectTrack from '../SelectTrack';
 import TagTrack from '../TagTrack';
-import { IUser, ISavedTrack } from '../../utils/interface';
+import { IUser, ISavedObject } from '../../utils/interface';
 import { post } from '../../utils/httpClient';
 import SelectList from '../SelectList';
 import EditList from '../EditList';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [deviceId, setDeviceId] = useState('');
   const [accessToken, setAccessToken] = useState('');
-  const [savedTracks, setSavedTracks] = useState<ISavedTrack[]>();
+  const [savedTracks, setSavedTracks] = useState<ISavedObject[]>();
+  const [selectedTrack, setSelectedTrack] = useState();
   const [user, setUser] = useState<IUser>({
     name: '',
     image: '',
@@ -63,7 +65,11 @@ const App = () => {
   } else {
     return (
       <main className="app">
-        <Navbar accessToken={accessToken} user={user} />
+        <Navbar
+          accessToken={accessToken}
+          user={user}
+          setDeviceId={setDeviceId}
+        />
         <Routes>
           <Route
             path="/"
@@ -71,8 +77,15 @@ const App = () => {
               <section className="main-view">
                 {savedTracks && (
                   <>
-                    <SelectTrack savedTracks={savedTracks} />
-                    <TagTrack />
+                    <SelectTrack
+                      savedTracks={savedTracks}
+                      setSelectedTrack={setSelectedTrack}
+                    />
+                    <TagTrack
+                      selectedTrack={selectedTrack}
+                      deviceId={deviceId}
+                      accessToken={accessToken}
+                    />
                   </>
                 )}
               </section>

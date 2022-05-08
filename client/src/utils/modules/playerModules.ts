@@ -8,8 +8,13 @@ const saveTrack = async (track: any, token: string): Promise<void> => {
   }, 2000);
 };
 
-const startSession = async (deviceId: string, token: string): Promise<void> => {
-  await post('/playback', { token, deviceId });
+const playTrack = async (
+  deviceId: string,
+  token: string,
+  album: string,
+  position: number
+): Promise<void> => {
+  await post('/playback', { token, deviceId, album, position });
 };
 
 const trackObject = {
@@ -20,4 +25,4 @@ const trackObject = {
   artists: [{ name: '' }],
 };
 
-export { saveTrack, startSession, trackObject };
+export { saveTrack, playTrack, trackObject };

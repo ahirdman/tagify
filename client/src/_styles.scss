@@ -25,6 +25,7 @@ $grey-1: #c4c4c4;
   width: 500px;
   height: 668px;
   border-radius: 15px;
+  padding: 30px;
   background-color: $component-background;
   display: flex;
   flex-direction: column;
@@ -34,4 +35,10 @@ $grey-1: #c4c4c4;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+@mixin cardTitleSelected {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
 }

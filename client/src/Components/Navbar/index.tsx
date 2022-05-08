@@ -9,32 +9,35 @@ import './Navbar.scss';
 interface INavbarProps {
   accessToken: any;
   user: any;
+  setDeviceId: any;
 }
 
-const Navbar = ({ accessToken, user }: INavbarProps) => {
+const Navbar = ({ accessToken, user, setDeviceId }: INavbarProps) => {
   return (
     <nav className="navbar">
-      <section className="navbar__row">
-        <img
-          src={user.image}
-          alt="profile"
-          className="navbar__row--avatar navbar__row--icon"
-        />
-        <p>{user.name}</p>
+      <section className="menu">
+        <section className="menu__row">
+          <img
+            src={user.image}
+            alt="profile"
+            className="menu__row--avatar menu__row--icon"
+          />
+          <p className="menu__row--user">{user.name}</p>
+        </section>
+        <Link to="/" className="menu__row">
+          <img src={Tag} alt="tag" className="menu__row--icon" />
+          Tag Tracks
+        </Link>
+        <Link to="/lists" className="menu__row">
+          <img src={List} alt="list" className="menu__row--icon" />
+          My Mood Lists
+        </Link>
+        <section className="menu__row">
+          <img src={SignOut} alt="sign out" className="menu__row--icon" />
+          <p>Sign Out</p>
+        </section>
       </section>
-      <Link to="/" className="navbar__row">
-        <img src={Tag} alt="tag" className="navbar__row--icon" />
-        Tag Tracks
-      </Link>
-      <Link to="/lists" className="navbar__row">
-        <img src={List} alt="list" className="navbar__row--icon" />
-        My Mood Lists
-      </Link>
-      <section className="navbar__row">
-        <img src={SignOut} alt="sign out" className="navbar__row--icon" />
-        <p>Sign Out</p>
-      </section>
-      <Player accessToken={accessToken} />
+      <Player accessToken={accessToken} setDeviceId={setDeviceId} />
     </nav>
   );
 };

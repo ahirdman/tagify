@@ -1,13 +1,19 @@
 @use '../../styles';
 
 .navbar {
-  max-width: 300px;
+  width: 300px;
   background-color: styles.$component-background;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   @include styles.navbarLinks;
+}
 
+.menu {
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
   &__row {
     display: flex;
     justify-content: left;
@@ -20,9 +26,15 @@
     }
 
     &--avatar {
-      width: 3em;
-      height: 3em;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
+    }
+
+    &--user {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 27px;
     }
 
     &--icon {
