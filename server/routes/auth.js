@@ -8,9 +8,10 @@ const clientSecret = process.env.CLIENT_SECRET;
 const redirectUri = process.env.REDIRECT_URI;
 const stateName = 'spotify_auth_state';
 
-const baseUrl = process.env.NODE_ENV === 'production'
-  ? 'https://spotifymoody.herokuapp.com/'
-  : 'http://localhost:3000';
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://spotifymoody.herokuapp.com/'
+    : 'http://localhost:3000';
 
 const router = express.Router();
 
@@ -29,7 +30,7 @@ router.get('/', (_, res) => {
     .clearCookie('access')
     .cookie(stateName, state)
     .redirect(
-      `https://accounts.spotify.com/authorize?${authParams.toString()}`,
+      `https://accounts.spotify.com/authorize?${authParams.toString()}`
     );
 });
 
@@ -53,7 +54,7 @@ router.get('/callback', async (req, res) => {
       body: form,
       headers: {
         Authorization: `Basic ${Buffer.from(
-          `${clientId}:${clientSecret}`,
+          `${clientId}:${clientSecret}`
         ).toString('base64')}`,
       },
     });

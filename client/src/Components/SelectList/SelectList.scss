@@ -1,5 +1,17 @@
 @use '../../styles';
 
-.select {
+.select-list {
   @include styles.card;
+
+  &__title {
+    @include styles.cardTitleSelected;
+  }
+
+  &__search {
+    @include styles.search;
+  }
+
+  &__header {
+    @include styles.header;
+  }
 }

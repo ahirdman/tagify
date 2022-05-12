@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ISavedObject } from '../../utils/interface';
+import Magnifier from '../../assets/magnifier.svg';
 import './SelectTrack.scss';
 
 interface ISavedTracks {
@@ -9,9 +10,12 @@ interface ISavedTracks {
 
 const SelectTrack = ({ savedTracks, setSelectedTrack }: ISavedTracks) => {
   return (
-    <section className="select">
-      <header className="select__title">Saved Tracks</header>
-      <input type="text" className="select__search" />
+    <fieldset className="select">
+      <legend className="select__title">Saved Tracks</legend>
+      <form className="select__search">
+        <input type="text" className="select__search--input" />
+        <img src={Magnifier} alt="search" className="select__search--icon" />
+      </form>
       <section className="select__header">
         <p className="select__header--title">TITLE & ARTIST</p>
       </section>
@@ -38,7 +42,7 @@ const SelectTrack = ({ savedTracks, setSelectedTrack }: ISavedTracks) => {
           );
         })}
       </ul>
-    </section>
+    </fieldset>
   );
 };
 

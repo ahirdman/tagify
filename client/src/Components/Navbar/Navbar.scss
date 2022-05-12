@@ -1,7 +1,7 @@
 @use '../../styles';
 
 .navbar {
-  width: 300px;
+  width: 250px;
   background-color: styles.$component-background;
   display: flex;
   flex-direction: column;
@@ -14,6 +14,7 @@
   display: flex;
   flex-direction: column;
   padding-left: 20px;
+
   &__row {
     display: flex;
     justify-content: left;
@@ -39,6 +40,8 @@
 
     &--icon {
       margin-right: 1em;
+      width: 35px;
+      height: auto;
     }
   }
 }

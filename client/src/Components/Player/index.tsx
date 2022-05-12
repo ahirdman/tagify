@@ -58,7 +58,7 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
   if (!isActive) {
     return (
       <>
-        <section className="container">
+        <section className="player">
           <p>Something</p>
         </section>
       </>
@@ -73,12 +73,14 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
             className="player__artwork"
           />
           <section className="player__info">
-            <h4 className="player__name">{currentTrack.name}</h4>
-            <p className="player__artist">{currentTrack.artists[0].name}</p>
+            <p className="player__info--name">{currentTrack.name}</p>
+            <p className="player__info--artist">
+              {currentTrack.artists[0].name}
+            </p>
           </section>
           <section className="player__control">
             <button
-              className="btn-dislike"
+              className="player__control--previous"
               onClick={() => {
                 player.nextTrack();
               }}
@@ -86,27 +88,27 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
               <img src={Previous} alt="X" />
             </button>
             <button
-              className="btn-playback"
+              className="player__control--playback"
               onClick={() => {
                 player.togglePlay();
               }}
             >
               {isPaused ? (
                 <img
-                  className="btn-playback--play"
+                  className="player__control--play"
                   alt="PLAY"
                   src={PlayButton}
                 />
               ) : (
                 <img
-                  className="btn-playback--pause"
+                  className="player__control--pause"
                   alt="PAUSE"
                   src={PauseButton}
                 />
               )}
             </button>
             <button
-              className="btn-love"
+              className="player__control--next"
               onClick={() => {
                 player.nextTrack();
               }}

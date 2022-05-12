@@ -1,5 +1,13 @@
 @use '../../styles';
 
-.select {
+.edit-list {
   @include styles.card;
+
+  &__title {
+    @include styles.cardTitleSelected;
+  }
+
+  &__empty {
+    @include styles.cardEmpty;
+  }
 }

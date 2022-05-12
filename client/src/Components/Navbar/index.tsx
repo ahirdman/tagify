@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Player from '../Player';
 import Tag from '../../assets/tag.svg';
-import List from '../../assets/list.svg';
+import List from '../../assets/list-white.svg';
 import SignOut from '../../assets/sign-out.svg';
 import './Navbar.scss';
 

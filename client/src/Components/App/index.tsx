@@ -1,19 +1,16 @@
-import {
-  eraseCookie,
-  findCookie,
-  handleLogIn,
-} from '../../utils/modules/modules';
+import { eraseCookie, findCookie } from '../../utils/modules/modules';
 import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import * as React from 'react';
 import Navbar from '../Navbar';
 import './App.scss';
-import SelectTrack from '../SelectTrack';
-import TagTrack from '../TagTrack';
+import SelectTrack from '../SavedTracks';
+import SelectedTrack from '../SelectedTrack';
 import { IUser, ISavedObject } from '../../utils/interface';
 import { post } from '../../utils/httpClient';
 import SelectList from '../SelectList';
 import EditList from '../EditList';
+import Login from '../Login';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -26,42 +23,35 @@ const App = () => {
     image: '',
   });
 
-  const getUser = async () => {
-    const user = await post('/user', { token: accessToken });
-    setUser({
-      name: user.display_name,
-      image: user.images[0].url,
-    });
-  };
-
-  const getTracks = async () => {
-    const savedTracks = await post('/user/saved', { token: accessToken });
-    setSavedTracks(savedTracks.items);
-  };
-
   useEffect(() => {
-    getUser();
-    getTracks();
-  }, [accessToken]);
+    const getUser = async () => {
+      const user = await post('/user', { token: accessToken });
+      setUser({
+        name: user.display_name,
+        image: user.images[0].url,
+      });
+    };
 
-  useEffect(() => {
+    const getTracks = async () => {
+      const savedTracks = await post('/user/saved', { token: accessToken });
+      setSavedTracks(savedTracks.items);
+    };
+
     if (document.cookie) {
       const accessCookie = findCookie('access');
-      setLoggedIn(true);
       setAccessToken(accessCookie);
       eraseCookie('access');
+      setLoggedIn(true);
     }
-  }, []);
+
+    if (accessToken) {
+      getUser();
+      getTracks();
+    }
+  }, [accessToken]);
 
   if (!loggedIn) {
-    return (
-      <main className="app">
-        <header className="header">TINDERIFY</header>
-        <button onClick={handleLogIn} className="login-button">
-          Login
-        </button>
-      </main>
-    );
+    return <Login />;
   } else {
     return (
       <main className="app">
@@ -74,14 +64,14 @@ const App = () => {
           <Route
             path="/"
             element={
-              <section className="main-view">
+              <section className="app__view">
                 {savedTracks && (
                   <>
                     <SelectTrack
                       savedTracks={savedTracks}
                       setSelectedTrack={setSelectedTrack}
                     />
-                    <TagTrack
+                    <SelectedTrack
                       selectedTrack={selectedTrack}
                       deviceId={deviceId}
                       accessToken={accessToken}
@@ -94,7 +84,7 @@ const App = () => {
           <Route
             path="/lists"
             element={
-              <section className="main-view">
+              <section className="app__view">
                 <SelectList />
                 <EditList />
               </section>

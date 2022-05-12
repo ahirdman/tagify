@@ -1,109 +1,75 @@
 @use '../../styles';
 
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  &__start {
-  }
-}
-
 .player {
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   &__artwork {
-    max-width: 300px;
+    width: 250px;
   }
 
   &__info {
-    margin-top: 2em;
+    margin-top: 20px;
     text-align: center;
+
+    &--name {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 27px;
+    }
+
+    &--artist {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 30px;
+      color: styles.$grey-1;
+      opacity: 0.75;
+    }
   }
 
   &__control {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    margin-top: 0.5em;
-    margin-right: 2em;
-    margin-bottom: 2em;
-    margin-left: 2em;
-    padding-right: 3em;
-    padding-left: 3em;
-  }
-}
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
 
-.btn-playback {
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  &--play,
-  &--pause {
-    width: 4.5em;
-    height: 4.5em;
-
-    // &:hover {
-    //   -webkit-filter: styles.$button-shadow;
-    //   filter: styles.$button-shadow;
-    // }
-
-    &:active {
-      filter: none;
+    &--playback {
+      background: none;
+      border: none;
+      cursor: pointer;
     }
-  }
-}
 
-.btn-dislike,
-.btn-love {
-  background: none;
-  border: none;
-  cursor: pointer;
+    &--play,
+    &--pause {
+      width: 60px;
+      height: 60px;
+      // &:hover {
+      //   -webkit-filter: styles.$button-shadow;
+      //   filter: styles.$button-shadow;
+      // }
+      // &:active {
+      //   filter: none;
+      // }
+    }
 
-  // &:hover {
-  //   -webkit-filter: styles.$button-shadow;
-  //   filter: styles.$button-shadow;
-  // }
+    &--previous,
+    &--next {
+      width: 45px;
+      height: 45px;
+      background: none;
+      border: none;
+      cursor: pointer;
 
-  &:active {
-    filter: none;
-  }
-}
+      // &:hover {
+      //   -webkit-filter: styles.$button-shadow;
+      //   filter: styles.$button-shadow;
+      // }
 
-.addLove {
-  width: 100%;
-  max-width: 25rem;
-  height: 2em;
-  padding-top: 0.5em;
-  position: fixed;
-  bottom: 0;
-  background-color: styles.$spotify-green;
-  border-top-left-radius: 0.5em;
-  border-top-right-radius: 0.5em;
-  color: black;
-  text-align: center;
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.3s linear;
-
-  &--visible {
-    opacity: 1;
-  }
-}
-
-@media screen and (min-width: 400px) {
-  .now-playing {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 3em;
-  }
-
-  .addLove {
-    margin-left: auto;
-    margin-right: auto;
+      &:active {
+        filter: none;
+      }
+    }
   }
 }

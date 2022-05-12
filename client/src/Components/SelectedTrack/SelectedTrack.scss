@@ -49,30 +49,6 @@
   }
 
   &__empty {
-    margin-top: 50%;
-    text-align: center;
-    &--text {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
-      color: styles.$grey-1;
-    }
-  }
-}
-
-.add-tag {
-  display: flex;
-  flex-direction: column;
-
-  &__search {
-    display: flex;
-
-    &--input {
-      background: none;
-    }
-
-    &--button {
-      background: none;
-    }
+    @include styles.cardEmpty;
   }
 }

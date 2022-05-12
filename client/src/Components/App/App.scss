@@ -1,22 +1,5 @@
 @use '../../styles';
 
-.header {
-  text-align: center;
-  width: 100%;
-  padding: 2.5em;
-  background-color: black;
-  font-weight: bolder;
-  font-size: smaller;
-}
-
-.login-button {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding-right: 2em;
-  padding-left: 1.5em;
-}
-
 .app {
   position: absolute;
   top: 0;
@@ -26,9 +9,9 @@
   display: flex;
   // justify-content: space-between;
   background: styles.$background;
-}
 
-.main-view {
-  @include styles.cardContainer;
-  width: 100%;
+  &__view {
+    @include styles.cardContainer;
+    width: 100%;
+  }
 }

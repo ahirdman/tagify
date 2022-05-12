@@ -1,0 +1,22 @@
+@use '../../styles';
+
+.login {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: styles.$background;
+
+  &__button {
+    width: 60px;
+    height: 40px;
+    background: styles.$spotify-green;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

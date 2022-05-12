@@ -5,26 +5,14 @@
 
   &__title {
     @include styles.cardTitleSelected;
-    // position: relative;
-    // bottom: 50px;
   }
 
   &__search {
-    border: 1px solid styles.$grey-1;
-    background: none;
-    border-radius: 10px;
-    height: 40px;
+    @include styles.search;
   }
 
   &__header {
-    border-bottom: 1px solid styles.$component-grey;
-
-    &--title {
-      color: styles.$component-grey;
-      font-weight: 300;
-      font-size: 18px;
-      line-height: 27px;
-    }
+    @include styles.header;
   }
 }
 
@@ -32,12 +20,14 @@
   // margin-left: 30px;
   // margin-right: 30px;
   overflow: scroll;
+  height: 100%;
 
   &__row {
     display: flex;
     height: 40px;
     margin-top: 10px;
     margin-bottom: 10px;
+    cursor: pointer;
 
     &:hover {
       background-color: styles.$row-hover;

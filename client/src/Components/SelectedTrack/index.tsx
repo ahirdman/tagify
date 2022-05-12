@@ -1,21 +1,50 @@
 import * as React from 'react';
-import './TagTrack.scss';
-import Note from '../../assets/music-note.svg';
-import { ISavedTrack } from '../../utils/interface';
-import Play from '../../assets/playback/play-green.svg';
-import Add from '../../assets/add.svg';
+import { useEffect, useState } from 'react';
 import { playTrack } from '../../utils/modules/playerModules';
+import { ISavedTrack } from '../../utils/interface';
+import { onSnapshot } from 'firebase/firestore';
+import { userDocRef } from '../../utils/firebase';
+import { matchTag } from '../../utils/modules/db';
+import AddTag from '../AddTag';
+import UserTags from '../TrackTags';
+import Note from '../../assets/music-note.svg';
+import Play from '../../assets/playback/play-green.svg';
+import './SelectedTrack.scss';
 
-interface ITagTrackProps {
+interface ISelectedTrackProps {
   selectedTrack?: ISavedTrack;
-  deviceId?: any;
+  deviceId?: string;
   accessToken: string;
 }
 
-const TagTrack = ({ selectedTrack, deviceId, accessToken }: ITagTrackProps) => {
+const SelectedTrack = ({
+  selectedTrack,
+  deviceId,
+  accessToken,
+}: ISelectedTrackProps) => {
+  const [trackTags, setTrackTags] = useState<string[]>();
+  const [userTags, setUserTags] = useState([]);
+
+  useEffect(() => {
+    const unsub = onSnapshot(userDocRef, doc => {
+      const tagObject = doc.data().tags;
+      const tags = Object.keys(tagObject);
+      setUserTags(tags);
+      if (selectedTrack) {
+        const matches = matchTag(tagObject, selectedTrack.uri);
+        setTrackTags(matches);
+      }
+    });
+
+    return () => {
+      unsub();
+      console.log('unsubscribed');
+    };
+  }, [selectedTrack]);
+
   return (
-    <section className="track-card">
-      <p className="track-card__title">Selected</p>
+    <fieldset className="track-card">
+      <legend className="track-card__title">Selected</legend>
       {selectedTrack ? (
         <>
           <section className="track-card__info">
@@ -47,16 +76,8 @@ const TagTrack = ({ selectedTrack, deviceId, accessToken }: ITagTrackProps) => {
               </p>
             </section>
           </section>
-          <section className="add-tag">
-            <section className="add-tag__search">
-              <input className="add-tag__search--input" type="text" />
-              <button className="add-tag__search--button">
-                <img src={Add} alt="check" />
-              </button>
-            </section>
-            <section className="add-tag__user-tags">Tag</section>
-          </section>
-          <section className="user-tags">All Tags</section>
+          <AddTag uri={selectedTrack.uri} userTags={userTags} />
+          <UserTags uri={selectedTrack.uri} trackTags={trackTags} />
         </>
       ) : (
         <section className="track-card__empty">
@@ -64,8 +85,8 @@ const TagTrack = ({ selectedTrack, deviceId, accessToken }: ITagTrackProps) => {
           <p className="track-card__empty--text">select a track</p>
         </section>
       )}
-    </section>
+    </fieldset>
   );
 };
 
-export default TagTrack;
+export default SelectedTrack;
