@@ -1,0 +1,13 @@
+@use '../../styles';
+
+.empty-card {
+  @include styles.card;
+
+  &__title {
+    @include styles.cardTitleSelected;
+  }
+
+  &__empty {
+    @include styles.cardEmpty;
+  }
+}

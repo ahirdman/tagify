@@ -201,4 +201,11 @@ interface ISavedTrack {
   uri: string;
 }
 
-export type { IUser, ITrack, ISDKTrack, ISavedObject, ISavedTrack };
+interface IDbTrack {
+  artist: string;
+  title: string;
+  artwork: string;
+  uri: string;
+}
+
+export type { IUser, ITrack, ISDKTrack, ISavedObject, ISavedTrack, IDbTrack };

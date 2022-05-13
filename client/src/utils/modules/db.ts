@@ -1,12 +1,14 @@
-interface TagObject {
-  key: string;
-  value: string;
-}
+import { IDbTrack } from '../interface';
 
-export const matchTag = (object: TagObject, uri: string) => {
-  let matched = [];
-  for (const [key, value] of Object.entries(object)) {
-    if (value.includes(uri)) matched.push(key);
+export const matchTag = (tagArr: any[], uri: string): string[] => {
+  const matched = [];
+
+  for (let tagTree of tagArr) {
+    const [tagname] = Object.keys(tagTree);
+    const [tracks]: any[] = Object.values(tagTree);
+    const match = tracks.filter((track: IDbTrack) => track.uri === uri);
+    if (match.length > 0) matched.push(tagname);
   }
+
   return matched;
 };

@@ -7,7 +7,15 @@
     @include styles.cardTitleSelected;
   }
 
-  &__empty {
-    @include styles.cardEmpty;
+  &__search {
+    @include styles.search;
   }
+
+  &__header {
+    @include styles.header;
+  }
+}
+
+.tracks {
+  @include styles.trackList;
 }

@@ -1,14 +1,21 @@
 import * as React from 'react';
-import { removeTrackTag } from '../../utils/firebase';
+import { clearTrackFromTag } from '../../utils/firebase';
 import Cross from '../../assets/cross-circle.svg';
 import './TrackTags.scss';
 
 interface ITrackTags {
-  uri: string;
+  selectedTrack: any;
   trackTags?: string[];
 }
 
-const TrackTags = ({ uri, trackTags }: ITrackTags) => {
+const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
+  const dbTrack = {
+    artist: selectedTrack.artists[0].name,
+    title: selectedTrack.name,
+    artwork: selectedTrack.album.images[2].url,
+    uri: selectedTrack.uri,
+  };
+
   return (
     <fieldset className="user-tags">
       <legend className="user-tags__title">Track Tags</legend>
@@ -17,7 +24,9 @@ const TrackTags = ({ uri, trackTags }: ITrackTags) => {
           trackTags.map((tagname: string, index: number) => {
             return (
               <button
-                onClick={() => removeTrackTag(tagname, uri)}
+                onClick={() =>
+                  clearTrackFromTag('purchasedAids', tagname, dbTrack)
+                }
                 key={index}
                 className="user-tags__tag"
               >

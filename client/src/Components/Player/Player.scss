@@ -45,13 +45,6 @@
     &--pause {
       width: 60px;
       height: 60px;
-      // &:hover {
-      //   -webkit-filter: styles.$button-shadow;
-      //   filter: styles.$button-shadow;
-      // }
-      // &:active {
-      //   filter: none;
-      // }
     }
 
     &--previous,
@@ -61,11 +54,6 @@
       background: none;
       border: none;
       cursor: pointer;
-
-      // &:hover {
-      //   -webkit-filter: styles.$button-shadow;
-      //   filter: styles.$button-shadow;
-      // }
 
       &:active {
         filter: none;

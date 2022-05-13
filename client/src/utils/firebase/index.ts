@@ -1,40 +1,64 @@
 // Import the functions you need from the SDKs you need
-import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+  collection,
+  query,
+  deleteDoc,
+  where,
+} from 'firebase/firestore';
+import { IDbTrack } from '../interface';
 import db from './config';
 
-//Select all documents in the users collection
-// export const usersRef = collection(db, 'users');
+const tagDoc = (user: string, tag: string) =>
+  doc(db, 'users', user, 'tags', tag);
 
-// Select the fields for the specified user
-export const userDocRef = doc(db, 'users', 'creamBeam');
+const tagCol = (user: string) => collection(db, `users/${user}/tags`);
 
-// export const getAllTags = async (userTags: Function, trackTags: Function) => {
-//   const userDocument = await getDoc(userDocRef);
+const q = (tag: string) =>
+  query(collection(db, 'users/purchasedAids/tags'), where('name', '==', tag));
 
-//   // WHole object with tag as key and array of tracks as value
-//   const tagObject = userDocument.data().tags;
+const createTag = async (user: string, tag: string, track: IDbTrack) => {
+  await setDoc(
+    doc(db, 'users', user, 'tags', tag),
+    {
+      name: tag,
+      color: '#1bd760',
+      tracks: [track],
+    },
+    { merge: true }
+  );
+};
 
-//   // Creates array of tag names
-//   const tags = Object.keys(tagObject);
-
-//   userTags(tags);
-//   trackTags(tagObject);
-// };
-
-export const addNewTag = async (tagName: string, trackId: string) => {
-  await updateDoc(userDocRef, {
-    ['tags.' + tagName]: [trackId],
+const tagTrack = async (user: string, tag: string, track: IDbTrack) => {
+  await updateDoc(doc(db, 'users', user, 'tags', tag), {
+    tracks: arrayUnion(track),
   });
 };
 
-export const addExistingTag = async (tagName: string, trackId: string) => {
-  await updateDoc(userDocRef, {
-    ['tags.' + tagName]: arrayUnion(trackId),
+const clearTrackFromTag = async (
+  user: string,
+  tag: string,
+  track: IDbTrack
+) => {
+  await updateDoc(doc(db, 'users', user, 'tags', tag), {
+    tracks: arrayRemove(track),
   });
 };
 
-export const removeTrackTag = async (tagName: string, trackId: string) => {
-  await updateDoc(userDocRef, {
-    ['tags.' + tagName]: arrayRemove(trackId),
-  });
+const deleteList = async (user: string, tag: string) => {
+  await deleteDoc(tagDoc(user, tag));
+};
+
+export {
+  tagDoc,
+  tagCol,
+  q,
+  createTag,
+  tagTrack,
+  clearTrackFromTag,
+  deleteList,
 };
