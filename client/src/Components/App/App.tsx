@@ -25,6 +25,7 @@ const App = () => {
   const [user, setUser] = useState<IUser>({
     name: '',
     image: '',
+    id: '',
   });
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const App = () => {
       setUser({
         name: user.display_name,
         image: user.images[0].url,
+        id: user.id,
       });
     };
 
@@ -95,7 +97,7 @@ const App = () => {
               <section className="app__view">
                 <SelectList setSelectedList={setSelectedList} />
                 {selectedList ? (
-                  <EditList selectedList={selectedList} />
+                  <EditList selectedList={selectedList} id={user.id} />
                 ) : (
                   <EmptyCard icon={List} />
                 )}

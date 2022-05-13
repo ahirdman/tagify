@@ -8,9 +8,10 @@ import { IDbTrack } from '../../utils/interface';
 
 interface IEditListProps {
   selectedList: string;
+  id: string;
 }
 
-const EditList = ({ selectedList }: IEditListProps) => {
+const EditList = ({ selectedList, id }: IEditListProps) => {
   const [tracks, setTracks] = useState([]);
 
   useEffect(() => {

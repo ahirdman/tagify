@@ -1,6 +1,7 @@
 interface IUser {
   image: string;
   name: string;
+  id: string;
 }
 
 interface ITrack {
