@@ -5,6 +5,7 @@ import cors from 'cors';
 import auth from './routes/auth.js';
 import user from './routes/user.js';
 import playback from './routes/playback.js';
+import playlist from './routes/playlist.js';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -34,6 +35,7 @@ app.get('/test', (_, res) => {
 app.use('/auth', auth);
 app.use('/user', user);
 app.use('/playback', playback);
+app.use('/playlist', playlist);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
