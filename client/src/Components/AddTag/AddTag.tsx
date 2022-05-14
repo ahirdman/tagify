@@ -5,10 +5,12 @@ import Plus from '../../assets/add-circle.svg';
 import Add from '../../assets/add.svg';
 import Tag from '../../assets/tag.svg';
 import './AddTag.scss';
+import { randomColor } from '../../utils/modules/db';
+import { ITags } from '../../utils/interface';
 
 interface IAddTagProps {
   selectedTrack: any;
-  userTags?: string[];
+  userTags?: ITags[];
 }
 
 const AddTag = ({ selectedTrack, userTags }: IAddTagProps) => {
@@ -36,7 +38,7 @@ const AddTag = ({ selectedTrack, userTags }: IAddTagProps) => {
           className="add-tag__search--button"
           onClick={e => {
             e.preventDefault();
-            createTag('purchasedAids', tagInput, dbTrack);
+            createTag('purchasedAids', tagInput, randomColor(), dbTrack);
             setTagInput('');
           }}
         >
@@ -47,14 +49,15 @@ const AddTag = ({ selectedTrack, userTags }: IAddTagProps) => {
         <p className="all-tags__title">MY TAGS</p>
         <section className="all-tags__container">
           {userTags &&
-            userTags.map((tagName: string, index: number) => {
+            userTags.map((tag: ITags, index: number) => {
               return (
                 <button
-                  onClick={() => tagTrack('purchasedAids', tagName, dbTrack)}
+                  onClick={() => tagTrack('purchasedAids', tag.name, dbTrack)}
                   key={index}
                   className="all-tags__tag"
+                  style={{ background: tag.color }}
                 >
-                  {tagName}
+                  {tag.name}
                   <img src={Plus} alt="add" className="all-tags__tag--action" />
                 </button>
               );

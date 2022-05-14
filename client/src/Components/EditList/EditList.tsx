@@ -5,14 +5,33 @@ import { onSnapshot } from 'firebase/firestore';
 import './EditList.scss';
 import { tagDoc } from '../../utils/firebase';
 import { IDbTrack } from '../../utils/interface';
+import Send from '../../assets/send.svg';
+import { post } from '../../utils/httpClient';
 
 interface IEditListProps {
   selectedList: string;
   id: string;
+  accessToken: string;
 }
 
-const EditList = ({ selectedList, id }: IEditListProps) => {
+const EditList = ({ selectedList, id, accessToken }: IEditListProps) => {
   const [tracks, setTracks] = useState([]);
+
+  const trackUris = (arr: IDbTrack[]) =>
+    arr.map((track: IDbTrack) => track.uri);
+
+  const savePlaylist = async (name: string) => {
+    const playlist = await post('/playlist', {
+      token: accessToken,
+      userId: id,
+      name,
+    });
+    await post('/playlist/add', {
+      token: accessToken,
+      playlistId: playlist.id,
+      tracks: trackUris(tracks),
+    });
+  };
 
   useEffect(() => {
     const unsub = onSnapshot(tagDoc('purchasedAids', selectedList), doc => {
@@ -31,6 +50,15 @@ const EditList = ({ selectedList, id }: IEditListProps) => {
       <form className="edit-list__search">
         <input type="text" className="edit-list__search--input" />
         <img src={Magnifier} alt="search" className="edit-list__search--icon" />
+        <button
+          className="edit-list__export"
+          onClick={e => {
+            e.preventDefault();
+            savePlaylist(selectedList);
+          }}
+        >
+          <img src={Send} alt="send" className="edit-list__export--icon" />
+        </button>
       </form>
       <section className="edit-list__header">
         <p className="edit-list__header--title">TRACKS</p>

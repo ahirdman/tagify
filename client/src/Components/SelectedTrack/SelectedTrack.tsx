@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { playTrack } from '../../utils/modules/playerModules';
-import { ISavedTrack } from '../../utils/interface';
+import { ISavedTrack, ITags } from '../../utils/interface';
 import { onSnapshot } from 'firebase/firestore';
 import { tagCol } from '../../utils/firebase';
 import { matchTag } from '../../utils/modules/db';
@@ -26,12 +26,15 @@ const SelectedTrack = ({
 
   useEffect(() => {
     const unsubscribe = onSnapshot(tagCol('purchasedAids'), collection => {
-      const tags: string[] = [];
+      const tags: ITags[] = [];
       const tagObject: any[] = [];
       collection.forEach(doc => {
-        tags.push(doc.data().name);
         const data = doc.data();
-        tagObject.push({ [data.name]: [...data.tracks] });
+        tags.push({ name: data.name, color: data.color });
+        tagObject.push({
+          color: data.color,
+          [data.name]: [...data.tracks],
+        });
       });
       setUserTags(tags);
       if (selectedTrack) {

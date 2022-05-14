@@ -62,10 +62,15 @@
     display: flex;
     align-items: center;
     visibility: hidden;
+  }
+  &__edit,
+  &__delete {
+    margin-right: 10px;
+    background: none;
+    border: none;
 
-    &--edit,
-    &--delete {
-      margin-right: 10px;
+    &:hover {
+      cursor: pointer;
     }
   }
 }

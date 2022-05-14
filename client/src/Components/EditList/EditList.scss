@@ -11,6 +11,12 @@
     @include styles.search;
   }
 
+  &__export {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
   &__header {
     @include styles.header;
   }

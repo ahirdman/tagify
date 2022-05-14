@@ -97,7 +97,11 @@ const App = () => {
               <section className="app__view">
                 <SelectList setSelectedList={setSelectedList} />
                 {selectedList ? (
-                  <EditList selectedList={selectedList} id={user.id} />
+                  <EditList
+                    selectedList={selectedList}
+                    id={user.id}
+                    accessToken={accessToken}
+                  />
                 ) : (
                   <EmptyCard icon={List} />
                 )}

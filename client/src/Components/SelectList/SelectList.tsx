@@ -6,19 +6,20 @@ import './SelectList.scss';
 import { deleteList, tagCol } from '../../utils/firebase';
 import { useEffect, useState } from 'react';
 import { onSnapshot } from 'firebase/firestore';
+import { ITags } from '../../utils/interface';
 
 interface ISelectListProps {
   setSelectedList: any;
 }
 
 const SelectList = ({ setSelectedList }: ISelectListProps) => {
-  const [lists, setLists] = useState([]);
-
+  const [lists, setLists] = useState<ITags[]>([]);
   useEffect(() => {
     const unsubscribe = onSnapshot(tagCol('purchasedAids'), collection => {
-      const tags: string[] = [];
+      const tags: ITags[] = [];
       collection.forEach(doc => {
-        tags.push(doc.data().name);
+        const data = doc.data();
+        tags.push({ name: data.name, color: data.color });
       });
       setLists(tags);
     });
@@ -46,13 +47,16 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
         {lists.map((tag, index) => {
           return (
             <li
-              onClick={() => setSelectedList(tag)}
+              onClick={() => setSelectedList(tag.name)}
               key={index}
               className="select-list__row"
             >
               <section className="select-list__details">
-                <div className="select-list__details--circle"></div>
-                <p className="select-list__details--title">{tag}</p>
+                <div
+                  className="select-list__details--circle"
+                  style={{ background: tag.color }}
+                ></div>
+                <p className="select-list__details--title">{tag.name}</p>
               </section>
               <section className="select-list__options">
                 <button
@@ -68,7 +72,7 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
                 <button
                   className="select-list__delete"
                   onClick={() => {
-                    deleteList('purchasedAids', tag);
+                    deleteList('purchasedAids', tag.name);
                   }}
                 >
                   <img

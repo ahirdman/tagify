@@ -5,7 +5,7 @@ import './TrackTags.scss';
 
 interface ITrackTags {
   selectedTrack: any;
-  trackTags?: string[];
+  trackTags?: any[];
 }
 
 const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
@@ -21,16 +21,17 @@ const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
       <legend className="user-tags__title">Track Tags</legend>
       <section className="user-tags__container">
         {trackTags &&
-          trackTags.map((tagname: string, index: number) => {
+          trackTags.map((tag: any, index: number) => {
             return (
               <button
                 onClick={() =>
-                  clearTrackFromTag('purchasedAids', tagname, dbTrack)
+                  clearTrackFromTag('purchasedAids', tag.name, dbTrack)
                 }
                 key={index}
                 className="user-tags__tag"
+                style={{ background: tag.color }}
               >
-                {tagname}
+                {tag.name}
                 <img
                   src={Cross}
                   alt="cross"

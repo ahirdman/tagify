@@ -209,4 +209,17 @@ interface IDbTrack {
   uri: string;
 }
 
-export type { IUser, ITrack, ISDKTrack, ISavedObject, ISavedTrack, IDbTrack };
+interface ITags {
+  name: string;
+  color: string;
+}
+
+export type {
+  IUser,
+  ITrack,
+  ISDKTrack,
+  ISavedObject,
+  ISavedTrack,
+  IDbTrack,
+  ITags,
+};

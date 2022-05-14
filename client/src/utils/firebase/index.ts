@@ -21,12 +21,17 @@ const tagCol = (user: string) => collection(db, `users/${user}/tags`);
 const q = (tag: string) =>
   query(collection(db, 'users/purchasedAids/tags'), where('name', '==', tag));
 
-const createTag = async (user: string, tag: string, track: IDbTrack) => {
+const createTag = async (
+  user: string,
+  tag: string,
+  color: string,
+  track: IDbTrack
+) => {
   await setDoc(
     doc(db, 'users', user, 'tags', tag),
     {
       name: tag,
-      color: '#1bd760',
+      color: color,
       tracks: [track],
     },
     { merge: true }
