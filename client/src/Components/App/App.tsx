@@ -84,7 +84,7 @@ const App = () => {
                         accessToken={accessToken}
                       />
                     ) : (
-                      <EmptyCard icon={Note} />
+                      <EmptyCard icon={Note} item="track" />
                     )}
                   </>
                 )}
@@ -103,7 +103,7 @@ const App = () => {
                     accessToken={accessToken}
                   />
                 ) : (
-                  <EmptyCard icon={List} />
+                  <EmptyCard icon={List} item="list" />
                 )}
               </section>
             }
