@@ -6,6 +6,10 @@
   width: 25vw;
   height: 100%;
 
+  &__track {
+    display: flex;
+  }
+
   &__artwork {
     height: 100%;
   }
@@ -13,13 +17,16 @@
   &__info {
     width: auto;
     text-align: center;
-    overflow-x: hidden;
-    width: 60%;
+    text-align: left;
 
     &--name {
       font-weight: 400;
       font-size: 12px;
       line-height: 18px;
+
+      overflow-x: hidden;
+      width: 60%;
+      height: 50%;
     }
 
     &--artist {
@@ -28,6 +35,9 @@
       line-height: 18px;
       color: styles.$grey-1;
       opacity: 0.75;
+
+      width: 60%;
+      height: 50%;
     }
   }
 

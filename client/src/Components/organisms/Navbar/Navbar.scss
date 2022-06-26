@@ -2,12 +2,20 @@
 
 .navbar {
   width: 100vw;
-  height: 70px;
+  height: 8vh;
   background-color: styles.$component-background;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid styles.$border;
+
   @include styles.navbarLinks;
+
+  @media screen and (max-width: styles.$breakpoint-phone) {
+    order: 1;
+    border-bottom: none;
+    border-top: 1px solid styles.$border;
+    justify-content: space-evenly;
+  }
 
   &__settings {
     width: 20vw;
@@ -35,9 +43,5 @@
         color: styles.$spotify-green;
       }
     }
-  }
-
-  &__player {
-    // display: flex;
   }
 }

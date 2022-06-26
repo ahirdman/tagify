@@ -4,14 +4,12 @@ import { Routes, Route } from 'react-router-dom';
 import { IUser, ISavedObject } from './utils/interface';
 import * as React from 'react';
 import { post } from './utils/httpClient';
-import List from './assets/list.svg';
 import './App.scss';
 import Navbar from './Components/organisms/Navbar/Navbar';
-import SelectList from './Components/organisms/SelectList/SelectList';
-import EditList from './Components/organisms/EditList/EditList';
+
 import Login from './Pages/login/Login';
-import EmptyCard from './Components/organisms/EmptyCard/EmptyCard';
 import Tracks from './Pages/tracks/Tracks';
+import Lists from './Pages/lists/Lists';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -80,8 +78,7 @@ const App = () => {
           path="/lists"
           element={
             <section className="app__view">
-              <SelectList setSelectedList={setSelectedList} />
-              {selectedList ? <EditList selectedList={selectedList} id={user.id} accessToken={accessToken} /> : <EmptyCard icon={List} item="list" />}
+              <Lists selectedList={selectedList} setSelectedList={setSelectedList} accessToken={accessToken} user={user} />
             </section>
           }
         />

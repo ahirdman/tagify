@@ -58,10 +58,12 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
   } else {
     return (
       <div className="player">
-        <img src={currentTrack.album.images[0].url} alt="album cover" className="player__artwork" />
-        <div className="player__info">
-          <p className="player__info--name">{currentTrack.name}</p>
-          <p className="player__info--artist">{currentTrack.artists[0].name}</p>
+        <div className="player__track">
+          <img src={currentTrack.album.images[0].url} alt="album cover" className="player__artwork" />
+          <div className="player__info">
+            <p className="player__info--name">{currentTrack.name}</p>
+            <p className="player__info--artist">{currentTrack.artists[0].name}</p>
+          </div>
         </div>
         <button
           className="player__control"

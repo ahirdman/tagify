@@ -10,8 +10,11 @@
   flex-direction: column;
   background: styles.$background;
 
+  @media screen and (max-width: 600px) {
+    background: styles.$component-background;
+  }
+
   &__view {
     @include styles.cardContainer;
-    // width: 100%;
   }
 }

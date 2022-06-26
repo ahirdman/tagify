@@ -1,11 +1,14 @@
 $background: #111111;
 $component-background: #000000;
+
 $highlighted: #ffffff;
 $spotify-green: #1bd760;
 $component-grey: rgba(255, 255, 255, 0.5);
 $row-hover: #4a4a4a;
 $grey-1: #c4c4c4;
 $border: #333333;
+
+$breakpoint-phone: 600px;
 
 @mixin navbarLinks {
   font-family: 'Poppins';
@@ -27,13 +30,28 @@ $border: #333333;
   padding-right: 30px;
   padding-bottom: 30px;
   padding-left: 30px;
+
+  @media screen and (max-width: $breakpoint-phone) {
+    border: none;
+    border-radius: 0;
+    width: 100vw;
+    height: 92vh;
+    padding-right: 15px;
+    padding-bottom: 0;
+    padding-left: 15px;
+  }
 }
 
 @mixin cardContainer {
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
   height: 100%;
+
+  @media screen and (min-width: $breakpoint-phone) {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+  }
 }
 
 @mixin cardEmpty {
