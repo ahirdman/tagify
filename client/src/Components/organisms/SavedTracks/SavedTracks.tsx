@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ISavedObject } from '../../utils/interface';
-import Magnifier from '../../assets/magnifier.svg';
+import { ISavedObject } from '../../../utils/interface';
+import Magnifier from '../../../assets/magnifier.svg';
 import './SelectTrack.scss';
 
 interface ISavedTracks {
@@ -10,8 +10,8 @@ interface ISavedTracks {
 
 const SelectTrack = ({ savedTracks, setSelectedTrack }: ISavedTracks) => {
   return (
-    <fieldset className="select">
-      <legend className="select__title">Saved Tracks</legend>
+    <section className="select">
+      <h2 className="select__title">Saved Tracks</h2>
       <form className="select__search">
         <input type="text" className="select__search--input" />
         <img src={Magnifier} alt="search" className="select__search--icon" />
@@ -22,27 +22,17 @@ const SelectTrack = ({ savedTracks, setSelectedTrack }: ISavedTracks) => {
       <ul className="track-list">
         {savedTracks.map((track, index) => {
           return (
-            <li
-              onClick={() => setSelectedTrack(track.track)}
-              key={index}
-              className="track-list__row"
-            >
-              <img
-                src={track.track.album.images[2].url}
-                alt="album"
-                className="track-list__album"
-              />
+            <li onClick={() => setSelectedTrack(track.track)} key={index} className="track-list__row">
+              <img src={track.track.album.images[2].url} alt="album" className="track-list__album" />
               <section className="track-list__details">
                 <p className="track-list__details--title">{track.track.name}</p>
-                <p className="track-list__details--artist">
-                  {track.track.artists[0].name}
-                </p>
+                <p className="track-list__details--artist">{track.track.artists[0].name}</p>
               </section>
             </li>
           );
         })}
       </ul>
-    </fieldset>
+    </section>
   );
 };
 

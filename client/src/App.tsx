@@ -1,19 +1,19 @@
-import { eraseCookie, findCookie } from '../../utils/modules/modules';
+import { eraseCookie, findCookie } from './utils/modules/modules';
 import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { IUser, ISavedObject } from './utils/interface';
 import * as React from 'react';
-import Navbar from '../Navbar/Navbar';
+import { post } from './utils/httpClient';
+import Note from './assets/music-note.svg';
+import List from './assets/list.svg';
 import './App.scss';
-import SelectTrack from '../SavedTracks/SavedTracks';
-import SelectedTrack from '../SelectedTrack/SelectedTrack';
-import { IUser, ISavedObject } from '../../utils/interface';
-import { post } from '../../utils/httpClient';
-import SelectList from '../SelectList/SelectList';
-import EditList from '../EditList/EditList';
-import Login from '../Login/Login';
-import EmptyCard from '../EmptyCard/EmptyCard';
-import List from '../../assets/list.svg';
-import Note from '../../assets/music-note.svg';
+import Navbar from './Components/organisms/Navbar/Navbar';
+import SelectTrack from './Components/organisms/SavedTracks/SavedTracks';
+import SelectedTrack from './Components/organisms/SelectedTrack/SelectedTrack';
+import SelectList from './Components/organisms/SelectList/SelectList';
+import EditList from './Components/organisms/EditList/EditList';
+import Login from './Pages/login/Login';
+import EmptyCard from './Components/organisms/EmptyCard/EmptyCard';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -61,11 +61,7 @@ const App = () => {
   } else {
     return (
       <main className="app">
-        <Navbar
-          accessToken={accessToken}
-          user={user}
-          setDeviceId={setDeviceId}
-        />
+        <Navbar accessToken={accessToken} user={user} setDeviceId={setDeviceId} />
         <Routes>
           <Route
             path="/"
@@ -73,16 +69,9 @@ const App = () => {
               <section className="app__view">
                 {savedTracks && (
                   <>
-                    <SelectTrack
-                      savedTracks={savedTracks}
-                      setSelectedTrack={setSelectedTrack}
-                    />
+                    <SelectTrack savedTracks={savedTracks} setSelectedTrack={setSelectedTrack} />
                     {selectedTrack ? (
-                      <SelectedTrack
-                        selectedTrack={selectedTrack}
-                        deviceId={deviceId}
-                        accessToken={accessToken}
-                      />
+                      <SelectedTrack selectedTrack={selectedTrack} deviceId={deviceId} accessToken={accessToken} />
                     ) : (
                       <EmptyCard icon={Note} item="track" />
                     )}
@@ -97,11 +86,7 @@ const App = () => {
               <section className="app__view">
                 <SelectList setSelectedList={setSelectedList} />
                 {selectedList ? (
-                  <EditList
-                    selectedList={selectedList}
-                    id={user.id}
-                    accessToken={accessToken}
-                  />
+                  <EditList selectedList={selectedList} id={user.id} accessToken={accessToken} />
                 ) : (
                   <EmptyCard icon={List} item="list" />
                 )}

@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "client": "npm run start --prefix client",
+    "server": "npm run start --prefix server"
+  },
   "dependencies": {
     "firebase": "^9.8.1",
     "react-router-dom": "^6.3.0"

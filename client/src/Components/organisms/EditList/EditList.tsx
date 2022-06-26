@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import Magnifier from '../../assets/magnifier.svg';
+import Magnifier from '../../../assets/magnifier.svg';
 import { onSnapshot } from 'firebase/firestore';
 import './EditList.scss';
-import { tagDoc } from '../../utils/firebase';
-import { IDbTrack } from '../../utils/interface';
-import Send from '../../assets/send.svg';
-import { post } from '../../utils/httpClient';
+import { tagDoc } from '../../../utils/firebase';
+import { IDbTrack } from '../../../utils/interface';
+import Send from '../../../assets/send.svg';
+import { post } from '../../../utils/httpClient';
 
 interface IEditListProps {
   selectedList: string;
@@ -17,8 +17,7 @@ interface IEditListProps {
 const EditList = ({ selectedList, id, accessToken }: IEditListProps) => {
   const [tracks, setTracks] = useState([]);
 
-  const trackUris = (arr: IDbTrack[]) =>
-    arr.map((track: IDbTrack) => track.uri);
+  const trackUris = (arr: IDbTrack[]) => arr.map((track: IDbTrack) => track.uri);
 
   const savePlaylist = async (name: string) => {
     const playlist = await post('/playlist', {

@@ -1,18 +1,17 @@
-@use '../../styles';
+@use '../../../styles';
 
 .navbar {
-  width: 250px;
+  width: 100vw;
+  height: 70px;
   background-color: styles.$component-background;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
+  border-bottom: 1px solid styles.$border;
   @include styles.navbarLinks;
 }
 
 .menu {
-  height: 350px;
   display: flex;
-  flex-direction: column;
   padding-left: 20px;
 
   &__row {

@@ -1,17 +1,18 @@
-@use '../../styles';
+@use '../../../styles';
 
 .player {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 350px;
+  // justify-content: center;
 
   &__artwork {
-    width: 250px;
+    height: 100%;
   }
 
   &__info {
     margin-top: 20px;
     text-align: center;
+    overflow: hidden;
 
     &--name {
       font-weight: 400;
@@ -43,21 +44,8 @@
 
     &--play,
     &--pause {
-      width: 60px;
-      height: 60px;
-    }
-
-    &--previous,
-    &--next {
-      width: 45px;
-      height: 45px;
-      background: none;
-      border: none;
-      cursor: pointer;
-
-      &:active {
-        filter: none;
-      }
+      width: 40px;
+      height: 40px;
     }
   }
 }

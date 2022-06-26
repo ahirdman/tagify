@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { tagTrack, createTag } from '../../utils/firebase';
+import { tagTrack, createTag } from '../../../utils/firebase';
 import { useState } from 'react';
-import Plus from '../../assets/add-circle.svg';
-import Add from '../../assets/add.svg';
-import Tag from '../../assets/tag.svg';
+import Plus from '../../../assets/add-circle.svg';
+import Add from '../../../assets/add.svg';
+import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
-import { randomColor } from '../../utils/modules/db';
-import { ITags } from '../../utils/interface';
+import { randomColor } from '../../../utils/modules/db';
+import { ITags } from '../../../utils/interface';
 
 interface IAddTagProps {
   selectedTrack: any;
@@ -24,15 +24,10 @@ const AddTag = ({ selectedTrack, userTags }: IAddTagProps) => {
   };
 
   return (
-    <fieldset className="add-tag">
-      <legend className="add-tag__title">Add Tag</legend>
+    <section className="add-tag">
+      <h2 className="add-tag__title">Add Tag</h2>
       <form className="add-tag__search">
-        <input
-          className="add-tag__search--input"
-          type="text"
-          value={tagInput}
-          onChange={e => setTagInput(e.target.value)}
-        />
+        <input className="add-tag__search--input" type="text" value={tagInput} onChange={e => setTagInput(e.target.value)} />
         <img src={Tag} alt="tag" className="add-tag__search--tag" />
         <button
           className="add-tag__search--button"
@@ -64,7 +59,7 @@ const AddTag = ({ selectedTrack, userTags }: IAddTagProps) => {
             })}
         </section>
       </section>
-    </fieldset>
+    </section>
   );
 };
 

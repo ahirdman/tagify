@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { playTrack } from '../../utils/modules/playerModules';
-import { ISavedTrack, ITags } from '../../utils/interface';
+import { playTrack } from '../../../utils/modules/playerModules';
+import { ISavedTrack, ITags } from '../../../utils/interface';
 import { onSnapshot } from 'firebase/firestore';
-import { tagCol } from '../../utils/firebase';
-import { matchTag } from '../../utils/modules/db';
-import AddTag from '../AddTag/AddTag';
-import UserTags from '../TrackTags/TrackTags';
-import Play from '../../assets/playback/play-green.svg';
+import { tagCol } from '../../../utils/firebase';
+import { matchTag } from '../../../utils/modules/db';
+import AddTag from '../../molecules/AddTag/AddTag';
+import UserTags from '../../molecules/TrackTags/TrackTags';
+import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
 
 interface ISelectedTrackProps {
@@ -16,11 +16,7 @@ interface ISelectedTrackProps {
   accessToken: string;
 }
 
-const SelectedTrack = ({
-  selectedTrack,
-  deviceId,
-  accessToken,
-}: ISelectedTrackProps) => {
+const SelectedTrack = ({ selectedTrack, deviceId, accessToken }: ISelectedTrackProps) => {
   const [trackTags, setTrackTags] = useState<string[]>([]);
   const [userTags, setUserTags] = useState([]);
 
@@ -49,38 +45,25 @@ const SelectedTrack = ({
   }, [selectedTrack]);
 
   return (
-    <fieldset className="track-card">
-      <legend className="track-card__title">Selected</legend>
+    <section className="track-card">
+      <h2 className="track-card__title">Selected</h2>
       <section className="track-card__info">
+        <img src={selectedTrack.album.images[1].url} alt="album" className="track-card__album" />
         <img
-          src={selectedTrack.album.images[1].url}
-          alt="album"
-          className="track-card__album"
-        />
-        <img
-          onClick={() =>
-            playTrack(
-              deviceId,
-              accessToken,
-              selectedTrack.album.uri,
-              selectedTrack.track_number - 1
-            )
-          }
+          onClick={() => playTrack(deviceId, accessToken, selectedTrack.album.uri, selectedTrack.track_number - 1)}
           src={Play}
           alt="playback"
           className="track-card__playback"
         />
         <section className="track-card__text">
           <p className="track-card__text--title">{selectedTrack.name}</p>
-          <p className="track-card__text--artist">
-            {selectedTrack.artists[0].name}
-          </p>
+          <p className="track-card__text--artist">{selectedTrack.artists[0].name}</p>
           <p className="track-card__text--album">{selectedTrack.album.name}</p>
         </section>
       </section>
-      <AddTag selectedTrack={selectedTrack} userTags={userTags} />
       <UserTags selectedTrack={selectedTrack} trackTags={trackTags} />
-    </fieldset>
+      <AddTag selectedTrack={selectedTrack} userTags={userTags} />
+    </section>
   );
 };
 

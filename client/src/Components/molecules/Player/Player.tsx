@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
-import { trackObject } from '../../utils/modules/playerModules';
-import PlayButton from '../../assets/playback/play-white.svg';
-import PauseButton from '../../assets/playback/pause-white.svg';
-import Next from '../../assets/playback/next.svg';
-import Previous from '../../assets/playback/previous.svg';
+import { trackObject } from '../../../utils/modules/playerModules';
+import PlayButton from '../../../assets/playback/play-white.svg';
+import PauseButton from '../../../assets/playback/pause-white.svg';
 import './Player.scss';
 import * as React from 'react';
 
@@ -56,37 +54,17 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
   }, [accessToken]);
 
   if (!isActive) {
-    return (
-      <>
-        <section className="player">
-          <p>Something</p>
-        </section>
-      </>
-    );
+    return <section className="player"></section>;
   } else {
     return (
       <>
         <section className="player">
-          <img
-            src={currentTrack.album.images[0].url}
-            alt="album cover"
-            className="player__artwork"
-          />
+          <img src={currentTrack.album.images[0].url} alt="album cover" className="player__artwork" />
           <section className="player__info">
             <p className="player__info--name">{currentTrack.name}</p>
-            <p className="player__info--artist">
-              {currentTrack.artists[0].name}
-            </p>
+            <p className="player__info--artist">{currentTrack.artists[0].name}</p>
           </section>
           <section className="player__control">
-            <button
-              className="player__control--previous"
-              onClick={() => {
-                player.nextTrack();
-              }}
-            >
-              <img src={Previous} alt="X" />
-            </button>
             <button
               className="player__control--playback"
               onClick={() => {
@@ -94,29 +72,12 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
               }}
             >
               {isPaused ? (
-                <img
-                  className="player__control--play"
-                  alt="PLAY"
-                  src={PlayButton}
-                />
+                <img className="player__control--play" alt="PLAY" src={PlayButton} />
               ) : (
-                <img
-                  className="player__control--pause"
-                  alt="PAUSE"
-                  src={PauseButton}
-                />
+                <img className="player__control--pause" alt="PAUSE" src={PauseButton} />
               )}
             </button>
-            <button
-              className="player__control--next"
-              onClick={() => {
-                player.nextTrack();
-              }}
-            >
-              <img src={Next} alt="LOVE" />
-            </button>
           </section>
-          {/* <footer className="addLove">It's a match! Added to libary</footer> */}
         </section>
       </>
     );
