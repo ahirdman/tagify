@@ -214,12 +214,9 @@ interface ITags {
   color: string;
 }
 
-export type {
-  IUser,
-  ITrack,
-  ISDKTrack,
-  ISavedObject,
-  ISavedTrack,
-  IDbTrack,
-  ITags,
-};
+interface IWindow {
+  width: undefined | number;
+  height: undefined | number;
+}
+
+export type { IUser, ITrack, ISDKTrack, ISavedObject, ISavedTrack, IDbTrack, ITags, IWindow };

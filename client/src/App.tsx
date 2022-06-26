@@ -4,16 +4,14 @@ import { Routes, Route } from 'react-router-dom';
 import { IUser, ISavedObject } from './utils/interface';
 import * as React from 'react';
 import { post } from './utils/httpClient';
-import Note from './assets/music-note.svg';
 import List from './assets/list.svg';
 import './App.scss';
 import Navbar from './Components/organisms/Navbar/Navbar';
-import SelectTrack from './Components/organisms/SavedTracks/SavedTracks';
-import SelectedTrack from './Components/organisms/SelectedTrack/SelectedTrack';
 import SelectList from './Components/organisms/SelectList/SelectList';
 import EditList from './Components/organisms/EditList/EditList';
 import Login from './Pages/login/Login';
 import EmptyCard from './Components/organisms/EmptyCard/EmptyCard';
+import Tracks from './Pages/tracks/Tracks';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -58,45 +56,38 @@ const App = () => {
 
   if (!loggedIn) {
     return <Login />;
-  } else {
-    return (
-      <main className="app">
-        <Navbar accessToken={accessToken} user={user} setDeviceId={setDeviceId} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <section className="app__view">
-                {savedTracks && (
-                  <>
-                    <SelectTrack savedTracks={savedTracks} setSelectedTrack={setSelectedTrack} />
-                    {selectedTrack ? (
-                      <SelectedTrack selectedTrack={selectedTrack} deviceId={deviceId} accessToken={accessToken} />
-                    ) : (
-                      <EmptyCard icon={Note} item="track" />
-                    )}
-                  </>
-                )}
-              </section>
-            }
-          />
-          <Route
-            path="/lists"
-            element={
-              <section className="app__view">
-                <SelectList setSelectedList={setSelectedList} />
-                {selectedList ? (
-                  <EditList selectedList={selectedList} id={user.id} accessToken={accessToken} />
-                ) : (
-                  <EmptyCard icon={List} item="list" />
-                )}
-              </section>
-            }
-          />
-        </Routes>
-      </main>
-    );
   }
+
+  return (
+    <main className="app">
+      <Navbar accessToken={accessToken} user={user} setDeviceId={setDeviceId} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <section className="app__view">
+              <Tracks
+                savedTracks={savedTracks}
+                selectedTrack={selectedTrack}
+                setSelectedTrack={setSelectedTrack}
+                deviceId={deviceId}
+                accessToken={accessToken}
+              />
+            </section>
+          }
+        />
+        <Route
+          path="/lists"
+          element={
+            <section className="app__view">
+              <SelectList setSelectedList={setSelectedList} />
+              {selectedList ? <EditList selectedList={selectedList} id={user.id} accessToken={accessToken} /> : <EmptyCard icon={List} item="list" />}
+            </section>
+          }
+        />
+      </Routes>
+    </main>
+  );
 };
 
 export default App;

@@ -3,8 +3,10 @@
 .track-card {
   @include styles.card;
 
-  &__title {
-    @include styles.cardTitleSelected;
+  &__nav {
+    &--title {
+      @include styles.cardTitleSelected;
+    }
   }
 
   &__playback {

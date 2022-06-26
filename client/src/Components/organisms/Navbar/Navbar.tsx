@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Player from '../../molecules/Player/Player';
-import Tag from '../../../assets/tag.svg';
-import List from '../../../assets/list-white.svg';
+// import Tag from '../../../assets/tag.svg';
+// import List from '../../../assets/list-white.svg';
 import './Navbar.scss';
 
 interface INavbarProps {
@@ -14,20 +14,23 @@ interface INavbarProps {
 const Navbar = ({ accessToken, user, setDeviceId }: INavbarProps) => {
   return (
     <nav className="navbar">
-      <section className="menu">
-        <section className="menu__row">
-          <img src={user.image} alt="profile" className="menu__row--avatar menu__row--icon" />
-          <p className="menu__row--user">{user.name}</p>
-        </section>
-        <Link to="/" className="menu__row">
-          <img src={Tag} alt="tag" className="menu__row--icon" />
+      <div className="navbar__settings">
+        <img src={user.image} alt="profile" className="navbar__settings--avatar" />
+        <p>{user.name}</p>
+      </div>
+
+      <div className="navbar__links">
+        <Link to="/" className="navbar__links--tracks">
+          {/* <img src={Tag} alt="tag" className="navbar__row--icon" /> */}
           Tag Tracks
         </Link>
-        <Link to="/lists" className="menu__row">
-          <img src={List} alt="list" className="menu__row--icon" />
+
+        <Link to="/lists" className="navbar__links--list">
+          {/* <img src={List} alt="list" className="navbar__row--icon" /> */}
           My Mood Lists
         </Link>
-      </section>
+      </div>
+
       <Player accessToken={accessToken} setDeviceId={setDeviceId} />
     </nav>
   );

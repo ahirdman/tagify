@@ -45,8 +45,10 @@ const SelectedTrack = ({ selectedTrack, deviceId, accessToken }: ISelectedTrackP
   }, [selectedTrack]);
 
   return (
-    <section className="track-card">
-      <h2 className="track-card__title">Selected</h2>
+    <div className="track-card">
+      <div className="track-card__nav">
+        <h2 className="track-card__nav-title">Selected</h2>
+      </div>
       <section className="track-card__info">
         <img src={selectedTrack.album.images[1].url} alt="album" className="track-card__album" />
         <img
@@ -63,7 +65,7 @@ const SelectedTrack = ({ selectedTrack, deviceId, accessToken }: ISelectedTrackP
       </section>
       <UserTags selectedTrack={selectedTrack} trackTags={trackTags} />
       <AddTag selectedTrack={selectedTrack} userTags={userTags} />
-    </section>
+    </div>
   );
 };
 
