@@ -44,8 +44,8 @@ const EditList = ({ selectedList, id, accessToken }: IEditListProps) => {
   }, [selectedList]);
 
   return (
-    <fieldset className="edit-list">
-      <legend className="edit-list__title">{selectedList}</legend>
+    <section className="edit-list">
+      <h3 className="edit-list__title">{selectedList}</h3>
       <form className="edit-list__search">
         <input type="text" className="edit-list__search--input" />
         <img src={Magnifier} alt="search" className="edit-list__search--icon" />
@@ -75,7 +75,7 @@ const EditList = ({ selectedList, id, accessToken }: IEditListProps) => {
           );
         })}
       </ul>
-    </fieldset>
+    </section>
   );
 };
 

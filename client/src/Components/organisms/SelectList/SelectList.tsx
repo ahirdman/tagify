@@ -30,8 +30,8 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
   }, []);
 
   return (
-    <fieldset className="select-list">
-      <legend className="select-list__title">Lists</legend>
+    <section className="select-list">
+      <h2 className="select-list__title">Lists</h2>
       <form className="select-list__search">
         <input type="text" className="select-list__search--input" />
         <img src={Magnifier} alt="search" className="select-list__search--icon" />
@@ -64,7 +64,7 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
           );
         })}
       </ul>
-    </fieldset>
+    </section>
   );
 };
 

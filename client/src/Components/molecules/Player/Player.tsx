@@ -51,35 +51,33 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
         });
       });
     };
-  }, [accessToken]);
+  }, [accessToken, setDeviceId]);
 
   if (!isActive) {
     return <section className="player"></section>;
   } else {
     return (
-      <>
-        <section className="player">
-          <img src={currentTrack.album.images[0].url} alt="album cover" className="player__artwork" />
-          <section className="player__info">
-            <p className="player__info--name">{currentTrack.name}</p>
-            <p className="player__info--artist">{currentTrack.artists[0].name}</p>
-          </section>
-          <section className="player__control">
-            <button
-              className="player__control--playback"
-              onClick={() => {
-                player.togglePlay();
-              }}
-            >
-              {isPaused ? (
-                <img className="player__control--play" alt="PLAY" src={PlayButton} />
-              ) : (
-                <img className="player__control--pause" alt="PAUSE" src={PauseButton} />
-              )}
-            </button>
-          </section>
+      <section className="player">
+        <img src={currentTrack.album.images[0].url} alt="album cover" className="player__artwork" />
+        <section className="player__info">
+          <p className="player__info--name">{currentTrack.name}</p>
+          <p className="player__info--artist">{currentTrack.artists[0].name}</p>
         </section>
-      </>
+        <section className="player__control">
+          <button
+            className="player__control--playback"
+            onClick={() => {
+              player.togglePlay();
+            }}
+          >
+            {isPaused ? (
+              <img className="player__control--play" alt="PLAY" src={PlayButton} />
+            ) : (
+              <img className="player__control--pause" alt="PAUSE" src={PauseButton} />
+            )}
+          </button>
+        </section>
+      </section>
     );
   }
 };
