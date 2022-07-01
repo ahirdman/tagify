@@ -5,6 +5,7 @@ import SelectedTrack from '../../Components/organisms/SelectedTrack/SelectedTrac
 import EmptyCard from '../../Components/organisms/EmptyCard/EmptyCard';
 import useWindowSize from '../../utils/hooks/window';
 import { IWindow } from '../../utils/interface';
+import './Tracks.scss';
 
 interface ITracksProps {
   savedTracks: any;
@@ -25,7 +26,7 @@ const Tracks = ({
 
   if (size.width >= 900) {
     return (
-      <>
+      <div className="tracks-view">
         {savedTracks && (
           <>
             <SelectTrack
@@ -45,7 +46,7 @@ const Tracks = ({
             </>
           </>
         )}
-      </>
+      </div>
     );
   }
 

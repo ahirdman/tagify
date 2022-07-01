@@ -1,3 +1,5 @@
-.tracks {
+@use '../../styles';
+
+.tracks-view {
   @include styles.cardView;
 }

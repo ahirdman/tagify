@@ -63,23 +63,24 @@ const App = () => {
         <Route
           path="/"
           element={
-            <section className="app__view">
-              <Tracks
-                savedTracks={savedTracks}
-                selectedTrack={selectedTrack}
-                setSelectedTrack={setSelectedTrack}
-                deviceId={deviceId}
-                accessToken={accessToken}
-              />
-            </section>
+            <Tracks
+              savedTracks={savedTracks}
+              selectedTrack={selectedTrack}
+              setSelectedTrack={setSelectedTrack}
+              deviceId={deviceId}
+              accessToken={accessToken}
+            />
           }
         />
         <Route
           path="/lists"
           element={
-            <section className="app__view">
-              <Lists selectedList={selectedList} setSelectedList={setSelectedList} accessToken={accessToken} user={user} />
-            </section>
+            <Lists
+              selectedList={selectedList}
+              setSelectedList={setSelectedList}
+              accessToken={accessToken}
+              user={user}
+            />
           }
         />
       </Routes>

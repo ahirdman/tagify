@@ -3,6 +3,12 @@
 .card-nav {
   @include styles.cardHeader;
 
+  &__back {
+    @media screen and (min-width: styles.$breakpoint-phone) {
+      display: none;
+    }
+  }
+
   &__title {
     @include styles.cardTitleSelected;
   }

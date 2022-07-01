@@ -55,10 +55,11 @@ $breakpoint-phone: 600px;
     border: none;
     border-radius: 0;
     width: 100%;
-    // height: 90vh;
-    padding-right: 15px;
-    padding-bottom: 0;
-    padding-left: 15px;
+    height: 100%;
+    // padding-right: 15px;
+    // padding-bottom: 0;
+    // padding-left: 15px;
+    padding: 0;
     overflow: hidden;
   }
 }
@@ -175,6 +176,10 @@ $breakpoint-phone: 600px;
     margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
+
+    @media screen and (max-width: $breakpoint-phone) {
+      margin-left: 10px;
+    }
 
     &:hover {
       background-color: $row-hover;

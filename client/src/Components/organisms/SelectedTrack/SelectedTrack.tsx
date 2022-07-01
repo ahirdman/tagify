@@ -52,41 +52,40 @@ const SelectedTrack = ({
   }, [selectedTrack]);
 
   return (
-    <div>
-      <CardNav title="Selected Track" setSelectedTrack={setSelectedTrack} />
-      <div className="track-card">
-        <section className="track-card__info">
-          <img
-            src={selectedTrack.album.images[1].url}
-            alt="album"
-            className="track-card__album"
-          />
-          <img
-            onClick={() =>
-              playTrack(
-                deviceId,
-                accessToken,
-                selectedTrack.album.uri,
-                selectedTrack.track_number - 1
-              )
-            }
-            src={Play}
-            alt="playback"
-            className="track-card__playback"
-          />
-          <section className="track-card__text">
-            <p className="track-card__text--title">{selectedTrack.name}</p>
-            <p className="track-card__text--artist">
-              {selectedTrack.artists[0].name}
-            </p>
-            <p className="track-card__text--album">
-              {selectedTrack.album.name}
-            </p>
-          </section>
+    <div className="track-card">
+      <CardNav
+        title="Selected Track"
+        onClick={() => setSelectedTrack(undefined)}
+      />
+      <section className="track-card__info">
+        <img
+          src={selectedTrack.album.images[1].url}
+          alt="album"
+          className="track-card__album"
+        />
+        <img
+          onClick={() =>
+            playTrack(
+              deviceId,
+              accessToken,
+              selectedTrack.album.uri,
+              selectedTrack.track_number - 1
+            )
+          }
+          src={Play}
+          alt="playback"
+          className="track-card__playback"
+        />
+        <section className="track-card__text">
+          <p className="track-card__text--title">{selectedTrack.name}</p>
+          <p className="track-card__text--artist">
+            {selectedTrack.artists[0].name}
+          </p>
+          <p className="track-card__text--album">{selectedTrack.album.name}</p>
         </section>
-        <UserTags selectedTrack={selectedTrack} trackTags={trackTags} />
-        <AddTag selectedTrack={selectedTrack} userTags={userTags} />
-      </div>
+      </section>
+      <UserTags selectedTrack={selectedTrack} trackTags={trackTags} />
+      <AddTag selectedTrack={selectedTrack} userTags={userTags} />
     </div>
   );
 };

@@ -1,28 +1,24 @@
 import * as React from 'react';
-import useWindowSize from '../../../utils/hooks/window';
-import { IWindow } from '../../../utils/interface';
 import Back from '../../../assets/go-back.svg';
 import './CardNav.scss';
 
 interface ICardNavProps {
   title: string;
   setSelectedTrack?: any;
+  onClick?: any;
 }
 
-const CardNav = ({ title, setSelectedTrack }: ICardNavProps) => {
-  const size: IWindow = useWindowSize();
-
-  if (size.width > 600) {
-    return (
-      <div className="card-nav">
-        <h2 className="card-nav__title">{title}</h2>
-      </div>
-    );
-  }
-
+const CardNav = ({ title, onClick }: ICardNavProps) => {
   return (
     <div className="card-nav">
-      <img src={Back} alt="back" onClick={() => setSelectedTrack(undefined)} />
+      {typeof onClick !== 'undefined' ? (
+        <img
+          src={Back}
+          alt="back"
+          onClick={onClick}
+          className="card-nav__back"
+        />
+      ) : null}
       <h2 className="card-nav__title">{title}</h2>
     </div>
   );

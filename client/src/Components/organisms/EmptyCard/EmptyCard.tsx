@@ -9,13 +9,11 @@ interface IEmptyCardProps {
 
 const EmptyCard = ({ icon, item }: IEmptyCardProps) => {
   return (
-    <div>
+    <div className="empty-card">
       <CardNav title="..." />
-      <section className="empty-card">
-        <section className="empty-card__empty">
-          <img src={icon} alt="cross" className="empty-card__empty--icon" />
-          <p className="empty-card__empty--text">select a {item}</p>
-        </section>
+      <section className="empty-card__empty">
+        <img src={icon} alt="cross" className="empty-card__empty--icon" />
+        <p className="empty-card__empty--text">select a {item}</p>
       </section>
     </div>
   );

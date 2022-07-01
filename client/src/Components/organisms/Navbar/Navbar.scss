@@ -30,13 +30,17 @@
 
     &--tracks,
     &--list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        color: styles.$spotify-green;
+      }
+
       @media screen and (min-width: styles.$breakpoint-phone) {
         text-decoration: none;
         margin: 10px;
-
-        &:hover {
-          color: styles.$spotify-green;
-        }
       }
     }
 
