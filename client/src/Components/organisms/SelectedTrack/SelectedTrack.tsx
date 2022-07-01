@@ -9,14 +9,21 @@ import AddTag from '../../molecules/AddTag/AddTag';
 import UserTags from '../../molecules/TrackTags/TrackTags';
 import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
+import CardNav from '../../molecules/CardNav/CardNav';
 
 interface ISelectedTrackProps {
   selectedTrack?: ISavedTrack;
   deviceId?: string;
   accessToken: string;
+  setSelectedTrack?: any;
 }
 
-const SelectedTrack = ({ selectedTrack, deviceId, accessToken }: ISelectedTrackProps) => {
+const SelectedTrack = ({
+  selectedTrack,
+  deviceId,
+  accessToken,
+  setSelectedTrack,
+}: ISelectedTrackProps) => {
   const [trackTags, setTrackTags] = useState<string[]>([]);
   const [userTags, setUserTags] = useState([]);
 
@@ -45,26 +52,41 @@ const SelectedTrack = ({ selectedTrack, deviceId, accessToken }: ISelectedTrackP
   }, [selectedTrack]);
 
   return (
-    <div className="track-card">
-      <div className="track-card__nav">
-        <h2 className="track-card__nav-title">Selected</h2>
-      </div>
-      <section className="track-card__info">
-        <img src={selectedTrack.album.images[1].url} alt="album" className="track-card__album" />
-        <img
-          onClick={() => playTrack(deviceId, accessToken, selectedTrack.album.uri, selectedTrack.track_number - 1)}
-          src={Play}
-          alt="playback"
-          className="track-card__playback"
-        />
-        <section className="track-card__text">
-          <p className="track-card__text--title">{selectedTrack.name}</p>
-          <p className="track-card__text--artist">{selectedTrack.artists[0].name}</p>
-          <p className="track-card__text--album">{selectedTrack.album.name}</p>
+    <div>
+      <CardNav title="Selected Track" setSelectedTrack={setSelectedTrack} />
+      <div className="track-card">
+        <section className="track-card__info">
+          <img
+            src={selectedTrack.album.images[1].url}
+            alt="album"
+            className="track-card__album"
+          />
+          <img
+            onClick={() =>
+              playTrack(
+                deviceId,
+                accessToken,
+                selectedTrack.album.uri,
+                selectedTrack.track_number - 1
+              )
+            }
+            src={Play}
+            alt="playback"
+            className="track-card__playback"
+          />
+          <section className="track-card__text">
+            <p className="track-card__text--title">{selectedTrack.name}</p>
+            <p className="track-card__text--artist">
+              {selectedTrack.artists[0].name}
+            </p>
+            <p className="track-card__text--album">
+              {selectedTrack.album.name}
+            </p>
+          </section>
         </section>
-      </section>
-      <UserTags selectedTrack={selectedTrack} trackTags={trackTags} />
-      <AddTag selectedTrack={selectedTrack} userTags={userTags} />
+        <UserTags selectedTrack={selectedTrack} trackTags={trackTags} />
+        <AddTag selectedTrack={selectedTrack} userTags={userTags} />
+      </div>
     </div>
   );
 };

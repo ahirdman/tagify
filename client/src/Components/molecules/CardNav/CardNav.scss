@@ -1,0 +1,9 @@
+@use '../../../styles';
+
+.card-nav {
+  @include styles.cardHeader;
+
+  &__title {
+    @include styles.cardTitleSelected;
+  }
+}

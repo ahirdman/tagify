@@ -3,10 +3,6 @@
 .select {
   @include styles.card;
 
-  &__title {
-    @include styles.cardTitleSelected;
-  }
-
   &__search {
     @include styles.search;
   }

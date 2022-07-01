@@ -35,6 +35,7 @@ const useWindowSize = () => {
   });
 
   useEffect((): any => {
+    console.log('useWindow');
     // only execute all the code below in client side
     if (typeof window !== 'undefined') {
       // Handler to call on window resize

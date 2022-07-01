@@ -13,15 +13,27 @@ interface IListsProps {
   user: any;
 }
 
-const Lists = ({ selectedList, setSelectedList, accessToken, user }: IListsProps) => {
+const Lists = ({
+  selectedList,
+  setSelectedList,
+  accessToken,
+  user,
+}: IListsProps) => {
   const size: IWindow = useWindowSize();
 
   if (size.width >= 900) {
     return (
       <>
         <SelectList setSelectedList={setSelectedList} />
-        {selectedList ? <EditList selectedList={selectedList} id={user.id} accessToken={accessToken} /> : <EmptyCard icon={List} item="list" />}
-        );
+        {selectedList ? (
+          <EditList
+            selectedList={selectedList}
+            id={user.id}
+            accessToken={accessToken}
+          />
+        ) : (
+          <EmptyCard icon={List} item="list" />
+        )}
       </>
     );
   }
@@ -29,7 +41,11 @@ const Lists = ({ selectedList, setSelectedList, accessToken, user }: IListsProps
   return (
     <>
       {selectedList ? (
-        <EditList selectedList={selectedList} id={user.id} accessToken={accessToken} />
+        <EditList
+          selectedList={selectedList}
+          id={user.id}
+          accessToken={accessToken}
+        />
       ) : (
         <SelectList setSelectedList={setSelectedList} />
       )}

@@ -14,7 +14,13 @@ interface ITracksProps {
   accessToken: any;
 }
 
-const Tracks = ({ savedTracks, selectedTrack, setSelectedTrack, deviceId, accessToken }: ITracksProps) => {
+const Tracks = ({
+  savedTracks,
+  selectedTrack,
+  setSelectedTrack,
+  deviceId,
+  accessToken,
+}: ITracksProps) => {
   const size: IWindow = useWindowSize();
 
   if (size.width >= 900) {
@@ -22,10 +28,17 @@ const Tracks = ({ savedTracks, selectedTrack, setSelectedTrack, deviceId, access
       <>
         {savedTracks && (
           <>
-            <SelectTrack savedTracks={savedTracks} setSelectedTrack={setSelectedTrack} />
+            <SelectTrack
+              savedTracks={savedTracks}
+              setSelectedTrack={setSelectedTrack}
+            />
             <>
               {selectedTrack ? (
-                <SelectedTrack selectedTrack={selectedTrack} deviceId={deviceId} accessToken={accessToken} />
+                <SelectedTrack
+                  selectedTrack={selectedTrack}
+                  deviceId={deviceId}
+                  accessToken={accessToken}
+                />
               ) : (
                 <EmptyCard icon={Note} item="track" />
               )}
@@ -40,13 +53,19 @@ const Tracks = ({ savedTracks, selectedTrack, setSelectedTrack, deviceId, access
     <>
       {savedTracks && (
         <>
-          <>
-            {selectedTrack ? (
-              <SelectedTrack selectedTrack={selectedTrack} deviceId={deviceId} accessToken={accessToken} />
-            ) : (
-              <SelectTrack savedTracks={savedTracks} setSelectedTrack={setSelectedTrack} />
-            )}
-          </>
+          {selectedTrack ? (
+            <SelectedTrack
+              selectedTrack={selectedTrack}
+              deviceId={deviceId}
+              accessToken={accessToken}
+              setSelectedTrack={setSelectedTrack}
+            />
+          ) : (
+            <SelectTrack
+              savedTracks={savedTracks}
+              setSelectedTrack={setSelectedTrack}
+            />
+          )}
         </>
       )}
     </>

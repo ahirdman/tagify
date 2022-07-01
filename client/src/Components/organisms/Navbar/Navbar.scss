@@ -15,33 +15,59 @@
     border-bottom: none;
     border-top: 1px solid styles.$border;
     justify-content: space-evenly;
-  }
-
-  &__settings {
-    width: 20vw;
-    display: flex;
-    justify-content: space-evenly;
     align-items: center;
-
-    &--avatar {
-      width: auto;
-      height: 45px;
-      border-radius: 50%;
-    }
   }
 
   &__links {
     display: flex;
     align-items: center;
 
+    &--avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+    }
+
     &--tracks,
     &--list {
-      text-decoration: none;
-      margin: 10px;
+      @media screen and (min-width: styles.$breakpoint-phone) {
+        text-decoration: none;
+        margin: 10px;
 
-      &:hover {
-        color: styles.$spotify-green;
+        &:hover {
+          color: styles.$spotify-green;
+        }
       }
+    }
+
+    &--icon {
+      width: 30px;
+      height: 30px;
+
+      @media screen and (min-width: styles.$breakpoint-phone) {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      @media screen and (max-width: styles.$breakpoint-phone) {
+        display: none;
+      }
+    }
+
+    &--mobile {
+      @media screen and (min-width: styles.$breakpoint-phone) {
+        display: none;
+      }
+    }
+  }
+
+  &__player {
+    @media screen and (max-width: styles.$breakpoint-phone) {
+      position: absolute;
+      bottom: 80px;
+      width: 100vw;
+      height: 70px;
     }
   }
 }

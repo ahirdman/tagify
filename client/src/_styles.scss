@@ -18,14 +18,34 @@ $breakpoint-phone: 600px;
   line-height: 27px;
 }
 
+@mixin cardHeader {
+  display: flex;
+  justify-content: center;
+
+  background-color: $background;
+  border: 2px solid $border;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+
+  @media screen and (max-width: $breakpoint-phone) {
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid $border;
+  }
+}
+
 @mixin card {
   display: flex;
   flex-direction: column;
   border: 2px solid $border;
+  border-top: none;
   background-color: $component-background;
-  border-radius: 15px;
+
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
   width: 500px;
-  height: 668px;
+  // height: 668px;
+  height: 600px;
   padding-top: 10px;
   padding-right: 30px;
   padding-bottom: 30px;
@@ -42,7 +62,7 @@ $breakpoint-phone: 600px;
   }
 }
 
-@mixin cardContainer {
+@mixin cardView {
   display: flex;
   height: 100%;
 
