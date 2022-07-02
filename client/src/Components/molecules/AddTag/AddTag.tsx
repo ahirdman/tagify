@@ -1,19 +1,18 @@
 import * as React from 'react';
-import { tagTrack, createTag } from '../../../utils/firebase';
+import { createTag } from '../../../utils/firebase';
 import { useState } from 'react';
-import Plus from '../../../assets/add-circle.svg';
 import Add from '../../../assets/add.svg';
 import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
 import { randomColor } from '../../../utils/modules/db';
-import { ITags } from '../../../utils/interface';
+// import { ITags } from '../../../utils/interface';
 
 interface IAddTagProps {
   selectedTrack: any;
-  userTags?: ITags[];
+  // userTags?: ITags[];
 }
 
-const AddTag = ({ selectedTrack, userTags }: IAddTagProps) => {
+const AddTag = ({ selectedTrack }: IAddTagProps) => {
   const [tagInput, setTagInput] = useState('');
 
   const dbTrack = {
@@ -27,7 +26,12 @@ const AddTag = ({ selectedTrack, userTags }: IAddTagProps) => {
     <section className="add-tag">
       <h2 className="add-tag__title">Add Tag</h2>
       <form className="add-tag__search">
-        <input className="add-tag__search--input" type="text" value={tagInput} onChange={e => setTagInput(e.target.value)} />
+        <input
+          className="add-tag__search--input"
+          type="text"
+          value={tagInput}
+          onChange={e => setTagInput(e.target.value)}
+        />
         <img src={Tag} alt="tag" className="add-tag__search--tag" />
         <button
           className="add-tag__search--button"
@@ -40,25 +44,6 @@ const AddTag = ({ selectedTrack, userTags }: IAddTagProps) => {
           <img src={Add} alt="check" className="add-tag__search--check" />
         </button>
       </form>
-      <section className="all-tags">
-        <p className="all-tags__title">MY TAGS</p>
-        <section className="all-tags__container">
-          {userTags &&
-            userTags.map((tag: ITags, index: number) => {
-              return (
-                <button
-                  onClick={() => tagTrack('purchasedAids', tag.name, dbTrack)}
-                  key={index}
-                  className="all-tags__tag"
-                  style={{ background: tag.color }}
-                >
-                  {tag.name}
-                  <img src={Plus} alt="add" className="all-tags__tag--action" />
-                </button>
-              );
-            })}
-        </section>
-      </section>
     </section>
   );
 };

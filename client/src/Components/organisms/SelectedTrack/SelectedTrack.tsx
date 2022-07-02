@@ -6,10 +6,11 @@ import { onSnapshot } from 'firebase/firestore';
 import { tagCol } from '../../../utils/firebase';
 import { matchTag } from '../../../utils/modules/db';
 import AddTag from '../../molecules/AddTag/AddTag';
-import UserTags from '../../molecules/TrackTags/TrackTags';
+import TrackTags from '../../molecules/TrackTags/TrackTags';
 import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
 import CardNav from '../../molecules/CardNav/CardNav';
+import UserTags from '../../molecules/UserTags/UserTags';
 
 interface ISelectedTrackProps {
   selectedTrack?: ISavedTrack;
@@ -84,8 +85,9 @@ const SelectedTrack = ({
           <p className="track-card__text--album">{selectedTrack.album.name}</p>
         </section>
       </section>
-      <UserTags selectedTrack={selectedTrack} trackTags={trackTags} />
-      <AddTag selectedTrack={selectedTrack} userTags={userTags} />
+      <TrackTags selectedTrack={selectedTrack} trackTags={trackTags} />
+      <UserTags selectedTrack={selectedTrack} userTags={userTags} />
+      <AddTag selectedTrack={selectedTrack} />
     </div>
   );
 };

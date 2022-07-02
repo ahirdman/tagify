@@ -234,7 +234,9 @@ $breakpoint-phone: 600px;
 
 @mixin tagSection {
   margin-top: 10px;
-  height: 100%;
+  margin-right: 30px;
+  margin-bottom: 10px;
+  margin-left: 30px;
 
   &__title {
     flex: 1;
@@ -248,6 +250,7 @@ $breakpoint-phone: 600px;
 
   &__container {
     margin-top: 10px;
+    min-height: 44px;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
