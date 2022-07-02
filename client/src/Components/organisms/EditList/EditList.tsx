@@ -13,9 +13,15 @@ interface IEditListProps {
   selectedList: string;
   id: string;
   accessToken: string;
+  setSelectedList?: any;
 }
 
-const EditList = ({ selectedList, id, accessToken }: IEditListProps) => {
+const EditList = ({
+  selectedList,
+  id,
+  accessToken,
+  setSelectedList,
+}: IEditListProps) => {
   const [tracks, setTracks] = useState([]);
 
   const trackUris = (arr: IDbTrack[]) =>
@@ -47,7 +53,10 @@ const EditList = ({ selectedList, id, accessToken }: IEditListProps) => {
 
   return (
     <div className="edit-list">
-      <CardNav title={selectedList} />
+      <CardNav
+        title={selectedList}
+        onClick={() => setSelectedList(undefined)}
+      />
       <form className="edit-list__search">
         <input type="text" className="edit-list__search--input" />
         <img src={Magnifier} alt="search" className="edit-list__search--icon" />

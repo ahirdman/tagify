@@ -54,15 +54,23 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
   }, [accessToken, setDeviceId]);
 
   if (!isActive) {
-    return <section className="player"></section>;
+    return (
+      <section className="player" style={{ visibility: 'hidden' }}></section>
+    );
   } else {
     return (
       <div className="player">
         <div className="player__track">
-          <img src={currentTrack.album.images[0].url} alt="album cover" className="player__artwork" />
+          <img
+            src={currentTrack.album.images[0].url}
+            alt="album cover"
+            className="player__artwork"
+          />
           <div className="player__info">
             <p className="player__info--name">{currentTrack.name}</p>
-            <p className="player__info--artist">{currentTrack.artists[0].name}</p>
+            <p className="player__info--artist">
+              {currentTrack.artists[0].name}
+            </p>
           </div>
         </div>
         <button
@@ -72,9 +80,17 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
           }}
         >
           {isPaused ? (
-            <img className="player__control--play" alt="PLAY" src={PlayButton} />
+            <img
+              className="player__control--play"
+              alt="PLAY"
+              src={PlayButton}
+            />
           ) : (
-            <img className="player__control--pause" alt="PAUSE" src={PauseButton} />
+            <img
+              className="player__control--pause"
+              alt="PAUSE"
+              src={PauseButton}
+            />
           )}
         </button>
       </div>

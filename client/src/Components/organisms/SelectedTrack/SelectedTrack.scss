@@ -17,24 +17,36 @@
 
   &__info {
     display: flex;
+    justify-content: center;
+
+    margin-top: 10px;
   }
 
   &__album {
     height: 150px;
     width: 150px;
+    border: 1px solid styles.$border;
   }
 
   &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    height: 150px;
+    width: 150px;
+
+    overflow-x: hidden;
+    white-space: nowrap;
+
     &--title {
       font-weight: 400;
       font-size: 18px;
       line-height: 27px;
-      margin-bottom: 10px;
     }
 
     &--artist,
     &--album {
-      margin-bottom: 10px;
       font-weight: 400;
       font-size: 16px;
       line-height: 18px;

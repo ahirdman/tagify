@@ -18,19 +18,25 @@ const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
 
   return (
     <section className="user-tags">
-      <h3 className="user-tags__title">Track Tags</h3>
+      <p className="user-tags__title">TAGS</p>
       <section className="user-tags__container">
         {trackTags &&
           trackTags.map((tag: any, index: number) => {
             return (
               <button
-                onClick={() => clearTrackFromTag('purchasedAids', tag.name, dbTrack)}
+                onClick={() =>
+                  clearTrackFromTag('purchasedAids', tag.name, dbTrack)
+                }
                 key={index}
                 className="user-tags__tag"
                 style={{ background: tag.color }}
               >
                 {tag.name}
-                <img src={Cross} alt="cross" className="user-tags__tag--action" />
+                <img
+                  src={Cross}
+                  alt="cross"
+                  className="user-tags__tag--action"
+                />
               </button>
             );
           })}

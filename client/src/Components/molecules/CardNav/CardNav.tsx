@@ -1,10 +1,9 @@
 import * as React from 'react';
-import Back from '../../../assets/go-back.svg';
+import Back from '../../../assets/back.svg';
 import './CardNav.scss';
 
 interface ICardNavProps {
   title: string;
-  setSelectedTrack?: any;
   onClick?: any;
 }
 

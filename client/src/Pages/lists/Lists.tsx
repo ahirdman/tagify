@@ -45,6 +45,7 @@ const Lists = ({
           selectedList={selectedList}
           id={user.id}
           accessToken={accessToken}
+          setSelectedList={setSelectedList}
         />
       ) : (
         <SelectList setSelectedList={setSelectedList} />

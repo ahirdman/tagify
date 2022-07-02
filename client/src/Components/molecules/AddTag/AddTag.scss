@@ -62,28 +62,5 @@
 }
 
 .all-tags {
-  margin-top: 25px;
-  height: 100%;
-
-  &__title {
-    flex: 1;
-    color: red;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 27px;
-    letter-spacing: 0.05em;
-    color: styles.$grey-1;
-    border-bottom: 1px solid styles.$grey-1;
-  }
-
-  &__container {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-  }
-
-  &__tag {
-    @include styles.tag;
-  }
+  @include styles.tagSection;
 }
