@@ -23,7 +23,7 @@ const Lists = ({
 
   if (size.width >= 900) {
     return (
-      <>
+      <div className="tracks-view">
         <SelectList setSelectedList={setSelectedList} />
         {selectedList ? (
           <EditList
@@ -34,7 +34,7 @@ const Lists = ({
         ) : (
           <EmptyCard icon={List} item="list" />
         )}
-      </>
+      </div>
     );
   }
 

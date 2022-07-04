@@ -1,10 +1,7 @@
 @use '../../../styles';
 
 .add-tag {
-  margin-top: 10px;
-  margin-right: 30px;
-  margin-bottom: 10px;
-  margin-left: 30px;
+  @include styles.cardMargins;
 
   &__title {
     @include styles.cardTitleSelected;
