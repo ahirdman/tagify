@@ -2,6 +2,7 @@ import * as React from 'react';
 import Plus from '../../../assets/add-circle.svg';
 import { tagTrack } from '../../../utils/firebase';
 import { ITags } from '../../../utils/interface';
+import Tag from '../../atoms/Tag';
 import './UserTags.scss';
 
 interface IUserTagsProps {
@@ -24,15 +25,13 @@ const UserTags = ({ selectedTrack, userTags }: IUserTagsProps) => {
         {userTags &&
           userTags.map((tag: ITags, index: number) => {
             return (
-              <button
-                onClick={() => tagTrack('purchasedAids', tag.name, dbTrack)}
+              <Tag
                 key={index}
-                className="user-tags__tag"
-                style={{ background: tag.color }}
-              >
-                {tag.name}
-                <img src={Plus} alt="add" className="user-tags__tag--action" />
-              </button>
+                onClick={() => tagTrack('purchasedAids', tag.name, dbTrack)}
+                color={tag.color}
+                name={tag.name}
+                actionIcon={Plus}
+              />
             );
           })}
       </section>

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { clearTrackFromTag } from '../../../utils/firebase';
 import Cross from '../../../assets/cross-circle.svg';
 import './TrackTags.scss';
+import Tag from '../../atoms/Tag';
 
 interface ITrackTags {
   selectedTrack: any;
@@ -23,21 +24,15 @@ const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
         {trackTags &&
           trackTags.map((tag: any, index: number) => {
             return (
-              <button
+              <Tag
+                key={index}
                 onClick={() =>
                   clearTrackFromTag('purchasedAids', tag.name, dbTrack)
                 }
-                key={index}
-                className="track-tags__tag"
-                style={{ background: tag.color }}
-              >
-                {tag.name}
-                <img
-                  src={Cross}
-                  alt="cross"
-                  className="track-tags__tag--action"
-                />
-              </button>
+                color={tag.color}
+                name={tag.name}
+                actionIcon={Cross}
+              />
             );
           })}
       </section>
