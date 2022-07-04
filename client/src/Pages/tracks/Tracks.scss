@@ -1,5 +1,14 @@
 @use '../../styles';
 
 .tracks-view {
-  @include styles.cardView;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  @media screen and (min-width: styles.$breakpoint-phone) {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 90vh;
+  }
 }

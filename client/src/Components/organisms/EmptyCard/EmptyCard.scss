@@ -3,6 +3,10 @@
 .empty-card {
   @include styles.card;
 
+  // @media screen and (max-width: styles.$breakpoint-phone) {
+  //   display: none;
+  // }
+
   &__title {
     @include styles.cardTitleSelected;
   }
