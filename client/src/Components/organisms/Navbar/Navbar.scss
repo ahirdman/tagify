@@ -8,8 +8,6 @@
   justify-content: space-between;
   border-bottom: 1px solid styles.$border;
 
-  @include styles.navbarLinks;
-
   @media screen and (max-width: styles.$breakpoint-phone) {
     order: 1;
     border-bottom: none;
@@ -18,7 +16,14 @@
     align-items: center;
   }
 
-  &__links {
+  &__profile {
+    @media screen and (min-width: styles.$breakpoint-phone) {
+      width: 25vw;
+      margin-left: 15px;
+    }
+  }
+
+  &__item {
     display: flex;
     align-items: center;
 
@@ -28,18 +33,18 @@
       border-radius: 50%;
     }
 
+    &--username {
+      margin-left: 15px;
+    }
+
     &--tracks,
     &--list {
       display: flex;
       justify-content: center;
       align-items: center;
-
-      &:hover {
-        color: styles.$spotify-green;
-      }
+      text-decoration: none;
 
       @media screen and (min-width: styles.$breakpoint-phone) {
-        text-decoration: none;
         margin: 10px;
       }
     }
@@ -49,7 +54,19 @@
       height: 30px;
 
       @media screen and (min-width: styles.$breakpoint-phone) {
-        display: none;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+    }
+
+    &--text {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 27px;
+
+      &:hover {
+        color: styles.$grey-1;
       }
     }
 
@@ -73,5 +90,11 @@
       width: 100vw;
       height: 50px;
     }
+  }
+}
+
+.active {
+  @media screen and (min-width: styles.$breakpoint-phone) {
+    border-bottom: 1px solid styles.$grey-1;
   }
 }

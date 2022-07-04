@@ -24,7 +24,7 @@ const AddTag = ({ selectedTrack }: IAddTagProps) => {
 
   return (
     <section className="add-tag">
-      <h2 className="add-tag__title">Add Tag</h2>
+      <h2 className="add-tag__title">ADD TAG</h2>
       <form className="add-tag__search">
         <input
           className="add-tag__search--input"

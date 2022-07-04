@@ -20,9 +20,16 @@
     display: flex;
     justify-content: space-between;
     height: 40px;
+    margin-left: 30px;
+    margin-right: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
+
+    @media screen and (max-width: styles.$breakpoint-phone) {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
 
     &:hover {
       background-color: styles.$row-hover;
@@ -38,6 +45,7 @@
   &__details {
     display: flex;
     align-items: center;
+
     &--circle {
       width: 20px;
       height: 20px;

@@ -3,34 +3,46 @@
 .add-tag {
   @include styles.cardMargins;
 
+  z-index: 1;
+
   &__title {
-    @include styles.cardTitleSelected;
-    padding-right: 10px;
-    padding-left: 10px;
+    color: styles.$component-grey;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 0.05em;
   }
 
   &__search {
+    margin-top: 10px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    position: relative;
+
     &--input {
       height: 40px;
-      width: 85%;
-      border: 1px solid styles.$grey-1;
+      width: 70%;
+      border: 1px solid styles.$component-grey;
       border-radius: 10px;
       background: none;
       padding-left: 45px;
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
+
+      &:focus {
+        border: 1px solid styles.$grey-1;
+      }
     }
 
     &--tag {
-      position: relative;
+      position: absolute;
       width: 24px;
       height: auto;
-      right: 357px;
+      left: 15px;
     }
 
     &--button {

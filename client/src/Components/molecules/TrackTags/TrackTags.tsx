@@ -2,7 +2,7 @@ import * as React from 'react';
 import { clearTrackFromTag } from '../../../utils/firebase';
 import Cross from '../../../assets/cross-circle.svg';
 import './TrackTags.scss';
-import Tag from '../../atoms/Tag';
+import Tag from '../../atoms/Tag/Tag';
 
 interface ITrackTags {
   selectedTrack: any;
@@ -20,8 +20,8 @@ const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
   return (
     <section className="track-tags">
       <p className="track-tags__title">TRACK TAGS</p>
-      <section className="track-tags__container">
-        {trackTags &&
+      <div className="track-tags__container">
+        {trackTags.length > 0 ? (
           trackTags.map((tag: any, index: number) => {
             return (
               <Tag
@@ -34,8 +34,11 @@ const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
                 actionIcon={Cross}
               />
             );
-          })}
-      </section>
+          })
+        ) : (
+          <div className="track-tags__container--empty">no tags added</div>
+        )}
+      </div>
     </section>
   );
 };
