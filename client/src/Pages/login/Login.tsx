@@ -1,8 +1,7 @@
 import * as React from 'react';
 import AuthButton from '../../Components/atoms/AuthButton/AuthButton';
 import Backdrop from '../../Components/atoms/Backdrop/Backdrop';
-import SignUpForm from '../../Components/molecules/SignUpForm/SignUpForm';
-import { handleLogIn } from '../../utils/modules/modules';
+import AuthForm from '../../Components/molecules/AuthForm/AuthForm';
 import './Login.scss';
 
 interface ILoginProps {
@@ -11,6 +10,7 @@ interface ILoginProps {
 
 const Login = ({ setLoggedIn }: ILoginProps) => {
   const [openSignUp, setOpenSignUp] = React.useState<boolean>(false);
+  const [openSignIn, setOpenSignIn] = React.useState<boolean>(false);
 
   return (
     <main className="login">
@@ -24,20 +24,19 @@ const Login = ({ setLoggedIn }: ILoginProps) => {
           onClick={() => setOpenSignUp(true)}
         />
         <AuthButton
-          title="CONTINUE WITH APPLE"
-          backgroundColor="#111111"
-          textColor="white"
-          onClick={() => console.log('apple')}
-        />
-        <AuthButton
           title="LOG IN"
           backgroundColor="white"
-          onClick={handleLogIn}
+          onClick={() => setOpenSignIn(true)}
         />
       </div>
       {openSignUp && (
         <Backdrop onClick={() => setOpenSignUp(false)}>
-          <SignUpForm setLoggedIn={setLoggedIn} />
+          <AuthForm title="SIGN UP" setLoggedIn={setLoggedIn} />
+        </Backdrop>
+      )}
+      {openSignIn && (
+        <Backdrop onClick={() => setOpenSignIn(false)}>
+          <AuthForm title="LOG IN" setLoggedIn={setLoggedIn} />
         </Backdrop>
       )}
     </main>

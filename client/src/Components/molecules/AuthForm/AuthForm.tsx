@@ -1,16 +1,22 @@
 import * as React from 'react';
-import { createAccount } from '../../../utils/firebase/auth';
+import {
+  createAccount,
+  logInEmailPassword,
+} from '../../../utils/firebase/auth';
 import { handleLogIn } from '../../../utils/modules/modules';
-import './SignUpForm.scss';
+import './AuthForm.scss';
 
-interface ISignUpFormProps {
+interface IAuthFormProps {
+  title: string;
   setLoggedIn: any;
 }
 
-const SignUpForm = ({ setLoggedIn }: ISignUpFormProps) => {
+const AuthForm = ({ title, setLoggedIn }: IAuthFormProps) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirm, setConfirm] = React.useState('');
+
+  const [authState, setAuthState] = React.useState('');
 
   const clearFields = (): void => {
     setEmail('');
@@ -31,22 +37,29 @@ const SignUpForm = ({ setLoggedIn }: ISignUpFormProps) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    setLoggedIn(true);
-    createAccount(email, password, handleLogIn);
+
+    if (title === 'SIGN UP') {
+      createAccount(email, password);
+    }
+
+    if (title === 'LOG IN') {
+      logInEmailPassword(email, password);
+    }
+
     clearFields();
   };
 
   return (
-    <div className="sign-up" onClick={e => e.stopPropagation()}>
-      <h1>SIGN UP</h1>
-      <form className="sign-up__form" onSubmit={handleSubmit}>
+    <div className="auth" onClick={e => e.stopPropagation()}>
+      <h1>{title}</h1>
+      <form className="auth__form" onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"
           name="email"
           value={email}
           onChange={handleInputChange}
-          className="sign-up__input"
+          className="auth__input"
         />
         <input
           type="password"
@@ -54,20 +67,23 @@ const SignUpForm = ({ setLoggedIn }: ISignUpFormProps) => {
           name="password"
           value={password}
           onChange={handleInputChange}
-          className="sign-up__input"
+          className="auth__input"
         />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          name="confirm"
-          value={confirm}
-          onChange={handleInputChange}
-          className="sign-up__input"
-        />
-        <input type="submit" value="SIGN UP" className="sign-up__submit" />
+        {title === 'SIGN UP' && (
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            name="confirm"
+            value={confirm}
+            onChange={handleInputChange}
+            className="auth__input"
+          />
+        )}
+        <input type="submit" value={title} className="auth__submit" />
       </form>
+      <div className={authState}></div>
     </div>
   );
 };
 
-export default SignUpForm;
+export default AuthForm;
