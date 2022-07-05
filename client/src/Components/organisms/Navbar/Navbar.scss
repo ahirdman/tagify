@@ -83,14 +83,14 @@
     }
   }
 
-  &__player {
-    @media screen and (max-width: styles.$breakpoint-phone) {
-      position: absolute;
-      bottom: 7.5vh;
-      width: 100vw;
-      height: 50px;
-    }
-  }
+  // &__player {
+  //   @media screen and (max-width: styles.$breakpoint-phone) {
+  //     position: absolute;
+  //     bottom: 7.5vh;
+  //     width: 100vw;
+  //     height: 50px;
+  //   }
+  // }
 }
 
 .active {

@@ -55,9 +55,7 @@ const Navbar = ({ accessToken, user, setDeviceId }: INavbarProps) => {
         </NavLink>
       </div>
 
-      <div className="navbar__player">
-        <Player accessToken={accessToken} setDeviceId={setDeviceId} />
-      </div>
+      <Player accessToken={accessToken} setDeviceId={setDeviceId} />
     </nav>
   );
 };
