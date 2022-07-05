@@ -3,7 +3,7 @@ import Magnifier from '../../../assets/magnifier.svg';
 import Edit from '../../../assets/edit.svg';
 import Delete from '../../../assets/trashcan.svg';
 import './SelectList.scss';
-import { deleteList, tagCol } from '../../../utils/firebase';
+import { deleteList, tagCol } from '../../../utils/firebase/firestore';
 import { useEffect, useState } from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import { ITags } from '../../../utils/interface';

@@ -53,12 +53,18 @@ const App = () => {
   }, [accessToken]);
 
   if (!loggedIn) {
-    return <Login />;
+    return <Login setLoggedIn={setLoggedIn} />;
   }
 
   return (
     <main className="app">
-      <Navbar accessToken={accessToken} user={user} setDeviceId={setDeviceId} />
+      <Navbar
+        loggedIn={loggedIn}
+        setLoggedIn={setLoggedIn}
+        accessToken={accessToken}
+        user={user}
+        setDeviceId={setDeviceId}
+      />
       <Routes>
         <Route
           path="/"

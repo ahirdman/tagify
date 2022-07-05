@@ -12,13 +12,7 @@
   align-items: center;
   background: styles.$background;
 
-  &__logo {
-    display: flex;
-    justify-content: center;
-
-    height: 30vh;
-  }
-
+  &__logo,
   &__header {
     display: flex;
     justify-content: center;

@@ -1,0 +1,51 @@
+@use '../../../styles';
+
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  width: 80vw;
+  height: 50vh;
+
+  background-color: styles.$background;
+  border: 1px solid styles.$border;
+  border-radius: 10px;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    width: 60%;
+    height: 60%;
+  }
+
+  &__input {
+    height: 35px;
+    padding-left: 5px;
+
+    color: white;
+    background-color: rgb(51, 51, 51);
+    border: none;
+    border-radius: 3px;
+
+    &::placeholder {
+      color: rgb(82, 82, 82);
+    }
+  }
+
+  &__submit {
+    height: 30px;
+
+    border: none;
+    background-color: styles.$spotify-green;
+    border-radius: 3px;
+
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 27px;
+    letter-spacing: 0.1em;
+  }
+}

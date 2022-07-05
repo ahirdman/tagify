@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { clearTrackFromTag } from '../../../utils/firebase';
+import { clearTrackFromTag } from '../../../utils/firebase/firestore';
 import Cross from '../../../assets/cross-circle.svg';
 import './TrackTags.scss';
 import Tag from '../../atoms/Tag/Tag';

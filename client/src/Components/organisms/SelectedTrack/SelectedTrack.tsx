@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { playTrack } from '../../../utils/modules/playerModules';
 import { ISavedTrack, ITags } from '../../../utils/interface';
 import { onSnapshot } from 'firebase/firestore';
-import { tagCol } from '../../../utils/firebase';
+import { tagCol } from '../../../utils/firebase/firestore';
 import { matchTag } from '../../../utils/modules/db';
 import AddTag from '../../molecules/AddTag/AddTag';
 import TrackTags from '../../molecules/TrackTags/TrackTags';

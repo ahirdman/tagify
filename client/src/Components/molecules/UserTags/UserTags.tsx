@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Plus from '../../../assets/add-circle.svg';
-import { tagTrack } from '../../../utils/firebase';
+import { tagTrack } from '../../../utils/firebase/firestore';
 import { ITags } from '../../../utils/interface';
 import Tag from '../../atoms/Tag/Tag';
 import './UserTags.scss';

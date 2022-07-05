@@ -7,12 +7,19 @@ import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
 
 interface INavbarProps {
+  loggedIn: any;
+  setLoggedIn: any;
   accessToken: string;
   user: any;
   setDeviceId: any;
 }
 
-const Navbar = ({ accessToken, user, setDeviceId }: INavbarProps) => {
+const Navbar = ({
+  setLoggedIn,
+  accessToken,
+  user,
+  setDeviceId,
+}: INavbarProps) => {
   return (
     <nav className="navbar">
       <div className="navbar__item navbar__profile">
@@ -20,11 +27,13 @@ const Navbar = ({ accessToken, user, setDeviceId }: INavbarProps) => {
           src={Avatar}
           alt="profile"
           className="navbar__item--icon navbar__item--mobile"
+          onClick={() => setLoggedIn(false)}
         />
         <img
           src={user.image}
           alt="profile"
           className="navbar__item--avatar navbar__item--desktop"
+          onClick={() => setLoggedIn(false)}
         />
         <p className="navbar__item--username navbar__item--desktop">
           {user.name}

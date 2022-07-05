@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createTag } from '../../../utils/firebase';
+import { createTag } from '../../../utils/firebase/firestore';
 import { useState } from 'react';
 import Add from '../../../assets/add.svg';
 import Tag from '../../../assets/tag.svg';

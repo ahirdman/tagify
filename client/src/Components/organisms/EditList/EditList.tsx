@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Magnifier from '../../../assets/magnifier.svg';
 import { onSnapshot } from 'firebase/firestore';
 import './EditList.scss';
-import { tagDoc } from '../../../utils/firebase';
+import { tagDoc } from '../../../utils/firebase/firestore';
 import { IDbTrack } from '../../../utils/interface';
 import Send from '../../../assets/send.svg';
 import { post } from '../../../utils/httpClient';
