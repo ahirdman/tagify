@@ -1,0 +1,20 @@
+@use '../../../styles';
+
+.authButton {
+  width: 80vw;
+  height: 50px;
+
+  border-radius: 25px;
+  border: none;
+  border: 1px solid styles.$border;
+
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 27px;
+  letter-spacing: 0.1em;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -7,16 +7,30 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: styles.$background;
 
-  &__button {
-    width: 60px;
-    height: 40px;
-    background: styles.$spotify-green;
-    &:hover {
-      cursor: pointer;
-    }
+  &__logo {
+    display: flex;
+    justify-content: center;
+
+    height: 30vh;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+
+    height: 30vh;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    height: 30vh;
   }
 }

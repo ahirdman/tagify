@@ -6,6 +6,14 @@
   width: 25vw;
   height: 100%;
 
+  // &--mobile {
+  //   visibility: hidden;
+
+  //   @media screen and (max-width: styles.$breakpoint-phone) {
+  //     display: none;
+  //   }
+  // }
+
   @media screen and (max-width: styles.$breakpoint-phone) {
     width: 100%;
     background-color: black;

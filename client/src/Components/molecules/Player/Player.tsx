@@ -54,9 +54,7 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
   }, [accessToken, setDeviceId]);
 
   if (!isActive) {
-    return (
-      <section className="player" style={{ visibility: 'hidden' }}></section>
-    );
+    return <section className="player"></section>;
   } else {
     return (
       <div className="player">

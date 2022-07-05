@@ -1,28 +1,26 @@
-const baseUrl = process.env.NODE_ENV === 'production'
-  ? ''
-  : 'http://localhost:8080';
+import { SERVER } from '../../config/server';
 
-const get = async (path: string) => {
-  const query = await fetch(`${baseUrl}${path}`);
+export const get = async (path: string) => {
+  const query = await fetch(`${SERVER}${path}`);
   const json = await query.json();
   return json;
 };
 
-const post = async (path: string, body: any) => {
-  const query = await fetch(`${baseUrl}${path}`, {
+export const post = async (path: string, body: any) => {
+  const query = await fetch(`${SERVER}${path}`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      Accept: 'application/json',
     },
   });
   const json = await query.json();
   return json;
 };
 
-const del = (path: string, body: any) => {
-  fetch(`${baseUrl}${path}`, {
+export const del = (path: string, body: any) => {
+  fetch(`${SERVER}${path}`, {
     method: 'DELETE',
     body: JSON.stringify(body),
     headers: {
@@ -30,10 +28,4 @@ const del = (path: string, body: any) => {
       Accept: 'application/json',
     },
   });
-};
-
-export {
-  get,
-  post,
-  del,
 };

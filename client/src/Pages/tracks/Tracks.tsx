@@ -24,31 +24,6 @@ const Tracks = ({
 }: ITracksProps) => {
   const size: IWindow = useWindowSize();
 
-  //   return (
-  //     <div className="tracks-view">
-  //       {savedTracks && (
-  //         <>
-  //           <SelectTrack
-  //             savedTracks={savedTracks}
-  //             setSelectedTrack={setSelectedTrack}
-  //           />
-  //           <>
-  //             {selectedTrack ? (
-  //               <SelectedTrack
-  //                 selectedTrack={selectedTrack}
-  //                 deviceId={deviceId}
-  //                 accessToken={accessToken}
-  //               />
-  //             ) : (
-  //               <EmptyCard icon={Note} item="track" />
-  //             )}
-  //           </>
-  //         </>
-  //       )}
-  //     </div>
-  //   );
-  // };
-
   if (size.width >= 900) {
     return (
       <div className="tracks-view">
