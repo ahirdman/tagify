@@ -3,7 +3,6 @@ import {
   createAccount,
   logInEmailPassword,
 } from '../../../utils/firebase/auth';
-import { handleLogIn } from '../../../utils/modules/modules';
 import './AuthForm.scss';
 
 interface IAuthFormProps {
@@ -15,8 +14,6 @@ const AuthForm = ({ title, setLoggedIn }: IAuthFormProps) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirm, setConfirm] = React.useState('');
-
-  const [authState, setAuthState] = React.useState('');
 
   const clearFields = (): void => {
     setEmail('');
@@ -60,6 +57,7 @@ const AuthForm = ({ title, setLoggedIn }: IAuthFormProps) => {
           value={email}
           onChange={handleInputChange}
           className="auth__input"
+          autoFocus
         />
         <input
           type="password"
@@ -81,7 +79,6 @@ const AuthForm = ({ title, setLoggedIn }: IAuthFormProps) => {
         )}
         <input type="submit" value={title} className="auth__submit" />
       </form>
-      <div className={authState}></div>
     </div>
   );
 };

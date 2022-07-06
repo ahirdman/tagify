@@ -1,9 +1,3 @@
-interface IUser {
-  image: string;
-  name: string;
-  id: string;
-}
-
 interface ITrack {
   album: {
     images: [
@@ -219,4 +213,12 @@ interface IWindow {
   height: undefined | number;
 }
 
-export type { IUser, ITrack, ISDKTrack, ISavedObject, ISavedTrack, IDbTrack, ITags, IWindow };
+export type {
+  ITrack,
+  ISDKTrack,
+  ISavedObject,
+  ISavedTrack,
+  IDbTrack,
+  ITags,
+  IWindow,
+};

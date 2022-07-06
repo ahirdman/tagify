@@ -8,6 +8,8 @@ const clientSecret = process.env.CLIENT_SECRET;
 const redirectUri = process.env.REDIRECT_URI;
 const stateName = 'spotify_auth_state';
 
+let accessData;
+
 const baseUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://spotifymoody.herokuapp.com/'
@@ -27,7 +29,6 @@ router.get('/', (_, res) => {
   });
 
   res
-    .clearCookie('access')
     .cookie(stateName, state)
     .redirect(
       `https://accounts.spotify.com/authorize?${authParams.toString()}`
@@ -58,13 +59,19 @@ router.get('/callback', async (req, res) => {
         ).toString('base64')}`,
       },
     });
-
     const data = await response.json();
 
-    res
-      .clearCookie(stateName)
-      .cookie('access', data.access_token)
-      .redirect(baseUrl);
+    accessData = data;
+
+    res.clearCookie(stateName).redirect(baseUrl);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+
+router.get('/token', async (_, res) => {
+  try {
+    res.json({ access_token: accessData.access_token });
   } catch (error) {
     res.sendStatus(500);
   }

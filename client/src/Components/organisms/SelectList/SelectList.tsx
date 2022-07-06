@@ -14,7 +14,8 @@ interface ISelectListProps {
 }
 
 const SelectList = ({ setSelectedList }: ISelectListProps) => {
-  const [lists, setLists] = useState<ITags[]>([]);
+  const [lists, setLists] = useState([] as ITags[]);
+
   useEffect(() => {
     const unsubscribe = onSnapshot(tagCol('purchasedAids'), collection => {
       const tags: ITags[] = [];

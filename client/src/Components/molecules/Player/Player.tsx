@@ -16,8 +16,12 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
   const [isActive, setActive] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(trackObject);
 
+  const existingScript = () => document.getElementById('player');
+
   useEffect(() => {
+    if (existingScript) return;
     const script = document.createElement('script');
+    script.setAttribute('id', 'player');
     script.src = 'https://sdk.scdn.co/spotify-player.js';
     script.async = true;
 

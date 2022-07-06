@@ -5,6 +5,7 @@ import Tag from '../../../assets/tag.svg';
 import List from '../../../assets/list-white.svg';
 import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
+import { logOut } from '../../../utils/firebase/auth';
 
 interface INavbarProps {
   loggedIn: any;
@@ -27,13 +28,15 @@ const Navbar = ({
           src={Avatar}
           alt="profile"
           className="navbar__item--icon navbar__item--mobile"
-          onClick={() => setLoggedIn(false)}
+          // onClick={() => setLoggedIn(false)}
+          onClick={() => logOut()}
         />
         <img
           src={user.image}
           alt="profile"
           className="navbar__item--avatar navbar__item--desktop"
-          onClick={() => setLoggedIn(false)}
+          // onClick={() => setLoggedIn(false)}
+          onClick={() => logOut()}
         />
         <p className="navbar__item--username navbar__item--desktop">
           {user.name}
