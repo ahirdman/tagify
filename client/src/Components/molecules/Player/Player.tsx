@@ -4,22 +4,22 @@ import PlayButton from '../../../assets/playback/play-white.svg';
 import PauseButton from '../../../assets/playback/pause-white.svg';
 import './Player.scss';
 import * as React from 'react';
+import { UserContext } from '../../../utils/hooks/UserContext';
+import { useContext } from 'react';
 
-interface IAccessProp {
-  accessToken?: string;
+interface INavbarProps {
   setDeviceId: any;
 }
 
-export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
+export const Player = ({ setDeviceId }: INavbarProps) => {
   const [player, setPlayer] = useState(undefined);
   const [isPaused, setPaused] = useState(false);
   const [isActive, setActive] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(trackObject);
 
-  const existingScript = () => document.getElementById('player');
+  const user = useContext(UserContext);
 
   useEffect(() => {
-    if (existingScript) return;
     const script = document.createElement('script');
     script.setAttribute('id', 'player');
     script.src = 'https://sdk.scdn.co/spotify-player.js';
@@ -31,7 +31,7 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
       const player = new window.Spotify.Player({
         name: 'Tinderify',
         getOAuthToken: cb => {
-          cb(accessToken);
+          cb(user.spotify.accessToken);
         },
         volume: 0.5,
       });
@@ -39,6 +39,7 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
       setPlayer(player);
 
       player.addListener('ready', ({ device_id }) => {
+        console.log(device_id);
         setDeviceId(device_id);
       });
 
@@ -55,7 +56,7 @@ export const Player = ({ accessToken, setDeviceId }: IAccessProp) => {
         });
       });
     };
-  }, [accessToken, setDeviceId]);
+  }, [user.spotify.accessToken, setDeviceId]);
 
   if (!isActive) {
     return <section className="player player--inactive"></section>;

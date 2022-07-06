@@ -7,10 +7,9 @@ import './AuthForm.scss';
 
 interface IAuthFormProps {
   title: string;
-  setLoggedIn: any;
 }
 
-const AuthForm = ({ title, setLoggedIn }: IAuthFormProps) => {
+const AuthForm = ({ title }: IAuthFormProps) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirm, setConfirm] = React.useState('');

@@ -6,21 +6,16 @@ import List from '../../../assets/list-white.svg';
 import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
 import { logOut } from '../../../utils/firebase/auth';
+import { UserContext } from '../../../utils/hooks/UserContext';
+import { useContext } from 'react';
 
 interface INavbarProps {
-  loggedIn: any;
-  setLoggedIn: any;
-  accessToken: string;
-  user: any;
   setDeviceId: any;
 }
 
-const Navbar = ({
-  setLoggedIn,
-  accessToken,
-  user,
-  setDeviceId,
-}: INavbarProps) => {
+const Navbar = ({ setDeviceId }: INavbarProps) => {
+  const user = useContext(UserContext);
+
   return (
     <nav className="navbar">
       <div className="navbar__item navbar__profile">
@@ -28,18 +23,16 @@ const Navbar = ({
           src={Avatar}
           alt="profile"
           className="navbar__item--icon navbar__item--mobile"
-          // onClick={() => setLoggedIn(false)}
           onClick={() => logOut()}
         />
         <img
-          src={user.image}
+          src={user.spotify.profile.image}
           alt="profile"
           className="navbar__item--avatar navbar__item--desktop"
-          // onClick={() => setLoggedIn(false)}
           onClick={() => logOut()}
         />
         <p className="navbar__item--username navbar__item--desktop">
-          {user.name}
+          {user.spotify.profile.name}
         </p>
       </div>
 
@@ -67,7 +60,7 @@ const Navbar = ({
         </NavLink>
       </div>
 
-      <Player accessToken={accessToken} setDeviceId={setDeviceId} />
+      <Player setDeviceId={setDeviceId} />
     </nav>
   );
 };

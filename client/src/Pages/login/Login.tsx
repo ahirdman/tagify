@@ -4,11 +4,7 @@ import Backdrop from '../../Components/atoms/Backdrop/Backdrop';
 import AuthForm from '../../Components/molecules/AuthForm/AuthForm';
 import './Login.scss';
 
-interface ILoginProps {
-  setLoggedIn: any;
-}
-
-const Login = ({ setLoggedIn }: ILoginProps) => {
+const Login = () => {
   const [openSignUp, setOpenSignUp] = React.useState<boolean>(false);
   const [openSignIn, setOpenSignIn] = React.useState<boolean>(false);
 
@@ -31,12 +27,12 @@ const Login = ({ setLoggedIn }: ILoginProps) => {
       </div>
       {openSignUp && (
         <Backdrop onClick={() => setOpenSignUp(false)}>
-          <AuthForm title="SIGN UP" setLoggedIn={setLoggedIn} />
+          <AuthForm title="SIGN UP" />
         </Backdrop>
       )}
       {openSignIn && (
         <Backdrop onClick={() => setOpenSignIn(false)}>
-          <AuthForm title="LOG IN" setLoggedIn={setLoggedIn} />
+          <AuthForm title="LOG IN" />
         </Backdrop>
       )}
     </main>

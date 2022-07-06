@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { playTrack } from '../../../utils/modules/playerModules';
 import { ISavedTrack, ITags } from '../../../utils/interface';
 import { onSnapshot } from 'firebase/firestore';
@@ -11,22 +11,23 @@ import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
 import CardNav from '../../molecules/CardNav/CardNav';
 import UserTags from '../../molecules/UserTags/UserTags';
+import { UserContext } from '../../../utils/hooks/UserContext';
 
 interface ISelectedTrackProps {
   selectedTrack?: ISavedTrack;
   deviceId?: string;
-  accessToken: string;
   setSelectedTrack?: any;
 }
 
 const SelectedTrack = ({
   selectedTrack,
   deviceId,
-  accessToken,
   setSelectedTrack,
 }: ISelectedTrackProps) => {
   const [trackTags, setTrackTags] = useState<string[]>([]);
   const [userTags, setUserTags] = useState([]);
+
+  const user = useContext(UserContext);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(tagCol('purchasedAids'), collection => {
@@ -68,7 +69,7 @@ const SelectedTrack = ({
           onClick={() =>
             playTrack(
               deviceId,
-              accessToken,
+              user.spotify.accessToken,
               selectedTrack.album.uri,
               selectedTrack.track_number - 1
             )

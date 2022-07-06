@@ -5,23 +5,35 @@ import SelectedTrack from '../../Components/organisms/SelectedTrack/SelectedTrac
 import EmptyCard from '../../Components/organisms/EmptyCard/EmptyCard';
 import useWindowSize from '../../utils/hooks/window';
 import { IWindow } from '../../utils/interface';
+import { post } from '../../utils/httpClient';
+import { ISavedObject } from '../../utils/interface';
 import './Tracks.scss';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../utils/hooks/UserContext';
 
 interface ITracksProps {
-  savedTracks: any;
-  selectedTrack: any;
-  setSelectedTrack: any;
-  deviceId: any;
-  accessToken: any;
+  deviceId: string;
 }
 
-const Tracks = ({
-  savedTracks,
-  selectedTrack,
-  setSelectedTrack,
-  deviceId,
-  accessToken,
-}: ITracksProps) => {
+const Tracks = ({ deviceId }: ITracksProps) => {
+  const [savedTracks, setSavedTracks] = useState([] as ISavedObject[]);
+  const [selectedTrack, setSelectedTrack] = useState();
+
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    const getTracks = async () => {
+      const savedTracks = await post('/user/saved', {
+        token: user.spotify.accessToken,
+      });
+      setSavedTracks(savedTracks.items);
+    };
+
+    if (user.spotify.accessToken) {
+      getTracks();
+    }
+  }, [user.spotify.accessToken]);
+
   const size: IWindow = useWindowSize();
 
   if (size.width >= 900) {
@@ -38,7 +50,6 @@ const Tracks = ({
                 <SelectedTrack
                   selectedTrack={selectedTrack}
                   deviceId={deviceId}
-                  accessToken={accessToken}
                 />
               ) : (
                 <EmptyCard icon={Note} item="track" />
@@ -58,7 +69,6 @@ const Tracks = ({
             <SelectedTrack
               selectedTrack={selectedTrack}
               deviceId={deviceId}
-              accessToken={accessToken}
               setSelectedTrack={setSelectedTrack}
             />
           ) : (

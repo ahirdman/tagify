@@ -4,7 +4,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
-import { IUser, userObject } from '../../App';
+import { IUser, userObject } from '../hooks/UserContext';
 import { auth } from './config';
 
 export const createAccount = async (mail: string, password: string) => {

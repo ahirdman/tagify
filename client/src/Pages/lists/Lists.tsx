@@ -5,20 +5,14 @@ import EmptyCard from '../../Components/organisms/EmptyCard/EmptyCard';
 import List from '../../assets/list.svg';
 import { IWindow } from '../../utils/interface';
 import useWindowSize from '../../utils/hooks/window';
+import { useContext, useState } from 'react';
+import { UserContext } from '../../utils/hooks/UserContext';
 
-interface IListsProps {
-  selectedList: any;
-  setSelectedList: any;
-  accessToken: any;
-  user: any;
-}
+const Lists = () => {
+  const [selectedList, setSelectedList] = useState();
 
-const Lists = ({
-  selectedList,
-  setSelectedList,
-  accessToken,
-  user,
-}: IListsProps) => {
+  const user = useContext(UserContext);
+
   const size: IWindow = useWindowSize();
 
   if (size.width >= 900) {
@@ -28,8 +22,8 @@ const Lists = ({
         {selectedList ? (
           <EditList
             selectedList={selectedList}
-            id={user.id}
-            accessToken={accessToken}
+            id={user.spotify.profile.id}
+            accessToken={user.spotify.accessToken}
           />
         ) : (
           <EmptyCard icon={List} item="list" />
@@ -43,8 +37,8 @@ const Lists = ({
       {selectedList ? (
         <EditList
           selectedList={selectedList}
-          id={user.id}
-          accessToken={accessToken}
+          id={user.spotify.profile.id}
+          accessToken={user.spotify.accessToken}
           setSelectedList={setSelectedList}
         />
       ) : (
