@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Auth from '../../../utils/firebase/auth';
 import './SignUpForm.scss';
 
-interface IAuthError {
+export interface IAuthError {
   display: boolean;
   message: string;
 }
@@ -12,12 +12,6 @@ const SignUpForm = () => {
   const [password, setPassword] = React.useState('');
   const [confirm, setConfirm] = React.useState('');
   const [error, setError] = React.useState({} as IAuthError);
-
-  // const clearFields = (): void => {
-  //   setEmail('');
-  //   setPassword('');
-  //   setConfirm('');
-  // };
 
   const handleInputChange = (
     event: React.FormEvent<HTMLInputElement>

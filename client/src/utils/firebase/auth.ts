@@ -21,6 +21,14 @@ const errorMessage = (code: string) => {
     return 'Invalid email';
   }
 
+  if (code === 'auth/wrong-password') {
+    return 'Wrong password';
+  }
+
+  if (code === 'auth/user-not-found') {
+    return 'No account linked to email address';
+  }
+
   return code;
 };
 
@@ -37,10 +45,6 @@ export const createAccount = async (
     );
     createUserDoc(userCredential.user.uid);
   } catch (error) {
-    // less than 6 char = "auth/weak-password"
-    // email already exists = "auth/email-already-in-use"
-    // invalid email = "auth/invalid-email"
-
     const message = errorMessage(error.code);
 
     callback({
@@ -50,11 +54,20 @@ export const createAccount = async (
   }
 };
 
-export const logInEmailPassword = async (mail: string, password: string) => {
+export const logInEmailPassword = async (
+  mail: string,
+  password: string,
+  callback: Function
+) => {
   try {
     await signInWithEmailAndPassword(auth, mail, password);
   } catch (error) {
-    console.log(error);
+    const message = errorMessage(error.code);
+
+    callback({
+      display: true,
+      message,
+    });
   }
 };
 
@@ -62,12 +75,12 @@ export const logOut = async () => {
   await signOut(auth);
 };
 
-export const authObserver = (callback: Function, initialUser: IUser) => {
+export const authObserver = (setUser: Function, emptyUserObj: IUser) => {
   onAuthStateChanged(auth, user => {
     if (user) {
       localStorage.setItem('auth', 'true');
 
-      callback((prevState: IUser) => ({
+      setUser((prevState: IUser) => ({
         ...prevState,
         loggedIn: true,
         mail: user.email,
@@ -77,7 +90,7 @@ export const authObserver = (callback: Function, initialUser: IUser) => {
       localStorage.removeItem('auth');
       localStorage.removeItem('spot');
 
-      callback(initialUser);
+      setUser(emptyUserObj);
     }
   });
 };
