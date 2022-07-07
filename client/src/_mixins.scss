@@ -1,9 +1,10 @@
-@use '../../../styles';
+@use './styles';
 
-.auth-form {
+@mixin auth-form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  position: relative;
 
   width: 60%;
   height: 60%;

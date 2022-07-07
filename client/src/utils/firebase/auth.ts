@@ -8,7 +8,27 @@ import { IUser } from '../hooks/UserContext';
 import { auth } from './config';
 import { createUserDoc } from './firestore';
 
-export const createAccount = async (mail: string, password: string) => {
+const errorMessage = (code: string) => {
+  if (code === 'auth/weak-password') {
+    return 'Password must be longer them 6 characters';
+  }
+
+  if (code === 'auth/email-already-in-use') {
+    return 'Email is already in use';
+  }
+
+  if (code === 'auth/invalid-email') {
+    return 'Invalid email';
+  }
+
+  return code;
+};
+
+export const createAccount = async (
+  mail: string,
+  password: string,
+  callback: Function
+) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -17,7 +37,16 @@ export const createAccount = async (mail: string, password: string) => {
     );
     createUserDoc(userCredential.user.uid);
   } catch (error) {
-    console.log(error);
+    // less than 6 char = "auth/weak-password"
+    // email already exists = "auth/email-already-in-use"
+    // invalid email = "auth/invalid-email"
+
+    const message = errorMessage(error.code);
+
+    callback({
+      display: true,
+      message,
+    });
   }
 };
 

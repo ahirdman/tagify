@@ -3,8 +3,9 @@ import { useContext } from 'react';
 import AuthButton from '../../Components/atoms/AuthButton/AuthButton';
 import AuthModal from '../../Components/atoms/AuthModal/AuthModal';
 import Backdrop from '../../Components/atoms/Backdrop/Backdrop';
-import AuthForm from '../../Components/molecules/AuthForm/AuthForm';
 import ConnectScreen from '../../Components/molecules/ConnectScreen/ConnectScreen';
+import SignInForm from '../../Components/molecules/SignInForm/SignInForm';
+import SignUpForm from '../../Components/molecules/SignUpForm/SignUpForm';
 import { UserContext } from '../../utils/hooks/UserContext';
 import './Login.scss';
 
@@ -37,7 +38,7 @@ const Login = () => {
             {user.loggedIn ? (
               <ConnectScreen autoConnect={false} />
             ) : (
-              <AuthForm title="SIGN UP" />
+              <SignUpForm />
             )}
           </AuthModal>
         </Backdrop>
@@ -48,7 +49,7 @@ const Login = () => {
             {user.loggedIn ? (
               <ConnectScreen autoConnect={true} />
             ) : (
-              <AuthForm title="LOG IN" />
+              <SignInForm />
             )}
           </AuthModal>
         </Backdrop>

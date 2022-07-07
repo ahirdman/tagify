@@ -1,0 +1,28 @@
+@use '../../../mixins';
+@use '../../../styles';
+
+.sign-up {
+  @include mixins.auth-form;
+}
+
+.error {
+  position: absolute;
+  top: 0;
+  height: 30px;
+  width: 100%;
+
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 30px;
+  letter-spacing: 0.1em;
+
+  background-color: #b8433e;
+
+  text-align: center;
+
+  overflow: hidden;
+
+  &--hidden {
+    display: none;
+  }
+}

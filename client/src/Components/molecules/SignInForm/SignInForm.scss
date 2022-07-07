@@ -1,0 +1,5 @@
+@use '../../../mixins';
+
+.sign-in {
+  @include mixins.auth-form;
+}
