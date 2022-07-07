@@ -7,14 +7,13 @@ import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
 import { logOut } from '../../../utils/firebase/auth';
 import { UserContext } from '../../../utils/hooks/UserContext';
-import { useContext } from 'react';
 
 interface INavbarProps {
   setDeviceId: any;
 }
 
 const Navbar = ({ setDeviceId }: INavbarProps) => {
-  const user = useContext(UserContext);
+  const user = React.useContext(UserContext);
 
   return (
     <nav className="navbar">

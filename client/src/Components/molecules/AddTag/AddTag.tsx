@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { createTag } from '../../../utils/firebase/firestore';
-import { useState } from 'react';
+import * as Firestore from '../../../utils/firebase/firestore';
 import Add from '../../../assets/add.svg';
 import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
 import { randomColor } from '../../../utils/modules/db';
-// import { ITags } from '../../../utils/interface';
+import { UserContext } from '../../../utils/hooks/UserContext';
 
 interface IAddTagProps {
   selectedTrack: any;
-  // userTags?: ITags[];
 }
 
 const AddTag = ({ selectedTrack }: IAddTagProps) => {
-  const [tagInput, setTagInput] = useState('');
+  const [tagInput, setTagInput] = React.useState('');
+
+  const user = React.useContext(UserContext);
 
   const dbTrack = {
     artist: selectedTrack.artists[0].name,
@@ -37,7 +37,7 @@ const AddTag = ({ selectedTrack }: IAddTagProps) => {
           className="add-tag__search--button"
           onClick={e => {
             e.preventDefault();
-            createTag('purchasedAids', tagInput, randomColor(), dbTrack);
+            Firestore.createTag(user.fireId, tagInput, randomColor(), dbTrack);
             setTagInput('');
           }}
         >

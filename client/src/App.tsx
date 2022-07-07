@@ -15,7 +15,7 @@ const App = () => {
 
   return (
     <>
-      {user.loggedIn ? (
+      {user.loggedIn && user.spotify.accessToken ? (
         <main className="app">
           <Navbar setDeviceId={setDeviceId} />
           <Routes>

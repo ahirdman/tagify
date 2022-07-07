@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import Magnifier from '../../../assets/magnifier.svg';
 import { onSnapshot } from 'firebase/firestore';
 import './EditList.scss';
-import { tagDoc } from '../../../utils/firebase/firestore';
+import * as Firestore from '../../../utils/firebase/firestore';
 import { IDbTrack } from '../../../utils/interface';
 import Send from '../../../assets/send.svg';
 import { post } from '../../../utils/httpClient';
 import CardNav from '../../molecules/CardNav/CardNav';
+import { UserContext } from '../../../utils/hooks/UserContext';
 
 interface IEditListProps {
   selectedList: string;
@@ -22,7 +22,9 @@ const EditList = ({
   accessToken,
   setSelectedList,
 }: IEditListProps) => {
-  const [tracks, setTracks] = useState([]);
+  const [tracks, setTracks] = React.useState([]);
+
+  const user = React.useContext(UserContext);
 
   const trackUris = (arr: IDbTrack[]) =>
     arr.map((track: IDbTrack) => track.uri);
@@ -40,16 +42,19 @@ const EditList = ({
     });
   };
 
-  useEffect(() => {
-    const unsub = onSnapshot(tagDoc('purchasedAids', selectedList), doc => {
-      const tracks = doc.data().tracks;
-      setTracks(tracks);
-    });
+  React.useEffect(() => {
+    const unsub = onSnapshot(
+      Firestore.tagDoc(user.fireId, selectedList),
+      doc => {
+        const tracks = doc.data().tracks;
+        setTracks(tracks);
+      }
+    );
 
     return () => {
       unsub();
     };
-  }, [selectedList]);
+  }, [selectedList, user.fireId]);
 
   return (
     <div className="edit-list">

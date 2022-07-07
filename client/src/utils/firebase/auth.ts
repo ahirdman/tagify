@@ -4,12 +4,18 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
-import { IUser, userObject } from '../hooks/UserContext';
+import { IUser } from '../hooks/UserContext';
 import { auth } from './config';
+import { createUserDoc } from './firestore';
 
 export const createAccount = async (mail: string, password: string) => {
   try {
-    await createUserWithEmailAndPassword(auth, mail, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      mail,
+      password
+    );
+    createUserDoc(userCredential.user.uid);
   } catch (error) {
     console.log(error);
   }
@@ -27,7 +33,7 @@ export const logOut = async () => {
   await signOut(auth);
 };
 
-export const authObserver = (callback: Function) => {
+export const authObserver = (callback: Function, initialUser: IUser) => {
   onAuthStateChanged(auth, user => {
     if (user) {
       localStorage.setItem('auth', 'true');
@@ -36,11 +42,13 @@ export const authObserver = (callback: Function) => {
         ...prevState,
         loggedIn: true,
         mail: user.email,
+        fireId: user.uid,
       }));
     } else {
-      localStorage.clear();
+      localStorage.removeItem('auth');
+      localStorage.removeItem('spot');
 
-      callback(userObject);
+      callback(initialUser);
     }
   });
 };

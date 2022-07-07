@@ -1,27 +1,25 @@
-import { useState, useEffect } from 'react';
 import { trackObject } from '../../../utils/modules/playerModules';
 import PlayButton from '../../../assets/playback/play-white.svg';
 import PauseButton from '../../../assets/playback/pause-white.svg';
 import './Player.scss';
 import * as React from 'react';
 import { UserContext } from '../../../utils/hooks/UserContext';
-import { useContext } from 'react';
 
 interface INavbarProps {
   setDeviceId: any;
 }
 
-export const Player = ({ setDeviceId }: INavbarProps) => {
-  const [player, setPlayer] = useState(undefined);
-  const [isPaused, setPaused] = useState(false);
-  const [isActive, setActive] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState(trackObject);
+const Player = ({ setDeviceId }: INavbarProps) => {
+  const [player, setPlayer] = React.useState(undefined);
+  const [isPaused, setPaused] = React.useState(false);
+  const [isActive, setActive] = React.useState(false);
+  const [currentTrack, setCurrentTrack] = React.useState(trackObject);
 
-  const user = useContext(UserContext);
+  const user = React.useContext(UserContext);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const script = document.createElement('script');
-    script.setAttribute('id', 'player');
+    script.setAttribute('id', 'spotPlayer');
     script.src = 'https://sdk.scdn.co/spotify-player.js';
     script.async = true;
 
@@ -39,7 +37,6 @@ export const Player = ({ setDeviceId }: INavbarProps) => {
       setPlayer(player);
 
       player.addListener('ready', ({ device_id }) => {
-        console.log(device_id);
         setDeviceId(device_id);
       });
 
@@ -55,6 +52,14 @@ export const Player = ({ setDeviceId }: INavbarProps) => {
           !state ? setActive(false) : setActive(true);
         });
       });
+    };
+    return () => {
+      const player = document.getElementById('spotPlayer');
+      const iFrame = document.querySelector(
+        'iframe[alt="Audio Playback Container"]'
+      );
+      player.remove();
+      iFrame.remove();
     };
   }, [user.spotify.accessToken, setDeviceId]);
 

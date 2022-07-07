@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
 import { playTrack } from '../../../utils/modules/playerModules';
 import { ISavedTrack, ITags } from '../../../utils/interface';
 import { onSnapshot } from 'firebase/firestore';
-import { tagCol } from '../../../utils/firebase/firestore';
+import * as Firestore from '../../../utils/firebase/firestore';
 import { matchTag } from '../../../utils/modules/db';
 import AddTag from '../../molecules/AddTag/AddTag';
 import TrackTags from '../../molecules/TrackTags/TrackTags';
@@ -24,34 +23,37 @@ const SelectedTrack = ({
   deviceId,
   setSelectedTrack,
 }: ISelectedTrackProps) => {
-  const [trackTags, setTrackTags] = useState<string[]>([]);
-  const [userTags, setUserTags] = useState([]);
+  const [trackTags, setTrackTags] = React.useState<string[]>([]);
+  const [userTags, setUserTags] = React.useState([]);
 
-  const user = useContext(UserContext);
+  const user = React.useContext(UserContext);
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot(tagCol('purchasedAids'), collection => {
-      const tags: ITags[] = [];
-      const tagObject: any[] = [];
-      collection.forEach(doc => {
-        const data = doc.data();
-        tags.push({ name: data.name, color: data.color });
-        tagObject.push({
-          color: data.color,
-          [data.name]: [...data.tracks],
+  React.useEffect(() => {
+    const unsubscribe = onSnapshot(
+      Firestore.tagCol(user.fireId),
+      collection => {
+        const tags: ITags[] = [];
+        const tagObject: any[] = [];
+        collection.forEach(doc => {
+          const data = doc.data();
+          tags.push({ name: data.name, color: data.color });
+          tagObject.push({
+            color: data.color,
+            [data.name]: [...data.tracks],
+          });
         });
-      });
-      setUserTags(tags);
-      if (selectedTrack) {
-        const matches = matchTag(tagObject, selectedTrack.uri);
-        setTrackTags(matches);
+        setUserTags(tags);
+        if (selectedTrack) {
+          const matches = matchTag(tagObject, selectedTrack.uri);
+          setTrackTags(matches);
+        }
       }
-    });
+    );
 
     return () => {
       unsubscribe();
     };
-  }, [selectedTrack]);
+  }, [selectedTrack, user.fireId]);
 
   return (
     <div className="track-card">

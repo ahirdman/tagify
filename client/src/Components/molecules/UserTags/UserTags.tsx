@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Plus from '../../../assets/add-circle.svg';
-import { tagTrack } from '../../../utils/firebase/firestore';
+import * as Firestore from '../../../utils/firebase/firestore';
+import { UserContext } from '../../../utils/hooks/UserContext';
 import { ITags } from '../../../utils/interface';
+import { dbTrack } from '../../../utils/modules/tracks/tracks';
 import Tag from '../../atoms/Tag/Tag';
 import './UserTags.scss';
 
@@ -11,12 +13,7 @@ interface IUserTagsProps {
 }
 
 const UserTags = ({ selectedTrack, userTags }: IUserTagsProps) => {
-  const dbTrack = {
-    artist: selectedTrack.artists[0].name,
-    title: selectedTrack.name,
-    artwork: selectedTrack.album.images[2].url,
-    uri: selectedTrack.uri,
-  };
+  const user = React.useContext(UserContext);
 
   return (
     <section className="user-tags">
@@ -27,7 +24,13 @@ const UserTags = ({ selectedTrack, userTags }: IUserTagsProps) => {
             return (
               <Tag
                 key={index}
-                onClick={() => tagTrack('purchasedAids', tag.name, dbTrack)}
+                onClick={() =>
+                  Firestore.tagTrack(
+                    user.fireId,
+                    tag.name,
+                    dbTrack(selectedTrack)
+                  )
+                }
                 color={tag.color}
                 name={tag.name}
                 actionIcon={Plus}

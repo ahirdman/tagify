@@ -1,12 +1,18 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import AuthButton from '../../Components/atoms/AuthButton/AuthButton';
+import AuthModal from '../../Components/atoms/AuthModal/AuthModal';
 import Backdrop from '../../Components/atoms/Backdrop/Backdrop';
 import AuthForm from '../../Components/molecules/AuthForm/AuthForm';
+import ConnectScreen from '../../Components/molecules/ConnectScreen/ConnectScreen';
+import { UserContext } from '../../utils/hooks/UserContext';
 import './Login.scss';
 
 const Login = () => {
   const [openSignUp, setOpenSignUp] = React.useState<boolean>(false);
   const [openSignIn, setOpenSignIn] = React.useState<boolean>(false);
+
+  const user = useContext(UserContext);
 
   return (
     <main className="login">
@@ -27,12 +33,24 @@ const Login = () => {
       </div>
       {openSignUp && (
         <Backdrop onClick={() => setOpenSignUp(false)}>
-          <AuthForm title="SIGN UP" />
+          <AuthModal>
+            {user.loggedIn ? (
+              <ConnectScreen autoConnect={false} />
+            ) : (
+              <AuthForm title="SIGN UP" />
+            )}
+          </AuthModal>
         </Backdrop>
       )}
       {openSignIn && (
         <Backdrop onClick={() => setOpenSignIn(false)}>
-          <AuthForm title="LOG IN" />
+          <AuthModal>
+            {user.loggedIn ? (
+              <ConnectScreen autoConnect={true} />
+            ) : (
+              <AuthForm title="LOG IN" />
+            )}
+          </AuthModal>
         </Backdrop>
       )}
     </main>

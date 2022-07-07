@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  createAccount,
-  logInEmailPassword,
-} from '../../../utils/firebase/auth';
+import * as Auth from '../../../utils/firebase/auth';
 import './AuthForm.scss';
 
 interface IAuthFormProps {
@@ -35,27 +32,27 @@ const AuthForm = ({ title }: IAuthFormProps) => {
     event.preventDefault();
 
     if (title === 'SIGN UP') {
-      createAccount(email, password);
+      Auth.createAccount(email, password);
     }
 
     if (title === 'LOG IN') {
-      logInEmailPassword(email, password);
+      Auth.logInEmailPassword(email, password);
     }
 
     clearFields();
   };
 
   return (
-    <div className="auth" onClick={e => e.stopPropagation()}>
+    <>
       <h1>{title}</h1>
-      <form className="auth__form" onSubmit={handleSubmit}>
+      <form className="auth-form" onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"
           name="email"
           value={email}
           onChange={handleInputChange}
-          className="auth__input"
+          className="auth-form__input"
           autoFocus
         />
         <input
@@ -64,7 +61,7 @@ const AuthForm = ({ title }: IAuthFormProps) => {
           name="password"
           value={password}
           onChange={handleInputChange}
-          className="auth__input"
+          className="auth-form__input"
         />
         {title === 'SIGN UP' && (
           <input
@@ -73,12 +70,12 @@ const AuthForm = ({ title }: IAuthFormProps) => {
             name="confirm"
             value={confirm}
             onChange={handleInputChange}
-            className="auth__input"
+            className="auth-form__input"
           />
         )}
-        <input type="submit" value={title} className="auth__submit" />
+        <input type="submit" value={title} className="auth-form__submit" />
       </form>
-    </div>
+    </>
   );
 };
 

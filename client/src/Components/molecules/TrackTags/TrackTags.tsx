@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { clearTrackFromTag } from '../../../utils/firebase/firestore';
+import * as Firestore from '../../../utils/firebase/firestore';
 import Cross from '../../../assets/cross-circle.svg';
 import './TrackTags.scss';
 import Tag from '../../atoms/Tag/Tag';
+import { UserContext } from '../../../utils/hooks/UserContext';
+import { dbTrack } from '../../../utils/modules/tracks/tracks';
 
 interface ITrackTags {
   selectedTrack: any;
@@ -10,12 +12,7 @@ interface ITrackTags {
 }
 
 const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
-  const dbTrack = {
-    artist: selectedTrack.artists[0].name,
-    title: selectedTrack.name,
-    artwork: selectedTrack.album.images[2].url,
-    uri: selectedTrack.uri,
-  };
+  const user = React.useContext(UserContext);
 
   return (
     <section className="track-tags">
@@ -27,7 +24,11 @@ const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
               <Tag
                 key={index}
                 onClick={() =>
-                  clearTrackFromTag('purchasedAids', tag.name, dbTrack)
+                  Firestore.clearTrackFromTag(
+                    user.fireId,
+                    tag.name,
+                    dbTrack(selectedTrack)
+                  )
                 }
                 color={tag.color}
                 name={tag.name}

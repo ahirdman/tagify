@@ -3,33 +3,38 @@ import Magnifier from '../../../assets/magnifier.svg';
 import Edit from '../../../assets/edit.svg';
 import Delete from '../../../assets/trashcan.svg';
 import './SelectList.scss';
-import { deleteList, tagCol } from '../../../utils/firebase/firestore';
-import { useEffect, useState } from 'react';
+import * as Firestore from '../../../utils/firebase/firestore';
 import { onSnapshot } from 'firebase/firestore';
 import { ITags } from '../../../utils/interface';
 import CardNav from '../../molecules/CardNav/CardNav';
+import { UserContext } from '../../../utils/hooks/UserContext';
 
 interface ISelectListProps {
   setSelectedList: any;
 }
 
 const SelectList = ({ setSelectedList }: ISelectListProps) => {
-  const [lists, setLists] = useState([] as ITags[]);
+  const [lists, setLists] = React.useState([] as ITags[]);
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot(tagCol('purchasedAids'), collection => {
-      const tags: ITags[] = [];
-      collection.forEach(doc => {
-        const data = doc.data();
-        tags.push({ name: data.name, color: data.color });
-      });
-      setLists(tags);
-    });
+  const user = React.useContext(UserContext);
+
+  React.useEffect(() => {
+    const unsubscribe = onSnapshot(
+      Firestore.tagCol(user.fireId),
+      collection => {
+        const tags: ITags[] = [];
+        collection.forEach(doc => {
+          const data = doc.data();
+          tags.push({ name: data.name, color: data.color });
+        });
+        setLists(tags);
+      }
+    );
 
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [user.fireId]);
 
   return (
     <div className="select-list">
@@ -74,7 +79,7 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
                 <button
                   className="select-list__delete"
                   onClick={() => {
-                    deleteList('purchasedAids', tag.name);
+                    Firestore.deleteList(user.fireId, tag.name);
                   }}
                 >
                   <img

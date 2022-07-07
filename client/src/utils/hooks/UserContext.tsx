@@ -2,10 +2,10 @@ import * as React from 'react';
 import { createContext, useEffect, useState } from 'react';
 import { get, post } from '../httpClient';
 import { authObserver } from '../firebase/auth';
-import { handleLogIn } from '../modules/modules';
 
 export interface IUser {
   mail: string;
+  fireId: string;
   loggedIn: boolean;
   spotify: {
     connected: boolean;
@@ -18,8 +18,9 @@ export interface IUser {
   };
 }
 
-export const userObject = {
+const userObject: IUser = {
   mail: '',
+  fireId: '',
   loggedIn: false,
   spotify: {
     connected: false,
@@ -33,7 +34,7 @@ export const userObject = {
 };
 
 interface IUserContextProviderProps {
-  children: any;
+  children: JSX.Element | JSX.Element[];
 }
 
 const UserContext = createContext<IUser | null>(null);
@@ -42,20 +43,11 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
   const [user, setUser] = useState<IUser>(userObject);
 
   useEffect(() => {
-    authObserver(setUser);
+    authObserver(setUser, userObject);
   }, []);
 
   useEffect(() => {
-    const localFire = localStorage.getItem('auth');
-
-    if (!localFire) return;
-
     const localSpot = localStorage.getItem('spot');
-
-    if (!localSpot) {
-      localStorage.setItem('spot', 'redirected');
-      handleLogIn();
-    }
 
     const getToken = async () => {
       try {
