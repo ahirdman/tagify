@@ -34,6 +34,7 @@ const SelectedTrack = ({
       collection => {
         const tags: ITags[] = [];
         const tagObject: any[] = [];
+
         collection.forEach(doc => {
           const data = doc.data();
           tags.push({ name: data.name, color: data.color });

@@ -1,4 +1,3 @@
-import { useContext, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import * as React from 'react';
 import './App.scss';
@@ -9,9 +8,9 @@ import Lists from './Pages/lists/Lists';
 import { UserContext } from './utils/hooks/UserContext';
 
 const App = () => {
-  const [deviceId, setDeviceId] = useState('');
+  const [deviceId, setDeviceId] = React.useState('');
 
-  const user = useContext(UserContext);
+  const user = React.useContext(UserContext);
 
   return (
     <>

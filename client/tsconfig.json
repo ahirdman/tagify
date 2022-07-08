@@ -12,6 +12,15 @@
     "noImplicitThis": true,
     "noImplicitAny": true
   },
-  "exclude": ["node_modules", "build", "scripts", "acceptance-tests", "webpack", "jest", "src/setupTests.ts"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts",
+    "functions"
+  ],
   "types": ["typePatches"]
 }
