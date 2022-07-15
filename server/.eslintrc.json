@@ -1,6 +1,0 @@
-{
-  "extends": "salt",
-  "rules": {
-    "import/extensions": 0
-  }
-}

@@ -6,6 +6,7 @@ import { SERVER } from '../../config/server';
 
 export const handleLogIn = () => {
   localStorage.setItem('spot', 'redirected');
+  // console.log(`${SERVER}/auth`);
   return (window.location.href = `${SERVER}/auth`);
 };
 

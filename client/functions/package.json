@@ -11,16 +11,18 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "16"
+    "node": "14"
   },
   "main": "lib/index.js",
   "dependencies": {
     "axios": "^0.27.2",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",
