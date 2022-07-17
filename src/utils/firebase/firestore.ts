@@ -5,9 +5,7 @@ import {
   arrayRemove,
   setDoc,
   collection,
-  // query,
   deleteDoc,
-  // where,
   serverTimestamp,
 } from 'firebase/firestore';
 import { IDbTrack } from '../interface';
@@ -17,9 +15,6 @@ const tagDoc = (user: string, tag: string) =>
   doc(db, 'users', user, 'tags', tag);
 
 const tagCol = (user: string) => collection(db, `users/${user}/tags`);
-
-// const q = (user: string, tag: string) =>
-//   query(collection(db, 'users/purchasedAids/tags'), where('name', '==', tag));
 
 const createUserDoc = async (uid: string) => {
   await setDoc(doc(db, 'users', uid), {
@@ -67,7 +62,6 @@ const deleteList = async (user: string, tag: string) => {
 export {
   tagDoc,
   tagCol,
-  // q,
   createTag,
   tagTrack,
   clearTrackFromTag,

@@ -3,7 +3,7 @@ import Note from '../../assets/music-note.svg';
 import SelectTrack from '../../Components/organisms/SavedTracks/SavedTracks';
 import SelectedTrack from '../../Components/organisms/SelectedTrack/SelectedTrack';
 import EmptyCard from '../../Components/organisms/EmptyCard/EmptyCard';
-import useWindowSize from '../../utils/hooks/window';
+import useWindowSize from '../../utils/hooks/useWindowSize';
 import { IWindow } from '../../utils/interface';
 import { post } from '../../utils/httpClient';
 import { ISavedObject } from '../../utils/interface';

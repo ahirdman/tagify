@@ -51,10 +51,7 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
 
     const getToken = async () => {
       try {
-        console.log(1, 'getting token');
         const token = await get('/auth/token');
-
-        console.log(2, token);
 
         setUser((prevState: IUser) => ({
           ...prevState,

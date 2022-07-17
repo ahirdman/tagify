@@ -4,7 +4,7 @@ import EditList from '../../Components/organisms/EditList/EditList';
 import EmptyCard from '../../Components/organisms/EmptyCard/EmptyCard';
 import List from '../../assets/list.svg';
 import { IWindow } from '../../utils/interface';
-import useWindowSize from '../../utils/hooks/window';
+import useWindowSize from '../../utils/hooks/useWindowSize';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../utils/hooks/UserContext';
 

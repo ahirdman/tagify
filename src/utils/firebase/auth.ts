@@ -78,8 +78,6 @@ export const logOut = async () => {
 export const authObserver = (setUser: Function, emptyUserObj: IUser) => {
   onAuthStateChanged(auth, user => {
     if (user) {
-      localStorage.setItem('auth', 'true');
-
       setUser((prevState: IUser) => ({
         ...prevState,
         loggedIn: true,
@@ -87,9 +85,7 @@ export const authObserver = (setUser: Function, emptyUserObj: IUser) => {
         fireId: user.uid,
       }));
     } else {
-      localStorage.removeItem('auth');
       localStorage.removeItem('spot');
-
       setUser(emptyUserObj);
     }
   });
