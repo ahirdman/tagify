@@ -1,4 +1,4 @@
-interface ITrack {
+export interface ITrack {
   album: {
     images: [
       {
@@ -31,7 +31,7 @@ interface ITrack {
   uri: string;
 }
 
-interface ISDKTrack {
+export interface ISDKTrack {
   name: string;
   album: {
     images: [{ url: string }];
@@ -39,7 +39,7 @@ interface ISDKTrack {
   artists: [{ name: string }];
 }
 
-interface ISavedObject {
+export interface ISavedObject {
   added_at: string;
   track: {
     album: {
@@ -119,7 +119,7 @@ interface ISavedObject {
   };
 }
 
-interface ISavedTrack {
+export interface ISavedTrack {
   album: {
     album_type: string;
     artists: [
@@ -196,29 +196,19 @@ interface ISavedTrack {
   uri: string;
 }
 
-interface IDbTrack {
+export interface IDbTrack {
   artist: string;
   title: string;
   artwork: string;
   uri: string;
 }
 
-interface ITags {
+export interface ITags {
   name: string;
   color: string;
 }
 
-interface IWindow {
+export interface IWindow {
   width: undefined | number;
   height: undefined | number;
 }
-
-export type {
-  ITrack,
-  ISDKTrack,
-  ISavedObject,
-  ISavedTrack,
-  IDbTrack,
-  ITags,
-  IWindow,
-};

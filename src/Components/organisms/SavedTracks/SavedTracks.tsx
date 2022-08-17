@@ -6,10 +6,36 @@ import CardNav from '../../molecules/CardNav/CardNav';
 
 interface ISavedTracks {
   savedTracks: ISavedObject[];
+  fetchMoreTracks: any;
   setSelectedTrack: any;
+  isFetching: boolean;
+  setIsFetching: any;
 }
 
-const SelectTrack = ({ savedTracks, setSelectedTrack }: ISavedTracks) => {
+const SelectTrack = ({
+  savedTracks,
+  setSelectedTrack,
+  fetchMoreTracks,
+  isFetching,
+  setIsFetching,
+}: ISavedTracks) => {
+  React.useEffect(() => {
+    const listEl = document.getElementById('tracks');
+    const handleScroll = () => {
+      if (listEl.scrollTop + listEl.clientHeight >= listEl.scrollHeight) {
+        setIsFetching(true);
+      }
+    };
+
+    listEl.addEventListener('scroll', handleScroll);
+    return () => listEl.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  React.useEffect(() => {
+    if (!isFetching) return;
+    fetchMoreTracks();
+  }, [isFetching]);
+
   return (
     <div className="select">
       <CardNav title="Saved Tracks" />
@@ -20,7 +46,7 @@ const SelectTrack = ({ savedTracks, setSelectedTrack }: ISavedTracks) => {
       <section className="select__header">
         <p className="select__header--title">TITLE & ARTIST</p>
       </section>
-      <ul className="track-list">
+      <ul className="track-list" id="tracks">
         {savedTracks.map((track, index) => {
           return (
             <li
@@ -42,6 +68,7 @@ const SelectTrack = ({ savedTracks, setSelectedTrack }: ISavedTracks) => {
             </li>
           );
         })}
+        {isFetching && <p>Fetching more tracks...</p>}
       </ul>
     </div>
   );

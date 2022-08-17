@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const router = express.Router();
 
+//Get users playlists
 router.post('/', async ({ body: { token, userId, name } }, res) => {
   try {
     const results = await axios(
@@ -19,6 +20,7 @@ router.post('/', async ({ body: { token, userId, name } }, res) => {
   }
 });
 
+// Create playlist
 router.post('/add', async ({ body: { token, playlistId, tracks } }, res) => {
   const postBody = {
     uris: tracks,

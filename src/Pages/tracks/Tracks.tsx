@@ -8,7 +8,6 @@ import { IWindow } from '../../utils/interface';
 import { post } from '../../utils/httpClient';
 import { ISavedObject } from '../../utils/interface';
 import './Tracks.scss';
-import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../utils/hooks/UserContext';
 
 interface ITracksProps {
@@ -16,17 +15,30 @@ interface ITracksProps {
 }
 
 const Tracks = ({ deviceId }: ITracksProps) => {
-  const [savedTracks, setSavedTracks] = useState([] as ISavedObject[]);
-  const [selectedTrack, setSelectedTrack] = useState();
+  const [savedTracks, setSavedTracks] = React.useState([] as ISavedObject[]);
+  const [selectedTrack, setSelectedTrack] = React.useState();
+  const [nextUrl, setNextUrl] = React.useState();
+  const [isFetching, setIsFetching] = React.useState(false);
 
-  const user = useContext(UserContext);
+  const user = React.useContext(UserContext);
 
-  useEffect(() => {
+  const fetchMoreTracks = async () => {
+    const nextTracks = await post('/user/next', {
+      token: user.spotify.accessToken,
+      url: nextUrl,
+    });
+    setSavedTracks(prevState => [...prevState, ...nextTracks.items]);
+    setIsFetching(false);
+    setNextUrl(nextTracks.next);
+  };
+
+  React.useEffect(() => {
     const getTracks = async () => {
       const savedTracks = await post('/user/saved', {
         token: user.spotify.accessToken,
       });
       setSavedTracks(savedTracks.items);
+      setNextUrl(savedTracks.next);
     };
 
     if (user.spotify.accessToken) {
@@ -43,7 +55,10 @@ const Tracks = ({ deviceId }: ITracksProps) => {
           <>
             <SelectTrack
               savedTracks={savedTracks}
+              fetchMoreTracks={fetchMoreTracks}
               setSelectedTrack={setSelectedTrack}
+              isFetching={isFetching}
+              setIsFetching={setIsFetching}
             />
             <>
               {selectedTrack ? (
@@ -74,7 +89,10 @@ const Tracks = ({ deviceId }: ITracksProps) => {
           ) : (
             <SelectTrack
               savedTracks={savedTracks}
+              fetchMoreTracks={fetchMoreTracks}
               setSelectedTrack={setSelectedTrack}
+              isFetching={isFetching}
+              setIsFetching={setIsFetching}
             />
           )}
         </>

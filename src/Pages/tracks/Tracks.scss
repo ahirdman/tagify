@@ -2,7 +2,8 @@
 
 .tracks-view {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   overflow: hidden;
 
   @media screen and (min-width: styles.$breakpoint-phone) {

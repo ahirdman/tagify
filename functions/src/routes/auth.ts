@@ -18,10 +18,7 @@ const stateName = 'spotify_auth_state';
 
 let accessData: IAccessData;
 
-const baseUrl = 'http://localhost:3000';
-// process.env.NODE_ENV === "production" ?
-//   "https://spotifymoody.herokuapp.com/" :
-//   "http://localhost:3000";
+const baseUrl = process.env.BASE_URL as string;
 
 const router = express.Router();
 
@@ -49,7 +46,7 @@ router.get('/callback', async (req, res) => {
   const storedState = req.cookies ? req.cookies[stateName] : null;
 
   if (state === null || state !== storedState) {
-    res.json('state mismatch');
+    res.json({ error: 'state mismatch' });
   }
 
   const form = new URLSearchParams();

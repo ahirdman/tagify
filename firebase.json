@@ -11,7 +11,13 @@
   },
   "hosting": {
     "public": "build",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "app"
+      }
+    ]
   },
   "emulators": {
     "auth": {
@@ -21,7 +27,7 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8080
+      "port": 8000
     },
     "hosting": {
       "port": 3000

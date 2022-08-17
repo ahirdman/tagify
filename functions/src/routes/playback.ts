@@ -46,6 +46,7 @@ router.post('/track', async ({ body: { token, trackId } }, res) => {
   }
 });
 
+// Save track to users library
 router.post('/save', async ({ body: { token, trackId } }, res) => {
   try {
     await axios(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
