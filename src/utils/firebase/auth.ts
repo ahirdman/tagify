@@ -4,7 +4,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
-import { IUser } from '../hooks/UserContext';
+import { IUser } from '../context/UserContext';
 import { auth } from './config';
 import { createUserDoc } from './firestore';
 

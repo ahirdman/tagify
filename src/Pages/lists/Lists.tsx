@@ -6,7 +6,7 @@ import List from '../../assets/list.svg';
 import { IWindow } from '../../utils/interface';
 import useWindowSize from '../../utils/hooks/useWindowSize';
 import { useContext, useState } from 'react';
-import { UserContext } from '../../utils/hooks/UserContext';
+import { UserContext } from '../../utils/context/UserContext';
 
 const Lists = () => {
   const [selectedList, setSelectedList] = useState();

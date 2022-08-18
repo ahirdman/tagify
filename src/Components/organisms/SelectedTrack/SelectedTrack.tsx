@@ -10,7 +10,7 @@ import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
 import CardNav from '../../molecules/CardNav/CardNav';
 import UserTags from '../../molecules/UserTags/UserTags';
-import { UserContext } from '../../../utils/hooks/UserContext';
+import { UserContext } from '../../../utils/context/UserContext';
 
 interface ISelectedTrackProps {
   selectedTrack?: ISavedTrack;
@@ -69,14 +69,9 @@ const SelectedTrack = ({
           className="track-card__album"
         />
         <img
-          onClick={() =>
-            playTrack(
-              deviceId,
-              user.spotify.accessToken,
-              selectedTrack.album.uri,
-              selectedTrack.track_number - 1
-            )
-          }
+          onClick={() => {
+            playTrack(deviceId, user.spotify.accessToken, selectedTrack.uri);
+          }}
           src={Play}
           alt="playback"
           className="track-card__playback"

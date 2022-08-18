@@ -3,7 +3,7 @@ import * as Firestore from '../../../utils/firebase/firestore';
 import Cross from '../../../assets/cross-circle.svg';
 import './TrackTags.scss';
 import Tag from '../../atoms/Tag/Tag';
-import { UserContext } from '../../../utils/hooks/UserContext';
+import { UserContext } from '../../../utils/context/UserContext';
 import { dbTrack } from '../../../utils/modules/tracks/tracks';
 
 interface ITrackTags {

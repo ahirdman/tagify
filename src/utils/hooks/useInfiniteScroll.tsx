@@ -1,35 +1,35 @@
 import * as React from 'react';
 
-interface IUseInfiniteScrollProps {
-  callback: any;
-  element: any;
-}
-
-const useInfiniteScroll = ({ callback, element }: IUseInfiniteScrollProps) => {
+const useInfiniteScroll = (callback: Function) => {
   const [isFetching, setIsFetching] = React.useState(false);
+  const listEl = React.useRef<HTMLUListElement>(null);
 
   React.useEffect(() => {
-    element.addEventListener('scroll', handleScroll);
-    return () => element.removeEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      if (
+        listEl.current.scrollTop + listEl.current.clientHeight >=
+          listEl.current.scrollHeight &&
+        !isFetching
+      ) {
+        setIsFetching(true);
+      }
+    };
+
+    const currentEl = listEl.current;
+
+    if (listEl && listEl.current) {
+      currentEl.addEventListener('scroll', handleScroll);
+    }
+
+    return () => currentEl.removeEventListener('scroll', handleScroll);
   }, []);
 
   React.useEffect(() => {
     if (!isFetching) return;
-    callback(() => {
-      console.log('called back');
-    });
+    callback();
   }, [isFetching]);
 
-  const handleScroll = () => {
-    if (
-      element.scrollTop + element.clientHeight >= element.scrollHeight ||
-      !isFetching
-    ) {
-      setIsFetching(true);
-    }
-  };
-
-  return [isFetching, setIsFetching];
+  return [isFetching, setIsFetching, listEl] as const;
 };
 
 export default useInfiniteScroll;

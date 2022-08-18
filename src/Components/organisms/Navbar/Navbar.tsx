@@ -6,7 +6,7 @@ import List from '../../../assets/list-white.svg';
 import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
 import { logOut } from '../../../utils/firebase/auth';
-import { UserContext } from '../../../utils/hooks/UserContext';
+import { UserContext } from '../../../utils/context/UserContext';
 
 interface INavbarProps {
   setDeviceId: any;

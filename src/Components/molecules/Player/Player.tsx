@@ -3,7 +3,7 @@ import PlayButton from '../../../assets/playback/play-white.svg';
 import PauseButton from '../../../assets/playback/pause-white.svg';
 import './Player.scss';
 import * as React from 'react';
-import { UserContext } from '../../../utils/hooks/UserContext';
+import { UserContext } from '../../../utils/context/UserContext';
 
 interface INavbarProps {
   setDeviceId: any;

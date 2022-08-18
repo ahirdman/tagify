@@ -1,18 +1,18 @@
-import express from 'express';
-import axios from 'axios';
+import express from "express";
+import axios from "axios";
 
 const router = express.Router();
 
-//Get users playlists
-router.post('/', async ({ body: { token, userId, name } }, res) => {
+// Get users playlists
+router.post("/", async ({body: {token, userId, name}}, res) => {
   try {
     const results = await axios(
-      `https://api.spotify.com/v1/users/${userId}/playlists`,
-      {
-        method: 'POST',
-        data: JSON.stringify({ name }),
-        headers: { Authorization: `Bearer ${token}` },
-      }
+        `https://api.spotify.com/v1/users/${userId}/playlists`,
+        {
+          method: "POST",
+          data: JSON.stringify({name}),
+          headers: {Authorization: `Bearer ${token}`},
+        }
     );
     res.send(results.data);
   } catch (error) {
@@ -21,19 +21,19 @@ router.post('/', async ({ body: { token, userId, name } }, res) => {
 });
 
 // Create playlist
-router.post('/add', async ({ body: { token, playlistId, tracks } }, res) => {
+router.post("/add", async ({body: {token, playlistId, tracks}}, res) => {
   const postBody = {
     uris: tracks,
   };
 
   try {
     const results = await axios(
-      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
-      {
-        method: 'POST',
-        data: JSON.stringify(postBody),
-        headers: { Authorization: `Bearer ${token}` },
-      }
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        {
+          method: "POST",
+          data: JSON.stringify(postBody),
+          headers: {Authorization: `Bearer ${token}`},
+        }
     );
     res.send(results.data);
   } catch (error) {
@@ -41,4 +41,4 @@ router.post('/add', async ({ body: { token, playlistId, tracks } }, res) => {
   }
 });
 
-export { router as default };
+export {router as default};

@@ -8,7 +8,7 @@ import { IWindow } from '../../utils/interface';
 import { post } from '../../utils/httpClient';
 import { ISavedObject } from '../../utils/interface';
 import './Tracks.scss';
-import { UserContext } from '../../utils/hooks/UserContext';
+import { UserContext } from '../../utils/context/UserContext';
 
 interface ITracksProps {
   deviceId: string;
@@ -18,19 +18,8 @@ const Tracks = ({ deviceId }: ITracksProps) => {
   const [savedTracks, setSavedTracks] = React.useState([] as ISavedObject[]);
   const [selectedTrack, setSelectedTrack] = React.useState();
   const [nextUrl, setNextUrl] = React.useState();
-  const [isFetching, setIsFetching] = React.useState(false);
 
   const user = React.useContext(UserContext);
-
-  const fetchMoreTracks = async () => {
-    const nextTracks = await post('/user/next', {
-      token: user.spotify.accessToken,
-      url: nextUrl,
-    });
-    setSavedTracks(prevState => [...prevState, ...nextTracks.items]);
-    setIsFetching(false);
-    setNextUrl(nextTracks.next);
-  };
 
   React.useEffect(() => {
     const getTracks = async () => {
@@ -55,10 +44,10 @@ const Tracks = ({ deviceId }: ITracksProps) => {
           <>
             <SelectTrack
               savedTracks={savedTracks}
-              fetchMoreTracks={fetchMoreTracks}
+              setSavedTracks={setSavedTracks}
               setSelectedTrack={setSelectedTrack}
-              isFetching={isFetching}
-              setIsFetching={setIsFetching}
+              nextUrl={nextUrl}
+              setNextUrl={setNextUrl}
             />
             <>
               {selectedTrack ? (
@@ -89,10 +78,10 @@ const Tracks = ({ deviceId }: ITracksProps) => {
           ) : (
             <SelectTrack
               savedTracks={savedTracks}
-              fetchMoreTracks={fetchMoreTracks}
+              setSavedTracks={setSavedTracks}
               setSelectedTrack={setSelectedTrack}
-              isFetching={isFetching}
-              setIsFetching={setIsFetching}
+              nextUrl={nextUrl}
+              setNextUrl={setNextUrl}
             />
           )}
         </>

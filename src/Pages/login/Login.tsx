@@ -6,7 +6,7 @@ import Backdrop from '../../Components/atoms/Backdrop/Backdrop';
 import ConnectScreen from '../../Components/molecules/ConnectScreen/ConnectScreen';
 import SignInForm from '../../Components/molecules/SignInForm/SignInForm';
 import SignUpForm from '../../Components/molecules/SignUpForm/SignUpForm';
-import { UserContext } from '../../utils/hooks/UserContext';
+import { UserContext } from '../../utils/context/UserContext';
 import './Login.scss';
 
 const Login = () => {

@@ -7,7 +7,7 @@ import { IDbTrack } from '../../../utils/interface';
 import Send from '../../../assets/send.svg';
 import { post } from '../../../utils/httpClient';
 import CardNav from '../../molecules/CardNav/CardNav';
-import { UserContext } from '../../../utils/hooks/UserContext';
+import { UserContext } from '../../../utils/context/UserContext';
 
 interface IEditListProps {
   selectedList: string;

@@ -7,7 +7,7 @@ import * as Firestore from '../../../utils/firebase/firestore';
 import { onSnapshot } from 'firebase/firestore';
 import { ITags } from '../../../utils/interface';
 import CardNav from '../../molecules/CardNav/CardNav';
-import { UserContext } from '../../../utils/hooks/UserContext';
+import { UserContext } from '../../../utils/context/UserContext';
 
 interface ISelectListProps {
   setSelectedList: any;

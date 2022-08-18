@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Plus from '../../../assets/add-circle.svg';
 import * as Firestore from '../../../utils/firebase/firestore';
-import { UserContext } from '../../../utils/hooks/UserContext';
+import { UserContext } from '../../../utils/context/UserContext';
 import { ITags } from '../../../utils/interface';
 import { dbTrack } from '../../../utils/modules/tracks/tracks';
 import Tag from '../../atoms/Tag/Tag';

@@ -11,10 +11,9 @@ const saveTrack = async (track: any, token: string): Promise<void> => {
 const playTrack = async (
   deviceId: string,
   token: string,
-  album: string,
-  position: number
+  uri: string
 ): Promise<void> => {
-  await post('/playback', { token, deviceId, album, position });
+  await post('/playback', { token, deviceId, uri });
 };
 
 const trackObject = {

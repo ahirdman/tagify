@@ -3,38 +3,39 @@ import { ISavedObject } from '../../../utils/interface';
 import Magnifier from '../../../assets/magnifier.svg';
 import './SelectTrack.scss';
 import CardNav from '../../molecules/CardNav/CardNav';
+import useInfiniteScroll from '../../../utils/hooks/useInfiniteScroll';
+import { UserContext } from '../../../utils/context/UserContext';
+import { post } from '../../../utils/httpClient';
 
 interface ISavedTracks {
   savedTracks: ISavedObject[];
-  fetchMoreTracks: any;
   setSelectedTrack: any;
-  isFetching: boolean;
-  setIsFetching: any;
+  setSavedTracks: any;
+  nextUrl: string;
+  setNextUrl: any;
 }
 
 const SelectTrack = ({
   savedTracks,
+  setSavedTracks,
   setSelectedTrack,
-  fetchMoreTracks,
-  isFetching,
-  setIsFetching,
+  nextUrl,
+  setNextUrl,
 }: ISavedTracks) => {
-  React.useEffect(() => {
-    const listEl = document.getElementById('tracks');
-    const handleScroll = () => {
-      if (listEl.scrollTop + listEl.clientHeight >= listEl.scrollHeight) {
-        setIsFetching(true);
-      }
-    };
+  const user = React.useContext(UserContext);
 
-    listEl.addEventListener('scroll', handleScroll);
-    return () => listEl.removeEventListener('scroll', handleScroll);
-  }, []);
+  const fetchMoreTracks = async () => {
+    const nextTracks = await post('/user/next', {
+      token: user.spotify.accessToken,
+      url: nextUrl,
+    });
+    setSavedTracks((prevState: any) => [...prevState, ...nextTracks.items]);
+    setIsFetching(false);
+    setNextUrl(nextTracks.next);
+  };
 
-  React.useEffect(() => {
-    if (!isFetching) return;
-    fetchMoreTracks();
-  }, [isFetching]);
+  const [isFetching, setIsFetching, listEl] =
+    useInfiniteScroll(fetchMoreTracks);
 
   return (
     <div className="select">
@@ -46,7 +47,7 @@ const SelectTrack = ({
       <section className="select__header">
         <p className="select__header--title">TITLE & ARTIST</p>
       </section>
-      <ul className="track-list" id="tracks">
+      <ul className="track-list" id="tracks" ref={listEl}>
         {savedTracks.map((track, index) => {
           return (
             <li

@@ -4,7 +4,7 @@ import Add from '../../../assets/add.svg';
 import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
 import { randomColor } from '../../../utils/modules/db';
-import { UserContext } from '../../../utils/hooks/UserContext';
+import { UserContext } from '../../../utils/context/UserContext';
 
 interface IAddTagProps {
   selectedTrack: any;
