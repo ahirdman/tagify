@@ -15,6 +15,8 @@ export interface IUser {
       id: string;
     };
     accessToken: string;
+    refreshToken: string;
+    expires: number;
   };
 }
 
@@ -30,6 +32,8 @@ const userObject: IUser = {
       id: '',
     },
     accessToken: '',
+    refreshToken: '',
+    expires: -1,
   },
 };
 
@@ -49,6 +53,22 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
   useEffect(() => {
     const localSpot = localStorage.getItem('spot');
 
+    const refreshToken = async () => {
+      const token = await get('/auth/refresh');
+
+      setUser((prevState: IUser) => ({
+        ...prevState,
+        spotify: {
+          ...prevState.spotify,
+          accessToken: token.access_token,
+          refreshToken: token.refresh_token,
+          expires: token.expires_in,
+        },
+      }));
+      console.log('refreshed token');
+      setTimeout(() => refreshToken(), token.expires_in * 1000);
+    };
+
     const getToken = async () => {
       try {
         const token = await get('/auth/token');
@@ -59,10 +79,17 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
             ...prevState.spotify,
             connected: true,
             accessToken: token.access_token,
+            refreshToken: token.refresh_token,
+            expires: token.expires_in,
           },
         }));
+
+        setTimeout(() => refreshToken(), token.expires_in * 1000);
       } catch (error) {
         console.log(error);
+        user.loggedIn === true
+          ? console.log(error)
+          : localStorage.removeItem('spot');
       }
     };
 

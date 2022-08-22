@@ -6,9 +6,14 @@ import Login from './Pages/login/Login';
 import Tracks from './Pages/tracks/Tracks';
 import Lists from './Pages/lists/Lists';
 import { UserContext } from './utils/context/UserContext';
+import * as SavedReducer from './utils/reducers/savedTracks';
 
 const App = () => {
   const [deviceId, setDeviceId] = React.useState('');
+  const [state, dispatch] = React.useReducer(
+    SavedReducer.savedTracksReducer,
+    SavedReducer.initialTracksState
+  );
 
   const user = React.useContext(UserContext);
 
@@ -18,7 +23,12 @@ const App = () => {
         <main className="app">
           <Navbar setDeviceId={setDeviceId} />
           <Routes>
-            <Route path="/" element={<Tracks deviceId={deviceId} />} />
+            <Route
+              path="/"
+              element={
+                <Tracks deviceId={deviceId} state={state} dispatch={dispatch} />
+              }
+            />
             <Route path="/lists" element={<Lists />} />
           </Routes>
         </main>
