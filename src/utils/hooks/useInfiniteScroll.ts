@@ -23,7 +23,9 @@ const useInfiniteScroll = (
   );
 
   React.useEffect(() => {
-    const handleScroll = () => {
+    console.log('scroll effect');
+
+    const handleScroll = (): void => {
       setScrollPosition(listEl.current.scrollTop);
       if (
         listEl.current.scrollTop + listEl.current.clientHeight >=
@@ -36,7 +38,7 @@ const useInfiniteScroll = (
 
     const currentEl = listEl.current;
 
-    if (listEl && listEl.current) {
+    if (currentEl) {
       currentEl.addEventListener('scroll', handleScroll);
     }
 
@@ -46,15 +48,18 @@ const useInfiniteScroll = (
   }, []);
 
   React.useEffect(() => {
+    console.log('callback effect');
+
     if (!isFetching) return;
     callback();
   }, [isFetching]);
 
   React.useEffect(() => {
+    console.log('filter effect');
     if (filtered < 8 && total !== fetched) {
       setIsFetching(true);
     }
-  }, [filtered]);
+  }, [filtered, fetched, total]);
 
   return [isFetching, setIsFetching, listEl] as const;
 };

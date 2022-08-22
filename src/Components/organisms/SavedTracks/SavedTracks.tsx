@@ -18,6 +18,22 @@ interface ISavedTracks {
   dispatch: any;
 }
 
+const getTracks = async (token: string, callback: Function) => {
+  const savedTracks = await post('/user/saved', {
+    token,
+  });
+
+  callback({
+    type: StateActionTypes.INITIAL_LOAD,
+    payload: {
+      total: savedTracks.total,
+      nextUrl: savedTracks.next,
+      savedTracks: savedTracks.items,
+      filteredTracks: savedTracks.items,
+    },
+  });
+};
+
 const SelectTrack = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
   const [query, setQuery] = React.useState('');
   const user = React.useContext(UserContext);
@@ -42,6 +58,11 @@ const SelectTrack = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
     setIsFetching(false);
   };
 
+  /**
+   * Custom Hook - manages infinite scroll functionalty, calls fetchMoreTracks when user hits bottom of element
+   * - until all tracks have been fetched
+   */
+
   const [isFetching, setIsFetching, listEl] = useInfiniteScroll(
     fetchMoreTracks,
     state.total,
@@ -49,27 +70,19 @@ const SelectTrack = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
     state.filteredTracks.length
   );
 
+  /**
+   * Initial fetch when user has obtained access Token. Should only run once.
+   */
+
   React.useEffect(() => {
     if (!user.spotify.accessToken || state.savedTracks.length !== 0) return;
 
-    const getTracks = async () => {
-      const savedTracks = await post('/user/saved', {
-        token: user.spotify.accessToken,
-      });
+    getTracks(user.spotify.accessToken, dispatch);
+  }, [user.spotify.accessToken, state.savedTracks.length, dispatch]);
 
-      dispatch({
-        type: StateActionTypes.INITIAL_LOAD,
-        payload: {
-          total: savedTracks.total,
-          nextUrl: savedTracks.next,
-          savedTracks: savedTracks.items,
-          filteredTracks: savedTracks.items,
-        },
-      });
-    };
-
-    getTracks();
-  }, [user.spotify.accessToken]);
+  /**
+   *  Filter effect, filter service is managed by reducer.
+   */
 
   React.useEffect(() => {
     if (query.length > 0) {
@@ -78,7 +91,7 @@ const SelectTrack = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
         payload: query,
       });
     }
-  }, [query, state.savedTracks]);
+  }, [query, state.savedTracks, dispatch]);
 
   return (
     <div className="select">
