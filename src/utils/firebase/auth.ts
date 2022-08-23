@@ -4,7 +4,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
-import { IUser } from '../context/UserContext';
+import { IUser } from '../reducers/userReducer';
 import { auth } from './config';
 import { createUserDoc } from './firestore';
 
@@ -75,18 +75,18 @@ export const logOut = async () => {
   await signOut(auth);
 };
 
-export const authObserver = (setUser: Function, emptyUserObj: IUser) => {
-  onAuthStateChanged(auth, user => {
-    if (user) {
-      setUser((prevState: IUser) => ({
-        ...prevState,
-        loggedIn: true,
-        mail: user.email,
-        fireId: user.uid,
-      }));
-    } else {
-      localStorage.removeItem('spot');
-      setUser(emptyUserObj);
-    }
-  });
-};
+// export const authObserver = (setUser: Function, emptyUserObj: IUser) => {
+//   onAuthStateChanged(auth, user => {
+//     if (user) {
+//       setUser((prevState: IUser) => ({
+//         ...prevState,
+//         loggedIn: true,
+//         mail: user.email,
+//         fireId: user.uid,
+//       }));
+//     } else {
+//       localStorage.removeItem('spot');
+//       setUser(emptyUserObj);
+//     }
+//   });
+// };

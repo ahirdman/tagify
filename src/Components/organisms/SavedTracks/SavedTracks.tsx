@@ -10,7 +10,7 @@ import SearchBar from '../../molecules/SearchBar/SearchBar';
 import {
   ITracksStateObj,
   StateActionTypes,
-} from '../../../utils/reducers/savedTracks';
+} from '../../../utils/reducers/savedReducer';
 
 interface ISavedTracks {
   setSelectedTrack: any;
@@ -38,6 +38,9 @@ const SelectTrack = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
   const [query, setQuery] = React.useState('');
   const user = React.useContext(UserContext);
   const fetchedAllTracks = state.savedTracks.length === state.total;
+  const resumeFetching =
+    state.filteredTracks.length < 8 &&
+    state.total !== state.filteredTracks.length;
 
   const fetchMoreTracks = async () => {
     if (fetchedAllTracks) return;
@@ -65,9 +68,7 @@ const SelectTrack = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
 
   const [isFetching, setIsFetching, listEl] = useInfiniteScroll(
     fetchMoreTracks,
-    state.total,
-    state.savedTracks.length,
-    state.filteredTracks.length
+    resumeFetching
   );
 
   /**

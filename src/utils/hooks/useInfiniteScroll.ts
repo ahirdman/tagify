@@ -1,12 +1,15 @@
 import * as React from 'react';
 import useStoredRef from './useStoredRef';
 
-const useInfiniteScroll = (
-  callback: Function,
-  total: number,
-  fetched: number,
-  filtered: number
-) => {
+// const useCallbackRef = (callback:Function) => {
+//   const callbackRef = React.useRef(callback);
+//   React.useLayoutEffect(() => {
+//     callbackRef.current = callback;
+//   }, [callback]);
+//   return callbackRef;
+// };
+
+const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
   const [isFetching, setIsFetching] = React.useState(false);
   const [scrollPosition, _setScrollPosition] = React.useState(0);
   const listEl = React.useRef<HTMLUListElement>(null);
@@ -22,9 +25,10 @@ const useInfiniteScroll = (
     handleReturn
   );
 
-  React.useEffect(() => {
-    console.log('scroll effect');
+  // const savedCallback = useCallbackRef(callback)
 
+  // FIXME: - Dependency array - isFetching & setScrollPosition dependency
+  React.useEffect(() => {
     const handleScroll = (): void => {
       setScrollPosition(listEl.current.scrollTop);
       if (
@@ -35,6 +39,8 @@ const useInfiniteScroll = (
         setIsFetching(true);
       }
     };
+
+    handleScroll();
 
     const currentEl = listEl.current;
 
@@ -47,19 +53,17 @@ const useInfiniteScroll = (
     };
   }, []);
 
+  // FIXME: - Dependency array - callback dependency
   React.useEffect(() => {
-    console.log('callback effect');
-
     if (!isFetching) return;
     callback();
   }, [isFetching]);
 
   React.useEffect(() => {
-    console.log('filter effect');
-    if (filtered < 8 && total !== fetched) {
+    if (forceFetch) {
       setIsFetching(true);
     }
-  }, [filtered, fetched, total]);
+  }, [forceFetch]);
 
   return [isFetching, setIsFetching, listEl] as const;
 };

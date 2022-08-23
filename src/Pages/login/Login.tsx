@@ -47,7 +47,7 @@ const Login = () => {
         <Backdrop onClick={() => setOpenSignIn(false)}>
           <AuthModal>
             {user.loggedIn ? (
-              <ConnectScreen autoConnect={true} />
+              <ConnectScreen autoConnect={false} />
             ) : (
               <SignInForm />
             )}

@@ -13,7 +13,8 @@ const useStoredRef = (
     stateSetter(param);
   };
 
-  React.useEffect(() => {
+  // FIXME: dependency array
+  React.useLayoutEffect(() => {
     const previousState = sessionStorage.getItem(sessionStorageName);
 
     if (previousState) {

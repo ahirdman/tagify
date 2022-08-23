@@ -6,7 +6,7 @@ import Login from './Pages/login/Login';
 import Tracks from './Pages/tracks/Tracks';
 import Lists from './Pages/lists/Lists';
 import { UserContext } from './utils/context/UserContext';
-import * as SavedReducer from './utils/reducers/savedTracks';
+import * as SavedReducer from './utils/reducers/savedReducer';
 
 const App = () => {
   const [deviceId, setDeviceId] = React.useState('');

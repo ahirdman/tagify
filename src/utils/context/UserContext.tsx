@@ -1,71 +1,103 @@
+import { onAuthStateChanged } from 'firebase/auth';
 import * as React from 'react';
-import { createContext, useEffect, useState } from 'react';
+import { auth } from '../firebase/config';
+import { userDoc } from '../firebase/firestore';
 import { get, post } from '../httpClient';
-import { authObserver } from '../firebase/auth';
-
-export interface IUser {
-  mail: string;
-  fireId: string;
-  loggedIn: boolean;
-  spotify: {
-    connected: boolean;
-    profile: {
-      image: string;
-      name: string;
-      id: string;
-    };
-    accessToken: string;
-    refreshToken: string;
-    expires: number;
-  };
-}
-
-const userObject: IUser = {
-  mail: '',
-  fireId: '',
-  loggedIn: false,
-  spotify: {
-    connected: false,
-    profile: {
-      image: '',
-      name: '',
-      id: '',
-    },
-    accessToken: '',
-    refreshToken: '',
-    expires: -1,
-  },
-};
+import { handleLogIn } from '../modules/modules';
+import {
+  initialUserState,
+  IUser,
+  UserActionTypes,
+  userReducer,
+} from '../reducers/userReducer';
 
 interface IUserContextProviderProps {
   children: JSX.Element | JSX.Element[];
 }
 
-const UserContext = createContext<IUser | null>(null);
+const UserContext = React.createContext<IUser | null>(null);
 
 const UserContextProvider = ({ children }: IUserContextProviderProps) => {
-  const [user, setUser] = useState<IUser>(userObject);
+  const [user, dispatch] = React.useReducer(userReducer, initialUserState);
 
-  useEffect(() => {
-    authObserver(setUser, userObject);
+  React.useEffect(() => {
+    const authObserver = () => {
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          dispatch({
+            type: UserActionTypes.FIREBASE_SIGN_IN,
+            payload: {
+              loggedIn: true,
+              mail: user.email,
+              fireId: user.uid,
+            },
+          });
+        } else {
+          dispatch({
+            type: UserActionTypes.FIREBASE_SIGN_OUT,
+            payload: initialUserState,
+          });
+        }
+      });
+    };
+
+    authObserver();
   }, []);
 
-  useEffect(() => {
-    const localSpot = localStorage.getItem('spot');
+  /**
+   * Get Spotify token when user is signed in
+   */
 
-    const refreshToken = async () => {
+  /**
+   * TODO: If user.spotify.connected === true, obtain refreshtoken from users firestore document and fetch a new token from spotify.
+   *  IF user.sptoify.connected === false, fire auth flow and write refresh token to users firestore document
+   */
+
+  React.useEffect(() => {
+    if (!user.loggedIn) return;
+
+    const getTokenWithRefresh = async () => {
       const token = await get('/auth/refresh');
-
-      setUser((prevState: IUser) => ({
-        ...prevState,
-        spotify: {
-          ...prevState.spotify,
+      dispatch({
+        type: UserActionTypes.SPOTIFY_TOKEN,
+        payload: {
           accessToken: token.access_token,
           refreshToken: token.refresh_token,
           expires: token.expires_in,
         },
-      }));
-      console.log('refreshed token');
+      });
+    };
+
+    const tokenService = async () => {
+      const userDocument = await userDoc(user.fireId);
+
+      if (userDocument.spotifyAuth === true) {
+        console.log('connected ');
+        // Get token from spotify api with existing refresh token
+        // user.spotifyRefreshToken
+        // Dispatch user object on success
+        getTokenWithRefresh();
+      } else {
+        console.log('not connected');
+        // handleLogIn();
+        // Go through initial auth process
+      }
+    };
+
+    tokenService();
+
+    const refreshToken = async () => {
+      const token = await get('/auth/refresh');
+
+      // setUser((prevState: IUser) => ({
+      //   ...prevState,
+      //   spotify: {
+      //     ...prevState.spotify,
+      //     accessToken: token.access_token,
+      //     refreshToken: token.refresh_token,
+      //     expires: token.expires_in,
+      //   },
+      // }));
       setTimeout(() => refreshToken(), token.expires_in * 1000);
     };
 
@@ -73,16 +105,16 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
       try {
         const token = await get('/auth/token');
 
-        setUser((prevState: IUser) => ({
-          ...prevState,
-          spotify: {
-            ...prevState.spotify,
-            connected: true,
-            accessToken: token.access_token,
-            refreshToken: token.refresh_token,
-            expires: token.expires_in,
-          },
-        }));
+        // setUser((prevState: IUser) => ({
+        //   ...prevState,
+        //   spotify: {
+        //     ...prevState.spotify,
+        //     connected: true,
+        //     accessToken: token.access_token,
+        //     refreshToken: token.refresh_token,
+        //     expires: token.expires_in,
+        //   },
+        // }));
 
         setTimeout(() => refreshToken(), token.expires_in * 1000);
       } catch (error) {
@@ -93,31 +125,32 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
       }
     };
 
-    if (localSpot === 'redirected') {
-      getToken();
-    }
+    // if (localSpot === 'redirected') {
+    //   getToken();
+    // }
   }, [user.loggedIn]);
 
-  useEffect(() => {
-    const getSpotifyUser = async () => {
+  /**
+   * Get Spotify Profile when accessToken is obtained
+   */
+
+  React.useEffect(() => {
+    const getSpotifyUserData = async () => {
       const spotifyUser = await post('/user', {
         token: user.spotify.accessToken,
       });
-      setUser((prevState: IUser) => ({
-        ...prevState,
-        spotify: {
-          ...prevState.spotify,
-          profile: {
-            image: spotifyUser.images[0].url,
-            name: spotifyUser.display_name,
-            id: spotifyUser.id,
-          },
+      dispatch({
+        type: UserActionTypes.SPOTIFY_PROFILE,
+        payload: {
+          image: spotifyUser.images[0].url,
+          name: spotifyUser.display_name,
+          id: spotifyUser.id,
         },
-      }));
+      });
     };
 
     if (user.spotify.accessToken) {
-      getSpotifyUser();
+      getSpotifyUserData();
     }
   }, [user.spotify.accessToken]);
 
