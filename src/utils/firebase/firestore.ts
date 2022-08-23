@@ -25,6 +25,11 @@ export const createUserDoc = async (uid: string) => {
   });
 };
 
+const addSeconds = (numOfSeconds: number, date = new Date()) => {
+  date.setSeconds(date.getSeconds() + numOfSeconds);
+
+  return date;
+};
 /**
  * Get a users document
  * @param uid
@@ -36,7 +41,17 @@ export const userDoc = async (uid: string) => {
   const userDocSnap = await getDoc(userDoc);
 
   if (userDocSnap.exists()) {
-    // console.log('Document data:', userDocSnap.data());
+    console.log('Document data:', userDocSnap.data());
+    const timestamp = new Date(
+      userDocSnap.data().spotifyTokenTimestamp.seconds * 1000
+    );
+
+    const secondsToExperation = userDocSnap.data().spotifyExpires;
+
+    const experationTime = addSeconds(secondsToExperation - 10, timestamp);
+
+    console.log(experationTime <= new Date());
+
     return userDocSnap.data();
   } else {
     // doc.data() will be undefined in this case

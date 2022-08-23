@@ -2,8 +2,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import * as React from 'react';
 import { auth } from '../firebase/config';
 import { userDoc } from '../firebase/firestore';
-import { get, post } from '../httpClient';
-import { handleLogIn } from '../modules/modules';
+import { get, post, postWithCookie } from '../httpClient';
 import {
   initialUserState,
   IUser,
@@ -56,79 +55,53 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
   React.useEffect(() => {
     if (!user.loggedIn) return;
 
+    console.log('logged in');
     const getTokenWithRefresh = async () => {
-      const token = await get('/auth/refresh');
-      dispatch({
-        type: UserActionTypes.SPOTIFY_TOKEN,
-        payload: {
-          accessToken: token.access_token,
-          refreshToken: token.refresh_token,
-          expires: token.expires_in,
-        },
-      });
+      try {
+        const token = await get('/auth/token');
+        dispatch({
+          type: UserActionTypes.SPOTIFY_TOKEN,
+          payload: {
+            accessToken: token.access_token,
+            refreshToken: token.refresh_token,
+            expires: token.expires_in,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const authorizeSpotify = async () => {
+      const response = await postWithCookie('/auth', { uid: user.fireId });
+      return (window.location.href = response);
     };
 
     const tokenService = async () => {
       const userDocument = await userDoc(user.fireId);
 
-      if (userDocument.spotifyAuth === true) {
+      if (userDocument.spotifyAuth) {
         console.log('connected ');
         // Get token from spotify api with existing refresh token
         // user.spotifyRefreshToken
         // Dispatch user object on success
-        getTokenWithRefresh();
+        // getTokenWithRefresh();
+        dispatch({
+          type: UserActionTypes.SPOTIFY_TOKEN,
+          payload: {
+            accessToken: userDocument.spotifyAccessToken,
+            refreshToken: userDocument.spotifyRefreshToken,
+            expires: userDocument.spotifyExpires,
+          },
+        });
       } else {
         console.log('not connected');
-        // handleLogIn();
-        // Go through initial auth process
+        authorizeSpotify();
       }
     };
 
     tokenService();
-
-    const refreshToken = async () => {
-      const token = await get('/auth/refresh');
-
-      // setUser((prevState: IUser) => ({
-      //   ...prevState,
-      //   spotify: {
-      //     ...prevState.spotify,
-      //     accessToken: token.access_token,
-      //     refreshToken: token.refresh_token,
-      //     expires: token.expires_in,
-      //   },
-      // }));
-      setTimeout(() => refreshToken(), token.expires_in * 1000);
-    };
-
-    const getToken = async () => {
-      try {
-        const token = await get('/auth/token');
-
-        // setUser((prevState: IUser) => ({
-        //   ...prevState,
-        //   spotify: {
-        //     ...prevState.spotify,
-        //     connected: true,
-        //     accessToken: token.access_token,
-        //     refreshToken: token.refresh_token,
-        //     expires: token.expires_in,
-        //   },
-        // }));
-
-        setTimeout(() => refreshToken(), token.expires_in * 1000);
-      } catch (error) {
-        console.log(error);
-        user.loggedIn === true
-          ? console.log(error)
-          : localStorage.removeItem('spot');
-      }
-    };
-
-    // if (localSpot === 'redirected') {
-    //   getToken();
-    // }
-  }, [user.loggedIn]);
+  }, [user.loggedIn, user.fireId]);
 
   /**
    * Get Spotify Profile when accessToken is obtained

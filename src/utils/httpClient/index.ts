@@ -6,6 +6,16 @@ export const get = async (path: string) => {
   return json;
 };
 
+export const postWithCookie = async (path: string, body: any) => {
+  const query = await fetch(`${SERVER}${path}`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    credentials: 'include',
+  });
+  const json = await query.json();
+  return json;
+};
+
 export const post = async (path: string, body: any) => {
   const query = await fetch(`${SERVER}${path}`, {
     method: 'POST',

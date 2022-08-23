@@ -2,13 +2,14 @@ import express, { Request, Response } from 'express';
 import axios from 'axios';
 import { scope, generateRandomString } from './auth.service';
 import 'dotenv/config';
-import { IAccessData } from './auth.interface';
 import * as AuthService from './auth.service';
 
 const router = express.Router();
-let accessData: IAccessData;
+let user: string;
 
-router.get('/', (_, res: Response) => {
+router.post('/', (req: Request, res: Response) => {
+  const id = JSON.parse(req.body);
+  user = id.uid;
   const state = generateRandomString(16);
 
   const authParams = new URLSearchParams({
@@ -20,10 +21,9 @@ router.get('/', (_, res: Response) => {
   });
 
   res
+    .setHeader('Access-Control-Allow-Credentials', 'true')
     .cookie(AuthService.stateName, state)
-    .redirect(
-      `https://accounts.spotify.com/authorize?${authParams.toString()}`
-    );
+    .json(`https://accounts.spotify.com/authorize?${authParams.toString()}`);
 });
 
 router.get('/callback', async (req: Request, res: Response) => {
@@ -51,9 +51,9 @@ router.get('/callback', async (req: Request, res: Response) => {
       },
     });
 
-    const data: unknown = response.data;
+    const { access_token, expires_in, refresh_token } = response.data;
 
-    accessData = data as IAccessData;
+    await AuthService.setUserDoc(user, access_token, expires_in, refresh_token);
 
     res.clearCookie(AuthService.stateName).redirect(AuthService.baseUrl);
   } catch (error) {
@@ -61,28 +61,30 @@ router.get('/callback', async (req: Request, res: Response) => {
   }
 });
 
-// GET token
-router.get('/token', async (_, res: Response) => {
-  try {
-    res.json({
-      access_token: accessData.access_token,
-      refresh_token: accessData.refresh_token,
-      expires_in: accessData.expires_in,
-    });
-  } catch (error: any) {
-    res.status(404).send(error.message);
-  }
-});
+interface IServerTimestamp {
+  _seconds: number;
+  _nanoseconds: number;
+}
 
-// GET refreshed token
-router.get('/refresh', async (_, res: Response) => {
-  if (!accessData.refresh_token) return;
+interface IUSerDocument {
+  spotifyAuth: boolean;
+  spotifyRefreshToken: string;
+  spotifyAccessToken: string;
+  spotifyExpires: number;
+  spotifyTokenTimestamp: IServerTimestamp;
+}
 
-  const form = new URLSearchParams();
-  form.append('grant_type', 'refresh_token');
-  form.append('refresh_token', accessData.refresh_token);
+// POST refreshed token
+router.post('/refresh', async (req: Request, res: Response) => {
+  const id = req.body;
 
   try {
+    const userDoc = (await AuthService.getUserDoc(id.id)) as IUSerDocument;
+
+    const form = new URLSearchParams();
+    form.append('grant_type', 'refresh_token');
+    form.append('refresh_token', userDoc.spotifyRefreshToken);
+
     const response = await axios('https://accounts.spotify.com/api/token', {
       method: 'post',
       data: form,
@@ -93,14 +95,14 @@ router.get('/refresh', async (_, res: Response) => {
       },
     });
 
-    const data: unknown = response.data;
+    const { access_token, expires_in, refresh_token } = response.data;
 
-    accessData = data as IAccessData;
+    await AuthService.setUserDoc(user, access_token, expires_in, refresh_token);
 
     res.json({
-      access_token: accessData.access_token,
-      refresh_token: accessData.refresh_token,
-      expires_in: accessData.expires_in,
+      access_token,
+      refresh_token,
+      expires_in,
     });
   } catch (error) {
     res.sendStatus(500);

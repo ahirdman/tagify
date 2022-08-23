@@ -1,3 +1,35 @@
+import { db } from '../index';
+import admin from 'firebase-admin';
+
+export const setUserDoc = async (
+  uid: string,
+  accessToken: string,
+  expiresIn: number,
+  refreshToken: string
+) => {
+  const userDocRef = db.doc(`users/${uid}`);
+
+  userDocRef.set({
+    spotifyAuth: true,
+    spotifyRefreshToken: refreshToken,
+    spotifyAccessToken: accessToken,
+    spotifyExpires: expiresIn,
+    spotifyTokenTimestamp: admin.firestore.FieldValue.serverTimestamp(),
+  });
+};
+
+export const getUserDoc = async (uid: string) => {
+  const docRef = db.doc(`users/${uid}`);
+
+  const document = await docRef.get();
+
+  if (document.exists) {
+    return document.data();
+  } else {
+    return 'Not Found';
+  }
+};
+
 export const scope =
   'user-read-playback-state \
   user-read-playback-position \
