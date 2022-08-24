@@ -31,12 +31,6 @@
     "emulators:functions": "firebase emulators:start --only functions",
     "deploy": "npm run build && firebase deploy --only hosting"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -48,8 +42,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint-config-salt": "^1.2.0"
   }
 }

@@ -1,6 +1,4 @@
-const filterTracks = (searchText: string, array: any[]) => {
-  const regExp = new RegExp(searchText, 'gmi');
-  return array.filter((device: any) => regExp.test(device.product.name));
-};
+import { hasExpired } from './date/date.service';
+import IExperationObj from './date/date.interface';
 
-export { filterTracks };
+export { hasExpired, IExperationObj };

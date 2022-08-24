@@ -6,63 +6,12 @@ import { post, postWithCookie } from '../utils/httpClient';
 import { initialUserState, userReducer } from '../reducers/user/user.reducer';
 import { IUser } from '../reducers/user/user.interface';
 import { UserActionTypes } from '../reducers/user/user.actions';
-
-interface IFirebaseTimestamp {
-  _seconds: number;
-  _nanoseconds: number;
-}
-
-interface IFirebaseUserDocument {
-  spotifyAuth: boolean;
-  spotifyAccessToken: string;
-  spotifyRefreshToken: string;
-  spotifyExpires: number;
-  spotifyTokenTimestamp: IFirebaseTimestamp;
-}
+import { hasExpired, IExperationObj } from '../utils';
+import { IFirebaseUserDocument } from '../services';
 
 interface IUserContextProviderProps {
   children: JSX.Element | JSX.Element[];
 }
-
-const addSeconds = (numOfSeconds: number, date = new Date()) => {
-  date.setSeconds(date.getSeconds() + numOfSeconds);
-
-  return date;
-};
-
-interface IExperationObj {
-  expired: boolean;
-  expiresIn: number | null;
-}
-
-const getSecondsDiff = (startDate: any, endDate: any) => {
-  const msInSecond = 1000;
-
-  return Math.round(Math.abs(endDate - startDate) / msInSecond);
-};
-
-const hasExpired = (timestamp: any, expiresInSec: number): IExperationObj => {
-  const msInSecond = 1000;
-  const tokenRecived = new Date(timestamp.seconds * msInSecond);
-
-  // Decrease by 10 seconds to give time to fetch new token
-  const experationTime = addSeconds(expiresInSec - 10, tokenRecived);
-  console.log('token expires date:', experationTime);
-
-  if (experationTime <= new Date()) {
-    return {
-      expired: true,
-      expiresIn: null,
-    };
-  } else {
-    const remainingSeconds = getSecondsDiff(experationTime, new Date());
-    console.log('token expires in sec:', remainingSeconds);
-    return {
-      expired: false,
-      expiresIn: remainingSeconds,
-    };
-  }
-};
 
 const authorizeSpotify = async (uid: string) => {
   const response = await postWithCookie('/auth', { uid });
