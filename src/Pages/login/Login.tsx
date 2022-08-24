@@ -1,12 +1,8 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import AuthButton from '../../Components/atoms/AuthButton/AuthButton';
-import AuthModal from '../../Components/atoms/AuthModal/AuthModal';
-import Backdrop from '../../Components/atoms/Backdrop/Backdrop';
-import ConnectScreen from '../../Components/molecules/ConnectScreen/ConnectScreen';
-import SignInForm from '../../Components/molecules/SignInForm/SignInForm';
-import SignUpForm from '../../Components/molecules/SignUpForm/SignUpForm';
-import { UserContext } from '../../utils/context/UserContext';
+import { AuthButton, AuthModal, Backdrop } from '@components/atoms';
+import { ConnectScreen, SignInForm, SignUpForm } from '@components/molecules';
+import { UserContext } from '../../context/UserContext';
 import './Login.scss';
 
 const Login = () => {

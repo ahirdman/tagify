@@ -1,12 +1,10 @@
 import * as React from 'react';
-import SelectList from '../../Components/organisms/SelectList/SelectList';
-import EditList from '../../Components/organisms/EditList/EditList';
-import EmptyCard from '../../Components/organisms/EmptyCard/EmptyCard';
-import List from '../../assets/list.svg';
-import { IWindow } from '../../utils/interface';
-import useWindowSize from '../../utils/hooks/useWindowSize';
+import { SelectList, EditList, EmptyCard } from '@components/organisms';
+import List from '@assets/list.svg';
+import { IWindow } from '@utils/interface';
+import useWindowSize from '../../hooks/useWindowSize';
 import { useContext, useState } from 'react';
-import { UserContext } from '../../utils/context/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 const Lists = () => {
   const [selectedList, setSelectedList] = useState();

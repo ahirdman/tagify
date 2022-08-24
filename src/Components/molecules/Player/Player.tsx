@@ -1,9 +1,9 @@
-import { trackObject } from '../../../utils/modules/playerModules';
-import PlayButton from '../../../assets/playback/play-white.svg';
-import PauseButton from '../../../assets/playback/pause-white.svg';
+import { trackObject } from '@utils/modules/playerModules';
+import PlayButton from '@assets/playback/play-white.svg';
+import PauseButton from '@assets/playback/pause-white.svg';
 import './Player.scss';
 import * as React from 'react';
-import { UserContext } from '../../../utils/context/UserContext';
+import { UserContext } from '../../../context/UserContext';
 
 interface INavbarProps {
   setDeviceId: any;

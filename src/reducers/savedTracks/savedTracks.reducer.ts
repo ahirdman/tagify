@@ -1,55 +1,6 @@
-import { ISavedObject } from '../interface';
-
-/**
- * Actions Interface
- */
-
-interface IAddTracksObj {
-  nextUrl: string;
-  savedTracks: ISavedObject[];
-}
-
-type InitalLoadAction = {
-  type: StateActionTypes.INITIAL_LOAD;
-  payload: ITracksStateObj;
-};
-
-type AddTracksAction = {
-  type: StateActionTypes.ADD_TRACKS;
-  payload: IAddTracksObj;
-};
-
-type FilterTracksAction = {
-  type: StateActionTypes.FILTER_TRACKS;
-  payload: string;
-};
-
-type IStateAction = InitalLoadAction | AddTracksAction | FilterTracksAction;
-
-/**
- * Actions Definition
- */
-
-export enum StateActionTypes {
-  INITIAL_LOAD = 'initial',
-  ADD_TRACKS = 'addTracks',
-  FILTER_TRACKS = 'filterTracks',
-}
-
-/**
- * Reducer Interface
- */
-
-export interface ITracksStateObj {
-  total: number;
-  nextUrl: string;
-  savedTracks: ISavedObject[];
-  filteredTracks: ISavedObject[];
-}
-
-/**
- * Reducer Definition
- */
+import { ISavedObject } from '../../utils/interface';
+import { StateActionTypes } from './savedTracks.actions';
+import { IStateAction, ITracksStateObj } from './savedTracks.interface';
 
 export const initialTracksState: ITracksStateObj = {
   total: 0,

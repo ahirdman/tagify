@@ -1,10 +1,8 @@
 import * as React from 'react';
-import Note from '../../assets/music-note.svg';
-import SavedTracks from '../../Components/organisms/SavedTracks/SavedTracks';
-import SelectedTrack from '../../Components/organisms/SelectedTrack/SelectedTrack';
-import EmptyCard from '../../Components/organisms/EmptyCard/EmptyCard';
-import useWindowSize from '../../utils/hooks/useWindowSize';
-import { IWindow } from '../../utils/interface';
+import Note from '@assets/music-note.svg';
+import { SavedTracks, SelectedTrack, EmptyCard } from '@components/organisms';
+import useWindowSize from '@hooks/useWindowSize';
+import { IWindow } from '@utils/interface';
 import './Tracks.scss';
 
 interface ITracksProps {

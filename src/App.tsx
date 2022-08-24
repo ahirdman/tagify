@@ -5,8 +5,8 @@ import Navbar from './Components/organisms/Navbar/Navbar';
 import Login from './Pages/login/Login';
 import Tracks from './Pages/tracks/Tracks';
 import Lists from './Pages/lists/Lists';
-import { UserContext } from './utils/context/UserContext';
-import * as SavedReducer from './utils/reducers/savedReducer';
+import { UserContext } from './context/UserContext';
+import * as SavedReducer from './reducers/savedTracks/savedTracks.reducer';
 
 const App = () => {
   const [deviceId, setDeviceId] = React.useState('');

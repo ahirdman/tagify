@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { handleLogIn } from '../../../utils/modules/modules';
-import AuthButton from '../../atoms/AuthButton/AuthButton';
+import { handleLogIn } from '@utils/modules/modules';
+import { AuthButton } from '@components/atoms';
 import './ConnectScreen.scss';
 
 interface IConnectScreenProps {

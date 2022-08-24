@@ -1,16 +1,13 @@
 import * as React from 'react';
-import Magnifier from '../../../assets/magnifier.svg';
-import './SelectTrack.scss';
-import CardNav from '../../molecules/CardNav/CardNav';
-import useInfiniteScroll from '../../../utils/hooks/useInfiniteScroll';
-import { UserContext } from '../../../utils/context/UserContext';
-import { post } from '../../../utils/httpClient';
-import Loader from '../../atoms/Loader/Loader';
-import SearchBar from '../../molecules/SearchBar/SearchBar';
-import {
-  ITracksStateObj,
-  StateActionTypes,
-} from '../../../utils/reducers/savedReducer';
+import Magnifier from '@assets/magnifier.svg';
+import './SavedTracks.scss';
+import { CardNav, SearchBar } from '@components/molecules';
+import useInfiniteScroll from '../../../hooks/useInfiniteScroll';
+import { UserContext } from '../../../context/UserContext';
+import { post } from '@utils/httpClient';
+import { Loader } from '@components/atoms';
+import { ITracksStateObj } from 'src/reducers/savedTracks/savedTracks.interface';
+import { StateActionTypes } from 'src/reducers/savedTracks/savedTracks.actions';
 
 interface ISavedTracks {
   setSelectedTrack: any;
@@ -34,7 +31,7 @@ const getTracks = async (token: string, callback: Function) => {
   });
 };
 
-const SelectTrack = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
+const SavedTracks = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
   const [query, setQuery] = React.useState('');
   const user = React.useContext(UserContext);
   const fetchedAllTracks = state.savedTracks.length === state.total;
@@ -131,4 +128,4 @@ const SelectTrack = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
   );
 };
 
-export default SelectTrack;
+export default SavedTracks;

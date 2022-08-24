@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as Firestore from '../../../utils/firebase/firestore';
-import Add from '../../../assets/add.svg';
-import Tag from '../../../assets/tag.svg';
+import * as Firestore from '../../../services/firebase/firestore';
+import Add from '@assets/add.svg';
+import Tag from '@assets/tag.svg';
 import './AddTag.scss';
 import { randomColor } from '../../../utils/modules/db';
-import { UserContext } from '../../../utils/context/UserContext';
+import { UserContext } from '../../../context/UserContext';
 
 interface IAddTagProps {
   selectedTrack: any;

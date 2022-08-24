@@ -76,10 +76,10 @@ interface IUSerDocument {
 
 // POST refreshed token
 router.post('/refresh', async (req: Request, res: Response) => {
-  const id = req.body;
+  const { id } = req.body;
 
   try {
-    const userDoc = (await AuthService.getUserDoc(id.id)) as IUSerDocument;
+    const userDoc = (await AuthService.getUserDoc(id)) as IUSerDocument;
 
     const form = new URLSearchParams();
     form.append('grant_type', 'refresh_token');
@@ -95,16 +95,16 @@ router.post('/refresh', async (req: Request, res: Response) => {
       },
     });
 
-    const { access_token, expires_in, refresh_token } = response.data;
+    const { access_token, expires_in } = response.data;
 
-    await AuthService.setUserDoc(user, access_token, expires_in, refresh_token);
+    await AuthService.updateUserDoc(id, access_token, expires_in);
 
     res.json({
       access_token,
-      refresh_token,
       expires_in,
     });
   } catch (error) {
+    console.log(error);
     res.sendStatus(500);
   }
 });

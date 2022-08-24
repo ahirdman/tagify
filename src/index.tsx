@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './_base.scss';
 import App from './App';
-import { UserContextProvider } from './utils/context/UserContext';
+import { UserContextProvider } from './context/UserContext';
 
 ReactDOM.render(
   <React.StrictMode>

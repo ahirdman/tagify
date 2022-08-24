@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useStoredRef from '../../../utils/hooks/useStoredRef';
+import useStoredRef from '../../../hooks/useStoredRef';
 import './SearchBar.scss';
 
 interface ISearchBarProps {

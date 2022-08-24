@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CardNav from '../../molecules/CardNav/CardNav';
+import { CardNav } from '@components/molecules';
 import './EmptyCard.scss';
 
 interface IEmptyCardProps {

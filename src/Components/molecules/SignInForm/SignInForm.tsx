@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as Auth from '../../../utils/firebase/auth';
+import * as Auth from '../../../services/firebase/auth';
 import { IAuthError } from '../SignUpForm/SignUpForm';
 import './SignInForm.scss';
 

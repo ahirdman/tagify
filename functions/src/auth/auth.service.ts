@@ -1,17 +1,29 @@
 import { db } from '../index';
 import admin from 'firebase-admin';
 
+const userDocRef = (uid: string) => db.doc(`users/${uid}`);
+
 export const setUserDoc = async (
   uid: string,
   accessToken: string,
   expiresIn: number,
   refreshToken: string
 ) => {
-  const userDocRef = db.doc(`users/${uid}`);
-
-  userDocRef.set({
+  await userDocRef(uid).set({
     spotifyAuth: true,
+    spotifyAccessToken: accessToken,
     spotifyRefreshToken: refreshToken,
+    spotifyExpires: expiresIn,
+    spotifyTokenTimestamp: admin.firestore.FieldValue.serverTimestamp(),
+  });
+};
+
+export const updateUserDoc = async (
+  uid: string,
+  accessToken: string,
+  expiresIn: number
+) => {
+  await userDocRef(uid).update({
     spotifyAccessToken: accessToken,
     spotifyExpires: expiresIn,
     spotifyTokenTimestamp: admin.firestore.FieldValue.serverTimestamp(),

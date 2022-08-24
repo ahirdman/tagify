@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { playTrack } from '../../../utils/modules/playerModules';
-import { ISavedTrack, ITags } from '../../../utils/interface';
+import { playTrack } from '@utils/modules/playerModules';
+import { ISavedTrack, ITags } from '@utils/interface';
 import { onSnapshot } from 'firebase/firestore';
-import * as Firestore from '../../../utils/firebase/firestore';
-import { matchTag } from '../../../utils/modules/db';
-import AddTag from '../../molecules/AddTag/AddTag';
-import TrackTags from '../../molecules/TrackTags/TrackTags';
-import Play from '../../../assets/playback/play-green.svg';
+import * as Firestore from '../../../services/firebase/firestore';
+import { matchTag } from '@utils/modules/db';
+import { AddTag, TrackTags, CardNav, UserTags } from '@components/molecules';
+import Play from '@assets/playback/play-green.svg';
 import './SelectedTrack.scss';
-import CardNav from '../../molecules/CardNav/CardNav';
-import UserTags from '../../molecules/UserTags/UserTags';
-import { UserContext } from '../../../utils/context/UserContext';
+import { UserContext } from '../../../context/UserContext';
 
 interface ISelectedTrackProps {
   selectedTrack?: ISavedTrack;
@@ -28,7 +25,7 @@ const SelectedTrack = ({
 
   const user = React.useContext(UserContext);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const unsubscribe = onSnapshot(
       Firestore.tagCol(user.fireId),
       collection => {

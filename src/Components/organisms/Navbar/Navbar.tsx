@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import Player from '../../molecules/Player/Player';
-import Tag from '../../../assets/tag.svg';
-import List from '../../../assets/list-white.svg';
-import Avatar from '../../../assets/avatar.svg';
+import { Player } from '@components/molecules';
+import Tag from '@assets/tag.svg';
+import List from '@assets/list-white.svg';
+import Avatar from '@assets/avatar.svg';
 import './Navbar.scss';
-import { logOut } from '../../../utils/firebase/auth';
-import { UserContext } from '../../../utils/context/UserContext';
+import { logOut } from '../../../services/firebase/auth';
+import { UserContext } from '../../../context/UserContext';
 
 interface INavbarProps {
   setDeviceId: any;

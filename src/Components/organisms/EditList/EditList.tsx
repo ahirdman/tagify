@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Magnifier from '../../../assets/magnifier.svg';
+import Magnifier from '@assets/magnifier.svg';
 import { onSnapshot } from 'firebase/firestore';
 import './EditList.scss';
-import * as Firestore from '../../../utils/firebase/firestore';
-import { IDbTrack } from '../../../utils/interface';
-import Send from '../../../assets/send.svg';
-import { post } from '../../../utils/httpClient';
-import CardNav from '../../molecules/CardNav/CardNav';
-import { UserContext } from '../../../utils/context/UserContext';
+import * as Firestore from '../../../services/firebase/firestore';
+import { IDbTrack } from '@utils/interface';
+import Send from '@assets/send.svg';
+import { post } from '@utils/httpClient';
+import { CardNav } from '@components/molecules';
+import { UserContext } from '../../../context/UserContext';
 
 interface IEditListProps {
   selectedList: string;
