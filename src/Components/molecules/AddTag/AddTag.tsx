@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Firestore from '../../../services/firebase/firestore';
-import Add from '@assets/add.svg';
-import Tag from '@assets/tag.svg';
+import Add from '../../../assets/add.svg';
+import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
 import { randomColor } from '../../../utils/modules/db';
 import { UserContext } from '../../../context/UserContext';

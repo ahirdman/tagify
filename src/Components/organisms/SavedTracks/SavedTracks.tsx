@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Magnifier from '@assets/magnifier.svg';
+import Magnifier from '../../../assets/magnifier.svg';
 import './SavedTracks.scss';
-import { CardNav, SearchBar } from '@components/molecules';
+import { CardNav, SearchBar } from '../..//molecules';
 import useInfiniteScroll from '../../../hooks/useInfiniteScroll';
 import { UserContext } from '../../../context/UserContext';
-import { post } from '@utils/httpClient';
-import { Loader } from '@components/atoms';
-import { ITracksStateObj } from 'src/reducers/savedTracks/savedTracks.interface';
-import { StateActionTypes } from 'src/reducers/savedTracks/savedTracks.actions';
+import { post } from '../../../utils/httpClient';
+import { Loader } from '../../atoms';
+import { ITracksStateObj } from '../../../reducers/savedTracks/savedTracks.interface';
+import { StateActionTypes } from '../../../reducers/savedTracks/savedTracks.actions';
 
 interface ISavedTracks {
   setSelectedTrack: any;

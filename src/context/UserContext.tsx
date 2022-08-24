@@ -2,10 +2,10 @@ import { onAuthStateChanged } from 'firebase/auth';
 import * as React from 'react';
 import { auth } from '../services/firebase/config';
 import { getUserDocument } from '../services/firebase/firestore';
-import { post, postWithCookie } from '@utils/httpClient';
+import { post, postWithCookie } from '../utils/httpClient';
 import { initialUserState, userReducer } from '../reducers/user/user.reducer';
-import { IUser } from 'src/reducers/user/user.interface';
-import { UserActionTypes } from 'src/reducers/user/user.actions';
+import { IUser } from '../reducers/user/user.interface';
+import { UserActionTypes } from '../reducers/user/user.actions';
 
 interface IFirebaseTimestamp {
   _seconds: number;

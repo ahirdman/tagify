@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Magnifier from '@assets/magnifier.svg';
-import Edit from '@assets/edit.svg';
-import Delete from '@assets/trashcan.svg';
+import Magnifier from '../../../assets/magnifier.svg';
+import Edit from '../../../assets/edit.svg';
+import Delete from '../../../assets/trashcan.svg';
 import './SelectList.scss';
 import * as Firestore from '../../../services/firebase/firestore';
 import { onSnapshot } from 'firebase/firestore';
-import { ITags } from '@utils/interface';
-import { CardNav } from '@components/molecules';
+import { ITags } from '../../../utils/interface';
+import { CardNav } from '../../molecules';
 import { UserContext } from '../../../context/UserContext';
 
 interface ISelectListProps {

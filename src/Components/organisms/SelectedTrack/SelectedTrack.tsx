@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { playTrack } from '@utils/modules/playerModules';
-import { ISavedTrack, ITags } from '@utils/interface';
+import { playTrack } from '../../../utils/modules/playerModules';
+import { ISavedTrack, ITags } from '../../../utils/interface';
 import { onSnapshot } from 'firebase/firestore';
 import * as Firestore from '../../../services/firebase/firestore';
-import { matchTag } from '@utils/modules/db';
-import { AddTag, TrackTags, CardNav, UserTags } from '@components/molecules';
-import Play from '@assets/playback/play-green.svg';
+import { matchTag } from '../../../utils/modules/db';
+import { AddTag, TrackTags, CardNav, UserTags } from '../../molecules';
+import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
 import { UserContext } from '../../../context/UserContext';
 

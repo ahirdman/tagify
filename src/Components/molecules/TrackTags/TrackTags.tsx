@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as Firestore from '../../../services/firebase/firestore';
-import Cross from '@/assets/cross-circle.svg';
+import Cross from '../../..//assets/cross-circle.svg';
 import './TrackTags.scss';
 import Tag from '../../atoms/Tag/Tag';
 import { UserContext } from '../../../context/UserContext';
-import { dbTrack } from '@utils/modules/tracks/tracks';
+import { dbTrack } from '../../../utils/modules/tracks/tracks';
 
 interface ITrackTags {
   selectedTrack: any;

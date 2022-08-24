@@ -10,16 +10,9 @@
     "rootDir": "src",
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": true,
-    "baseUrl": ".",
-    "paths": {
-      // "@components/molecules/*": ["src/Components/molecules/*"],
-      "@components/*": ["src/Components/*"],
-      "@assets/*": ["src/assets/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@utils/*": ["src/utils/*"]
-    }
+    "noImplicitAny": true
   },
+  // "include": ["src/**/*", "./**/*.ts", "./**/*.tsx"],
   "exclude": [
     "node_modules",
     "build",

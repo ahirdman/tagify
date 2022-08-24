@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { IWindow } from '@utils/interface';
+import { IWindow } from '../utils/interface';
 
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<IWindow>({

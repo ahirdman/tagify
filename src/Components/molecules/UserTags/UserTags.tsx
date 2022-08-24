@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Plus from '@assets/add-circle.svg';
+import Plus from '../../../assets/add-circle.svg';
 import * as Firestore from '../../../services/firebase/firestore';
 import { UserContext } from '../../../context/UserContext';
-import { ITags } from '@utils/interface';
-import { dbTrack } from '@utils/modules/tracks/tracks';
-import { Tag } from '@components/atoms';
+import { ITags } from '../../../utils/interface';
+import { dbTrack } from '../../../utils/modules/tracks/tracks';
+import { Tag } from '../../atoms';
 import './UserTags.scss';
 
 interface IUserTagsProps {

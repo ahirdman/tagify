@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { AuthButton, AuthModal, Backdrop } from '@components/atoms';
-import { ConnectScreen, SignInForm, SignUpForm } from '@components/molecules';
+import { AuthButton, AuthModal, Backdrop } from '../../Components/atoms';
+import {
+  ConnectScreen,
+  SignInForm,
+  SignUpForm,
+} from '../../Components/molecules';
 import { UserContext } from '../../context/UserContext';
 import './Login.scss';
 

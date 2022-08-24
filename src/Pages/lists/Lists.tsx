@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { SelectList, EditList, EmptyCard } from '@components/organisms';
-import List from '@assets/list.svg';
-import { IWindow } from '@utils/interface';
+import { SelectList, EditList, EmptyCard } from '../../Components/organisms';
+import List from '../../assets/list.svg';
+import { IWindow } from '../../utils/interface';
 import useWindowSize from '../../hooks/useWindowSize';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
