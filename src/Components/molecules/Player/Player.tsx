@@ -1,4 +1,4 @@
-import { trackObject } from '../../../utils/modules/playerModules';
+// import { trackObject } from '../../../utils/modules/playerModules';
 import PlayButton from '../../../assets/playback/play-white.svg';
 import PauseButton from '../../../assets/playback/pause-white.svg';
 import './Player.scss';
@@ -9,24 +9,35 @@ interface INavbarProps {
   setDeviceId: any;
 }
 
+const trackObject = {
+  name: '',
+  album: {
+    images: [{ url: '' }],
+  },
+  artists: [{ name: '' }],
+};
+
 const Player = ({ setDeviceId }: INavbarProps) => {
   const [player, setPlayer] = React.useState(undefined);
   const [isPaused, setPaused] = React.useState(false);
   const [isActive, setActive] = React.useState(false);
   const [currentTrack, setCurrentTrack] = React.useState(trackObject);
 
+  const SDKurl = 'https://sdk.scdn.co/spotify-player.js';
+  const iFrameRef = React.useRef(null);
+
   const user = React.useContext(UserContext);
 
   React.useEffect(() => {
     const script = document.createElement('script');
     script.setAttribute('id', 'spotPlayer');
-    script.src = 'https://sdk.scdn.co/spotify-player.js';
+    script.src = SDKurl;
     script.async = true;
 
     document.body.appendChild(script);
 
     window.onSpotifyWebPlaybackSDKReady = () => {
-      const player = new window.Spotify.Player({
+      const spotifySDK = new window.Spotify.Player({
         name: 'Tinderify',
         getOAuthToken: cb => {
           cb(user.spotify.accessToken);
@@ -34,32 +45,35 @@ const Player = ({ setDeviceId }: INavbarProps) => {
         volume: 0.5,
       });
 
-      setPlayer(player);
+      setPlayer(spotifySDK);
 
-      player.addListener('ready', ({ device_id }) => {
+      spotifySDK.addListener('ready', ({ device_id }) => {
         setDeviceId(device_id);
       });
 
-      player.connect();
+      spotifySDK.connect();
 
-      player.addListener('player_state_changed', state => {
+      spotifySDK.addListener('player_state_changed', state => {
         if (!state) return;
 
         setCurrentTrack(state.track_window.current_track);
         setPaused(state.paused);
 
-        player.getCurrentState().then(state => {
+        spotifySDK.getCurrentState().then(state => {
           !state ? setActive(false) : setActive(true);
         });
       });
+
+      const iFrame = document.querySelector(
+        'iframe[alt="Audio Playback Container"]'
+      );
+      iFrame.setAttribute('title', 'SDKPlayer');
+      iFrameRef.current = iFrame;
     };
-    const player = document.getElementById('spotPlayer');
-    // const iFrame = document.querySelector(
-    //   'iframe[alt="Audio Playback Container"]'
-    // );
+
     return () => {
-      player.remove();
-      // iFrame.remove();
+      iFrameRef.current.remove();
+      script.remove();
     };
   }, [user.spotify.accessToken, setDeviceId]);
 

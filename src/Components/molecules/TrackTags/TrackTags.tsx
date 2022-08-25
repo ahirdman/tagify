@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as Firestore from '../../../services/firebase/firestore';
+import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import Cross from '../../..//assets/cross-circle.svg';
 import './TrackTags.scss';
 import Tag from '../../atoms/Tag/Tag';
 import { UserContext } from '../../../context/UserContext';
-import { dbTrack } from '../../../utils/modules/tracks/tracks';
+import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
 
 interface ITrackTags {
   selectedTrack: any;
@@ -14,6 +14,7 @@ interface ITrackTags {
 const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
   const user = React.useContext(UserContext);
 
+  console.log(selectedTrack);
   return (
     <section className="track-tags">
       <p className="track-tags__title">TRACK TAGS</p>
@@ -27,7 +28,7 @@ const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
                   Firestore.clearTrackFromTag(
                     user.fireId,
                     tag.name,
-                    dbTrack(selectedTrack)
+                    extractTrackInfo(selectedTrack)
                   )
                 }
                 color={tag.color}

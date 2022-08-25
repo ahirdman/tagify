@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Plus from '../../../assets/add-circle.svg';
-import * as Firestore from '../../../services/firebase/firestore';
+import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import { UserContext } from '../../../context/UserContext';
-import { ITags } from '../../../utils/interface';
-import { dbTrack } from '../../../utils/modules/tracks/tracks';
 import { Tag } from '../../atoms';
 import './UserTags.scss';
+import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
+import { ITags } from '../../../common/common.types';
 
 interface IUserTagsProps {
   selectedTrack: any;
@@ -28,7 +28,7 @@ const UserTags = ({ selectedTrack, userTags }: IUserTagsProps) => {
                   Firestore.tagTrack(
                     user.fireId,
                     tag.name,
-                    dbTrack(selectedTrack)
+                    extractTrackInfo(selectedTrack)
                   )
                 }
                 color={tag.color}

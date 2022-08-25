@@ -6,7 +6,7 @@ import {
   EmptyCard,
 } from '../../Components/organisms';
 import useWindowSize from '../../hooks/useWindowSize';
-import { IWindow } from '../../utils/interface';
+import { IWindow } from '../../services/spotify/spotify.interface';
 import './Tracks.scss';
 
 interface ITracksProps {

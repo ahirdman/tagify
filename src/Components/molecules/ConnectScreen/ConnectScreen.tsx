@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { handleLogIn } from '../../../utils/modules/modules';
 import { AuthButton } from '../../atoms';
 import './ConnectScreen.scss';
 
@@ -10,7 +9,7 @@ interface IConnectScreenProps {
 const ConnectScreen = ({ autoConnect }: IConnectScreenProps) => {
   React.useEffect(() => {
     if (autoConnect) {
-      handleLogIn();
+      console.log('removed redirect');
     }
   }, [autoConnect]);
 
@@ -19,7 +18,7 @@ const ConnectScreen = ({ autoConnect }: IConnectScreenProps) => {
       {!autoConnect && (
         <AuthButton
           title="CONNECT TO SPOTIFY"
-          onClick={handleLogIn}
+          onClick={() => console.log('removed redirect')}
           backgroundColor="#1bd760"
         />
       )}

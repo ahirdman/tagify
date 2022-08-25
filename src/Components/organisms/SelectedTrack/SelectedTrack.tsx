@@ -1,13 +1,22 @@
 import * as React from 'react';
-import { playTrack } from '../../../utils/modules/playerModules';
-import { ISavedTrack, ITags } from '../../../utils/interface';
+import { ISavedTrack } from '../../../services/spotify/spotify.interface';
 import { onSnapshot } from 'firebase/firestore';
-import * as Firestore from '../../../services/firebase/firestore';
-import { matchTag } from '../../../utils/modules/db';
+import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import { AddTag, TrackTags, CardNav, UserTags } from '../../molecules';
 import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
 import { UserContext } from '../../../context/UserContext';
+import { post } from '../../../utils/httpClient';
+import { matchTag } from '../../../services/firebase/firestore/firestore.helper';
+import { ITags } from '../../../common/common.types';
+
+const playTrack = async (
+  deviceId: string,
+  token: string,
+  uri: string
+): Promise<void> => {
+  await post('/playback', { token, deviceId, uri });
+};
 
 interface ISelectedTrackProps {
   selectedTrack?: ISavedTrack;

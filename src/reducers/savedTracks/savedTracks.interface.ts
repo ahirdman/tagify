@@ -1,16 +1,16 @@
-import { ISavedObject } from '../../utils/interface';
+import { IUserSavedObject } from '../../services/spotify/spotify.interface';
 import { StateActionTypes } from './savedTracks.actions';
 
 export interface ITracksStateObj {
   total: number;
   nextUrl: string;
-  savedTracks: ISavedObject[];
-  filteredTracks: ISavedObject[];
+  savedTracks: IUserSavedObject[];
+  filteredTracks: IUserSavedObject[];
 }
 
 interface IAddTracksObj {
   nextUrl: string;
-  savedTracks: ISavedObject[];
+  savedTracks: IUserSavedObject[];
 }
 
 type InitalLoadAction = {

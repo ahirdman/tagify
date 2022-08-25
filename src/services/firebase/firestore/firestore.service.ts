@@ -9,8 +9,8 @@ import {
   serverTimestamp,
   getDoc,
 } from 'firebase/firestore';
-import { IDbTrack } from '../../utils/interface';
-import db from './config';
+import db from '../config';
+import { IFirestoreTrack } from './firestore.interface';
 
 /**
  * Firebase References
@@ -55,7 +55,7 @@ export const createTag = async (
   user: string,
   tag: string,
   color: string,
-  track: IDbTrack
+  track: IFirestoreTrack
 ) => {
   await setDoc(
     userTagDocRef(user, tag),
@@ -68,7 +68,11 @@ export const createTag = async (
   );
 };
 
-export const tagTrack = async (user: string, tag: string, track: IDbTrack) => {
+export const tagTrack = async (
+  user: string,
+  tag: string,
+  track: IFirestoreTrack
+) => {
   await updateDoc(userTagDocRef(user, tag), {
     tracks: arrayUnion(track),
   });
@@ -77,7 +81,7 @@ export const tagTrack = async (user: string, tag: string, track: IDbTrack) => {
 export const clearTrackFromTag = async (
   user: string,
   tag: string,
-  track: IDbTrack
+  track: IFirestoreTrack
 ) => {
   await updateDoc(userTagDocRef(user, tag), {
     tracks: arrayRemove(track),

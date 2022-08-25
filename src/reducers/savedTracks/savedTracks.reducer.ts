@@ -1,12 +1,12 @@
-import { ISavedObject } from '../../utils/interface';
+import { IUserSavedObject } from '../../services/spotify/spotify.interface';
 import { StateActionTypes } from './savedTracks.actions';
 import { IStateAction, ITracksStateObj } from './savedTracks.interface';
 
 export const initialTracksState: ITracksStateObj = {
   total: 0,
   nextUrl: '',
-  savedTracks: [] as ISavedObject[],
-  filteredTracks: [] as ISavedObject[],
+  savedTracks: [] as IUserSavedObject[],
+  filteredTracks: [] as IUserSavedObject[],
 };
 
 export const savedTracksReducer = (
@@ -29,7 +29,7 @@ export const savedTracksReducer = (
       const regExp = new RegExp(payload, 'gmi');
       return {
         ...state,
-        filteredTracks: state.savedTracks.filter((track: ISavedObject) =>
+        filteredTracks: state.savedTracks.filter((track: IUserSavedObject) =>
           regExp.test(track.track.name)
         ),
       };

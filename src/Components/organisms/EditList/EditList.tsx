@@ -2,12 +2,12 @@ import * as React from 'react';
 import Magnifier from '../../../assets/magnifier.svg';
 import { onSnapshot } from 'firebase/firestore';
 import './EditList.scss';
-import * as Firestore from '../../../services/firebase/firestore';
-import { IDbTrack } from '../../../utils/interface';
+import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import Send from '../../../assets/send.svg';
 import { post } from '../../../utils/httpClient';
 import { CardNav } from '../../molecules';
 import { UserContext } from '../../../context/UserContext';
+import { IFirestoreTrack } from '../../../services/firebase/firestore/firestore.interface';
 
 interface IEditListProps {
   selectedList: string;
@@ -26,8 +26,8 @@ const EditList = ({
 
   const user = React.useContext(UserContext);
 
-  const trackUris = (arr: IDbTrack[]) =>
-    arr.map((track: IDbTrack) => track.uri);
+  const trackUris = (arr: IFirestoreTrack[]) =>
+    arr.map((track: IFirestoreTrack) => track.uri);
 
   const savePlaylist = async (name: string) => {
     const playlist = await post('/playlist', {
@@ -79,7 +79,7 @@ const EditList = ({
         <p className="edit-list__header--title">TRACKS</p>
       </section>
       <ul className="tracks">
-        {tracks.map((track: IDbTrack, index) => {
+        {tracks.map((track: IFirestoreTrack, index) => {
           return (
             <li key={index} className="tracks__row">
               <img src={track.artwork} alt="album" className="tracks__album" />

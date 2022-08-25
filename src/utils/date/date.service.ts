@@ -1,5 +1,5 @@
 import { IExperationObj } from '../';
-import { IFirebaseTimestamp } from '../../services';
+import { IFirestoreTimestamp } from '../../services';
 
 export const getSecondsDiff = (startDate: any, endDate: any) => {
   const msInSecond = 1000;
@@ -8,7 +8,7 @@ export const getSecondsDiff = (startDate: any, endDate: any) => {
 };
 
 export const hasExpired = (
-  timestamp: IFirebaseTimestamp,
+  timestamp: IFirestoreTimestamp,
   expiresInSec: number,
   nowDate = new Date()
 ): IExperationObj => {

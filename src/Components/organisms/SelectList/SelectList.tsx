@@ -3,11 +3,11 @@ import Magnifier from '../../../assets/magnifier.svg';
 import Edit from '../../../assets/edit.svg';
 import Delete from '../../../assets/trashcan.svg';
 import './SelectList.scss';
-import * as Firestore from '../../../services/firebase/firestore';
+import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import { onSnapshot } from 'firebase/firestore';
-import { ITags } from '../../../utils/interface';
 import { CardNav } from '../../molecules';
 import { UserContext } from '../../../context/UserContext';
+import { ITags } from '../../../common/common.types';
 
 interface ISelectListProps {
   setSelectedList: any;

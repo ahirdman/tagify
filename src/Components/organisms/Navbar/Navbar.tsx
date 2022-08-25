@@ -5,7 +5,7 @@ import Tag from '../../../assets/tag.svg';
 import List from '../../../assets/list-white.svg';
 import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
-import { logOut } from '../../../services/firebase/auth';
+import { logOut } from '../../../services/firebase/auth/auth.service';
 import { UserContext } from '../../../context/UserContext';
 
 interface INavbarProps {

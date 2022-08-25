@@ -1,19 +1,27 @@
-import { IDbTrack } from '../interface';
+import { ITrack } from '../../spotify/spotify.interface';
+import { IFirestoreTrack } from './firestore.interface';
 
-const matchTag = (tagArr: any[], uri: string): any[] => {
+export const extractTrackInfo = (track: ITrack) => ({
+  artist: track.artists[0].name,
+  title: track.name,
+  artwork: track.album.images[2].url,
+  uri: track.uri,
+});
+
+export const matchTag = (tagArr: any[], uri: string): any[] => {
   const matched = [];
 
   for (let tagTree of tagArr) {
     const [, tagName] = Object.keys(tagTree);
     const [tagColor, tracks]: any[] = Object.values(tagTree);
-    const match = tracks.filter((track: IDbTrack) => track.uri === uri);
+    const match = tracks.filter((track: IFirestoreTrack) => track.uri === uri);
     if (match.length > 0) matched.push({ name: tagName, color: tagColor });
   }
 
   return matched;
 };
 
-const randomColor = (): string => {
+export const randomizeTagColor = (): string => {
   const randomNumber = Math.floor(Math.random() * 7);
 
   switch (randomNumber) {
@@ -33,5 +41,3 @@ const randomColor = (): string => {
       return '#FBD566';
   }
 };
-
-export { matchTag, randomColor };

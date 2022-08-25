@@ -3,8 +3,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { auth } from './config';
-import { createUserDoc } from './firestore';
+import { auth } from '../config';
+import { createUserDoc } from '../firestore/firestore.service';
 
 const errorMessage = (code: string) => {
   if (code === 'auth/weak-password') {

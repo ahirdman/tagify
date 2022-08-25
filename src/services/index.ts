@@ -1,6 +1,6 @@
 import {
-  IFirebaseUserDocument,
-  IFirebaseTimestamp,
-} from './firebase/interface';
+  IFirestoreUserDocument,
+  IFirestoreTimestamp,
+} from './firebase/firestore/firestore.interface';
 
-export { IFirebaseUserDocument, IFirebaseTimestamp };
+export { IFirestoreUserDocument, IFirestoreTimestamp };

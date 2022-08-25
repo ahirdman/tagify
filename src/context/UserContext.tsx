@@ -1,13 +1,13 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import * as React from 'react';
 import { auth } from '../services/firebase/config';
-import { getUserDocument } from '../services/firebase/firestore';
+import { getUserDocument } from '../services/firebase/firestore/firestore.service';
 import { post, postWithCookie } from '../utils/httpClient';
 import { initialUserState, userReducer } from '../reducers/user/user.reducer';
 import { IUser } from '../reducers/user/user.interface';
 import { UserActionTypes } from '../reducers/user/user.actions';
 import { hasExpired, IExperationObj } from '../utils';
-import { IFirebaseUserDocument } from '../services';
+import { IFirestoreUserDocument } from '../services';
 
 interface IUserContextProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -82,7 +82,7 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
         }, milliseconds * 1000);
       };
 
-      const tokenService = async (doc: IFirebaseUserDocument, uid: string) => {
+      const tokenService = async (doc: IFirestoreUserDocument, uid: string) => {
         const tokenHasExpired: IExperationObj = hasExpired(
           doc.spotifyTokenTimestamp,
           doc.spotifyExpires
