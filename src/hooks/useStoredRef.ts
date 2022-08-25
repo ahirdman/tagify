@@ -6,20 +6,22 @@ const useStoredRef = (
   sessionStorageName: string,
   callback: Function
 ) => {
-  const stateRef = React.useRef(state);
-
   const setState = (param: string | number) => {
     stateRef.current = param;
     stateSetter(param);
   };
 
-  // FIXME: dependency array
+  const stateRef = React.useRef(state);
+  const callbackRef = React.useRef(callback);
+  const storageNameRef = React.useRef(sessionStorageName);
+
   React.useLayoutEffect(() => {
-    const previousState = sessionStorage.getItem(sessionStorageName);
+    const storageName = storageNameRef.current;
+    const previousState = sessionStorage.getItem(storageName);
 
     if (previousState) {
-      callback(previousState);
-      sessionStorage.removeItem(sessionStorageName);
+      callbackRef.current(previousState);
+      sessionStorage.removeItem(storageName);
     }
 
     return () => {
@@ -27,7 +29,7 @@ const useStoredRef = (
         return;
       if (typeof stateRef.current === 'number' && stateRef.current === 0)
         return;
-      sessionStorage.setItem(sessionStorageName, stateRef.current.toString());
+      sessionStorage.setItem(storageName, stateRef.current.toString());
     };
   }, []);
 

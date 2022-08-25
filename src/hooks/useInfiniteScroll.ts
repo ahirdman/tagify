@@ -1,14 +1,6 @@
 import * as React from 'react';
 import useStoredRef from './useStoredRef';
 
-// const useCallbackRef = (callback:Function) => {
-//   const callbackRef = React.useRef(callback);
-//   React.useLayoutEffect(() => {
-//     callbackRef.current = callback;
-//   }, [callback]);
-//   return callbackRef;
-// };
-
 const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
   const [isFetching, setIsFetching] = React.useState(false);
   const [scrollPosition, _setScrollPosition] = React.useState(0);
@@ -25,27 +17,31 @@ const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
     handleReturn
   );
 
-  // const savedCallback = useCallbackRef(callback)
+  const isFetchingRef = React.useRef(null);
+  const callbackRef = React.useRef(null);
+  const setScrollPositionRef = React.useRef(null);
 
-  // FIXME: - Dependency array - isFetching & setScrollPosition dependency
+  isFetchingRef.current = isFetching;
+  callbackRef.current = callback;
+  setScrollPositionRef.current = setScrollPosition;
+
   React.useEffect(() => {
     const handleScroll = (): void => {
-      setScrollPosition(listEl.current.scrollTop);
+      setScrollPositionRef.current(listEl.current.scrollTop);
       if (
         listEl.current.scrollTop + listEl.current.clientHeight >=
           listEl.current.scrollHeight &&
-        !isFetching
+        !isFetchingRef.current
       ) {
         setIsFetching(true);
       }
     };
 
-    handleScroll();
-
     const currentEl = listEl.current;
 
     if (currentEl) {
       currentEl.addEventListener('scroll', handleScroll);
+      handleScroll();
     }
 
     return () => {
@@ -53,10 +49,10 @@ const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
     };
   }, []);
 
-  // FIXME: - Dependency array - callback dependency
   React.useEffect(() => {
     if (!isFetching) return;
-    callback();
+
+    callbackRef.current();
   }, [isFetching]);
 
   React.useEffect(() => {

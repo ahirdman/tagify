@@ -18,10 +18,25 @@ const authorizeSpotify = async (uid: string) => {
   return (window.location.href = response);
 };
 
+const refreshToken = async (uid: string, callback: any) => {
+  const token = await post('/auth/refresh', { id: uid });
+  if (!token) return;
+
+  callback({
+    type: UserActionTypes.SPOTIFY_TOKEN,
+    payload: {
+      accessToken: token.access_token,
+      expires: token.expires_in,
+    },
+  });
+};
+
 const UserContext = React.createContext<IUser | null>(null);
 
 const UserContextProvider = ({ children }: IUserContextProviderProps) => {
   const [user, dispatch] = React.useReducer(userReducer, initialUserState);
+
+  const refreshTimerRef = React.useRef(null);
 
   const authObserver = () => {
     onAuthStateChanged(auth, user => {
@@ -55,64 +70,55 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
    * Get Spotify token when user is signed in
    */
 
-  React.useEffect(() => {
-    if (!user.loggedIn) return;
+  React.useEffect((): any => {
+    if (user.loggedIn) {
+      const refreshTimer = (milliseconds: number, uid: string) => {
+        console.log('refresh timer set to:', milliseconds, 'seconds');
 
-    const refreshToken = async (uid: string) => {
-      const token = await post('/auth/refresh', { id: uid });
-      if (!token) return;
+        refreshTimerRef.current = setTimeout(() => {
+          console.log('refreshing something');
+          refreshToken(uid, dispatch);
+          refreshTimer(3590, uid);
+        }, milliseconds * 1000);
+      };
 
-      dispatch({
-        type: UserActionTypes.SPOTIFY_TOKEN,
-        payload: {
-          accessToken: token.access_token,
-          expires: token.expires_in,
-        },
-      });
-    };
+      const tokenService = async (doc: IFirebaseUserDocument, uid: string) => {
+        const tokenHasExpired: IExperationObj = hasExpired(
+          doc.spotifyTokenTimestamp,
+          doc.spotifyExpires
+        );
 
-    // const refreshTimer = (milliSeconds: number, uid: string) => {
-    //   setTimeout(() => {
-    //     console.log('refreshing something');
-    //     refreshToken(uid);
-    //     refreshTimer(milliSeconds, uid);
-    //   }, milliSeconds * 1000);
-    // };
+        if (tokenHasExpired.expired || tokenHasExpired.expiresIn < 60) {
+          refreshToken(uid, dispatch);
+          refreshTimer(tokenHasExpired.expiresIn - 10, uid);
+        } else {
+          dispatch({
+            type: UserActionTypes.SPOTIFY_TOKEN,
+            payload: {
+              accessToken: doc.spotifyAccessToken,
+              expires: tokenHasExpired.expiresIn,
+            },
+          });
+          refreshTimer(tokenHasExpired.expiresIn - 10, uid);
+        }
+      };
 
-    const tokenService = async (doc: IFirebaseUserDocument, uid: string) => {
-      const tokenHasExpired: IExperationObj = hasExpired(
-        doc.spotifyTokenTimestamp,
-        doc.spotifyExpires
-      );
+      const spotifyAuthService = async (uid: string) => {
+        const userDocument = await getUserDocument(uid);
 
-      if (tokenHasExpired.expired) {
-        refreshToken(uid);
-      } else {
-        dispatch({
-          type: UserActionTypes.SPOTIFY_TOKEN,
-          payload: {
-            accessToken: doc.spotifyAccessToken,
-            expires: doc.spotifyExpires,
-          },
-        });
-      }
+        if (userDocument.spotifyAuth) {
+          tokenService(userDocument, uid);
+        } else {
+          authorizeSpotify(uid);
+        }
+      };
 
-      // Call a function that counts down untill expiration and refreshes token
-      // refreshTimer(doc.spotifyExpires, uid);
-      // Abort timer
-    };
+      spotifyAuthService(user.fireId);
 
-    const spotifyAuthService = async (uid: string) => {
-      const userDocument = await getUserDocument(uid);
-
-      if (userDocument.spotifyAuth) {
-        tokenService(userDocument, uid);
-      } else {
-        authorizeSpotify(uid);
-      }
-    };
-
-    spotifyAuthService(user.fireId);
+      return () => {
+        clearTimeout(refreshTimerRef.current);
+      };
+    }
   }, [user.loggedIn, user.fireId]);
 
   /**
@@ -120,21 +126,21 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
    */
 
   React.useEffect(() => {
-    const getSpotifyUserData = async () => {
-      const spotifyUser = await post('/user', {
-        token: user.spotify.accessToken,
-      });
-      dispatch({
-        type: UserActionTypes.SPOTIFY_PROFILE,
-        payload: {
-          image: spotifyUser.images[0].url,
-          name: spotifyUser.display_name,
-          id: spotifyUser.id,
-        },
-      });
-    };
-
     if (user.spotify.accessToken) {
+      const getSpotifyUserData = async () => {
+        const spotifyUser = await post('/user', {
+          token: user.spotify.accessToken,
+        });
+        dispatch({
+          type: UserActionTypes.SPOTIFY_PROFILE,
+          payload: {
+            image: spotifyUser.images[0].url,
+            name: spotifyUser.display_name,
+            id: spotifyUser.id,
+          },
+        });
+      };
+
       getSpotifyUserData();
     }
   }, [user.spotify.accessToken]);

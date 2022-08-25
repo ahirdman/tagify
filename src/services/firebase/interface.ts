@@ -1,6 +1,6 @@
 export interface IFirebaseTimestamp {
-  _seconds: number;
-  _nanoseconds: number;
+  seconds: number;
+  nanoseconds: number;
 }
 
 export interface IFirebaseUserDocument {

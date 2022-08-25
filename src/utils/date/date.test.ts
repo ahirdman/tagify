@@ -76,4 +76,13 @@ describe('Validate if token has expired', () => {
 
     expect(throwsError).toThrowError('hasExpired misfired');
   });
+
+  test('Returns error if seconds till expire param > 3600', () => {
+    const throwsError = () => {
+      hasExpired(dummyTimestamp, 3700);
+    };
+    expect(throwsError).toThrowError(
+      'Invalid expire time, default is 3600, functions recived 3700'
+    );
+  });
 });

@@ -53,13 +53,13 @@ const Player = ({ setDeviceId }: INavbarProps) => {
         });
       });
     };
+    const player = document.getElementById('spotPlayer');
+    // const iFrame = document.querySelector(
+    //   'iframe[alt="Audio Playback Container"]'
+    // );
     return () => {
-      const player = document.getElementById('spotPlayer');
-      const iFrame = document.querySelector(
-        'iframe[alt="Audio Playback Container"]'
-      );
       player.remove();
-      iFrame.remove();
+      // iFrame.remove();
     };
   }, [user.spotify.accessToken, setDeviceId]);
 

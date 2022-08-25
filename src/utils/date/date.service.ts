@@ -1,4 +1,5 @@
 import { IExperationObj } from '../';
+import { IFirebaseTimestamp } from '../../services';
 
 export const getSecondsDiff = (startDate: any, endDate: any) => {
   const msInSecond = 1000;
@@ -7,18 +8,26 @@ export const getSecondsDiff = (startDate: any, endDate: any) => {
 };
 
 export const hasExpired = (
-  timestamp: any,
+  timestamp: IFirebaseTimestamp,
   expiresInSec: number,
-  date = new Date()
+  nowDate = new Date()
 ): IExperationObj => {
-  const experationTime = new Date((timestamp.seconds + expiresInSec) * 1000);
+  if (expiresInSec > 3600) {
+    throw new Error(
+      `Invalid expire time, default is 3600, functions recived ${expiresInSec}`
+    );
+  }
 
-  const remainingSeconds = getSecondsDiff(experationTime, date);
+  const expiredDate = new Date((timestamp.seconds + expiresInSec) * 1000);
 
-  if (experationTime <= date) {
+  const remainingSeconds = getSecondsDiff(expiredDate, nowDate);
+
+  // One hour or more time has passed - Token has expired
+  if (expiredDate <= nowDate) {
     return { expired: true, expiresIn: null };
   }
 
+  // Elapsed time is less than or equal to expiresInSec @Param
   if (remainingSeconds <= expiresInSec) {
     return { expired: false, expiresIn: remainingSeconds };
   }
