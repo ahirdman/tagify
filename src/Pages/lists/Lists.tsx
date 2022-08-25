@@ -3,13 +3,9 @@ import { SelectList, EditList, EmptyCard } from '../../Components/organisms';
 import List from '../../assets/list.svg';
 import { IWindow } from '../../services/spotify/spotify.interface';
 import useWindowSize from '../../hooks/useWindowSize';
-import { useContext, useState } from 'react';
-import { UserContext } from '../../context/UserContext';
 
 const Lists = () => {
-  const [selectedList, setSelectedList] = useState();
-
-  const user = useContext(UserContext);
+  const [selectedList, setSelectedList] = React.useState();
 
   const size: IWindow = useWindowSize();
 
@@ -18,11 +14,7 @@ const Lists = () => {
       <div className="tracks-view">
         <SelectList setSelectedList={setSelectedList} />
         {selectedList ? (
-          <EditList
-            selectedList={selectedList}
-            id={user.spotify.profile.id}
-            accessToken={user.spotify.accessToken}
-          />
+          <EditList selectedList={selectedList} />
         ) : (
           <EmptyCard icon={List} item="list" />
         )}
@@ -35,8 +27,6 @@ const Lists = () => {
       {selectedList ? (
         <EditList
           selectedList={selectedList}
-          id={user.spotify.profile.id}
-          accessToken={user.spotify.accessToken}
           setSelectedList={setSelectedList}
         />
       ) : (

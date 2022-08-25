@@ -6,17 +6,9 @@ import { AddTag, TrackTags, CardNav, UserTags } from '../../molecules';
 import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
 import { UserContext } from '../../../context/UserContext';
-import { post } from '../../../utils/httpClient';
 import { matchTag } from '../../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../../common/common.types';
-
-const playTrack = async (
-  deviceId: string,
-  token: string,
-  uri: string
-): Promise<void> => {
-  await post('/playback', { token, deviceId, uri });
-};
+import { Spotify } from '../../../services';
 
 interface ISelectedTrackProps {
   selectedTrack?: ISavedTrack;
@@ -76,7 +68,11 @@ const SelectedTrack = ({
         />
         <img
           onClick={() => {
-            playTrack(deviceId, user.spotify.accessToken, selectedTrack.uri);
+            Spotify.playTrack(
+              deviceId,
+              user.spotify.accessToken,
+              selectedTrack.uri
+            );
           }}
           src={Play}
           alt="playback"

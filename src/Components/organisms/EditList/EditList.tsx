@@ -4,43 +4,20 @@ import { onSnapshot } from 'firebase/firestore';
 import './EditList.scss';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import Send from '../../../assets/send.svg';
-import { post } from '../../../utils/httpClient';
 import { CardNav } from '../../molecules';
 import { UserContext } from '../../../context/UserContext';
 import { IFirestoreTrack } from '../../../services/firebase/firestore/firestore.interface';
+import { Spotify } from '../../../services';
 
 interface IEditListProps {
   selectedList: string;
-  id: string;
-  accessToken: string;
   setSelectedList?: any;
 }
 
-const EditList = ({
-  selectedList,
-  id,
-  accessToken,
-  setSelectedList,
-}: IEditListProps) => {
+const EditList = ({ selectedList, setSelectedList }: IEditListProps) => {
   const [tracks, setTracks] = React.useState([]);
 
   const user = React.useContext(UserContext);
-
-  const trackUris = (arr: IFirestoreTrack[]) =>
-    arr.map((track: IFirestoreTrack) => track.uri);
-
-  const savePlaylist = async (name: string) => {
-    const playlist = await post('/playlist', {
-      token: accessToken,
-      userId: id,
-      name,
-    });
-    await post('/playlist/add', {
-      token: accessToken,
-      playlistId: playlist.id,
-      tracks: trackUris(tracks),
-    });
-  };
 
   React.useEffect(() => {
     const unsub = onSnapshot(
@@ -69,7 +46,12 @@ const EditList = ({
           className="edit-list__export"
           onClick={e => {
             e.preventDefault();
-            savePlaylist(selectedList);
+            Spotify.createNewPlaylistWithTracks(
+              selectedList,
+              user.spotify.accessToken,
+              user.spotify.profile.id,
+              tracks
+            );
           }}
         >
           <img src={Send} alt="send" className="edit-list__export--icon" />

@@ -1,45 +1,48 @@
-import express, { Response } from 'express';
+import express, { Response, NextFunction } from 'express';
 import axios from 'axios';
 
 const router = express.Router();
 
-// Get users playlists
-router.post('/', async ({ body: { token, userId, name } }, res: Response) => {
-  try {
-    const results = await axios(
-      `https://api.spotify.com/v1/users/${userId}/playlists`,
-      {
-        method: 'POST',
-        data: JSON.stringify({ name }),
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    res.send(results.data);
-  } catch (error) {
-    res.sendStatus(500);
-  }
-});
-
-// Create playlist
+// Create new Playlist
 router.post(
-  '/add',
-  async ({ body: { token, playlistId, tracks } }, res: Response) => {
-    const postBody = {
-      uris: tracks,
-    };
-
+  '/',
+  async ({ body: { data } }, res: Response, next: NextFunction) => {
     try {
       const results = await axios(
-        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        `https://api.spotify.com/v1/users/${data.userId}/playlists`,
         {
           method: 'POST',
-          data: JSON.stringify(postBody),
-          headers: { Authorization: `Bearer ${token}` },
+          data: JSON.stringify({ name }),
+          headers: { Authorization: `Bearer ${data.token}` },
         }
       );
       res.send(results.data);
     } catch (error) {
-      res.sendStatus(500);
+      next(error);
+    }
+  }
+);
+
+// Add tracks to existing Playlist
+router.post(
+  '/add',
+  async ({ body: { data } }, res: Response, next: NextFunction) => {
+    const postBody = {
+      uris: data.tracks,
+    };
+
+    try {
+      const results = await axios(
+        `https://api.spotify.com/v1/playlists/${data.playlistId}/tracks`,
+        {
+          method: 'POST',
+          data: JSON.stringify(postBody),
+          headers: { Authorization: `Bearer ${data.token}` },
+        }
+      );
+      res.send(results.data);
+    } catch (error) {
+      next(error);
     }
   }
 );

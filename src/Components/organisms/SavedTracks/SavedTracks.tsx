@@ -4,32 +4,16 @@ import './SavedTracks.scss';
 import { CardNav, SearchBar } from '../..//molecules';
 import useInfiniteScroll from '../../../hooks/useInfiniteScroll';
 import { UserContext } from '../../../context/UserContext';
-import { post } from '../../../utils/httpClient';
 import { Loader } from '../../atoms';
 import { ITracksStateObj } from '../../../reducers/savedTracks/savedTracks.interface';
 import { StateActionTypes } from '../../../reducers/savedTracks/savedTracks.actions';
+import { Spotify } from '../../../services';
 
 interface ISavedTracks {
   setSelectedTrack: any;
   state: ITracksStateObj;
   dispatch: any;
 }
-
-const getTracks = async (token: string, callback: Function) => {
-  const savedTracks = await post('/user/saved', {
-    token,
-  });
-
-  callback({
-    type: StateActionTypes.INITIAL_LOAD,
-    payload: {
-      total: savedTracks.total,
-      nextUrl: savedTracks.next,
-      savedTracks: savedTracks.items,
-      filteredTracks: savedTracks.items,
-    },
-  });
-};
 
 const SavedTracks = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
   const [query, setQuery] = React.useState('');
@@ -42,17 +26,14 @@ const SavedTracks = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
   const fetchMoreTracks = async () => {
     if (fetchedAllTracks) return;
 
-    const nextTracks = await post('/user/next', {
-      token: user.spotify.accessToken,
-      url: state.nextUrl,
-    });
+    const nextTracks = await Spotify.getNextUserSavedTracks(
+      user.spotify.accessToken,
+      state.nextUrl
+    );
 
     dispatch({
       type: StateActionTypes.ADD_TRACKS,
-      payload: {
-        nextUrl: nextTracks.next,
-        savedTracks: nextTracks.items,
-      },
+      payload: nextTracks,
     });
 
     setIsFetching(false);
@@ -75,7 +56,16 @@ const SavedTracks = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
   React.useEffect(() => {
     if (!user.spotify.accessToken || state.savedTracks.length !== 0) return;
 
-    getTracks(user.spotify.accessToken, dispatch);
+    const getTracks = async (token: string) => {
+      const savedData = await Spotify.getInitalUserSavedTracks(token);
+
+      dispatch({
+        type: StateActionTypes.INITIAL_LOAD,
+        payload: savedData,
+      });
+    };
+
+    getTracks(user.spotify.accessToken);
   }, [user.spotify.accessToken, state.savedTracks.length, dispatch]);
 
   /**

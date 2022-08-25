@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
 import { scope, generateRandomString } from './auth.service';
 import 'dotenv/config';
@@ -8,7 +8,7 @@ const router = express.Router();
 let user: string;
 
 router.post('/', (req: Request, res: Response) => {
-  const id = JSON.parse(req.body);
+  const id = JSON.parse(req.body.data);
   user = id.uid;
   const state = generateRandomString(16);
 
@@ -26,40 +26,48 @@ router.post('/', (req: Request, res: Response) => {
     .json(`https://accounts.spotify.com/authorize?${authParams.toString()}`);
 });
 
-router.get('/callback', async (req: Request, res: Response) => {
-  const code = req.query.code as string; // || null;
-  const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies[AuthService.stateName] : null;
+router.get(
+  '/callback',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const code = req.query.code as string; // || null;
+    const state = req.query.state || null;
+    const storedState = req.cookies ? req.cookies[AuthService.stateName] : null;
 
-  if (state === null || state !== storedState) {
-    res.json({ error: 'state mismatch' });
+    if (state === null || state !== storedState) {
+      res.json({ error: 'state mismatch' });
+    }
+
+    const form = new URLSearchParams();
+    form.append('code', code);
+    form.append('redirect_uri', AuthService.redirectUri);
+    form.append('grant_type', 'authorization_code');
+
+    try {
+      const response = await axios('https://accounts.spotify.com/api/token', {
+        method: 'post',
+        data: form,
+        headers: {
+          Authorization: `Basic ${Buffer.from(
+            `${AuthService.clientId}:${AuthService.clientSecret}`
+          ).toString('base64')}`,
+        },
+      });
+
+      const { access_token, expires_in, refresh_token } = response.data;
+
+      await AuthService.setUserDoc(
+        user,
+        access_token,
+        expires_in,
+        refresh_token
+      );
+
+      res.clearCookie(AuthService.stateName).redirect(AuthService.baseUrl);
+    } catch (error) {
+      next(error);
+    }
   }
-
-  const form = new URLSearchParams();
-  form.append('code', code);
-  form.append('redirect_uri', AuthService.redirectUri);
-  form.append('grant_type', 'authorization_code');
-
-  try {
-    const response = await axios('https://accounts.spotify.com/api/token', {
-      method: 'post',
-      data: form,
-      headers: {
-        Authorization: `Basic ${Buffer.from(
-          `${AuthService.clientId}:${AuthService.clientSecret}`
-        ).toString('base64')}`,
-      },
-    });
-
-    const { access_token, expires_in, refresh_token } = response.data;
-
-    await AuthService.setUserDoc(user, access_token, expires_in, refresh_token);
-
-    res.clearCookie(AuthService.stateName).redirect(AuthService.baseUrl);
-  } catch (error) {
-    res.sendStatus(500);
-  }
-});
+);
 
 interface IServerTimestamp {
   _seconds: number;
@@ -75,38 +83,40 @@ interface IUSerDocument {
 }
 
 // POST refreshed token
-router.post('/refresh', async (req: Request, res: Response) => {
-  const { id } = req.body;
+router.post(
+  '/refresh',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.body.data;
 
-  try {
-    const userDoc = (await AuthService.getUserDoc(id)) as IUSerDocument;
+    try {
+      const userDoc = (await AuthService.getUserDoc(id)) as IUSerDocument;
 
-    const form = new URLSearchParams();
-    form.append('grant_type', 'refresh_token');
-    form.append('refresh_token', userDoc.spotifyRefreshToken);
+      const form = new URLSearchParams();
+      form.append('grant_type', 'refresh_token');
+      form.append('refresh_token', userDoc.spotifyRefreshToken);
 
-    const response = await axios('https://accounts.spotify.com/api/token', {
-      method: 'post',
-      data: form,
-      headers: {
-        Authorization: `Basic ${Buffer.from(
-          `${AuthService.clientId}:${AuthService.clientSecret}`
-        ).toString('base64')}`,
-      },
-    });
+      const response = await axios('https://accounts.spotify.com/api/token', {
+        method: 'post',
+        data: form,
+        headers: {
+          Authorization: `Basic ${Buffer.from(
+            `${AuthService.clientId}:${AuthService.clientSecret}`
+          ).toString('base64')}`,
+        },
+      });
 
-    const { access_token, expires_in } = response.data;
+      const { access_token, expires_in } = response.data;
 
-    await AuthService.updateUserDoc(id, access_token, expires_in);
+      await AuthService.updateUserDoc(id, access_token, expires_in);
 
-    res.json({
-      access_token,
-      expires_in,
-    });
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
+      res.json({
+        access_token,
+        expires_in,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 export { router as default };

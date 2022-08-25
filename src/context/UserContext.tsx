@@ -2,34 +2,16 @@ import { onAuthStateChanged } from 'firebase/auth';
 import * as React from 'react';
 import { auth } from '../services/firebase/config';
 import { getUserDocument } from '../services/firebase/firestore/firestore.service';
-import { post, postWithCookie } from '../utils/httpClient';
 import { initialUserState, userReducer } from '../reducers/user/user.reducer';
 import { IUser } from '../reducers/user/user.interface';
 import { UserActionTypes } from '../reducers/user/user.actions';
 import { hasExpired, IExperationObj } from '../utils';
 import { IFirestoreUserDocument } from '../services';
+import { Spotify } from '../services';
 
 interface IUserContextProviderProps {
   children: JSX.Element | JSX.Element[];
 }
-
-const authorizeSpotify = async (uid: string) => {
-  const response = await postWithCookie('/auth', { uid });
-  return (window.location.href = response);
-};
-
-const refreshToken = async (uid: string, callback: any) => {
-  const token = await post('/auth/refresh', { id: uid });
-  if (!token) return;
-
-  callback({
-    type: UserActionTypes.SPOTIFY_TOKEN,
-    payload: {
-      accessToken: token.access_token,
-      expires: token.expires_in,
-    },
-  });
-};
 
 const UserContext = React.createContext<IUser | null>(null);
 
@@ -75,10 +57,19 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
       const refreshTimer = (milliseconds: number, uid: string) => {
         console.log('refresh timer set to:', milliseconds, 'seconds');
 
-        refreshTimerRef.current = setTimeout(() => {
+        refreshTimerRef.current = setTimeout(async () => {
           console.log('refreshing something');
-          refreshToken(uid, dispatch);
-          refreshTimer(3590, uid);
+          const token = await Spotify.refreshToken(uid);
+
+          dispatch({
+            type: UserActionTypes.SPOTIFY_TOKEN,
+            payload: {
+              accessToken: token.access_token,
+              expires: token.expires_in,
+            },
+          });
+
+          refreshTimer(token.expires_in - 10, uid);
         }, milliseconds * 1000);
       };
 
@@ -89,8 +80,17 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
         );
 
         if (tokenHasExpired.expired || tokenHasExpired.expiresIn < 60) {
-          refreshToken(uid, dispatch);
-          refreshTimer(tokenHasExpired.expiresIn - 10, uid);
+          const token = await Spotify.refreshToken(uid);
+
+          dispatch({
+            type: UserActionTypes.SPOTIFY_TOKEN,
+            payload: {
+              accessToken: token.access_token,
+              expires: token.expires_in,
+            },
+          });
+
+          refreshTimer(token.expires_in - 10, uid);
         } else {
           dispatch({
             type: UserActionTypes.SPOTIFY_TOKEN,
@@ -99,6 +99,7 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
               expires: tokenHasExpired.expiresIn,
             },
           });
+
           refreshTimer(tokenHasExpired.expiresIn - 10, uid);
         }
       };
@@ -109,7 +110,7 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
         if (userDocument.spotifyAuth) {
           tokenService(userDocument, uid);
         } else {
-          authorizeSpotify(uid);
+          Spotify.authorizeSpotify(uid);
         }
       };
 
@@ -127,21 +128,20 @@ const UserContextProvider = ({ children }: IUserContextProviderProps) => {
 
   React.useEffect(() => {
     if (user.spotify.accessToken) {
-      const getSpotifyUserData = async () => {
-        const spotifyUser = await post('/user', {
-          token: user.spotify.accessToken,
-        });
+      const getSpotifyUserData = async (token: string) => {
+        const data = await Spotify.getSpotifyUserData(token);
+
         dispatch({
           type: UserActionTypes.SPOTIFY_PROFILE,
           payload: {
-            image: spotifyUser.images[0].url,
-            name: spotifyUser.display_name,
-            id: spotifyUser.id,
+            image: data.images[0].url,
+            name: data.display_name,
+            id: data.id,
           },
         });
       };
 
-      getSpotifyUserData();
+      getSpotifyUserData(user.spotify.accessToken);
     }
   }, [user.spotify.accessToken]);
 

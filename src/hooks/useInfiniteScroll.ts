@@ -25,7 +25,7 @@ const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
   callbackRef.current = callback;
   setScrollPositionRef.current = setScrollPosition;
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const handleScroll = (): void => {
       setScrollPositionRef.current(listEl.current.scrollTop);
       if (
