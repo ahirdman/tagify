@@ -4,7 +4,10 @@ import Add from '../../../assets/add.svg';
 import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
 import { UserContext } from '../../../context/UserContext';
-import { randomizeTagColor } from '../../../services/firebase/firestore/firestore.helper';
+import {
+  extractTrackInfo,
+  randomizeTagColor,
+} from '../../../services/firebase/firestore/firestore.helper';
 
 interface IAddTagProps {
   selectedTrack: any;
@@ -14,13 +17,6 @@ const AddTag = ({ selectedTrack }: IAddTagProps) => {
   const [tagInput, setTagInput] = React.useState('');
 
   const user = React.useContext(UserContext);
-
-  const dbTrack = {
-    artist: selectedTrack.artists[0].name,
-    title: selectedTrack.name,
-    artwork: selectedTrack.album.images[2].url,
-    uri: selectedTrack.uri,
-  };
 
   return (
     <section className="add-tag">
@@ -41,7 +37,7 @@ const AddTag = ({ selectedTrack }: IAddTagProps) => {
               user.fireId,
               tagInput,
               randomizeTagColor(),
-              dbTrack
+              extractTrackInfo(selectedTrack)
             );
             setTagInput('');
           }}

@@ -11,7 +11,7 @@ import { ITags } from '../../../common/common.types';
 import { Spotify } from '../../../services';
 
 interface ISelectedTrackProps {
-  selectedTrack?: ISavedTrack;
+  selectedTrack: ISavedTrack;
   deviceId?: string;
   setSelectedTrack?: any;
 }
@@ -41,11 +41,10 @@ const SelectedTrack = ({
             [data.name]: [...data.tracks],
           });
         });
+
         setUserTags(tags);
-        if (selectedTrack) {
-          const matches = matchTag(tagObject, selectedTrack.uri);
-          setTrackTags(matches);
-        }
+        const matches = matchTag(tagObject, selectedTrack.uri);
+        setTrackTags(matches);
       }
     );
 

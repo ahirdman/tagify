@@ -10,7 +10,7 @@ import { UserContext } from '../../../context/UserContext';
 import { ITags } from '../../../common/common.types';
 
 interface ISelectListProps {
-  setSelectedList: any;
+  setSelectedList: (prevState: any) => any;
 }
 
 const SelectList = ({ setSelectedList }: ISelectListProps) => {

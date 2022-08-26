@@ -14,7 +14,6 @@ interface ITrackTags {
 const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
   const user = React.useContext(UserContext);
 
-  console.log(selectedTrack);
   return (
     <section className="track-tags">
       <p className="track-tags__title">TRACK TAGS</p>

@@ -9,6 +9,14 @@ interface INavbarProps {
   setDeviceId: any;
 }
 
+// interface ISDKcurrentTrack {
+//   name: string;
+//   album: {
+//     images: [{ url: string }];
+//   };
+//   artists: [{ name: string }];
+// }
+
 const trackObject = {
   name: '',
   album: {
@@ -28,6 +36,7 @@ const Player = ({ setDeviceId }: INavbarProps) => {
 
   const user = React.useContext(UserContext);
 
+  // FIXME: unsubscribe from session in cleanup function
   React.useEffect(() => {
     const script = document.createElement('script');
     script.setAttribute('id', 'spotPlayer');
