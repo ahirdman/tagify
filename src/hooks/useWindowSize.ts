@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react';
 import { IWindow } from '../services/spotify/spotify.interface';
 
 const useWindowSize = () => {
-  const [windowSize, setWindowSize] = useState<IWindow>({
+  const [windowSize, setWindowSize] = React.useState<IWindow>({
     width: undefined,
     height: undefined,
   });
 
-  useEffect((): any => {
+  React.useEffect((): any => {
     if (typeof window !== 'undefined') {
       const handleResize = () => {
         setWindowSize({
@@ -23,6 +23,9 @@ const useWindowSize = () => {
       return () => window.removeEventListener('resize', handleResize);
     }
   }, []);
+
+  React.useDebugValue('Window Size');
+
   return windowSize;
 };
 

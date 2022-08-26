@@ -23,4 +23,4 @@ const CardNav = ({ title, onClick }: ICardNavProps) => {
   );
 };
 
-export default CardNav;
+export default React.memo(CardNav);

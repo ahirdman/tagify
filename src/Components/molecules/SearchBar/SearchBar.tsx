@@ -41,4 +41,4 @@ const SearchBar = ({ icon, setSearch }: ISearchBarProps) => {
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);
