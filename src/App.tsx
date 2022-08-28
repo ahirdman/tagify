@@ -9,7 +9,7 @@ import { UserContext } from './context/UserContext';
 import * as SavedReducer from './reducers/savedTracks/savedTracks.reducer';
 
 const App = () => {
-  const [deviceId, setDeviceId] = React.useState('');
+  // const [deviceId, setDeviceId] = React.useState('');
   const [state, dispatch] = React.useReducer(
     SavedReducer.savedTracksReducer,
     SavedReducer.initialTracksState
@@ -21,13 +21,11 @@ const App = () => {
     <>
       {user.loggedIn && user.spotify.accessToken ? (
         <main className="app">
-          <Navbar setDeviceId={setDeviceId} />
+          <Navbar />
           <Routes>
             <Route
               path="/"
-              element={
-                <Tracks deviceId={deviceId} state={state} dispatch={dispatch} />
-              }
+              element={<Tracks state={state} dispatch={dispatch} />}
             />
             <Route path="/lists" element={<Lists />} />
           </Routes>

@@ -8,11 +8,11 @@ import './Navbar.scss';
 import { logOut } from '../../../services/firebase/auth/auth.service';
 import { UserContext } from '../../../context/UserContext';
 
-interface INavbarProps {
-  setDeviceId: any;
-}
+// interface INavbarProps {
+//   setDeviceId: any;
+// }
 
-const Navbar = ({ setDeviceId }: INavbarProps) => {
+const Navbar = () => {
   const user = React.useContext(UserContext);
 
   return (
@@ -59,7 +59,7 @@ const Navbar = ({ setDeviceId }: INavbarProps) => {
         </NavLink>
       </div>
 
-      <Player setDeviceId={setDeviceId} />
+      <Player />
     </nav>
   );
 };

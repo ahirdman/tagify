@@ -10,12 +10,11 @@ import { IWindow } from '../../services/spotify/spotify.interface';
 import './Tracks.scss';
 
 interface ITracksProps {
-  deviceId: string;
   state: any;
   dispatch: any;
 }
 
-const Tracks = ({ deviceId, state, dispatch }: ITracksProps) => {
+const Tracks = ({ state, dispatch }: ITracksProps) => {
   const [selectedTrack, setSelectedTrack] = React.useState();
 
   const size: IWindow = useWindowSize();
@@ -31,10 +30,7 @@ const Tracks = ({ deviceId, state, dispatch }: ITracksProps) => {
           />
           <>
             {selectedTrack ? (
-              <SelectedTrack
-                selectedTrack={selectedTrack}
-                deviceId={deviceId}
-              />
+              <SelectedTrack selectedTrack={selectedTrack} />
             ) : (
               <EmptyCard icon={Note} item="track" />
             )}
@@ -49,7 +45,6 @@ const Tracks = ({ deviceId, state, dispatch }: ITracksProps) => {
       {selectedTrack ? (
         <SelectedTrack
           selectedTrack={selectedTrack}
-          deviceId={deviceId}
           setSelectedTrack={setSelectedTrack}
         />
       ) : (

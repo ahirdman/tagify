@@ -9,20 +9,21 @@ import { UserContext } from '../../../context/UserContext';
 import { matchTag } from '../../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../../common/common.types';
 import { Spotify } from '../../../services';
+import { useAppSelector } from '../../../store/hooks';
 
 interface ISelectedTrackProps {
   selectedTrack: ISavedTrack;
-  deviceId?: string;
   setSelectedTrack?: any;
 }
 
 const SelectedTrack = ({
   selectedTrack,
-  deviceId,
   setSelectedTrack,
 }: ISelectedTrackProps) => {
   const [trackTags, setTrackTags] = React.useState<string[]>([]);
   const [userTags, setUserTags] = React.useState([]);
+
+  const deviceId = useAppSelector(state => state.playback.deviceID);
 
   const user = React.useContext(UserContext);
 
