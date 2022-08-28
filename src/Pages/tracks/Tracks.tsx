@@ -9,12 +9,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 import { IWindow } from '../../services/spotify/spotify.interface';
 import './Tracks.scss';
 
-interface ITracksProps {
-  state: any;
-  dispatch: any;
-}
-
-const Tracks = ({ state, dispatch }: ITracksProps) => {
+const Tracks = () => {
   const [selectedTrack, setSelectedTrack] = React.useState();
 
   const size: IWindow = useWindowSize();
@@ -23,11 +18,7 @@ const Tracks = ({ state, dispatch }: ITracksProps) => {
     return (
       <div className="tracks-view">
         <>
-          <SavedTracks
-            setSelectedTrack={setSelectedTrack}
-            state={state}
-            dispatch={dispatch}
-          />
+          <SavedTracks setSelectedTrack={setSelectedTrack} />
           <>
             {selectedTrack ? (
               <SelectedTrack selectedTrack={selectedTrack} />
@@ -48,11 +39,7 @@ const Tracks = ({ state, dispatch }: ITracksProps) => {
           setSelectedTrack={setSelectedTrack}
         />
       ) : (
-        <SavedTracks
-          setSelectedTrack={setSelectedTrack}
-          state={state}
-          dispatch={dispatch}
-        />
+        <SavedTracks setSelectedTrack={setSelectedTrack} />
       )}
     </>
   );

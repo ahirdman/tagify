@@ -6,14 +6,12 @@ import List from '../../../assets/list-white.svg';
 import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
 import { logOut } from '../../../services/firebase/auth/auth.service';
-import { UserContext } from '../../../context/UserContext';
-
-// interface INavbarProps {
-//   setDeviceId: any;
-// }
+import { useAppSelector } from '../../../store/hooks';
 
 const Navbar = () => {
-  const user = React.useContext(UserContext);
+  const profile = useAppSelector(state => state.user.spotify.profile);
+
+  console.log('rendered navbar');
 
   return (
     <nav className="navbar">
@@ -25,13 +23,13 @@ const Navbar = () => {
           onClick={() => logOut()}
         />
         <img
-          src={user.spotify.profile.image}
+          src={profile.image}
           alt="profile"
           className="navbar__item--avatar navbar__item--desktop"
           onClick={() => logOut()}
         />
         <p className="navbar__item--username navbar__item--desktop">
-          {user.spotify.profile.name}
+          {profile.name}
         </p>
       </div>
 

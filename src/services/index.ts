@@ -4,6 +4,8 @@
 //   IFirestoreTrack,
 // } from './firebase/firestore/firestore.interface';
 import * as Spotify from './spotify/spotify.controller';
+import * as FirebaseAuth from './firebase/auth/auth.service';
+import * as Firestore from './firebase/firestore/firestore.service';
 
 export interface IFirestoreTimestamp {
   seconds: number;
@@ -30,4 +32,6 @@ export {
   // IFirestoreTimestamp,
   // IFirestoreTrack,
   Spotify,
+  FirebaseAuth,
+  Firestore,
 };

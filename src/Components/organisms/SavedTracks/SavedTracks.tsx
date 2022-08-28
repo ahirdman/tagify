@@ -3,38 +3,45 @@ import Magnifier from '../../../assets/magnifier.svg';
 import './SavedTracks.scss';
 import { CardNav, SearchBar } from '../..//molecules';
 import useInfiniteScroll from '../../../hooks/useInfiniteScroll';
-import { UserContext } from '../../../context/UserContext';
 import { Loader } from '../../atoms';
-import { ITracksStateObj } from '../../../reducers/savedTracks/savedTracks.interface';
-import { StateActionTypes } from '../../../reducers/savedTracks/savedTracks.actions';
 import { Spotify } from '../../../services';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {
+  addTracks,
+  filterTracks,
+  initialLoad,
+} from '../../../store/savedTracks/savedTracks.slice';
 
 interface ISavedTracks {
   setSelectedTrack: any;
-  state: ITracksStateObj;
-  dispatch: any;
 }
 
-const SavedTracks = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
+const SavedTracks = ({ setSelectedTrack }: ISavedTracks) => {
   const [query, setQuery] = React.useState('');
-  const user = React.useContext(UserContext);
-  const fetchedAllTracks = state.savedTracks.length === state.total;
+  const user = useAppSelector(state => state.user);
+  const tracks = useAppSelector(state => state.savedTracks);
+
+  const dispatch = useAppDispatch();
+
+  const fetchedAllTracks = tracks.savedTracks.length === tracks.total;
   const resumeFetching =
-    state.filteredTracks.length < 8 &&
-    state.total !== state.filteredTracks.length;
+    tracks.filteredTracks.length < 8 &&
+    tracks.total !== tracks.filteredTracks.length;
 
   const fetchMoreTracks = async () => {
     if (fetchedAllTracks) return;
 
     const nextTracks = await Spotify.getNextUserSavedTracks(
       user.spotify.accessToken,
-      state.nextUrl
+      tracks.nextUrl
     );
 
-    dispatch({
-      type: StateActionTypes.ADD_TRACKS,
-      payload: nextTracks,
-    });
+    dispatch(
+      addTracks({
+        savedTracks: nextTracks.savedTracks,
+        filteredTracks: nextTracks.savedTracks,
+      })
+    );
 
     setIsFetching(false);
   };
@@ -54,19 +61,16 @@ const SavedTracks = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
    */
 
   React.useEffect(() => {
-    if (!user.spotify.accessToken || state.savedTracks.length !== 0) return;
+    if (!user.spotify.accessToken || tracks.savedTracks.length !== 0) return;
 
     const getTracks = async (token: string) => {
       const savedData = await Spotify.getInitalUserSavedTracks(token);
 
-      dispatch({
-        type: StateActionTypes.INITIAL_LOAD,
-        payload: savedData,
-      });
+      dispatch(initialLoad(savedData));
     };
 
     getTracks(user.spotify.accessToken);
-  }, [user.spotify.accessToken, state.savedTracks.length, dispatch]);
+  }, [user.spotify.accessToken, tracks.savedTracks.length, dispatch]);
 
   /**
    *  Filter effect, filter service is managed by reducer.
@@ -74,12 +78,9 @@ const SavedTracks = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
 
   React.useEffect(() => {
     if (query.length > 0) {
-      dispatch({
-        type: StateActionTypes.FILTER_TRACKS,
-        payload: query,
-      });
+      dispatch(filterTracks(query));
     }
-  }, [query, state.savedTracks, dispatch]);
+  }, [query, tracks.savedTracks, dispatch]);
 
   return (
     <div className="select">
@@ -89,7 +90,7 @@ const SavedTracks = ({ setSelectedTrack, state, dispatch }: ISavedTracks) => {
         <p className="select__header--title">TITLE & ARTIST</p>
       </section>
       <ul className="track-list" ref={listEl}>
-        {state.filteredTracks.map((trackObj, index) => {
+        {tracks.filteredTracks.map((trackObj, index) => {
           return (
             <li
               onClick={() => setSelectedTrack(trackObj.track)}

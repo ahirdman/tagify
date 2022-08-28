@@ -3,11 +3,11 @@ import * as Firestore from '../../../services/firebase/firestore/firestore.servi
 import Add from '../../../assets/add.svg';
 import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
-import { UserContext } from '../../../context/UserContext';
 import {
   extractTrackInfo,
   randomizeTagColor,
 } from '../../../services/firebase/firestore/firestore.helper';
+import { useAppSelector } from '../../../store/hooks';
 
 interface IAddTagProps {
   selectedTrack: any;
@@ -16,7 +16,7 @@ interface IAddTagProps {
 const AddTag = ({ selectedTrack }: IAddTagProps) => {
   const [tagInput, setTagInput] = React.useState('');
 
-  const user = React.useContext(UserContext);
+  const fireId = useAppSelector(state => state.user.fireId);
 
   return (
     <section className="add-tag">
@@ -34,7 +34,7 @@ const AddTag = ({ selectedTrack }: IAddTagProps) => {
           onClick={e => {
             e.preventDefault();
             Firestore.createTag(
-              user.fireId,
+              fireId,
               tagInput,
               randomizeTagColor(),
               extractTrackInfo(selectedTrack)

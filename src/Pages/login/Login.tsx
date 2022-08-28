@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { useContext } from 'react';
 import { AuthButton, AuthModal, Backdrop } from '../../Components/atoms';
 import {
   ConnectScreen,
   SignInForm,
   SignUpForm,
 } from '../../Components/molecules';
-import { UserContext } from '../../context/UserContext';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { toggleSignInModal, toggleSignUpModal } from '../../store/ui/ui.slice';
 import './Login.scss';
@@ -14,7 +12,7 @@ import './Login.scss';
 const Login = () => {
   const { signInModal, signUpModal } = useAppSelector(state => state.ui);
   const dispatch = useAppDispatch();
-  const user = useContext(UserContext);
+  const loggedIn = useAppSelector(state => state.user.loggedIn);
 
   return (
     <main className="login">
@@ -36,22 +34,14 @@ const Login = () => {
       {signUpModal && (
         <Backdrop onClick={() => dispatch(toggleSignUpModal())}>
           <AuthModal>
-            {user.loggedIn ? (
-              <ConnectScreen autoConnect={false} />
-            ) : (
-              <SignUpForm />
-            )}
+            {loggedIn ? <ConnectScreen autoConnect={false} /> : <SignUpForm />}
           </AuthModal>
         </Backdrop>
       )}
       {signInModal && (
         <Backdrop onClick={() => dispatch(toggleSignInModal())}>
           <AuthModal>
-            {user.loggedIn ? (
-              <ConnectScreen autoConnect={false} />
-            ) : (
-              <SignInForm />
-            )}
+            {loggedIn ? <ConnectScreen autoConnect={false} /> : <SignInForm />}
           </AuthModal>
         </Backdrop>
       )}

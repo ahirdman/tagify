@@ -3,8 +3,8 @@ import * as Firestore from '../../../services/firebase/firestore/firestore.servi
 import Cross from '../../..//assets/cross-circle.svg';
 import './TrackTags.scss';
 import Tag from '../../atoms/Tag/Tag';
-import { UserContext } from '../../../context/UserContext';
 import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
+import { useAppSelector } from '../../../store/hooks';
 
 interface ITrackTags {
   selectedTrack: any;
@@ -12,7 +12,7 @@ interface ITrackTags {
 }
 
 const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
-  const user = React.useContext(UserContext);
+  const fireId = useAppSelector(state => state.user.fireId);
 
   return (
     <section className="track-tags">
@@ -25,7 +25,7 @@ const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
                 key={index}
                 onClick={() =>
                   Firestore.clearTrackFromTag(
-                    user.fireId,
+                    fireId,
                     tag.name,
                     extractTrackInfo(selectedTrack)
                   )

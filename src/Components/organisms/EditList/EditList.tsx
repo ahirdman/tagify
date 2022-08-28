@@ -5,9 +5,9 @@ import './EditList.scss';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import Send from '../../../assets/send.svg';
 import { CardNav } from '../../molecules';
-import { UserContext } from '../../../context/UserContext';
 import { IFirestoreTrack } from '../../../services/firebase/firestore/firestore.interface';
 import { Spotify } from '../../../services';
+import { useAppSelector } from '../../../store/hooks';
 
 interface IEditListProps {
   selectedList: string;
@@ -17,7 +17,7 @@ interface IEditListProps {
 const EditList = ({ selectedList, setSelectedList }: IEditListProps) => {
   const [tracks, setTracks] = React.useState([]);
 
-  const user = React.useContext(UserContext);
+  const user = useAppSelector(state => state.user);
 
   React.useEffect(() => {
     const unsub = onSnapshot(

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Plus from '../../../assets/add-circle.svg';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
-import { UserContext } from '../../../context/UserContext';
 import { Tag } from '../../atoms';
 import './UserTags.scss';
 import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../../common/common.types';
+import { useAppSelector } from '../../../store/hooks';
 
 interface IUserTagsProps {
   selectedTrack: any;
@@ -13,7 +13,7 @@ interface IUserTagsProps {
 }
 
 const UserTags = ({ selectedTrack, userTags }: IUserTagsProps) => {
-  const user = React.useContext(UserContext);
+  const fireId = useAppSelector(state => state.user.fireId);
 
   return (
     <section className="user-tags">
@@ -26,7 +26,7 @@ const UserTags = ({ selectedTrack, userTags }: IUserTagsProps) => {
                 key={index}
                 onClick={() =>
                   Firestore.tagTrack(
-                    user.fireId,
+                    fireId,
                     tag.name,
                     extractTrackInfo(selectedTrack)
                   )

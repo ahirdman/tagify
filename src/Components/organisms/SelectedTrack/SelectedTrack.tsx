@@ -5,7 +5,6 @@ import * as Firestore from '../../../services/firebase/firestore/firestore.servi
 import { AddTag, TrackTags, CardNav, UserTags } from '../../molecules';
 import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
-import { UserContext } from '../../../context/UserContext';
 import { matchTag } from '../../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../../common/common.types';
 import { Spotify } from '../../../services';
@@ -24,8 +23,7 @@ const SelectedTrack = ({
   const [userTags, setUserTags] = React.useState([]);
 
   const deviceId = useAppSelector(state => state.playback.deviceID);
-
-  const user = React.useContext(UserContext);
+  const user = useAppSelector(state => state.user);
 
   React.useLayoutEffect(() => {
     const unsubscribe = onSnapshot(

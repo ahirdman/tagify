@@ -6,8 +6,8 @@ import './SelectList.scss';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import { onSnapshot } from 'firebase/firestore';
 import { CardNav } from '../../molecules';
-import { UserContext } from '../../../context/UserContext';
 import { ITags } from '../../../common/common.types';
+import { useAppSelector } from '../../../store/hooks';
 
 interface ISelectListProps {
   setSelectedList: (prevState: any) => any;
@@ -16,25 +16,22 @@ interface ISelectListProps {
 const SelectList = ({ setSelectedList }: ISelectListProps) => {
   const [lists, setLists] = React.useState([] as ITags[]);
 
-  const user = React.useContext(UserContext);
+  const fireId = useAppSelector(state => state.user.fireId);
 
   React.useEffect(() => {
-    const unsubscribe = onSnapshot(
-      Firestore.tagCol(user.fireId),
-      collection => {
-        const tags: ITags[] = [];
-        collection.forEach(doc => {
-          const data = doc.data();
-          tags.push({ name: data.name, color: data.color });
-        });
-        setLists(tags);
-      }
-    );
+    const unsubscribe = onSnapshot(Firestore.tagCol(fireId), collection => {
+      const tags: ITags[] = [];
+      collection.forEach(doc => {
+        const data = doc.data();
+        tags.push({ name: data.name, color: data.color });
+      });
+      setLists(tags);
+    });
 
     return () => {
       unsubscribe();
     };
-  }, [user.fireId]);
+  }, [fireId]);
 
   return (
     <div className="select-list">
@@ -79,7 +76,7 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
                 <button
                   className="select-list__delete"
                   onClick={() => {
-                    Firestore.deleteList(user.fireId, tag.name);
+                    Firestore.deleteList(fireId, tag.name);
                   }}
                 >
                   <img
