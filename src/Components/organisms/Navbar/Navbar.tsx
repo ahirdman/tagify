@@ -5,7 +5,7 @@ import Tag from '../../../assets/tag.svg';
 import List from '../../../assets/list-white.svg';
 import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
-import { logOut } from '../../../services/firebase/auth/auth.service';
+import { FirebaseAuth } from '../../../services';
 import { useAppSelector } from '../../../store/hooks';
 
 const Navbar = () => {
@@ -20,13 +20,13 @@ const Navbar = () => {
           src={Avatar}
           alt="profile"
           className="navbar__item--icon navbar__item--mobile"
-          onClick={() => logOut()}
+          onClick={() => FirebaseAuth.logOut()}
         />
         <img
           src={profile.image}
           alt="profile"
           className="navbar__item--avatar navbar__item--desktop"
-          onClick={() => logOut()}
+          onClick={() => FirebaseAuth.logOut()}
         />
         <p className="navbar__item--username navbar__item--desktop">
           {profile.name}

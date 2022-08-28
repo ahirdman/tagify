@@ -24,7 +24,29 @@ interface IWebPlaybackTrack {
   artists: IArtists[];
 }
 
-const initialState = {
+interface IPlaybackState {
+  player: null | any;
+  isPaused: boolean;
+  isActive: boolean;
+  deviceID: string;
+  currentTrack: {
+    uri: string;
+    id: string;
+    type: string;
+    media_type: string;
+    name: string;
+    is_playable: boolean;
+    album: {
+      uri: string;
+      name: string;
+      images: IAlbumImages[];
+    };
+    artists: IArtists[];
+  };
+}
+
+const initialState: IPlaybackState = {
+  player: null,
   isPaused: false,
   isActive: false,
   deviceID: '',
@@ -48,6 +70,9 @@ export const playbackSlice = createSlice({
   name: 'playback',
   initialState,
   reducers: {
+    setPlayer: (state, action) => {
+      state.player = action.payload;
+    },
     setPaused: (state, action) => {
       state.isPaused = action.payload;
     },

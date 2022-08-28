@@ -1,12 +1,4 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from 'firebase/auth';
-import { auth } from '../config';
-import { createUserDoc } from '../firestore/firestore.service';
-
-const errorMessage = (code: string) => {
+export const errorMessage = (code: string) => {
   if (code === 'auth/weak-password') {
     return 'Password must be longer them 6 characters';
   }
@@ -28,47 +20,4 @@ const errorMessage = (code: string) => {
   }
 
   return code;
-};
-
-export const createAccount = async (
-  mail: string,
-  password: string,
-  callback: Function
-) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      mail,
-      password
-    );
-    createUserDoc(userCredential.user.uid);
-  } catch (error) {
-    const message = errorMessage(error.code);
-
-    callback({
-      display: true,
-      message,
-    });
-  }
-};
-
-export const logInEmailPassword = async (
-  mail: string,
-  password: string,
-  callback: Function
-) => {
-  try {
-    await signInWithEmailAndPassword(auth, mail, password);
-  } catch (error) {
-    const message = errorMessage(error.code);
-
-    callback({
-      display: true,
-      message,
-    });
-  }
-};
-
-export const logOut = async () => {
-  await signOut(auth);
 };

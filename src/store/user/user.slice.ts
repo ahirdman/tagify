@@ -5,6 +5,7 @@ const initialState: IUser = {
   mail: '',
   fireId: '',
   loggedIn: false,
+  ready: false,
   spotify: {
     connected: false,
     profile: {
@@ -38,6 +39,7 @@ export const userSlice = createSlice({
       action: PayloadAction<ISpotifyProfilePayload>
     ) => {
       state.spotify.profile = action.payload;
+      state.ready = true;
     },
   },
 });

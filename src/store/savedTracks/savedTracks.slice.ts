@@ -10,6 +10,7 @@ interface ITracksStateObj {
 }
 
 interface IAddTracksPayload {
+  nextUrl: string;
   savedTracks: IUserSavedObject[];
   filteredTracks: IUserSavedObject[];
 }
@@ -25,20 +26,23 @@ export const savedTracksSlice = createSlice({
   name: 'savedTracks',
   initialState,
   reducers: {
-    initialLoad: (state, action: PayloadAction<ITracksStateObj>) => {
-      state.total = action.payload.total;
-      state.nextUrl = action.payload.nextUrl;
-      state.savedTracks = action.payload.savedTracks;
-      state.filteredTracks = action.payload.filteredTracks;
+    initialLoad: (state, { payload }: PayloadAction<ITracksStateObj>) => {
+      state.total = payload.total;
+      state.nextUrl = payload.nextUrl;
+      state.savedTracks = payload.savedTracks;
+      state.filteredTracks = payload.filteredTracks;
     },
-    addTracks: (state, action: PayloadAction<IAddTracksPayload>) => {
-      state.savedTracks.concat(action.payload.savedTracks);
-      state.filteredTracks.concat(action.payload.filteredTracks);
+    addTracks: (state, { payload }: PayloadAction<IAddTracksPayload>) => {
+      state.savedTracks = state.savedTracks.concat(payload.savedTracks);
+      state.filteredTracks = state.filteredTracks.concat(
+        payload.filteredTracks
+      );
+      state.nextUrl = payload.nextUrl;
     },
-    filterTracks: (state, action: PayloadAction<string>) => {
-      const regExp = new RegExp(action.payload, 'gmi');
-      state.filteredTracks.filter((track: IUserSavedObject) =>
-        regExp.test(track.track.name)
+    filterTracks: (state, { payload }: PayloadAction<string>) => {
+      const regExp = new RegExp(payload, 'gmi');
+      state.filteredTracks = state.savedTracks.filter(
+        (track: IUserSavedObject) => regExp.test(track.track.name)
       );
     },
   },

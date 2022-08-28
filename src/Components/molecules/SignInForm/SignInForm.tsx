@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as Auth from '../../../services/firebase/auth/auth.service';
+import { FirebaseAuth } from '../../../services';
 import { IAuthError } from '../SignUpForm/SignUpForm';
 import './SignInForm.scss';
 
@@ -20,7 +20,7 @@ const SignInForm = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    Auth.logInEmailPassword(email, password, setError);
+    FirebaseAuth.logInEmailPassword(email, password, setError);
   };
 
   return (

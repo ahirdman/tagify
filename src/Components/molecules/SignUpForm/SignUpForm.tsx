@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as Auth from '../../../services/firebase/auth/auth.service';
+import { FirebaseAuth } from '../../../services';
 import './SignUpForm.scss';
 
 export interface IAuthError {
@@ -35,7 +35,7 @@ const SignUpForm = () => {
     }
 
     if (password === confirm) {
-      Auth.createAccount(email, password, setError);
+      FirebaseAuth.createAccount(email, password, setError);
     }
   };
 

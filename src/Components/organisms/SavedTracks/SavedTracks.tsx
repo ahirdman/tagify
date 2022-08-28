@@ -31,6 +31,8 @@ const SavedTracks = ({ setSelectedTrack }: ISavedTracks) => {
   const fetchMoreTracks = async () => {
     if (fetchedAllTracks) return;
 
+    console.log('fetching more tracks');
+
     const nextTracks = await Spotify.getNextUserSavedTracks(
       user.spotify.accessToken,
       tracks.nextUrl
@@ -40,6 +42,7 @@ const SavedTracks = ({ setSelectedTrack }: ISavedTracks) => {
       addTracks({
         savedTracks: nextTracks.savedTracks,
         filteredTracks: nextTracks.savedTracks,
+        nextUrl: nextTracks.nextUrl,
       })
     );
 
@@ -77,9 +80,7 @@ const SavedTracks = ({ setSelectedTrack }: ISavedTracks) => {
    */
 
   React.useEffect(() => {
-    if (query.length > 0) {
-      dispatch(filterTracks(query));
-    }
+    dispatch(filterTracks(query));
   }, [query, tracks.savedTracks, dispatch]);
 
   return (

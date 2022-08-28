@@ -11,18 +11,6 @@ import {
   setPaused,
 } from '../../../store/playback/playback.slice';
 
-// interface INavbarProps {
-//   setDeviceId: any;
-// }
-
-// const trackObject = {
-//   name: '',
-//   album: {
-//     images: [{ url: '' }],
-//   },
-//   artists: [{ name: '' }],
-// };
-
 const Player = () => {
   const [player, setPlayer] = React.useState(undefined);
   const { isActive } = useAppSelector(state => state.playback);

@@ -2,6 +2,7 @@ interface IUser {
   mail: string;
   fireId: string;
   loggedIn: boolean;
+  ready: boolean;
   spotify: {
     connected: boolean;
     profile: {
