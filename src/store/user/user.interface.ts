@@ -15,18 +15,11 @@ interface IUser {
   };
 }
 
-interface IFirebaseSignInPayload {
-  mail: string;
-  fireId: string;
-}
+type IFirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
 
-interface ITokenPayload {
-  accessToken: string;
-  expires: number;
-}
+type ITokenPayload = Pick<IUser['spotify'], 'accessToken' | 'expires'>;
 
-interface ISpotifyProfilePayload {
-  image: string;
-  name: string;
-  id: string;
-}
+type ISpotifyProfilePayload = Pick<
+  IUser['spotify']['profile'],
+  'image' | 'name' | 'id'
+>;

@@ -1,19 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { IAddTracksPayload, ITracksStateObj } from './savedTracks.interface';
 import { IUserSavedObject } from '../../services/spotify/spotify.interface';
-
-interface ITracksStateObj {
-  total: number;
-  nextUrl: string;
-  savedTracks: IUserSavedObject[];
-  filteredTracks: IUserSavedObject[];
-}
-
-interface IAddTracksPayload {
-  nextUrl: string;
-  savedTracks: IUserSavedObject[];
-  filteredTracks: IUserSavedObject[];
-}
 
 const initialState: ITracksStateObj = {
   total: 0,

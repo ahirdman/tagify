@@ -2,96 +2,18 @@ import PlayButton from '../../../assets/playback/play-white.svg';
 import PauseButton from '../../../assets/playback/pause-white.svg';
 import './Player.scss';
 import * as React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
+import useSpotifySDK from '../../../hooks/useSpotifySDK';
 import {
-  clearPlayback,
-  setActive,
-  setCurrentTrack,
-  setDeviceID,
-  setPaused,
+  isActiveSelector,
+  playBackInfoSelector,
 } from '../../../store/playback/playback.slice';
 
 const Player = () => {
-  const [player, setPlayer] = React.useState(undefined);
-  const { isActive } = useAppSelector(state => state.playback);
-  const dispatch = useAppDispatch();
+  const player = useSpotifySDK();
+  const isActive = useAppSelector(isActiveSelector);
 
-  const SDKurl = 'https://sdk.scdn.co/spotify-player.js';
-  const iFrameRef = React.useRef(null);
-
-  console.log('rendered player');
-
-  const accessToken = useAppSelector(state => state.user.spotify.accessToken);
-
-  React.useEffect(() => {
-    console.log('player useEffect');
-    const script = document.createElement('script');
-    script.setAttribute('id', 'spotPlayer');
-    script.src = SDKurl;
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      const spotifySDK = new window.Spotify.Player({
-        name: 'Moodify',
-        getOAuthToken: cb => {
-          cb(accessToken);
-        },
-        volume: 0.5,
-      });
-
-      setPlayer(spotifySDK);
-
-      spotifySDK.addListener('ready', ({ device_id }) => {
-        dispatch(setDeviceID(device_id));
-      });
-
-      spotifySDK.connect();
-
-      spotifySDK.addListener('player_state_changed', state => {
-        if (!state) return;
-        // console.log('player state changed:', state);
-
-        // if (state.track_window.current_track !== currentTrack) {
-        //   console.log('different tracks:');
-        //   console.log('listener:', state.track_window.current_track);
-        //   console.log('store:', currentTrack);
-        // }
-
-        // Current track in redux is empty - why?? Referencing initial state of redux store
-        dispatch(setCurrentTrack(state.track_window.current_track));
-
-        dispatch(setPaused(state.paused));
-
-        spotifySDK.getCurrentState().then((state: any) => {
-          console.log('get current state');
-          !state ? dispatch(setActive(false)) : dispatch(setActive(true));
-        });
-      });
-
-      const iFrame = document.querySelector(
-        'iframe[alt="Audio Playback Container"]'
-      );
-
-      iFrame.setAttribute('title', 'SDKPlayer');
-      iFrameRef.current = iFrame;
-
-      return () => {
-        console.log('removing listeners');
-        spotifySDK.removeListener('ready');
-        spotifySDK.removeListener('player_state_changed');
-        spotifySDK.disconnect();
-        console.log('spotify disconnected');
-      };
-    };
-
-    return () => {
-      iFrameRef.current.remove();
-      script.remove();
-      dispatch(clearPlayback());
-    };
-  }, [accessToken, dispatch]);
+  console.log('player rendered');
 
   if (!isActive) {
     return <section className="player player--inactive"></section>;
@@ -108,25 +30,23 @@ const Player = () => {
 export default Player;
 
 export const PlayBackInfo = () => {
-  const currentTrack = useAppSelector(state => state.playback.currentTrack);
+  const track = useAppSelector(playBackInfoSelector);
+
+  console.log('rendered info', track);
 
   return (
     <div className="player__track">
-      <img
-        src={currentTrack.album.images[0].url}
-        alt="album cover"
-        className="player__artwork"
-      />
+      <img src={track.image} alt="album cover" className="player__artwork" />
       <div className="player__info">
-        <p className="player__info--name">{currentTrack.name}</p>
-        <p className="player__info--artist">{currentTrack.artists[0].name}</p>
+        <p className="player__info--name">{track.name}</p>
+        <p className="player__info--artist">{track.artist}</p>
       </div>
     </div>
   );
 };
 
 interface IPlaybackButtonProps {
-  onClick: any;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const PlaybackButton = ({ onClick }: IPlaybackButtonProps) => {

@@ -1,52 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-interface IAlbumImages {
-  url: string;
-}
-
-interface IArtists {
-  uri: string;
-  name: string;
-}
-
-interface IWebPlaybackTrack {
-  uri: string;
-  id: string;
-  type: string;
-  media_type: string;
-  name: string;
-  is_playable: boolean;
-  album: {
-    uri: string;
-    name: string;
-    images: IAlbumImages[];
-  };
-  artists: IArtists[];
-}
-
-interface IPlaybackState {
-  player: null | any;
-  isPaused: boolean;
-  isActive: boolean;
-  deviceID: string;
-  currentTrack: {
-    uri: string;
-    id: string;
-    type: string;
-    media_type: string;
-    name: string;
-    is_playable: boolean;
-    album: {
-      uri: string;
-      name: string;
-      images: IAlbumImages[];
-    };
-    artists: IArtists[];
-  };
-}
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
+import { IAlbumImages, IArtists, IPlaybackState } from './playback.interface';
 
 const initialState: IPlaybackState = {
-  player: null,
   isPaused: false,
   isActive: false,
   deviceID: '',
@@ -63,16 +19,13 @@ const initialState: IPlaybackState = {
       images: [] as IAlbumImages[],
     },
     artists: [] as IArtists[],
-  } as IWebPlaybackTrack,
+  },
 };
 
 export const playbackSlice = createSlice({
   name: 'playback',
   initialState,
   reducers: {
-    setPlayer: (state, action) => {
-      state.player = action.payload;
-    },
     setPaused: (state, action) => {
       state.isPaused = action.payload;
     },
@@ -88,6 +41,20 @@ export const playbackSlice = createSlice({
     clearPlayback: () => initialState,
   },
 });
+
+export const playBackInfoSelector = createSelector(
+  [(state: RootState) => state.playback.currentTrack],
+  currentTrack => ({
+    image: currentTrack.album.images[0].url,
+    name: currentTrack.name,
+    artist: currentTrack.artists[0].name,
+  })
+);
+
+export const isActiveSelector = createSelector(
+  [(state: RootState) => state.playback.isActive],
+  isActive => isActive
+);
 
 export const {
   setPaused,
