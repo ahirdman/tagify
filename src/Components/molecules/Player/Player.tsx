@@ -59,7 +59,7 @@ const Player = () => {
         //   console.log('store:', currentTrack);
         // }
 
-        // Current track is empty - why??
+        // Current track in redux is empty - why?? Referencing initial state of redux store
         dispatch(setCurrentTrack(state.track_window.current_track));
 
         dispatch(setPaused(state.paused));
@@ -108,20 +108,18 @@ const Player = () => {
 export default Player;
 
 export const PlayBackInfo = () => {
-  const { currentTrack } = useAppSelector(state => state.playback);
-
-  const memoizesTrack = React.useMemo(() => currentTrack, [currentTrack]);
+  const currentTrack = useAppSelector(state => state.playback.currentTrack);
 
   return (
     <div className="player__track">
       <img
-        src={memoizesTrack.album.images[0].url}
+        src={currentTrack.album.images[0].url}
         alt="album cover"
         className="player__artwork"
       />
       <div className="player__info">
-        <p className="player__info--name">{memoizesTrack.name}</p>
-        <p className="player__info--artist">{memoizesTrack.artists[0].name}</p>
+        <p className="player__info--name">{currentTrack.name}</p>
+        <p className="player__info--artist">{currentTrack.artists[0].name}</p>
       </div>
     </div>
   );
@@ -132,7 +130,7 @@ interface IPlaybackButtonProps {
 }
 
 export const PlaybackButton = ({ onClick }: IPlaybackButtonProps) => {
-  const { isPaused } = useAppSelector(state => state.playback);
+  const isPaused = useAppSelector(state => state.playback.isPaused);
   return (
     <button className="player__control" onClick={onClick}>
       {isPaused ? (
