@@ -2,12 +2,12 @@ import * as React from 'react';
 import Back from '../../../assets/back.svg';
 import './CardNav.scss';
 
-interface ICardNavProps {
+interface Props {
   title: string;
   onClick?: any;
 }
 
-const CardNav = ({ title, onClick }: ICardNavProps) => {
+const CardNav = ({ title, onClick }: Props) => {
   return (
     <div className="card-nav">
       {typeof onClick !== 'undefined' ? (

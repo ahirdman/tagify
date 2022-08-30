@@ -1,11 +1,11 @@
 import * as React from 'react';
 import './AuthModal.scss';
 
-interface IAuthModalProps {
+interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-const AuthModal = ({ children }: IAuthModalProps) => {
+const AuthModal = ({ children }: Props) => {
   return (
     <div className="modal" onClick={e => e.stopPropagation()}>
       {children}

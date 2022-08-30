@@ -53,3 +53,8 @@ export default savedTracksSlice.reducer;
 
 export const selectedTrackSelector = (state: RootState) =>
   state.savedTracks.selectedTrack;
+
+// export const filterSelector = createSelector(
+//   [(state: RootState) => state.savedTracks.filteredTracks],
+//   filterTracks => filterTracks
+// );

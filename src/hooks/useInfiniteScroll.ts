@@ -17,11 +17,9 @@ const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
   //   handleReturn
   // );
 
-  const isFetchingRef = React.useRef(null);
   const callbackRef = React.useRef(null);
   // const setScrollPositionRef = React.useRef(null);
 
-  isFetchingRef.current = isFetching;
   callbackRef.current = callback;
   // setScrollPositionRef.current = setScrollPosition;
 
@@ -30,8 +28,7 @@ const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
       // setScrollPositionRef.current(listEl.current.scrollTop);
       if (
         listEl.current.scrollTop + listEl.current.clientHeight >=
-          listEl.current.scrollHeight &&
-        !isFetchingRef.current
+        listEl.current.scrollHeight
       ) {
         setIsFetching(true);
       }
@@ -41,7 +38,6 @@ const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
 
     if (currentEl) {
       currentEl.addEventListener('scroll', handleScroll);
-      handleScroll();
     }
 
     return () => {
@@ -51,7 +47,6 @@ const useInfiniteScroll = (callback: Function, forceFetch: boolean) => {
 
   React.useEffect(() => {
     if (!isFetching) return;
-
     callbackRef.current();
   }, [isFetching]);
 

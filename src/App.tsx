@@ -5,12 +5,29 @@ import Navbar from './Components/organisms/Navbar/Navbar';
 import Login from './Pages/login/Login';
 import Tracks from './Pages/tracks/Tracks';
 import Lists from './Pages/lists/Lists';
-import { useAppSelector } from './store/hooks';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { onAuthStateChanged } from '@firebase/auth';
+import { auth } from './services/firebase/config';
+import { firebaseSignIn, firebaseSignOut } from './store/user/user.slice';
 
 const App = () => {
   const ready = useAppSelector(state => state.user.ready);
+  const dispatch = useAppDispatch();
 
   console.log('rendered app component');
+
+  React.useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, fireUser => {
+      if (fireUser) {
+        const { email, uid } = fireUser;
+        dispatch(firebaseSignIn({ mail: email, fireId: uid }));
+      } else {
+        dispatch(firebaseSignOut());
+      }
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
 
   if (ready) {
     return (
@@ -27,4 +44,4 @@ const App = () => {
   }
 };
 
-export default React.memo(App);
+export default App;

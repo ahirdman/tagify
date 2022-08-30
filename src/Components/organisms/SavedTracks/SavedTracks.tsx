@@ -17,7 +17,6 @@ const SavedTracks = () => {
   const [query, setQuery] = React.useState('');
   const user = useAppSelector(state => state.user);
   const tracks = useAppSelector(state => state.savedTracks);
-
   const dispatch = useAppDispatch();
 
   const fetchedAllTracks = tracks.savedTracks.length === tracks.total;
@@ -27,8 +26,6 @@ const SavedTracks = () => {
 
   const fetchMoreTracks = async () => {
     if (fetchedAllTracks) return;
-
-    console.log('fetching more tracks');
 
     const nextTracks = await Spotify.getNextUserSavedTracks(
       user.spotify.accessToken,
@@ -77,7 +74,9 @@ const SavedTracks = () => {
    */
 
   React.useEffect(() => {
-    dispatch(filterTracks(query));
+    if (query.length > 0) {
+      dispatch(filterTracks(query));
+    }
   }, [query, tracks.savedTracks, dispatch]);
 
   return (

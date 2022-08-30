@@ -18,6 +18,7 @@ const useSpotifySDK = () => {
   const currentTrackRef = React.useRef<ICurrentTrack | null>(null);
   const firstTrackRef = React.useRef<ICurrentTrack | null>(null);
   const activeSessionRef = React.useRef<boolean | null>(null);
+  const pausedRef = React.useRef<boolean | null>(null);
   const iFrameRef = React.useRef(null);
 
   const accessToken = useAppSelector(state => state.user.spotify.accessToken);
@@ -76,7 +77,11 @@ const useSpotifySDK = () => {
       }
 
       currentTrackRef.current = stateTrack;
-      dispatch(setPaused(state.paused));
+
+      if (pausedRef.current !== state.paused) {
+        dispatch(setPaused(state.paused));
+        pausedRef.current = state.paused;
+      }
 
       spotifySDK.getCurrentState().then(state => {
         if (!state) {

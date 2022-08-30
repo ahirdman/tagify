@@ -2,12 +2,12 @@ import * as React from 'react';
 import { CardNav } from '../../molecules';
 import './EmptyCard.scss';
 
-interface IEmptyCardProps {
-  icon: any;
+interface Props {
+  icon: string;
   item: string;
 }
 
-const EmptyCard = ({ icon, item }: IEmptyCardProps) => {
+const EmptyCard = ({ icon, item }: Props) => {
   return (
     <div className="empty-card">
       <CardNav title="..." />

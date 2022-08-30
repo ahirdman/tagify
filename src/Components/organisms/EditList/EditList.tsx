@@ -9,12 +9,12 @@ import { IFirestoreTrack } from '../../../services/firebase/firestore/firestore.
 import { Spotify } from '../../../services';
 import { useAppSelector } from '../../../store/hooks';
 
-interface IEditListProps {
+interface Props {
   selectedList: string;
   setSelectedList?: any;
 }
 
-const EditList = ({ selectedList, setSelectedList }: IEditListProps) => {
+const EditList = ({ selectedList, setSelectedList }: Props) => {
   const [tracks, setTracks] = React.useState([]);
 
   const user = useAppSelector(state => state.user);

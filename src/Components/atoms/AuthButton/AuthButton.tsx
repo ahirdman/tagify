@@ -1,19 +1,14 @@
 import * as React from 'react';
 import './AuthButton.scss';
 
-interface IAuthButtonProps {
+interface Props {
   title: string;
   backgroundColor: string;
   textColor?: string;
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const AuthButton = ({
-  title,
-  backgroundColor,
-  textColor,
-  onClick,
-}: IAuthButtonProps) => {
+const AuthButton = ({ title, backgroundColor, textColor, onClick }: Props) => {
   return (
     <button
       className="authButton"

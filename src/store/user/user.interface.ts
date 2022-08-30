@@ -1,4 +1,4 @@
-interface IUser {
+export interface IUser {
   mail: string;
   fireId: string;
   loggedIn: boolean;
@@ -15,11 +15,11 @@ interface IUser {
   };
 }
 
-type IFirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
+export type IFirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
 
-type ITokenPayload = Pick<IUser['spotify'], 'accessToken' | 'expires'>;
+export type ITokenPayload = Pick<IUser['spotify'], 'accessToken' | 'expires'>;
 
-type ISpotifyProfilePayload = Pick<
+export type ISpotifyProfilePayload = Pick<
   IUser['spotify']['profile'],
   'image' | 'name' | 'id'
 >;

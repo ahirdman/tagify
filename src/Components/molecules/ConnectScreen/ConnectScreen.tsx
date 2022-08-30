@@ -2,11 +2,11 @@ import * as React from 'react';
 import { AuthButton } from '../../atoms';
 import './ConnectScreen.scss';
 
-interface IConnectScreenProps {
+interface Props {
   autoConnect: boolean;
 }
 
-const ConnectScreen = ({ autoConnect }: IConnectScreenProps) => {
+const ConnectScreen = ({ autoConnect }: Props) => {
   React.useEffect(() => {
     if (autoConnect) {
       console.log('removed redirect');

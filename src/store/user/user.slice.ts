@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import {
+  IFirebaseSignInPayload,
+  ISpotifyProfilePayload,
+  ITokenPayload,
+  IUser,
+} from './user.interface';
 
 const initialState: IUser = {
   mail: '',

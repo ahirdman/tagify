@@ -14,7 +14,6 @@ import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.sl
 const AddTag = () => {
   const [tagInput, setTagInput] = React.useState('');
   const selectedTrack = useAppSelector(selectedTrackSelector);
-
   const fireId = useAppSelector(fireIdSelector);
 
   return (

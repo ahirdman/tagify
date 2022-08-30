@@ -13,8 +13,6 @@ const Player = () => {
   const player = useSpotifySDK();
   const isActive = useAppSelector(isActiveSelector);
 
-  console.log('player rendered');
-
   if (!isActive) {
     return <section className="player player--inactive"></section>;
   } else {

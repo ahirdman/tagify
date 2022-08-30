@@ -11,8 +11,6 @@ import { useAppSelector } from '../../../store/hooks';
 const Navbar = () => {
   const profile = useAppSelector(state => state.user.spotify.profile);
 
-  console.log('rendered navbar');
-
   return (
     <nav className="navbar">
       <div className="navbar__item navbar__profile">
