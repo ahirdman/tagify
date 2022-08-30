@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 const initialState: IUser = {
   mail: '',
@@ -44,7 +45,6 @@ export const userSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
   firebaseSignIn,
   firebaseSignOut,
@@ -53,3 +53,5 @@ export const {
 } = userSlice.actions;
 
 export default userSlice.reducer;
+
+export const fireIdSelector = (state: RootState) => state.user.fireId;

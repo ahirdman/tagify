@@ -5,14 +5,15 @@ import './TrackTags.scss';
 import Tag from '../../atoms/Tag/Tag';
 import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
 import { useAppSelector } from '../../../store/hooks';
+import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
 
 interface ITrackTags {
-  selectedTrack: any;
   trackTags?: any[];
 }
 
-const TrackTags = ({ selectedTrack, trackTags }: ITrackTags) => {
+const TrackTags = ({ trackTags }: ITrackTags) => {
   const fireId = useAppSelector(state => state.user.fireId);
+  const selectedTrack = useAppSelector(selectedTrackSelector);
 
   return (
     <section className="track-tags">

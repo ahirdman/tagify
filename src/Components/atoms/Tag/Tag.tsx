@@ -2,10 +2,10 @@ import * as React from 'react';
 import './Tag.scss';
 
 interface ITagProps {
-  onClick: any;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
   color: string;
   name: string;
-  actionIcon: any;
+  actionIcon: string;
 }
 
 const Tag = ({ onClick, color, name, actionIcon }: ITagProps) => {

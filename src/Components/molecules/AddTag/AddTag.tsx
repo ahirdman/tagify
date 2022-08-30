@@ -8,15 +8,14 @@ import {
   randomizeTagColor,
 } from '../../../services/firebase/firestore/firestore.helper';
 import { useAppSelector } from '../../../store/hooks';
+import { fireIdSelector } from '../../../store/user/user.slice';
+import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
 
-interface IAddTagProps {
-  selectedTrack: any;
-}
-
-const AddTag = ({ selectedTrack }: IAddTagProps) => {
+const AddTag = () => {
   const [tagInput, setTagInput] = React.useState('');
+  const selectedTrack = useAppSelector(selectedTrackSelector);
 
-  const fireId = useAppSelector(state => state.user.fireId);
+  const fireId = useAppSelector(fireIdSelector);
 
   return (
     <section className="add-tag">

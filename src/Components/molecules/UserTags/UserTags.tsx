@@ -6,14 +6,15 @@ import './UserTags.scss';
 import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../../common/common.types';
 import { useAppSelector } from '../../../store/hooks';
+import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
 
-interface IUserTagsProps {
-  selectedTrack: any;
+interface Props {
   userTags?: ITags[];
 }
 
-const UserTags = ({ selectedTrack, userTags }: IUserTagsProps) => {
+const UserTags = ({ userTags }: Props) => {
   const fireId = useAppSelector(state => state.user.fireId);
+  const selectedTrack = useAppSelector(selectedTrackSelector);
 
   return (
     <section className="user-tags">

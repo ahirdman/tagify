@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { SelectList, EditList, EmptyCard } from '../../Components/organisms';
 import List from '../../assets/list.svg';
-import { IWindow } from '../../services/spotify/spotify.interface';
-import useWindowSize from '../../hooks/useWindowSize';
+import useWindowSize, { Window } from '../../hooks/useWindowSize';
 
 const Lists = () => {
   const [selectedList, setSelectedList] = React.useState();
 
-  const size: IWindow = useWindowSize();
+  const size: Window = useWindowSize();
 
   if (size.width >= 900) {
     return (

@@ -4,6 +4,9 @@ interface ITrackImages {
   width: number;
 }
 
+/**
+ * Used by firestore helper, passed in with "selectedTrack"
+ */
 export interface ITrack {
   album: {
     images: ITrackImages[];
@@ -31,14 +34,9 @@ export interface ITrack {
   uri: string;
 }
 
-export interface ISDKTrackObj {
-  name: string;
-  album: {
-    images: [{ url: string }];
-  };
-  artists: [{ name: string }];
-}
-
+/**
+ * Interface for each saved track stored in redux state
+ */
 export interface IUserSavedObject {
   added_at: string;
   track: {
@@ -196,7 +194,21 @@ export interface ISavedTrack {
   uri: string;
 }
 
-export interface IWindow {
-  width: undefined | number;
-  height: undefined | number;
+export interface HTTPUserTracksResponse {
+  href: string;
+  items: IUserSavedObject[];
+  limit: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
+}
+
+export interface SavedTracksData {
+  name: string;
+  artist: string;
+  album: string;
+  artworkSmall: string;
+  artworkMedium: string;
+  uri: string;
 }

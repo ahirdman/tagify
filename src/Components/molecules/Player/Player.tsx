@@ -30,16 +30,16 @@ const Player = () => {
 export default Player;
 
 export const PlayBackInfo = () => {
-  const track = useAppSelector(playBackInfoSelector);
+  const { image, name, artist } = useAppSelector(playBackInfoSelector);
 
-  console.log('rendered info', track);
+  console.log('rendered info');
 
   return (
     <div className="player__track">
-      <img src={track.image} alt="album cover" className="player__artwork" />
+      <img src={image} alt="album cover" className="player__artwork" />
       <div className="player__info">
-        <p className="player__info--name">{track.name}</p>
-        <p className="player__info--artist">{track.artist}</p>
+        <p className="player__info--name">{name}</p>
+        <p className="player__info--artist">{artist}</p>
       </div>
     </div>
   );
@@ -51,6 +51,7 @@ interface IPlaybackButtonProps {
 
 export const PlaybackButton = ({ onClick }: IPlaybackButtonProps) => {
   const isPaused = useAppSelector(state => state.playback.isPaused);
+
   return (
     <button className="player__control" onClick={onClick}>
       {isPaused ? (

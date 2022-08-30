@@ -1,8 +1,12 @@
 import * as React from 'react';
-import { IWindow } from '../services/spotify/spotify.interface';
+
+export interface Window {
+  width: undefined | number;
+  height: undefined | number;
+}
 
 const useWindowSize = () => {
-  const [windowSize, setWindowSize] = React.useState<IWindow>({
+  const [windowSize, setWindowSize] = React.useState<Window>({
     width: undefined,
     height: undefined,
   });

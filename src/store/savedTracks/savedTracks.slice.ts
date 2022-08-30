@@ -1,20 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { IAddTracksPayload, ITracksStateObj } from './savedTracks.interface';
-import { IUserSavedObject } from '../../services/spotify/spotify.interface';
+import {
+  IAddTracksPayload,
+  InitialPayload,
+  ITracksStateObj,
+  SelectPayload,
+} from './savedTracks.interface';
+import { SavedTracksData } from '../../services/spotify/spotify.interface';
+import { RootState } from '../store';
 
 const initialState: ITracksStateObj = {
   total: 0,
   nextUrl: '',
-  savedTracks: [] as IUserSavedObject[],
-  filteredTracks: [] as IUserSavedObject[],
+  savedTracks: [] as SavedTracksData[],
+  filteredTracks: [] as SavedTracksData[],
+  selectedTrack: null,
 };
 
 export const savedTracksSlice = createSlice({
   name: 'savedTracks',
   initialState,
   reducers: {
-    initialLoad: (state, { payload }: PayloadAction<ITracksStateObj>) => {
+    initialLoad: (state, { payload }: PayloadAction<InitialPayload>) => {
       state.total = payload.total;
       state.nextUrl = payload.nextUrl;
       state.savedTracks = payload.savedTracks;
@@ -30,13 +37,19 @@ export const savedTracksSlice = createSlice({
     filterTracks: (state, { payload }: PayloadAction<string>) => {
       const regExp = new RegExp(payload, 'gmi');
       state.filteredTracks = state.savedTracks.filter(
-        (track: IUserSavedObject) => regExp.test(track.track.name)
+        (track: SavedTracksData) => regExp.test(track.name)
       );
+    },
+    setSelectedTrack: (state, { payload }: PayloadAction<SelectPayload>) => {
+      state.selectedTrack = payload;
     },
   },
 });
 
-export const { initialLoad, addTracks, filterTracks } =
+export const { initialLoad, addTracks, filterTracks, setSelectedTrack } =
   savedTracksSlice.actions;
 
 export default savedTracksSlice.reducer;
+
+export const selectedTrackSelector = (state: RootState) =>
+  state.savedTracks.selectedTrack;

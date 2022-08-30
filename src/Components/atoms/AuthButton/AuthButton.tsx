@@ -5,7 +5,7 @@ interface IAuthButtonProps {
   title: string;
   backgroundColor: string;
   textColor?: string;
-  onClick?: any;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const AuthButton = ({

@@ -5,23 +5,24 @@ import {
   SelectedTrack,
   EmptyCard,
 } from '../../Components/organisms';
-import useWindowSize from '../../hooks/useWindowSize';
-import { IWindow } from '../../services/spotify/spotify.interface';
+import useWindowSize, { Window } from '../../hooks/useWindowSize';
+import { useAppSelector } from '../../store/hooks';
+import { selectedTrackSelector } from '../../store/savedTracks/savedTracks.slice';
 import './Tracks.scss';
 
 const Tracks = () => {
-  const [selectedTrack, setSelectedTrack] = React.useState();
+  const selectedTrack = useAppSelector(selectedTrackSelector);
 
-  const size: IWindow = useWindowSize();
+  const size: Window = useWindowSize();
 
   if (size.width >= 900) {
     return (
       <div className="tracks-view">
         <>
-          <SavedTracks setSelectedTrack={setSelectedTrack} />
+          <SavedTracks />
           <>
             {selectedTrack ? (
-              <SelectedTrack selectedTrack={selectedTrack} />
+              <SelectedTrack />
             ) : (
               <EmptyCard icon={Note} item="track" />
             )}
@@ -31,18 +32,7 @@ const Tracks = () => {
     );
   }
 
-  return (
-    <>
-      {selectedTrack ? (
-        <SelectedTrack
-          selectedTrack={selectedTrack}
-          setSelectedTrack={setSelectedTrack}
-        />
-      ) : (
-        <SavedTracks setSelectedTrack={setSelectedTrack} />
-      )}
-    </>
-  );
+  return <>{selectedTrack ? <SelectedTrack /> : <SavedTracks />}</>;
 };
 
 export default Tracks;

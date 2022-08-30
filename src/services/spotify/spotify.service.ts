@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SERVER } from '../../config/server';
 import { IFirestoreTrack } from '../firebase/firestore/firestore.interface';
+import { IUserSavedObject, SavedTracksData } from './spotify.interface';
 
 axios.defaults.baseURL = SERVER;
 
@@ -47,6 +48,18 @@ export const createEmptyPlaylist = async (
   });
   return newPlaylist.id;
 };
+
+export const savedDataExtractor = (
+  data: IUserSavedObject[]
+): SavedTracksData[] =>
+  data.map(({ track }) => ({
+    name: track.name,
+    artist: track.artists[0].name,
+    album: track.album.name,
+    artworkSmall: track.album.images[2].url,
+    artworkMedium: track.album.images[1].url,
+    uri: track.uri,
+  }));
 
 // export const get = async (path: string) => {
 //   const query = await fetch(`${SERVER}${path}`);

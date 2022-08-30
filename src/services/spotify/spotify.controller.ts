@@ -1,9 +1,11 @@
+import { HTTPUserTracksResponse } from './spotify.interface';
 import {
   addTracksToPlaylist,
   createEmptyPlaylist,
   extractUris,
   post,
   postWithCookie,
+  savedDataExtractor,
 } from './spotify.service';
 
 export const playTrack = async (
@@ -57,22 +59,30 @@ export const createNewPlaylistWithTracks = async (
 };
 
 export const getInitalUserSavedTracks = async (token: string) => {
-  const userSavedTracks = await post('/user/saved', {
+  const userSavedTracks: HTTPUserTracksResponse = await post('/user/saved', {
     token,
   });
+
+  const data = savedDataExtractor(userSavedTracks.items);
 
   return {
     total: userSavedTracks.total,
     nextUrl: userSavedTracks.next,
-    savedTracks: userSavedTracks.items,
-    filteredTracks: userSavedTracks.items,
+    savedTracks: data,
+    filteredTracks: data,
   };
 };
 
 export const getNextUserSavedTracks = async (token: string, url: string) => {
-  const nextUserSavedTracks = await post('/user/next', { token, url });
+  const nextUserSavedTracks: HTTPUserTracksResponse = await post('/user/next', {
+    token,
+    url,
+  });
+
+  const data = savedDataExtractor(nextUserSavedTracks.items);
+
   return {
     nextUrl: nextUserSavedTracks.next,
-    savedTracks: nextUserSavedTracks.items,
+    savedTracks: data,
   };
 };

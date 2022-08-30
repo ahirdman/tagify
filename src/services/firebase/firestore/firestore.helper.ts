@@ -1,10 +1,10 @@
-import { ITrack } from '../../spotify/spotify.interface';
+import { SavedTracksData } from '../../spotify/spotify.interface';
 import { IFirestoreTrack } from './firestore.interface';
 
-export const extractTrackInfo = (track: ITrack) => ({
-  artist: track.artists[0].name,
+export const extractTrackInfo = (track: SavedTracksData) => ({
+  artist: track.artist,
   title: track.name,
-  artwork: track.album.images[2].url,
+  artwork: track.artworkSmall,
   uri: track.uri,
 });
 

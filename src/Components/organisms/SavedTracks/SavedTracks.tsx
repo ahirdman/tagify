@@ -10,13 +10,10 @@ import {
   addTracks,
   filterTracks,
   initialLoad,
+  setSelectedTrack,
 } from '../../../store/savedTracks/savedTracks.slice';
 
-interface ISavedTracks {
-  setSelectedTrack: any;
-}
-
-const SavedTracks = ({ setSelectedTrack }: ISavedTracks) => {
+const SavedTracks = () => {
   const [query, setQuery] = React.useState('');
   const user = useAppSelector(state => state.user);
   const tracks = useAppSelector(state => state.savedTracks);
@@ -91,25 +88,21 @@ const SavedTracks = ({ setSelectedTrack }: ISavedTracks) => {
         <p className="select__header--title">TITLE & ARTIST</p>
       </section>
       <ul className="track-list" ref={listEl}>
-        {tracks.filteredTracks.map((trackObj, index) => {
+        {tracks.filteredTracks.map((track, index) => {
           return (
             <li
-              onClick={() => setSelectedTrack(trackObj.track)}
+              onClick={() => dispatch(setSelectedTrack(track))}
               key={index}
               className="track-list__row"
             >
               <img
-                src={trackObj.track.album.images[2].url}
+                src={track.artworkSmall}
                 alt="album"
                 className="track-list__album"
               />
               <section className="track-list__details">
-                <p className="track-list__details--title">
-                  {trackObj.track.name}
-                </p>
-                <p className="track-list__details--artist">
-                  {trackObj.track.artists[0].name}
-                </p>
+                <p className="track-list__details--title">{track.name}</p>
+                <p className="track-list__details--artist">{track.artist}</p>
               </section>
             </li>
           );

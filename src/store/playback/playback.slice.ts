@@ -42,20 +42,6 @@ export const playbackSlice = createSlice({
   },
 });
 
-export const playBackInfoSelector = createSelector(
-  [(state: RootState) => state.playback.currentTrack],
-  currentTrack => ({
-    image: currentTrack.album.images[0].url,
-    name: currentTrack.name,
-    artist: currentTrack.artists[0].name,
-  })
-);
-
-export const isActiveSelector = createSelector(
-  [(state: RootState) => state.playback.isActive],
-  isActive => isActive
-);
-
 export const {
   setPaused,
   setActive,
@@ -65,3 +51,15 @@ export const {
 } = playbackSlice.actions;
 
 export default playbackSlice.reducer;
+
+export const playBackInfoSelector = createSelector(
+  [(state: RootState) => state.playback.currentTrack],
+  currentTrack => ({
+    image: currentTrack.album.images[0].url,
+    name: currentTrack.name,
+    artist: currentTrack.artists[0].name,
+  })
+);
+
+export const isActiveSelector = (state: RootState): boolean =>
+  state.playback.isActive;
