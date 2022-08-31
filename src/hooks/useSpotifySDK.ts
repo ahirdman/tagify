@@ -94,6 +94,7 @@ const useSpotifySDK = () => {
       });
     });
 
+    // iFrame is null on token refresh
     const iFrame = document.querySelector(
       'iframe[alt="Audio Playback Container"]'
     );

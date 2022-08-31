@@ -1,35 +1,26 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   firebaseSignIn,
+  refreshSpotifyToken,
   setSpotifyProfile,
   setSpotifyToken,
 } from './user.slice';
 import { Spotify, Firestore } from '../../services/index';
 import { hasExpired, IExperationObj } from '../../utils';
+import type { TypedStartListening } from '@reduxjs/toolkit';
+import type { RootState, AppDispatch } from '../store';
 
-// const refreshTimerRef = React.useRef(null);
-// const refreshTimer = (milliseconds: number, uid: string) => {
-//   console.log('refresh timer set to:', milliseconds, 'seconds');
+export type AppStartListening = TypedStartListening<RootState, AppDispatch>;
 
-//   refreshTimerRef.current = setTimeout(async () => {
-//     const token = await Spotify.refreshToken(uid);
+export const signIn = createListenerMiddleware();
+export const spotifyToken = createListenerMiddleware();
+export const refreshToken = createListenerMiddleware();
 
-//     dispatch(
-//       setSpotifyToken({
-//         accessToken: token.access_token,
-//         expires: token.expires_in,
-//       })
-//     );
+const startSignInListening = signIn.startListening as AppStartListening;
+const startTokenListening = spotifyToken.startListening as AppStartListening;
+const startRefreshListening = spotifyToken.startListening as AppStartListening;
 
-//     refreshTimer(token.expires_in - 10, uid);
-//   }, milliseconds * 1000);
-// };
-
-// Create the middleware instance and methods
-export const signInMiddleware = createListenerMiddleware();
-export const spotifyTokenMiddleware = createListenerMiddleware();
-
-signInMiddleware.startListening({
+startSignInListening({
   actionCreator: firebaseSignIn,
   effect: async (action, listenerApi) => {
     const uid = action.payload.fireId;
@@ -44,6 +35,9 @@ signInMiddleware.startListening({
       doc.spotifyExpires
     );
 
+    console.log('token has epired:', tokenHasExpired.expired);
+    console.log('token epires in:', tokenHasExpired.expiresIn);
+
     if (tokenHasExpired.expired || tokenHasExpired.expiresIn < 60) {
       const token = await Spotify.refreshToken(uid);
 
@@ -53,8 +47,6 @@ signInMiddleware.startListening({
           expires: token.expires_in,
         })
       );
-
-      // refreshTimer(token.expires_in - 10, uid);
     } else {
       listenerApi.dispatch(
         setSpotifyToken({
@@ -62,16 +54,15 @@ signInMiddleware.startListening({
           expires: tokenHasExpired.expiresIn,
         })
       );
-      // refreshTimer(tokenHasExpired.expiresIn - 10, uid);
     }
   },
 });
 
-spotifyTokenMiddleware.startListening({
+startTokenListening({
   actionCreator: setSpotifyToken,
   effect: async (action, listenerApi) => {
-    const token = action.payload.accessToken;
-    const data = await Spotify.getSpotifyUserData(token);
+    const { expires, accessToken } = action.payload;
+    const data = await Spotify.getSpotifyUserData(accessToken);
 
     listenerApi.dispatch(
       setSpotifyProfile({
@@ -80,43 +71,40 @@ spotifyTokenMiddleware.startListening({
         id: data.id,
       })
     );
+
+    const state = listenerApi.getState();
+    const uid = state.user.fireId;
+
+    await listenerApi.delay(expires * 1000);
+
+    const token = await Spotify.refreshToken(uid);
+
+    listenerApi.dispatch(
+      refreshSpotifyToken({
+        accessToken: token.access_token,
+        expires: token.expires_in,
+      })
+    );
   },
 });
 
-// Add one or more listener entries that look for specific actions.
-// They may contain any sync or async logic, similar to thunks.
-// listenerMiddleware.startListening({
-//   actionCreator: todoAdded,
-//   effect: async (action, listenerApi) => {
-//     // Run whatever additional side-effect-y logic you want here
-//     console.log('Todo added: ', action.payload.text)
+startRefreshListening({
+  actionCreator: refreshSpotifyToken,
+  effect: async (action, listenerApi) => {
+    const { expires } = action.payload;
 
-//     // Can cancel other running instances
-//     listenerApi.cancelActiveListeners()
+    const state = listenerApi.getState();
+    const uid = state.user.fireId;
 
-//     // Run async logic
-//     const data = await fetchData()
+    await listenerApi.delay(expires * 1000);
 
-//     // Pause until action dispatched or state changed
-//     if (await listenerApi.condition(matchSomeAction)) {
-//       // Use the listener API methods to dispatch, get state,
-//       // unsubscribe the listener, start child tasks, and more
-//       listenerApi.dispatch(todoAdded('Buy pet food'))
+    const token = await Spotify.refreshToken(uid);
 
-//       // Spawn "child tasks" that can do more work and return results
-//       const task = listenerApi.fork(async (forkApi) => {
-//         // Can pause execution
-//         await forkApi.delay(5)
-//         // Complete the child by returning a value
-//         return 42
-//       })
-
-//       const result = await task.result
-//       // Unwrap the child result in the listener
-//       if (result.status === 'ok') {
-//         // Logs the `42` result value that was returned
-//         console.log('Child succeeded: ', result.value)
-//       }
-//     }
-//   },
-// })
+    listenerApi.dispatch(
+      refreshSpotifyToken({
+        accessToken: token.access_token,
+        expires: token.expires_in,
+      })
+    );
+  },
+});

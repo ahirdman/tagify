@@ -11,8 +11,8 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const Login = () => {
   const { signInModal, signUpModal } = useAppSelector(state => state.ui);
+  const { loggedIn } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
-  const loggedIn = useAppSelector(state => state.user.loggedIn);
 
   return (
     <main className="login">

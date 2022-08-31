@@ -36,11 +36,19 @@ export const userSlice = createSlice({
       state.loggedIn = true;
     },
     firebaseSignOut: () => initialState,
+
     setSpotifyToken: (state, action: PayloadAction<ITokenPayload>) => {
       const { expires, accessToken } = action.payload;
       state.spotify.accessToken = accessToken;
       state.spotify.expires = expires;
     },
+
+    refreshSpotifyToken: (state, action: PayloadAction<ITokenPayload>) => {
+      const { expires, accessToken } = action.payload;
+      state.spotify.accessToken = accessToken;
+      state.spotify.expires = expires;
+    },
+
     setSpotifyProfile: (
       state,
       action: PayloadAction<ISpotifyProfilePayload>
@@ -56,6 +64,7 @@ export const {
   firebaseSignOut,
   setSpotifyToken,
   setSpotifyProfile,
+  refreshSpotifyToken,
 } = userSlice.actions;
 
 export default userSlice.reducer;

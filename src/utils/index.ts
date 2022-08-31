@@ -1,4 +1,5 @@
 import { hasExpired } from './date/date.service';
-import IExperationObj from './date/date.interface';
+import { refreshTimer } from './recursion/recursion.service';
+import type IExperationObj from './date/date.interface';
 
-export { hasExpired, IExperationObj };
+export { hasExpired, IExperationObj, refreshTimer };

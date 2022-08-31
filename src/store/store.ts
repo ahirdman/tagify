@@ -3,7 +3,7 @@ import userReducer from './user/user.slice';
 import uiReducer from './ui/ui.slice';
 import playbackReducer from './playback/playback.slice';
 import savedTracksReducer from './savedTracks/savedTracks.slice';
-import { signInMiddleware, spotifyTokenMiddleware } from './user/user.listener';
+import { signIn, spotifyToken } from './user/user.listener';
 
 export const store = configureStore({
   reducer: {
@@ -13,10 +13,7 @@ export const store = configureStore({
     savedTracks: savedTracksReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().prepend(
-      signInMiddleware.middleware,
-      spotifyTokenMiddleware.middleware
-    ),
+    getDefaultMiddleware().prepend(signIn.middleware, spotifyToken.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

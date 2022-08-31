@@ -14,8 +14,6 @@ const App = () => {
   const ready = useAppSelector(state => state.user.ready);
   const dispatch = useAppDispatch();
 
-  console.log('rendered app component');
-
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, fireUser => {
       if (fireUser) {
