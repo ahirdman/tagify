@@ -1,4 +1,4 @@
-import { HTTPUserTracksResponse } from './spotify.interface';
+import { HTTPUserTracksResponse, refreshRes } from './spotify.interface';
 import {
   addTracksToPlaylist,
   createEmptyPlaylist,
@@ -26,7 +26,7 @@ export const authorizeSpotify = async (uid: string) => {
 };
 
 export const refreshToken = async (uid: string) => {
-  const response = await post('/auth/refresh', { id: uid });
+  const response: refreshRes = await post('/auth/refresh', { id: uid });
   return response;
 };
 

@@ -8,51 +8,40 @@ import {
   setDeviceID,
   setPaused,
 } from './../store/playback/playback.slice';
-
-const SDKurl = 'https://sdk.scdn.co/spotify-player.js';
+import useSDKScript from './useSDKScript';
 
 const useSpotifySDK = () => {
-  const [player, setPlayer] = React.useState(null);
-  const [SDKReady, setSDKReady] = React.useState(false);
+  const [player, setPlayer] = React.useState(undefined);
+
+  const SDKReady = useSDKScript();
+
+  const accessToken = useAppSelector(state => state.user.spotify.accessToken);
+  const dispatch = useAppDispatch();
 
   const currentTrackRef = React.useRef<ICurrentTrack | null>(null);
   const firstTrackRef = React.useRef<ICurrentTrack | null>(null);
   const activeSessionRef = React.useRef<boolean | null>(null);
   const pausedRef = React.useRef<boolean | null>(null);
-  const iFrameRef = React.useRef(null);
-
-  const accessToken = useAppSelector(state => state.user.spotify.accessToken);
-  const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    const script = document.createElement('script');
-    script.setAttribute('id', 'spotPlayer');
-    script.src = SDKurl;
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      setSDKReady(true);
-    };
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
 
   React.useEffect((): any => {
-    if (!SDKReady) return;
+    if (!SDKReady || !accessToken) return;
 
     const spotifySDK = new window.Spotify.Player({
       name: 'Moodify',
+
       getOAuthToken: cb => {
+        console.log('authtoken callback fired');
         cb(accessToken);
       },
       volume: 0.5,
     });
 
     setPlayer(spotifySDK);
+
+    const iFrame =
+      document.querySelector(
+        'iframe[src="https://sdk.scdn.co/embedded/index.html"]'
+      ) || null;
 
     spotifySDK.addListener('ready', ({ device_id }) => {
       dispatch(setDeviceID(device_id));
@@ -94,19 +83,13 @@ const useSpotifySDK = () => {
       });
     });
 
-    // iFrame is null on token refresh
-    const iFrame = document.querySelector(
-      'iframe[alt="Audio Playback Container"]'
-    );
-
-    iFrame.setAttribute('title', 'SDKPlayer');
-    iFrameRef.current = iFrame;
-
     return () => {
       spotifySDK.removeListener('ready');
       spotifySDK.removeListener('player_state_changed');
       spotifySDK.disconnect();
-      iFrameRef.current.remove();
+      if (iFrame) {
+        document.body.removeChild(iFrame);
+      }
       dispatch(clearPlayback());
     };
   }, [accessToken, dispatch, SDKReady]);
