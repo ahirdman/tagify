@@ -28,7 +28,7 @@ const SavedTracks = () => {
     if (fetchedAllTracks) return;
 
     const nextTracks = await Spotify.getNextUserSavedTracks(
-      user.spotify.accessToken,
+      user.spotify.auth.accessToken,
       tracks.nextUrl
     );
 
@@ -58,7 +58,8 @@ const SavedTracks = () => {
    */
 
   React.useEffect(() => {
-    if (!user.spotify.accessToken || tracks.savedTracks.length !== 0) return;
+    if (!user.spotify.auth.accessToken || tracks.savedTracks.length !== 0)
+      return;
 
     const getTracks = async (token: string) => {
       const savedData = await Spotify.getInitalUserSavedTracks(token);
@@ -66,8 +67,8 @@ const SavedTracks = () => {
       dispatch(initialLoad(savedData));
     };
 
-    getTracks(user.spotify.accessToken);
-  }, [user.spotify.accessToken, tracks.savedTracks.length, dispatch]);
+    getTracks(user.spotify.auth.accessToken);
+  }, [user.spotify.auth.accessToken, tracks.savedTracks.length, dispatch]);
 
   /**
    *  Filter effect, filter service is managed by reducer.

@@ -72,39 +72,43 @@ startTokenListening({
       })
     );
 
-    const state = listenerApi.getState();
-    const uid = state.user.fireId;
+    /**
+     * MOVED LIESTENER LOGIC TO SDK PLAEYER CALLBACK
+     */
 
-    await listenerApi.delay(expires * 1000);
+    // const state = listenerApi.getState();
+    // const uid = state.user.fireId;
 
-    const token = await Spotify.refreshToken(uid);
+    // await listenerApi.delay(expires * 1000);
 
-    listenerApi.dispatch(
-      refreshSpotifyToken({
-        accessToken: token.access_token,
-        expires: token.expires_in,
-      })
-    );
+    // const token = await Spotify.refreshToken(uid);
+
+    // listenerApi.dispatch(
+    //   refreshSpotifyToken({
+    //     accessToken: token.access_token,
+    //     expires: token.expires_in,
+    //   })
+    // );
   },
 });
 
-startRefreshListening({
-  actionCreator: refreshSpotifyToken,
-  effect: async (action, listenerApi) => {
-    const { expires } = action.payload;
+// startRefreshListening({
+//   actionCreator: refreshSpotifyToken,
+//   effect: async (action, listenerApi) => {
+//     const { expires } = action.payload;
 
-    const state = listenerApi.getState();
-    const uid = state.user.fireId;
+//     const state = listenerApi.getState();
+//     const uid = state.user.fireId;
 
-    await listenerApi.delay(expires * 1000);
+//     await listenerApi.delay(expires * 1000);
 
-    const token = await Spotify.refreshToken(uid);
+//     const token = await Spotify.refreshToken(uid);
 
-    listenerApi.dispatch(
-      refreshSpotifyToken({
-        accessToken: token.access_token,
-        expires: token.expires_in,
-      })
-    );
-  },
-});
+//     listenerApi.dispatch(
+//       refreshSpotifyToken({
+//         accessToken: token.access_token,
+//         expires: token.expires_in,
+//       })
+//     );
+//   },
+// });

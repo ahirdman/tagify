@@ -9,7 +9,7 @@ import {
   serverTimestamp,
   getDoc,
 } from 'firebase/firestore';
-import db from '../config';
+import { db } from '../config';
 import { IFirestoreTrack } from './firestore.interface';
 
 /**

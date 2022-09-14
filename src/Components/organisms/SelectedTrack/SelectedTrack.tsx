@@ -65,7 +65,7 @@ const SelectedTrack = () => {
           onClick={() => {
             Spotify.playTrack(
               deviceId,
-              user.spotify.accessToken,
+              user.spotify.auth.accessToken,
               selectedTrack.uri
             );
           }}

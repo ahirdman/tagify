@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ICurrentTrack } from '../store/playback/playback.interface';
+import { Spotify } from '../services/index';
 import { useAppDispatch, useAppSelector } from './../store/hooks';
 import {
   clearPlayback,
@@ -9,13 +10,25 @@ import {
   setPaused,
 } from './../store/playback/playback.slice';
 import useSDKScript from './useSDKScript';
+import {
+  refreshSpotifyToken,
+  setConsumed,
+  setSpotifyToken,
+} from '../store/user/user.slice';
+import {
+  getToken,
+  refreshToken,
+} from '../services/firebase/functions/functions.controller';
 
 const useSpotifySDK = () => {
   const [player, setPlayer] = React.useState(undefined);
 
   const SDKReady = useSDKScript();
 
-  const accessToken = useAppSelector(state => state.user.spotify.accessToken);
+  const { accessToken, consumedBySDK } = useAppSelector(
+    state => state.user.spotify.auth
+  );
+  const uid = useAppSelector(state => state.user.fireId);
   const dispatch = useAppDispatch();
 
   const currentTrackRef = React.useRef<ICurrentTrack | null>(null);
@@ -24,14 +37,51 @@ const useSpotifySDK = () => {
   const pausedRef = React.useRef<boolean | null>(null);
 
   React.useEffect((): any => {
-    if (!SDKReady || !accessToken) return;
-
+    if (!SDKReady) return;
+    console.log('SDK effect ran');
     const spotifySDK = new window.Spotify.Player({
       name: 'Moodify',
 
-      getOAuthToken: cb => {
-        console.log('authtoken callback fired');
-        cb(accessToken);
+      getOAuthToken: async cb => {
+        // After initial load (app starts with new token) - refresh token
+        // if (consumedBySDK) {
+        //   const token = await Spotify.refreshToken(uid);
+        //   dispatch(
+        //     refreshSpotifyToken({
+        //       accessToken: token.access_token,
+        //       expires: token.expires_in,
+        //     })
+        //   );
+
+        //   cb(token.access_token);
+        //   console.log('authtoken callback refresh');
+        // }
+
+        // dispatch(setConsumed());
+        // cb(accessToken);
+        // console.log('authtoken callback initial');
+
+        // Will it increase?
+        let initialLoad = true;
+
+        if (initialLoad) {
+          const token = await getToken();
+          dispatch(
+            setSpotifyToken({
+              accessToken: token.access_token,
+            })
+          );
+          initialLoad = false;
+          cb(token.access_token);
+        } else {
+          const token = await refreshToken();
+          dispatch(
+            setSpotifyToken({
+              accessToken: token.access_token,
+            })
+          );
+          cb(token.access_token);
+        }
       },
       volume: 0.5,
     });
@@ -91,6 +141,7 @@ const useSpotifySDK = () => {
         document.body.removeChild(iFrame);
       }
       dispatch(clearPlayback());
+      setPlayer(undefined);
     };
   }, [accessToken, dispatch, SDKReady]);
 

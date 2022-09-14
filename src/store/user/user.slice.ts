@@ -4,7 +4,7 @@ import { RootState } from '../store';
 import {
   IFirebaseSignInPayload,
   ISpotifyProfilePayload,
-  ITokenPayload,
+  TokenPayload,
   IUser,
 } from './user.interface';
 
@@ -20,8 +20,11 @@ const initialState: IUser = {
       name: '',
       id: '',
     },
-    accessToken: '',
-    expires: -1,
+    auth: {
+      consumedBySDK: false,
+      accessToken: '',
+      expires: -1,
+    },
   },
 };
 
@@ -35,18 +38,23 @@ export const userSlice = createSlice({
       state.fireId = fireId;
       state.loggedIn = true;
     },
+
     firebaseSignOut: () => initialState,
 
-    setSpotifyToken: (state, action: PayloadAction<ITokenPayload>) => {
+    setSpotifyToken: (state, action: PayloadAction<TokenPayload>) => {
       const { expires, accessToken } = action.payload;
-      state.spotify.accessToken = accessToken;
-      state.spotify.expires = expires;
+      state.spotify.auth.accessToken = accessToken;
+      state.spotify.auth.expires = expires;
     },
 
-    refreshSpotifyToken: (state, action: PayloadAction<ITokenPayload>) => {
+    refreshSpotifyToken: (state, action: PayloadAction<TokenPayload>) => {
       const { expires, accessToken } = action.payload;
-      state.spotify.accessToken = accessToken;
-      state.spotify.expires = expires;
+      state.spotify.auth.accessToken = accessToken;
+      state.spotify.auth.expires = expires;
+    },
+
+    setConsumed: state => {
+      state.spotify.auth.consumedBySDK = true;
     },
 
     setSpotifyProfile: (
@@ -63,8 +71,9 @@ export const {
   firebaseSignIn,
   firebaseSignOut,
   setSpotifyToken,
-  setSpotifyProfile,
   refreshSpotifyToken,
+  setConsumed,
+  setSpotifyProfile,
 } = userSlice.actions;
 
 export default userSlice.reducer;
