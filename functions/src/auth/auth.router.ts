@@ -3,6 +3,7 @@ import axios from 'axios';
 import { scope, generateRandomString } from './auth.service';
 import 'dotenv/config';
 import * as AuthService from './auth.service';
+import { IUSerDocument } from './auth.interface';
 
 const router = express.Router();
 let user: string;
@@ -69,18 +70,7 @@ router.get(
   }
 );
 
-interface IServerTimestamp {
-  _seconds: number;
-  _nanoseconds: number;
-}
 
-interface IUSerDocument {
-  spotifyAuth: boolean;
-  spotifyRefreshToken: string;
-  spotifyAccessToken: string;
-  spotifyExpires: number;
-  spotifyTokenTimestamp: IServerTimestamp;
-}
 
 // POST refreshed token
 router.post(

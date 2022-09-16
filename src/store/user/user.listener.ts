@@ -1,7 +1,7 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   firebaseSignIn,
-  refreshSpotifyToken,
+  // refreshSpotifyToken,
   setSpotifyProfile,
   setSpotifyToken,
 } from './user.slice';
@@ -18,7 +18,7 @@ export const refreshToken = createListenerMiddleware();
 
 const startSignInListening = signIn.startListening as AppStartListening;
 const startTokenListening = spotifyToken.startListening as AppStartListening;
-const startRefreshListening = spotifyToken.startListening as AppStartListening;
+// const startRefreshListening = spotifyToken.startListening as AppStartListening;
 
 startSignInListening({
   actionCreator: firebaseSignIn,

@@ -69,6 +69,7 @@ const useSpotifySDK = () => {
           dispatch(
             setSpotifyToken({
               accessToken: token.access_token,
+              expires: token.expires
             })
           );
           initialLoad = false;
@@ -76,8 +77,9 @@ const useSpotifySDK = () => {
         } else {
           const token = await refreshToken();
           dispatch(
-            setSpotifyToken({
+            refreshSpotifyToken({
               accessToken: token.access_token,
+              expires: token.expires
             })
           );
           cb(token.access_token);
