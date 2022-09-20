@@ -2,7 +2,6 @@ import * as React from 'react';
 import Magnifier from '../../../assets/magnifier.svg';
 import './SavedTracks.scss';
 import { CardNav, SearchBar } from '../..//molecules';
-import useInfiniteScroll from '../../../hooks/useInfiniteScroll';
 import { Loader } from '../../atoms';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -14,39 +13,43 @@ import {
 
 const SavedTracks = () => {
   const [query, setQuery] = React.useState('');
-  const tracks = useAppSelector(state => state.savedTracks);
+  const listEl = React.useRef<HTMLUListElement>(null);
+  const savedTracksState = useAppSelector(state => state.savedTracks);
   const dispatch = useAppDispatch();
 
-  const fetchedAllTracks = tracks.savedTracks.length === tracks.total;
-  const resumeFetching =
-    tracks.filteredTracks.length < 8 &&
-    tracks.total !== tracks.filteredTracks.length;
+  React.useEffect(() => {
+    const handleScroll = (): void => {
+      if (
+        listEl.current.scrollTop + listEl.current.clientHeight >=
+        listEl.current.scrollHeight
+      ) {
+      dispatch(fetchNextTracks());
+      }
+    };
 
-  const fetchMoreTracks = async () => {
-    if (fetchedAllTracks) return;
+    const currentEl = listEl.current;
 
-    dispatch(fetchNextTracks(tracks.nextUrl));
+    if (currentEl) {
+      currentEl.addEventListener('scroll', handleScroll);
+    }
 
-    setIsFetching(false);
-  };
-
-  const [isFetching, setIsFetching, listEl] = useInfiniteScroll(
-    fetchMoreTracks,
-    resumeFetching
-  );
+    return () => {
+      currentEl.removeEventListener('scroll', handleScroll);
+    };
+  }, [dispatch])
 
   React.useEffect(() => {
-    if (tracks.savedTracks.length !== 0) return;
+    if (savedTracksState.savedTracks.length !== 0) return;
 
     dispatch(fetchInitialTracks());
 
-  }, [tracks.savedTracks.length, dispatch]);
+  }, [savedTracksState.savedTracks.length, dispatch]);
 
   React.useEffect(() => {
     if (query.length > 0) {
       dispatch(filterTracks(query));
     }
-  }, [query, tracks.savedTracks, dispatch]);
+  }, [query, savedTracksState.savedTracks, dispatch]);
 
   return (
     <div className="select">
@@ -56,7 +59,7 @@ const SavedTracks = () => {
         <p className="select__header--title">TITLE & ARTIST</p>
       </section>
       <ul className="track-list" ref={listEl}>
-        {tracks.filteredTracks.map((track, index) => {
+        {savedTracksState.filteredTracks.map((track, index) => {
           return (
             <li
               onClick={() => dispatch(setSelectedTrack(track))}
@@ -75,7 +78,7 @@ const SavedTracks = () => {
             </li>
           );
         })}
-        {isFetching && !fetchedAllTracks && <Loader />}
+        {savedTracksState.loading && <Loader />}
       </ul>
     </div>
   );
