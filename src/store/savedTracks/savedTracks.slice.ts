@@ -1,31 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ITracksStateObj, SelectPayload } from './savedTracks.interface';
-import { SavedTracksData } from '../../services/spotify/spotify.interface';
 import { RootState } from '../store';
-import { functions } from '../../services/firebase/index';
-import { savedDataExtractor } from '../../services/spotify/spotify.service';
+import { Spotify, SavedTracksData } from '../../services';
 
-export const fetchInitialTracks = createAsyncThunk(
-  'tracks/getInitial',
-  async (_, thunkAPI) => {
-    const {
-      user: {
-        spotify: { token },
-      },
-    } = thunkAPI.getState() as RootState;
+export const fetchInitialTracks = createAsyncThunk('tracks/getInitial', async (_, thunkAPI) => {
+  const {
+    user: {
+      spotify: { token },
+    },
+  } = thunkAPI.getState() as RootState;
 
-    const response = await functions.getInitialSavedTracks({ token });
-    const tracks = savedDataExtractor(response.data.items);
+  const data = await Spotify.getInitialSavedTracks(token);
 
-    return {
-      total: response.data.total,
-      nextUrl: response.data.next,
-      savedTracks: tracks,
-      filteredTracks: tracks,
-    };
-  }
-);
+  return data;
+});
 
 export const fetchNextTracks = createAsyncThunk(
   'tracks/getnext',
@@ -33,18 +22,9 @@ export const fetchNextTracks = createAsyncThunk(
     const state = thunkAPI.getState() as RootState;
     const { token } = state.user.spotify;
     const { nextUrl } = state.savedTracks;
-    const response = await functions.getNextSavedTracks({
-      token,
-      url: nextUrl,
-    });
-    const tracks = savedDataExtractor(response.data.items);
+    const data = await Spotify.getNextSavedTracks(token, nextUrl);
 
-    return {
-      total: response.data.total,
-      nextUrl: response.data.next,
-      savedTracks: tracks,
-      filteredTracks: tracks,
-    };
+    return data;
   },
   {
     condition: (_, { getState }) => {
@@ -77,8 +57,8 @@ export const savedTracksSlice = createSlice({
   reducers: {
     filterTracks: (state, { payload }: PayloadAction<string>) => {
       const regExp = new RegExp(payload, 'gmi');
-      state.filteredTracks = state.savedTracks.filter(
-        (track: SavedTracksData) => regExp.test(track.name)
+      state.filteredTracks = state.savedTracks.filter((track: SavedTracksData) =>
+        regExp.test(track.name)
       );
     },
     setSelectedTrack: (state, { payload }: PayloadAction<SelectPayload>) => {
@@ -103,9 +83,7 @@ export const savedTracksSlice = createSlice({
       .addCase(fetchNextTracks.fulfilled, (state, { payload }) => {
         state.nextUrl = payload.nextUrl;
         state.savedTracks = state.savedTracks.concat(payload.savedTracks);
-        state.filteredTracks = state.filteredTracks.concat(
-          payload.filteredTracks
-        );
+        state.filteredTracks = state.filteredTracks.concat(payload.filteredTracks);
         state.allTracksLoaded = state.total === state.savedTracks.length;
         state.loading = false;
       });
@@ -116,5 +94,4 @@ export const { filterTracks, setSelectedTrack } = savedTracksSlice.actions;
 
 export default savedTracksSlice.reducer;
 
-export const selectedTrackSelector = (state: RootState) =>
-  state.savedTracks.selectedTrack;
+export const selectedTrackSelector = (state: RootState) => state.savedTracks.selectedTrack;

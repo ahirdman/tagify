@@ -19,11 +19,8 @@ const SavedTracks = () => {
 
   React.useEffect(() => {
     const handleScroll = (): void => {
-      if (
-        listEl.current.scrollTop + listEl.current.clientHeight >=
-        listEl.current.scrollHeight
-      ) {
-      dispatch(fetchNextTracks());
+      if (listEl.current.scrollTop + listEl.current.clientHeight >= listEl.current.scrollHeight) {
+        dispatch(fetchNextTracks());
       }
     };
 
@@ -36,13 +33,12 @@ const SavedTracks = () => {
     return () => {
       currentEl.removeEventListener('scroll', handleScroll);
     };
-  }, [dispatch])
+  }, [dispatch]);
 
   React.useEffect(() => {
     if (savedTracksState.savedTracks.length !== 0) return;
 
     dispatch(fetchInitialTracks());
-
   }, [savedTracksState.savedTracks.length, dispatch]);
 
   React.useEffect(() => {
@@ -66,11 +62,7 @@ const SavedTracks = () => {
               key={index}
               className="track-list__row"
             >
-              <img
-                src={track.artworkSmall}
-                alt="album"
-                className="track-list__album"
-              />
+              <img src={track.artworkSmall} alt="album" className="track-list__album" />
               <section className="track-list__details">
                 <p className="track-list__details--title">{track.name}</p>
                 <p className="track-list__details--artist">{track.artist}</p>

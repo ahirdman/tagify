@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ICurrentTrack } from '../store/playback/playback.interface';
-import { useAppDispatch} from './../store/hooks';
+import { useAppDispatch } from './../store/hooks';
 import {
   clearPlayback,
   setActive,
@@ -9,9 +9,7 @@ import {
   setPaused,
 } from './../store/playback/playback.slice';
 import useSDKScript from './useSDKScript';
-import {
-  getSpotifyToken,
-} from '../services/firebase/functions/functions.controller';
+import { Spotify } from '../services/index';
 import { setSpotifyToken } from '../store/user/user.slice';
 
 const useSpotifySDK = () => {
@@ -31,10 +29,12 @@ const useSpotifySDK = () => {
       name: 'Moodify',
 
       getOAuthToken: async cb => {
-        const token: any = await getSpotifyToken()
-        dispatch(setSpotifyToken({
-          token: token.data.accessToken
-        }))
+        const token: any = await Spotify.getSpotifyToken();
+        dispatch(
+          setSpotifyToken({
+            token: token.data.accessToken,
+          })
+        );
         cb(token.data.accessToken);
       },
       volume: 0.5,
@@ -43,9 +43,7 @@ const useSpotifySDK = () => {
     setPlayer(spotifySDK);
 
     const iFrame =
-      document.querySelector(
-        'iframe[src="https://sdk.scdn.co/embedded/index.html"]'
-      ) || null;
+      document.querySelector('iframe[src="https://sdk.scdn.co/embedded/index.html"]') || null;
 
     spotifySDK.addListener('ready', ({ device_id }) => {
       dispatch(setDeviceID(device_id));

@@ -78,7 +78,16 @@ export interface IUserSavedObject {
   };
 }
 
-export interface HTTPUserTracksResponse {
+export interface SavedTracksData {
+  name: string;
+  artist: string;
+  album: string;
+  artworkSmall: string;
+  artworkMedium: string;
+  uri: string;
+}
+
+export interface SavedTracksResponse {
   href: string;
   items: IUserSavedObject[];
   limit: number;
@@ -88,11 +97,21 @@ export interface HTTPUserTracksResponse {
   total: number;
 }
 
-export interface SavedTracksData {
+export interface TokenResponse {
+  accessToken: string;
+}
+
+export interface ProfileResponse {
+  image: string;
   name: string;
-  artist: string;
-  album: string;
-  artworkSmall: string;
-  artworkMedium: string;
-  uri: string;
+  id: string;
+}
+
+export interface TokenBody {
+  token: string;
+}
+
+export interface NextTracksBody {
+  token: string;
+  url: string;
 }

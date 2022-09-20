@@ -1,4 +1,10 @@
-import { HTTPUserTracksResponse } from './spotify.interface';
+import {
+  SavedTracksResponse,
+  NextTracksBody,
+  ProfileResponse,
+  TokenBody,
+  TokenResponse,
+} from './spotify.interface';
 import {
   addTracksToPlaylist,
   createEmptyPlaylist,
@@ -7,12 +13,51 @@ import {
   postWithCookie,
   savedDataExtractor,
 } from './spotify.service';
+import { functions } from '../firebase/config';
+import { httpsCallable } from 'firebase/functions';
 
-export const playTrack = async (
-  deviceId: string,
-  token: string,
-  uri: string
-): Promise<void> => {
+export const getSpotifyToken = httpsCallable<void, TokenResponse>(functions, 'spotifyToken');
+
+export const getSpotifyProfile = httpsCallable<TokenBody, ProfileResponse>(
+  functions,
+  'getSpotifyProfile'
+);
+
+const initialSavedTracks = httpsCallable<TokenBody, SavedTracksResponse>(
+  functions,
+  'getInitialSavedTracks'
+);
+
+export const getInitialSavedTracks = async (token: string) => {
+  const response = await initialSavedTracks({ token });
+  const tracks = savedDataExtractor(response.data.items);
+
+  return {
+    total: response.data.total,
+    nextUrl: response.data.next,
+    savedTracks: tracks,
+    filteredTracks: tracks,
+  };
+};
+
+const nextSavedTracks = httpsCallable<NextTracksBody, SavedTracksResponse>(
+  functions,
+  'getNextSavedTracks'
+);
+
+export const getNextSavedTracks = async (token: string, nextUrl: string) => {
+  const response = await nextSavedTracks({ token, url: nextUrl });
+  const tracks = savedDataExtractor(response.data.items);
+
+  return {
+    total: response.data.total,
+    nextUrl: response.data.next,
+    savedTracks: tracks,
+    filteredTracks: tracks,
+  };
+};
+
+export const playTrack = async (deviceId: string, token: string, uri: string): Promise<void> => {
   await post('/playback', {
     token,
     deviceId,
@@ -31,48 +76,11 @@ export const createNewPlaylistWithTracks = async (
   userId: string,
   tracks: any
 ) => {
-  const newEmptyPlaylist = await createEmptyPlaylist(
-    token,
-    userId,
-    playlistName
-  );
+  const newEmptyPlaylist = await createEmptyPlaylist(token, userId, playlistName);
 
   const tracksUris = extractUris(tracks);
 
-  const filledPlaylist = await addTracksToPlaylist(
-    token,
-    newEmptyPlaylist.id,
-    tracksUris
-  );
+  const filledPlaylist = await addTracksToPlaylist(token, newEmptyPlaylist.id, tracksUris);
 
   console.log('success!', filledPlaylist);
-};
-
-export const getInitalUserSavedTracks = async (token: string) => {
-  const userSavedTracks: HTTPUserTracksResponse = await post('/user/saved', {
-    token,
-  });
-
-  const data = savedDataExtractor(userSavedTracks.items);
-
-  return {
-    total: userSavedTracks.total,
-    nextUrl: userSavedTracks.next,
-    savedTracks: data,
-    filteredTracks: data,
-  };
-};
-
-export const getNextUserSavedTracks = async (token: string, url: string) => {
-  const nextUserSavedTracks: HTTPUserTracksResponse = await post('/user/next', {
-    token,
-    url,
-  });
-
-  const data = savedDataExtractor(nextUserSavedTracks.items);
-
-  return {
-    nextUrl: nextUserSavedTracks.next,
-    savedTracks: data,
-  };
 };

@@ -5,11 +5,6 @@ import { IUserSavedObject, SavedTracksData } from './spotify.interface';
 
 axios.defaults.baseURL = SERVER;
 
-export const get = async (path: string) => {
-  const response = await axios.get(path);
-  return response.data;
-};
-
 export const post = async (path: string, data: any) => {
   const response = await axios.post(path, { data });
   return response.data;
@@ -24,11 +19,7 @@ export const postWithCookie = async (path: string, body: any) => {
 export const extractUris = (arr: IFirestoreTrack[]): string[] =>
   arr.map((track: IFirestoreTrack) => track.uri);
 
-export const addTracksToPlaylist = async (
-  token: string,
-  playlistId: string,
-  tracks: string[]
-) => {
+export const addTracksToPlaylist = async (token: string, playlistId: string, tracks: string[]) => {
   await post('/playlist/add', {
     token,
     playlistId,
@@ -36,11 +27,7 @@ export const addTracksToPlaylist = async (
   });
 };
 
-export const createEmptyPlaylist = async (
-  token: string,
-  userId: string,
-  playlistName: string
-) => {
+export const createEmptyPlaylist = async (token: string, userId: string, playlistName: string) => {
   const newPlaylist = await post('/playlist', {
     token,
     userId,
@@ -49,9 +36,7 @@ export const createEmptyPlaylist = async (
   return newPlaylist.id;
 };
 
-export const savedDataExtractor = (
-  data: IUserSavedObject[]
-): SavedTracksData[] =>
+export const savedDataExtractor = (data: IUserSavedObject[]): SavedTracksData[] =>
   data.map(({ track }) => ({
     name: track.name,
     artist: track.artists[0].name,
@@ -60,32 +45,3 @@ export const savedDataExtractor = (
     artworkMedium: track.album.images[1].url,
     uri: track.uri,
   }));
-
-// export const get = async (path: string) => {
-//   const query = await fetch(`${SERVER}${path}`);
-//   const json = await query.json();
-//   return json;
-// };
-
-// export const postWithCookie = async (path: string, body: any) => {
-//   const query = await fetch(`${SERVER}${path}`, {
-//     method: 'POST',
-//     body: JSON.stringify(body),
-//     credentials: 'include',
-//   });
-//   const json = await query.json();
-//   return json;
-// };
-
-// export const post = async (path: string, body: any) => {
-//   const query = await fetch(`${SERVER}${path}`, {
-//     method: 'POST',
-//     body: JSON.stringify(body),
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Accept: 'application/json',
-//     },
-//   });
-//   const json = await query.json();
-//   return json;
-// };

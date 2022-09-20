@@ -1,13 +1,8 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
-import {
-  firebaseSignIn,
-  setSpotifyProfile,
-  setSpotifyToken,
-} from './user.slice';
+import { firebaseSignIn, setSpotifyProfile, setSpotifyToken } from './user.slice';
 import { Spotify, Firestore } from '../../services/index';
 import type { TypedStartListening } from '@reduxjs/toolkit';
 import type { RootState, AppDispatch } from '../store';
-import { getSpotifyProfile, getSpotifyToken } from '../../services/firebase/functions/functions.controller';
 
 export type AppStartListening = TypedStartListening<RootState, AppDispatch>;
 
@@ -28,14 +23,13 @@ startSignInListening({
       Spotify.authorizeSpotify(uid);
     }
 
-    const token: any = await getSpotifyToken()
+    const token: any = await Spotify.getSpotifyToken();
 
     listenerApi.dispatch(
       setSpotifyToken({
         token: token.data.accessToken,
       })
     );
-    
   },
 });
 
@@ -43,14 +37,12 @@ startTokenListening({
   actionCreator: setSpotifyToken,
   effect: async (action, listenerApi) => {
     const { token } = action.payload;
-    const state = listenerApi.getState()
+    const state = listenerApi.getState();
 
     if (!state.user.spotify.profile.id) {
-      const results: any = await getSpotifyProfile({token});
-  
-      listenerApi.dispatch(
-        setSpotifyProfile(results.data)
-      )
+      const results = await Spotify.getSpotifyProfile({ token });
+
+      listenerApi.dispatch(setSpotifyProfile(results.data));
     }
-  }
+  },
 });
