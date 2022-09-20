@@ -5,15 +5,11 @@ export interface IUser {
   ready: boolean;
   spotify: {
     connected: boolean;
+    token: string;
     profile: {
       image: string;
       name: string;
       id: string;
-    };
-    auth: {
-      consumedBySDK: boolean;
-      accessToken: string;
-      expires: number;
     };
   };
 }
@@ -21,8 +17,8 @@ export interface IUser {
 export type IFirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
 
 export type TokenPayload = Pick<
-  IUser['spotify']['auth'],
-  'accessToken' | 'expires'
+  IUser['spotify'],
+  'token'
 >;
 
 export type ISpotifyProfilePayload = Pick<

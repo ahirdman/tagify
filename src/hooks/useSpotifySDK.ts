@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ICurrentTrack } from '../store/playback/playback.interface';
-import { Spotify } from '../services/index';
-import { useAppDispatch, useAppSelector } from './../store/hooks';
+import { useAppDispatch} from './../store/hooks';
 import {
   clearPlayback,
   setActive,
@@ -11,24 +10,14 @@ import {
 } from './../store/playback/playback.slice';
 import useSDKScript from './useSDKScript';
 import {
-  refreshSpotifyToken,
-  setConsumed,
-  setSpotifyToken,
-} from '../store/user/user.slice';
-import {
-  getToken,
-  refreshToken,
+  getSpotifyToken,
 } from '../services/firebase/functions/functions.controller';
+import { setSpotifyToken } from '../store/user/user.slice';
 
 const useSpotifySDK = () => {
   const [player, setPlayer] = React.useState(undefined);
 
   const SDKReady = useSDKScript();
-
-  const { accessToken, consumedBySDK } = useAppSelector(
-    state => state.user.spotify.auth
-  );
-  const uid = useAppSelector(state => state.user.fireId);
   const dispatch = useAppDispatch();
 
   const currentTrackRef = React.useRef<ICurrentTrack | null>(null);
@@ -38,52 +27,15 @@ const useSpotifySDK = () => {
 
   React.useEffect((): any => {
     if (!SDKReady) return;
-    console.log('SDK effect ran');
     const spotifySDK = new window.Spotify.Player({
       name: 'Moodify',
 
       getOAuthToken: async cb => {
-        // After initial load (app starts with new token) - refresh token
-        // if (consumedBySDK) {
-        //   const token = await Spotify.refreshToken(uid);
-        //   dispatch(
-        //     refreshSpotifyToken({
-        //       accessToken: token.access_token,
-        //       expires: token.expires_in,
-        //     })
-        //   );
-
-        //   cb(token.access_token);
-        //   console.log('authtoken callback refresh');
-        // }
-
-        // dispatch(setConsumed());
-        // cb(accessToken);
-        // console.log('authtoken callback initial');
-
-        // Will it increase?
-        let initialLoad = true;
-
-        if (initialLoad) {
-          const token = await getToken();
-          dispatch(
-            setSpotifyToken({
-              accessToken: token.access_token,
-              expires: token.expires
-            })
-          );
-          initialLoad = false;
-          cb(token.access_token);
-        } else {
-          const token = await refreshToken();
-          dispatch(
-            refreshSpotifyToken({
-              accessToken: token.access_token,
-              expires: token.expires
-            })
-          );
-          cb(token.access_token);
-        }
+        const token: any = await getSpotifyToken()
+        dispatch(setSpotifyToken({
+          token: token.data.accessToken
+        }))
+        cb(token.data.accessToken);
       },
       volume: 0.5,
     });
@@ -145,7 +97,7 @@ const useSpotifySDK = () => {
       dispatch(clearPlayback());
       setPlayer(undefined);
     };
-  }, [accessToken, dispatch, SDKReady]);
+  }, [dispatch, SDKReady]);
 
   return player;
 };

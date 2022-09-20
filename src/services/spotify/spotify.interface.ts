@@ -96,8 +96,3 @@ export interface SavedTracksData {
   artworkMedium: string;
   uri: string;
 }
-
-export interface refreshRes {
-  access_token: string;
-  expires_in: number;
-}

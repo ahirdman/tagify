@@ -14,6 +14,7 @@ const Login = () => {
   const { loggedIn } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
 
+
   return (
     <main className="login">
       <div className="login__logo">TAGIFY</div>

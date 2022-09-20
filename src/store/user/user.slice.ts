@@ -15,15 +15,11 @@ const initialState: IUser = {
   ready: false,
   spotify: {
     connected: false,
+    token: '',
     profile: {
       image: '',
       name: '',
       id: '',
-    },
-    auth: {
-      consumedBySDK: false,
-      accessToken: '',
-      expires: -1,
     },
   },
 };
@@ -42,19 +38,8 @@ export const userSlice = createSlice({
     firebaseSignOut: () => initialState,
 
     setSpotifyToken: (state, action: PayloadAction<TokenPayload>) => {
-      const { expires, accessToken } = action.payload;
-      state.spotify.auth.accessToken = accessToken;
-      state.spotify.auth.expires = expires;
-    },
-
-    refreshSpotifyToken: (state, action: PayloadAction<TokenPayload>) => {
-      const { expires, accessToken } = action.payload;
-      state.spotify.auth.accessToken = accessToken;
-      state.spotify.auth.expires = expires;
-    },
-
-    setConsumed: state => {
-      state.spotify.auth.consumedBySDK = true;
+      const { token } = action.payload;
+      state.spotify.token = token;
     },
 
     setSpotifyProfile: (
@@ -71,8 +56,6 @@ export const {
   firebaseSignIn,
   firebaseSignOut,
   setSpotifyToken,
-  refreshSpotifyToken,
-  setConsumed,
   setSpotifyProfile,
 } = userSlice.actions;
 

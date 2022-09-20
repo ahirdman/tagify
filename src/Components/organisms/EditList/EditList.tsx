@@ -48,7 +48,7 @@ const EditList = ({ selectedList, setSelectedList }: Props) => {
             e.preventDefault();
             Spotify.createNewPlaylistWithTracks(
               selectedList,
-              user.spotify.auth.accessToken,
+              user.spotify.token,
               user.spotify.profile.id,
               tracks
             );

@@ -1,9 +1,8 @@
-import PlayButton from '../../../assets/playback/play-white.svg';
-import PauseButton from '../../../assets/playback/pause-white.svg';
 import './Player.scss';
 import * as React from 'react';
 import { useAppSelector } from '../../../store/hooks';
 import useSpotifySDK from '../../../hooks/useSpotifySDK';
+import { PlaybackButton } from '../../atoms';
 import {
   isActiveSelector,
   playBackInfoSelector,
@@ -25,12 +24,8 @@ const Player = () => {
   }
 };
 
-export default Player;
-
 export const PlayBackInfo = () => {
   const { image, name, artist } = useAppSelector(playBackInfoSelector);
-
-  console.log('rendered info');
 
   return (
     <div className="player__track">
@@ -43,20 +38,4 @@ export const PlayBackInfo = () => {
   );
 };
 
-interface IPlaybackButtonProps {
-  onClick: (event: React.MouseEvent<HTMLElement>) => void;
-}
-
-export const PlaybackButton = ({ onClick }: IPlaybackButtonProps) => {
-  const isPaused = useAppSelector(state => state.playback.isPaused);
-
-  return (
-    <button className="player__control" onClick={onClick}>
-      {isPaused ? (
-        <img className="player__control--play" alt="PLAY" src={PlayButton} />
-      ) : (
-        <img className="player__control--pause" alt="PAUSE" src={PauseButton} />
-      )}
-    </button>
-  );
-};
+export default Player;

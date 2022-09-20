@@ -26,5 +26,8 @@ module.exports = {
     "import/no-unresolved": 0,
     "new-cap": 0,
     "max-len": 0,
+    "@typescript-eslint/no-explicit-any": "off",
+    "camelcase": "off",
+    "require-jsdoc": "off",
   },
 };
