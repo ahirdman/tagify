@@ -23,7 +23,9 @@ startSignInListening({
       Spotify.authorizeSpotify(uid);
     }
 
-    const token: any = await Spotify.getSpotifyToken();
+    const token = await Spotify.getSpotifyToken();
+
+    console.log('Token recived - ', token);
 
     listenerApi.dispatch(
       setSpotifyToken({
