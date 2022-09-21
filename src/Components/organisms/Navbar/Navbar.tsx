@@ -5,7 +5,6 @@ import Tag from '../../../assets/tag.svg';
 import List from '../../../assets/list-white.svg';
 import Avatar from '../../../assets/avatar.svg';
 import './Navbar.scss';
-import { FirebaseAuth } from '../../../services';
 import { useAppSelector } from '../../../store/hooks';
 
 const Navbar = () => {
@@ -14,21 +13,15 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar__item navbar__profile">
-        <img
-          src={Avatar}
-          alt="profile"
-          className="navbar__item--icon navbar__item--mobile"
-          onClick={() => FirebaseAuth.logOut()}
-        />
-        <img
-          src={profile.image}
-          alt="profile"
-          className="navbar__item--avatar navbar__item--desktop"
-          onClick={() => FirebaseAuth.logOut()}
-        />
-        <p className="navbar__item--username navbar__item--desktop">
-          {profile.name}
-        </p>
+        <NavLink to="/account">
+          <img src={Avatar} alt="profile" className="navbar__item--icon navbar__item--mobile" />
+          <img
+            src={profile.image}
+            alt="profile"
+            className="navbar__item--avatar navbar__item--desktop"
+          />
+          <p className="navbar__item--username navbar__item--desktop">{profile.name}</p>
+        </NavLink>
       </div>
 
       <div className="navbar__item navbar__item--desktop">

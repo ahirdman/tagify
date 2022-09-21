@@ -1,0 +1,23 @@
+.account {
+  height: 100%;
+
+  &__settings {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &--row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &__avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+}
