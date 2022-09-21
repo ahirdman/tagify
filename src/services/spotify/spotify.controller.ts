@@ -4,6 +4,7 @@ import {
   ProfileResponse,
   TokenBody,
   TokenResponse,
+  PlayTrackBody,
 } from './spotify.interface';
 import {
   addTracksToPlaylist,
@@ -57,12 +58,13 @@ export const getNextSavedTracks = async (token: string, nextUrl: string) => {
   };
 };
 
+// Unconverted calls
+
+const playback = httpsCallable<PlayTrackBody, string>(functions, 'playSpotifyTrack');
+
 export const playTrack = async (deviceId: string, token: string, uri: string): Promise<void> => {
-  await post('/playback', {
-    token,
-    deviceId,
-    uri,
-  });
+  const response = await playback({ uri, token, deviceId });
+  console.log(response.data);
 };
 
 export const authorizeSpotify = async (uid: string) => {

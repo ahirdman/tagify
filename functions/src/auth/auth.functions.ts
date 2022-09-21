@@ -4,16 +4,12 @@ import { FireStoreUserDocument, RefreshTokenResponse } from './auth.interface';
 import * as functions from 'firebase-functions';
 import { ExperationObj } from '../Utils/date/date.interface';
 import { hasExpired } from '../Utils/date/date.service';
+import { isAuthenticated } from '../common/common.error';
 
 export const spotifyToken = functions.https.onCall(async (_, context) => {
-  if (!context.auth) {
-    throw new functions.https.HttpsError(
-      'failed-precondition',
-      'The function must be called ' + 'while authenticated.'
-    );
-  }
+  isAuthenticated(context);
 
-  const uid = context.auth.uid as string;
+  const uid = context.auth!.uid as string;
 
   const userDoc = (await AuthService.getUserDoc(uid)) as FireStoreUserDocument;
 

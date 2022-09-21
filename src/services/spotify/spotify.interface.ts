@@ -115,3 +115,9 @@ export interface NextTracksBody {
   token: string;
   url: string;
 }
+
+export interface PlayTrackBody {
+  uri: string;
+  token: string;
+  deviceId: string;
+}
