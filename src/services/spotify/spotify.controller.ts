@@ -5,17 +5,13 @@ import {
   TokenBody,
   TokenResponse,
   PlayTrackBody,
+  PlaylistBody,
+  PlaylistResponse,
 } from './spotify.interface';
-import {
-  addTracksToPlaylist,
-  createEmptyPlaylist,
-  extractUris,
-  post,
-  postWithCookie,
-  savedDataExtractor,
-} from './spotify.service';
+import { extractUris, postWithCookie, savedDataExtractor } from './spotify.service';
 import { functions } from '../firebase/config';
 import { httpsCallable } from 'firebase/functions';
+import { IFirestoreTrack } from '../firebase/firestore/firestore.interface';
 
 export const getSpotifyToken = httpsCallable<void, TokenResponse>(functions, 'spotifyToken');
 
@@ -58,8 +54,6 @@ export const getNextSavedTracks = async (token: string, nextUrl: string) => {
   };
 };
 
-// Unconverted calls
-
 const playback = httpsCallable<PlayTrackBody, string>(functions, 'playSpotifyTrack');
 
 export const playTrack = async (deviceId: string, token: string, uri: string): Promise<void> => {
@@ -67,22 +61,27 @@ export const playTrack = async (deviceId: string, token: string, uri: string): P
   console.log(response.data);
 };
 
-export const authorizeSpotify = async (uid: string) => {
-  const response = await postWithCookie('/auth', { uid });
-  return (window.location.href = response);
-};
+const newPlaylist = httpsCallable<PlaylistBody, PlaylistResponse>(
+  functions,
+  'createSpotifyPlaylist'
+);
 
 export const createNewPlaylistWithTracks = async (
   playlistName: string,
   token: string,
   userId: string,
-  tracks: any
+  tracksData: IFirestoreTrack[]
 ) => {
-  const newEmptyPlaylist = await createEmptyPlaylist(token, userId, playlistName);
+  const tracksUris = extractUris(tracksData);
 
-  const tracksUris = extractUris(tracks);
+  const response = await newPlaylist({ playlistName, token, userId, tracks: tracksUris });
 
-  const filledPlaylist = await addTracksToPlaylist(token, newEmptyPlaylist.id, tracksUris);
+  console.log('success!', response.data);
+};
 
-  console.log('success!', filledPlaylist);
+// Unconverted call
+
+export const authorizeSpotify = async (uid: string) => {
+  const response = await postWithCookie('/auth', { uid });
+  return (window.location.href = response);
 };

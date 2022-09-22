@@ -20,13 +20,10 @@ const EditList = ({ selectedList, setSelectedList }: Props) => {
   const user = useAppSelector(state => state.user);
 
   React.useEffect(() => {
-    const unsub = onSnapshot(
-      Firestore.tagDoc(user.fireId, selectedList),
-      doc => {
-        const tracks = doc.data().tracks;
-        setTracks(tracks);
-      }
-    );
+    const unsub = onSnapshot(Firestore.tagDoc(user.fireId, selectedList), doc => {
+      const tracks: IFirestoreTrack[] = doc.data().tracks;
+      setTracks(tracks);
+    });
 
     return () => {
       unsub();
@@ -35,10 +32,7 @@ const EditList = ({ selectedList, setSelectedList }: Props) => {
 
   return (
     <div className="edit-list">
-      <CardNav
-        title={selectedList}
-        onClick={() => setSelectedList(undefined)}
-      />
+      <CardNav title={selectedList} onClick={() => setSelectedList(undefined)} />
       <form className="edit-list__search">
         <input type="text" className="edit-list__search--input" />
         <img src={Magnifier} alt="search" className="edit-list__search--icon" />

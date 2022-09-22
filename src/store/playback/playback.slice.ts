@@ -1,6 +1,30 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { IAlbumImages, IArtists, IPlaybackState } from './playback.interface';
+import { Spotify } from '../../services';
+
+export const playSpotifyTrack = createAsyncThunk(
+  'tracks/getnext',
+  async (uri: string, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const { token } = state.user.spotify;
+    const { deviceID } = state.playback;
+    await Spotify.playTrack(deviceID, token, uri);
+  },
+  {
+    condition: (uri: string, { getState }) => {
+      const {
+        playback: { deviceID },
+      } = getState() as RootState;
+
+      if (!deviceID || !uri) {
+        return false;
+      }
+
+      return true;
+    },
+  }
+);
 
 const initialState: IPlaybackState = {
   isPaused: false,
@@ -40,15 +64,19 @@ export const playbackSlice = createSlice({
     },
     clearPlayback: () => initialState,
   },
+  extraReducers: builder => {
+    builder
+      .addCase(playSpotifyTrack.fulfilled, () => {
+        console.log('fullfilled, playing track');
+      })
+      .addCase(playSpotifyTrack.pending, () => {
+        console.log('pending, playing track soon');
+      });
+  },
 });
 
-export const {
-  setPaused,
-  setActive,
-  setDeviceID,
-  setCurrentTrack,
-  clearPlayback,
-} = playbackSlice.actions;
+export const { setPaused, setActive, setDeviceID, setCurrentTrack, clearPlayback } =
+  playbackSlice.actions;
 
 export default playbackSlice.reducer;
 
@@ -61,5 +89,4 @@ export const playBackInfoSelector = createSelector(
   })
 );
 
-export const isActiveSelector = (state: RootState): boolean =>
-  state.playback.isActive;
+export const isActiveSelector = (state: RootState): boolean => state.playback.isActive;

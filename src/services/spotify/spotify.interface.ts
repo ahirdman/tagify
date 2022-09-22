@@ -121,3 +121,16 @@ export interface PlayTrackBody {
   token: string;
   deviceId: string;
 }
+
+export interface PlaylistBody {
+  playlistName: string;
+  token: string;
+  userId: string;
+  tracks: string[];
+}
+
+export interface PlaylistResponse {
+  playlist: {
+    snapshot_id: string;
+  };
+}
