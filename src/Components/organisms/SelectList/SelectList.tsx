@@ -6,25 +6,26 @@ import './SelectList.scss';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import { onSnapshot } from 'firebase/firestore';
 import { CardNav } from '../../molecules';
-import { ITags } from '../../../common/common.types';
-import { useAppSelector } from '../../../store/hooks';
+import { ITags } from '../../../common/common.interface';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { setSelectedList } from '../../../store/playlists/playlists.slice';
 
-interface ISelectListProps {
-  setSelectedList: (prevState: any) => any;
-}
-
-const SelectList = ({ setSelectedList }: ISelectListProps) => {
+const SelectList = () => {
   const [lists, setLists] = React.useState([] as ITags[]);
+
+  const dispatch = useAppDispatch();
 
   const fireId = useAppSelector(state => state.user.fireId);
 
   React.useEffect(() => {
     const unsubscribe = onSnapshot(Firestore.tagCol(fireId), collection => {
       const tags: ITags[] = [];
+
       collection.forEach(doc => {
         const data = doc.data();
         tags.push({ name: data.name, color: data.color });
       });
+
       setLists(tags);
     });
 
@@ -38,11 +39,7 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
       <CardNav title="Lists" />
       <form className="select-list__search">
         <input type="text" className="select-list__search--input" />
-        <img
-          src={Magnifier}
-          alt="search"
-          className="select-list__search--icon"
-        />
+        <img src={Magnifier} alt="search" className="select-list__search--icon" />
       </form>
       <section className="select-list__header">
         <p className="select-list__header--title">TAGS</p>
@@ -51,7 +48,7 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
         {lists.map((tag, index) => {
           return (
             <li
-              onClick={() => setSelectedList(tag.name)}
+              onClick={() => dispatch(setSelectedList({ selectedList: tag.name }))}
               key={index}
               className="select-list__row"
             >
@@ -63,15 +60,8 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
                 <p className="select-list__details--title">{tag.name}</p>
               </section>
               <section className="select-list__options">
-                <button
-                  className="select-list__edit"
-                  onClick={() => console.log('edit')}
-                >
-                  <img
-                    src={Edit}
-                    alt="edit"
-                    className="select-list__edit--icon"
-                  />
+                <button className="select-list__edit" onClick={() => console.log('edit')}>
+                  <img src={Edit} alt="edit" className="select-list__edit--icon" />
                 </button>
                 <button
                   className="select-list__delete"
@@ -79,11 +69,7 @@ const SelectList = ({ setSelectedList }: ISelectListProps) => {
                     Firestore.deleteList(fireId, tag.name);
                   }}
                 >
-                  <img
-                    src={Delete}
-                    alt="delete"
-                    className="select-list__delete--icon"
-                  />
+                  <img src={Delete} alt="delete" className="select-list__delete--icon" />
                 </button>
               </section>
             </li>

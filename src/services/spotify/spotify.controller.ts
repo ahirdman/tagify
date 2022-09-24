@@ -66,6 +66,14 @@ const newPlaylist = httpsCallable<PlaylistBody, PlaylistResponse>(
   'createSpotifyPlaylist'
 );
 
+/**
+ *
+ * @param playlistName Name of the playlist to be created
+ * @param token A valid sotify token
+ * @param userId Spotify user id
+ * @param tracksData An array with the tracks to be put in the playlist
+ */
+
 export const createNewPlaylistWithTracks = async (
   playlistName: string,
   token: string,

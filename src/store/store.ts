@@ -3,6 +3,7 @@ import userReducer from './user/user.slice';
 import uiReducer from './ui/ui.slice';
 import playbackReducer from './playback/playback.slice';
 import savedTracksReducer from './savedTracks/savedTracks.slice';
+import playlistsReducer from './playlists/playlists.slice';
 import { signIn, spotifyToken } from './user/user.listener';
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     ui: uiReducer,
     playback: playbackReducer,
     savedTracks: savedTracksReducer,
+    playlist: playlistsReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().prepend(signIn.middleware, spotifyToken.middleware),

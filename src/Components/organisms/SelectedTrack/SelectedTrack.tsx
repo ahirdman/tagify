@@ -5,7 +5,7 @@ import { AddTag, TrackTags, CardNav, UserTags } from '../../molecules';
 import Play from '../../../assets/playback/play-green.svg';
 import './SelectedTrack.scss';
 import { matchTag } from '../../../services/firebase/firestore/firestore.helper';
-import { ITags } from '../../../common/common.types';
+import { ITags } from '../../../common/common.interface';
 import { Spotify } from '../../../services';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -23,26 +23,23 @@ const SelectedTrack = () => {
   const dispatch = useAppDispatch();
 
   React.useLayoutEffect(() => {
-    const unsubscribe = onSnapshot(
-      Firestore.tagCol(user.fireId),
-      collection => {
-        const tags: ITags[] = [];
-        const tagObject: any[] = [];
+    const unsubscribe = onSnapshot(Firestore.tagCol(user.fireId), collection => {
+      const tags: ITags[] = [];
+      const tagObject: any[] = [];
 
-        collection.forEach(doc => {
-          const data = doc.data();
-          tags.push({ name: data.name, color: data.color });
-          tagObject.push({
-            color: data.color,
-            [data.name]: [...data.tracks],
-          });
+      collection.forEach(doc => {
+        const data = doc.data();
+        tags.push({ name: data.name, color: data.color });
+        tagObject.push({
+          color: data.color,
+          [data.name]: [...data.tracks],
         });
+      });
 
-        setUserTags(tags);
-        const matches = matchTag(tagObject, selectedTrack.uri);
-        setTrackTags(matches);
-      }
-    );
+      setUserTags(tags);
+      const matches = matchTag(tagObject, selectedTrack.uri);
+      setTrackTags(matches);
+    });
 
     return () => {
       unsubscribe();
@@ -51,23 +48,12 @@ const SelectedTrack = () => {
 
   return (
     <div className="track-card">
-      <CardNav
-        title="Selected Track"
-        onClick={() => dispatch(setSelectedTrack(undefined))}
-      />
+      <CardNav title="Selected Track" onClick={() => dispatch(setSelectedTrack(undefined))} />
       <section className="track-card__info">
-        <img
-          src={selectedTrack.artworkMedium}
-          alt="album"
-          className="track-card__album"
-        />
+        <img src={selectedTrack.artworkMedium} alt="album" className="track-card__album" />
         <img
           onClick={() => {
-            Spotify.playTrack(
-              deviceId,
-              user.spotify.token,
-              selectedTrack.uri
-            );
+            Spotify.playTrack(deviceId, user.spotify.token, selectedTrack.uri);
           }}
           src={Play}
           alt="playback"

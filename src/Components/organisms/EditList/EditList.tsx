@@ -6,33 +6,35 @@ import * as Firestore from '../../../services/firebase/firestore/firestore.servi
 import Send from '../../../assets/send.svg';
 import { CardNav } from '../../molecules';
 import { IFirestoreTrack } from '../../../services/firebase/firestore/firestore.interface';
-import { Spotify } from '../../../services';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {
+  createPlaylist,
+  setSelectedList,
+  setTracks,
+} from '../../../store/playlists/playlists.slice';
 
-interface Props {
-  selectedList: string;
-  setSelectedList?: any;
-}
-
-const EditList = ({ selectedList, setSelectedList }: Props) => {
-  const [tracks, setTracks] = React.useState([]);
-
+const EditList = () => {
+  const { tracks, selectedList } = useAppSelector(state => state.playlist);
+  const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user);
 
   React.useEffect(() => {
-    const unsub = onSnapshot(Firestore.tagDoc(user.fireId, selectedList), doc => {
+    const unSubscirbe = onSnapshot(Firestore.tagDoc(user.fireId, selectedList), doc => {
       const tracks: IFirestoreTrack[] = doc.data().tracks;
-      setTracks(tracks);
+      dispatch(setTracks({ tracks }));
     });
 
     return () => {
-      unsub();
+      unSubscirbe();
     };
-  }, [selectedList, user.fireId]);
+  }, [selectedList, user.fireId, dispatch]);
 
   return (
     <div className="edit-list">
-      <CardNav title={selectedList} onClick={() => setSelectedList(undefined)} />
+      <CardNav
+        title={selectedList}
+        onClick={() => dispatch(setSelectedList({ selectedList: null }))}
+      />
       <form className="edit-list__search">
         <input type="text" className="edit-list__search--input" />
         <img src={Magnifier} alt="search" className="edit-list__search--icon" />
@@ -40,12 +42,7 @@ const EditList = ({ selectedList, setSelectedList }: Props) => {
           className="edit-list__export"
           onClick={e => {
             e.preventDefault();
-            Spotify.createNewPlaylistWithTracks(
-              selectedList,
-              user.spotify.token,
-              user.spotify.profile.id,
-              tracks
-            );
+            dispatch(createPlaylist());
           }}
         >
           <img src={Send} alt="send" className="edit-list__export--icon" />

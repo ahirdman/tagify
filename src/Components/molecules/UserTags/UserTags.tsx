@@ -4,7 +4,7 @@ import * as Firestore from '../../../services/firebase/firestore/firestore.servi
 import { Tag } from '../../atoms';
 import './UserTags.scss';
 import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
-import { ITags } from '../../../common/common.types';
+import { ITags } from '../../../common/common.interface';
 import { useAppSelector } from '../../../store/hooks';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
 
@@ -26,11 +26,7 @@ const UserTags = ({ userTags }: Props) => {
               <Tag
                 key={index}
                 onClick={() =>
-                  Firestore.tagTrack(
-                    fireId,
-                    tag.name,
-                    extractTrackInfo(selectedTrack)
-                  )
+                  Firestore.tagTrack(fireId, tag.name, extractTrackInfo(selectedTrack))
                 }
                 color={tag.color}
                 name={tag.name}
