@@ -1,7 +1,12 @@
-import {db} from "../index";
-import admin from "firebase-admin";
+import {db, fieldValue} from "../index";
 
 const userDocRef = (uid: string) => db.doc(`users/${uid}`);
+
+export const setUserDocAuth = async (uid: string, stateName: string) => {
+  await userDocRef(uid).set({
+    spotifyStateName: stateName,
+  });
+};
 
 export const setUserDoc = async (
     uid: string,
@@ -14,19 +19,15 @@ export const setUserDoc = async (
     spotifyAccessToken: accessToken,
     spotifyRefreshToken: refreshToken,
     spotifyExpires: expiresIn,
-    spotifyTokenTimestamp: admin.firestore.FieldValue.serverTimestamp(),
+    spotifyTokenTimestamp: fieldValue.serverTimestamp(),
   });
 };
 
-export const updateUserDoc = async (
-    uid: string,
-    accessToken: string,
-    expiresIn: number
-) => {
+export const updateUserDoc = async (uid: string, accessToken: string, expiresIn: number) => {
   await userDocRef(uid).update({
     spotifyAccessToken: accessToken,
     spotifyExpires: expiresIn,
-    spotifyTokenTimestamp: admin.firestore.FieldValue.serverTimestamp(),
+    spotifyTokenTimestamp: fieldValue.serverTimestamp(),
   });
 };
 
@@ -47,8 +48,7 @@ export const scope =
 
 export const generateRandomString = (length: number) => {
   let text = "";
-  const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   for (let i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));

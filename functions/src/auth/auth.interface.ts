@@ -1,3 +1,5 @@
+import * as AuthService from "./auth.service";
+
 export interface TokenResponse {
   access_token: string;
   token_type: string;
@@ -7,10 +9,10 @@ export interface TokenResponse {
 }
 
 export interface RefreshTokenResponse {
-  access_token: string
-  token_type: string,
-  scope: string,
-  expires_in: number
+  access_token: string;
+  token_type: string;
+  scope: string;
+  expires_in: number;
 }
 
 export interface FirestoreTimestamp {
@@ -24,4 +26,9 @@ export interface FireStoreUserDocument {
   spotifyAccessToken: string;
   spotifyExpires: number;
   spotifyTokenTimestamp: FirestoreTimestamp;
+}
+
+export interface StoredCookie {
+  [AuthService.stateName]: string;
+  context: string;
 }
