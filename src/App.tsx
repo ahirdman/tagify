@@ -18,6 +18,7 @@ const App = () => {
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, fireUser => {
       if (fireUser) {
+        console.log('signed in as:', fireUser.email);
         const { email, uid } = fireUser;
         dispatch(firebaseSignIn({ mail: email, fireId: uid }));
       } else {

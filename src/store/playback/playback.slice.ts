@@ -4,7 +4,7 @@ import { IAlbumImages, IArtists, IPlaybackState } from './playback.interface';
 import { Spotify } from '../../services';
 
 export const playSpotifyTrack = createAsyncThunk(
-  'tracks/getnext',
+  'playback/playSpotifyTrack',
   async (uri: string, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const { token } = state.user.spotify;

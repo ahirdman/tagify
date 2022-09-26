@@ -1,6 +1,6 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getFunctions } from 'firebase/functions';
+import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 
 import { getAuth } from 'firebase/auth';
 
@@ -16,6 +16,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export const functions = getFunctions(app);
+const functions = getFunctions(getApp());
+connectFunctionsEmulator(functions, 'localhost', 5001);
+export { functions };
+
 export const db = getFirestore(app);
 export const auth = getAuth(app);

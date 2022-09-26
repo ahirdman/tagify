@@ -6,8 +6,11 @@ import { IUserSavedObject, SavedTracksData } from './spotify.interface';
 axios.defaults.baseURL = SERVER;
 
 export const postWithCookie = async (path: string, body: any) => {
-  const data = JSON.stringify(body);
-  const response = await axios.post(path, { data }, { withCredentials: true });
+  const response = await axios.post(
+    `${SERVER}/api/auth/${path}`,
+    { data: JSON.stringify(body.uid) },
+    { withCredentials: true }
+  );
   return response.data;
 };
 

@@ -90,6 +90,6 @@ export const createNewPlaylistWithTracks = async (
 // Unconverted call
 
 export const authorizeSpotify = async (uid: string) => {
-  const response = await postWithCookie('/auth', { uid });
+  const response = await postWithCookie('getAuthUrl', { uid });
   return (window.location.href = response);
 };

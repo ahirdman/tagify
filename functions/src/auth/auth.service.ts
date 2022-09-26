@@ -1,4 +1,5 @@
 import {db, fieldValue} from "../index";
+import "dotenv/config";
 
 const userDocRef = (uid: string) => db.doc(`users/${uid}`);
 
