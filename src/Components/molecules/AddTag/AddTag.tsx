@@ -3,10 +3,7 @@ import * as Firestore from '../../../services/firebase/firestore/firestore.servi
 import Add from '../../../assets/add.svg';
 import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
-import {
-  extractTrackInfo,
-  randomizeTagColor,
-} from '../../../services/firebase/firestore/firestore.helper';
+import { randomizeTagColor } from '../../../services/firebase/firestore/firestore.helper';
 import { useAppSelector } from '../../../store/hooks';
 import { fireIdSelector } from '../../../store/user/user.slice';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
@@ -31,12 +28,7 @@ const AddTag = () => {
           className="add-tag__search--button"
           onClick={e => {
             e.preventDefault();
-            Firestore.createTag(
-              fireId,
-              tagInput,
-              randomizeTagColor(),
-              extractTrackInfo(selectedTrack)
-            );
+            Firestore.createTag(fireId, tagInput, randomizeTagColor(), selectedTrack);
             setTagInput('');
           }}
         >

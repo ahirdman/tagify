@@ -10,6 +10,8 @@
   &__export {
     border: none;
     background: none;
+    width: 40px;
+    height: 40px;
 
     margin-left: 20px;
     cursor: pointer;
@@ -18,8 +20,4 @@
   &__header {
     @include styles.header;
   }
-}
-
-.tracks {
-  @include styles.trackList;
 }

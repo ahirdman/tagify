@@ -8,8 +8,8 @@ import {
   fetchInitialTracks,
   fetchNextTracks,
   filterTracks,
-  setSelectedTrack,
 } from '../../../store/savedTracks/savedTracks.slice';
+import TracksList from '../TracksList/TracksList';
 
 const SavedTracks = () => {
   const [query, setQuery] = React.useState('');
@@ -54,24 +54,11 @@ const SavedTracks = () => {
       <section className="select__header">
         <p className="select__header--title">TITLE & ARTIST</p>
       </section>
-      <ul className="track-list" ref={listEl}>
-        {savedTracksState.filteredTracks.map((track, index) => {
-          return (
-            <li
-              onClick={() => dispatch(setSelectedTrack(track))}
-              key={index}
-              className="track-list__row"
-            >
-              <img src={track.artworkSmall} alt="album" className="track-list__album" />
-              <section className="track-list__details">
-                <p className="track-list__details--title">{track.name}</p>
-                <p className="track-list__details--artist">{track.artist}</p>
-              </section>
-            </li>
-          );
-        })}
-        {savedTracksState.loading && <Loader />}
-      </ul>
+      <TracksList
+        tracks={savedTracksState.filteredTracks}
+        element={listEl}
+        children={savedTracksState.loading && <Loader />}
+      />
     </div>
   );
 };

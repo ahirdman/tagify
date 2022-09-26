@@ -9,18 +9,16 @@ import {
   serverTimestamp,
   getDoc,
 } from 'firebase/firestore';
+import { SavedTracksData } from '../../spotify/spotify.interface';
 import { db } from '../config';
-import { IFirestoreTrack } from './firestore.interface';
 
 /**
  * Firebase References
  */
 
 const userDocRef = (uid: string) => doc(db, 'users', uid);
-const userTagDocRef = (user: string, tag: string) =>
-  doc(db, 'users', user, 'tags', tag);
-const userTagCollectionRef = (user: string) =>
-  collection(db, `users/${user}/tags`);
+const userTagDocRef = (user: string, tag: string) => doc(db, 'users', user, 'tags', tag);
+const userTagCollectionRef = (user: string) => collection(db, `users/${user}/tags`);
 
 /**
  * Firebase Services
@@ -55,7 +53,7 @@ export const createTag = async (
   user: string,
   tag: string,
   color: string,
-  track: IFirestoreTrack
+  track: SavedTracksData
 ) => {
   await setDoc(
     userTagDocRef(user, tag),
@@ -68,21 +66,13 @@ export const createTag = async (
   );
 };
 
-export const tagTrack = async (
-  user: string,
-  tag: string,
-  track: IFirestoreTrack
-) => {
+export const tagTrack = async (user: string, tag: string, track: SavedTracksData) => {
   await updateDoc(userTagDocRef(user, tag), {
     tracks: arrayUnion(track),
   });
 };
 
-export const clearTrackFromTag = async (
-  user: string,
-  tag: string,
-  track: IFirestoreTrack
-) => {
+export const clearTrackFromTag = async (user: string, tag: string, track: SavedTracksData) => {
   await updateDoc(userTagDocRef(user, tag), {
     tracks: arrayRemove(track),
   });
@@ -90,5 +80,4 @@ export const clearTrackFromTag = async (
 
 export const deleteList = async (user: string, tag: string) => {
   await deleteDoc(userTagDocRef(user, tag));
-  // await deleteDoc(tagDoc(user, tag));
 };

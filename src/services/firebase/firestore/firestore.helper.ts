@@ -1,12 +1,4 @@
 import { SavedTracksData } from '../../spotify/spotify.interface';
-import { IFirestoreTrack } from './firestore.interface';
-
-export const extractTrackInfo = (track: SavedTracksData) => ({
-  artist: track.artist,
-  title: track.name,
-  artwork: track.artworkSmall,
-  uri: track.uri,
-});
 
 export const matchTag = (tagArr: any[], uri: string): any[] => {
   const matched = [];
@@ -14,7 +6,7 @@ export const matchTag = (tagArr: any[], uri: string): any[] => {
   for (let tagTree of tagArr) {
     const [, tagName] = Object.keys(tagTree);
     const [tagColor, tracks]: any[] = Object.values(tagTree);
-    const match = tracks.filter((track: IFirestoreTrack) => track.uri === uri);
+    const match = tracks.filter((track: SavedTracksData) => track.uri === uri);
     if (match.length > 0) matched.push({ name: tagName, color: tagColor });
   }
 

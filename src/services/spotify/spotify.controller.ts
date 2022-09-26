@@ -7,11 +7,11 @@ import {
   PlayTrackBody,
   PlaylistBody,
   PlaylistResponse,
+  SavedTracksData,
 } from './spotify.interface';
 import { extractUris, postWithCookie, savedDataExtractor } from './spotify.service';
 import { functions } from '../firebase/config';
 import { httpsCallable } from 'firebase/functions';
-import { IFirestoreTrack } from '../firebase/firestore/firestore.interface';
 
 export const getSpotifyToken = httpsCallable<void, TokenResponse>(functions, 'spotifyToken');
 
@@ -78,7 +78,7 @@ export const createNewPlaylistWithTracks = async (
   playlistName: string,
   token: string,
   userId: string,
-  tracksData: IFirestoreTrack[]
+  tracksData: SavedTracksData[]
 ) => {
   const tracksUris = extractUris(tracksData);
 

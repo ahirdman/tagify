@@ -4,14 +4,15 @@ import { onSnapshot } from 'firebase/firestore';
 import './EditList.scss';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import Send from '../../../assets/send.svg';
-import { CardNav } from '../../molecules';
-import { IFirestoreTrack } from '../../../services/firebase/firestore/firestore.interface';
+import { CardNav, SearchBar } from '../../molecules';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   createPlaylist,
   setSelectedList,
   setTracks,
 } from '../../../store/playlists/playlists.slice';
+import { TracksList } from '..';
+import { SavedTracksData } from '../../../services';
 
 const EditList = () => {
   const { tracks, selectedList } = useAppSelector(state => state.playlist);
@@ -20,7 +21,7 @@ const EditList = () => {
 
   React.useEffect(() => {
     const unSubscirbe = onSnapshot(Firestore.tagDoc(user.fireId, selectedList), doc => {
-      const tracks: IFirestoreTrack[] = doc.data().tracks;
+      const tracks: SavedTracksData[] = doc.data().tracks;
       dispatch(setTracks({ tracks }));
     });
 
@@ -35,35 +36,20 @@ const EditList = () => {
         title={selectedList}
         onClick={() => dispatch(setSelectedList({ selectedList: null }))}
       />
-      <form className="edit-list__search">
-        <input type="text" className="edit-list__search--input" />
-        <img src={Magnifier} alt="search" className="edit-list__search--icon" />
-        <button
-          className="edit-list__export"
-          onClick={e => {
-            e.preventDefault();
-            dispatch(createPlaylist());
-          }}
-        >
-          <img src={Send} alt="send" className="edit-list__export--icon" />
-        </button>
-      </form>
+      <SearchBar icon={Magnifier} />
+      <button
+        className="edit-list__export"
+        onClick={e => {
+          e.preventDefault();
+          dispatch(createPlaylist());
+        }}
+      >
+        <img src={Send} alt="send" className="edit-list__export--icon" />
+      </button>
       <section className="edit-list__header">
         <p className="edit-list__header--title">TRACKS</p>
       </section>
-      <ul className="tracks">
-        {tracks.map((track: IFirestoreTrack, index) => {
-          return (
-            <li key={index} className="tracks__row">
-              <img src={track.artwork} alt="album" className="tracks__album" />
-              <section className="tracks__details">
-                <p className="tracks__details--title">{track.title}</p>
-                <p className="tracks__details--artist">{track.artist}</p>
-              </section>
-            </li>
-          );
-        })}
-      </ul>
+      <TracksList tracks={tracks} />
     </div>
   );
 };

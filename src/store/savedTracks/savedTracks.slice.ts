@@ -58,7 +58,7 @@ export const savedTracksSlice = createSlice({
     filterTracks: (state, { payload }: PayloadAction<string>) => {
       const regExp = new RegExp(payload, 'gmi');
       state.filteredTracks = state.savedTracks.filter((track: SavedTracksData) =>
-        regExp.test(track.name)
+        regExp.test(track.title)
       );
     },
     setSelectedTrack: (state, { payload }: PayloadAction<SelectPayload>) => {

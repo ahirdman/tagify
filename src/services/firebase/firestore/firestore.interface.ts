@@ -10,10 +10,3 @@ export interface IFirestoreUserDocument {
   spotifyExpires: number;
   spotifyTokenTimestamp: IFirestoreTimestamp;
 }
-
-export interface IFirestoreTrack {
-  artist: string;
-  title: string;
-  artwork: string;
-  uri: string;
-}

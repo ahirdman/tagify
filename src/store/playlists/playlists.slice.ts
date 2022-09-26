@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { IFirestoreTrack, Spotify } from '../../services';
+import { SavedTracksData, Spotify } from '../../services';
 import { PlaylistState, SelectListPayload, SetTracksPayload } from './playlists.interface';
 
 export const createPlaylist = createAsyncThunk(
@@ -31,7 +31,7 @@ export const createPlaylist = createAsyncThunk(
 
 const initialState: PlaylistState = {
   selectedList: null,
-  tracks: [] as IFirestoreTrack[],
+  tracks: [] as SavedTracksData[],
 };
 
 export const playlistSlice = createSlice({

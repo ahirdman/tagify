@@ -1,11 +1,11 @@
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
-import express, { Application } from 'express';
-import cors from 'cors';
-import auth from './auth/auth.router.js';
-import admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
-import axios from 'axios';
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import express, {Application} from "express";
+import cors from "cors";
+import auth from "./auth/auth.router.js";
+import admin from "firebase-admin";
+import * as functions from "firebase-functions";
+import axios from "axios";
 
 admin.initializeApp();
 
@@ -24,18 +24,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.use('/auth', auth);
+app.use("/auth", auth);
 
 export const api = functions.https.onRequest(app);
 
-export { spotifyToken } from './auth/auth.controller';
+export {spotifyToken} from "./auth/auth.controller";
 export {
   getSpotifyProfile,
   getInitialSavedTracks,
   getNextSavedTracks,
-} from './user/user.controller';
-export { playSpotifyTrack } from './playback/playback.controller';
-export { createSpotifyPlaylist } from './playlist/playlist.controller';
+} from "./user/user.controller";
+export {playSpotifyTrack} from "./playback/playback.controller";
+export {createSpotifyPlaylist} from "./playlist/playlist.controller";

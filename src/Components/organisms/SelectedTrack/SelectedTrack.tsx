@@ -60,7 +60,7 @@ const SelectedTrack = () => {
           className="track-card__playback"
         />
         <section className="track-card__text">
-          <p className="track-card__text--title">{selectedTrack.name}</p>
+          <p className="track-card__text--title">{selectedTrack.title}</p>
           <p className="track-card__text--artist">{selectedTrack.artist}</p>
           <p className="track-card__text--album">{selectedTrack.album}</p>
         </section>

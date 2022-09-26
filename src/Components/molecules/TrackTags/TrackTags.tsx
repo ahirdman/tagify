@@ -3,7 +3,6 @@ import * as Firestore from '../../../services/firebase/firestore/firestore.servi
 import Cross from '../../..//assets/cross-circle.svg';
 import './TrackTags.scss';
 import Tag from '../../atoms/Tag/Tag';
-import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
 import { useAppSelector } from '../../../store/hooks';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
 
@@ -24,13 +23,7 @@ const TrackTags = ({ trackTags }: ITrackTags) => {
             return (
               <Tag
                 key={index}
-                onClick={() =>
-                  Firestore.clearTrackFromTag(
-                    fireId,
-                    tag.name,
-                    extractTrackInfo(selectedTrack)
-                  )
-                }
+                onClick={() => Firestore.clearTrackFromTag(fireId, tag.name, selectedTrack)}
                 color={tag.color}
                 name={tag.name}
                 actionIcon={Cross}

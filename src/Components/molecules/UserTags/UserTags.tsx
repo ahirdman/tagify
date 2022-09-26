@@ -3,7 +3,6 @@ import Plus from '../../../assets/add-circle.svg';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import { Tag } from '../../atoms';
 import './UserTags.scss';
-import { extractTrackInfo } from '../../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../../common/common.interface';
 import { useAppSelector } from '../../../store/hooks';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
@@ -25,9 +24,7 @@ const UserTags = ({ userTags }: Props) => {
             return (
               <Tag
                 key={index}
-                onClick={() =>
-                  Firestore.tagTrack(fireId, tag.name, extractTrackInfo(selectedTrack))
-                }
+                onClick={() => Firestore.tagTrack(fireId, tag.name, selectedTrack)}
                 color={tag.color}
                 name={tag.name}
                 actionIcon={Plus}

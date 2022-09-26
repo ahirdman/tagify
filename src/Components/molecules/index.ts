@@ -7,6 +7,7 @@ import SignInForm from './SignInForm/SignInForm';
 import SignUpForm from './SignUpForm/SignUpForm';
 import TrackTags from './TrackTags/TrackTags';
 import UserTags from './UserTags/UserTags';
+import TrackRow from './TrackRow/TrackRow';
 
 export {
   AddTag,
@@ -18,4 +19,5 @@ export {
   SignUpForm,
   TrackTags,
   UserTags,
+  TrackRow,
 };
