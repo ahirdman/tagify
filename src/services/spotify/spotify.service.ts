@@ -24,4 +24,5 @@ export const savedDataExtractor = (data: IUserSavedObject[]): SavedTracksData[] 
     artworkSmall: track.album.images[2].url,
     artworkMedium: track.album.images[1].url,
     uri: track.uri,
+    duration: track.duration_ms,
   }));

@@ -1,0 +1,44 @@
+@use '../../../styles';
+
+.playlist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 15vh;
+
+  margin: 15px;
+
+  &__data {
+    &--text {
+      color: styles.$component-grey;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  &__control {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button {
+    background: none;
+    width: 40%;
+    height: 35px;
+    border-radius: 5px;
+
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+
+    &--edit {
+      border: 2px solid styles.$grey-1;
+    }
+
+    &--export {
+      border: 2px solid #f6a943;
+    }
+  }
+}

@@ -85,6 +85,7 @@ export interface SavedTracksData {
   artworkSmall: string;
   artworkMedium: string;
   uri: string;
+  duration: number;
 }
 
 export interface SavedTracksResponse {

@@ -32,6 +32,11 @@ export const createPlaylist = createAsyncThunk(
 const initialState: PlaylistState = {
   selectedList: null,
   tracks: [] as SavedTracksData[],
+  sync: {
+    status: 'UNSYNCED',
+    exporting: false,
+    error: false,
+  },
 };
 
 export const playlistSlice = createSlice({
@@ -46,9 +51,18 @@ export const playlistSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(createPlaylist.fulfilled, state => {
-      state.selectedList = null;
-    });
+    builder
+      .addCase(createPlaylist.pending, state => {
+        state.sync.exporting = true;
+      })
+      .addCase(createPlaylist.rejected, state => {
+        state.sync.exporting = false;
+        state.sync.error = true;
+      })
+      .addCase(createPlaylist.fulfilled, state => {
+        state.sync.exporting = false;
+        state.sync.status = 'SYNCED';
+      });
   },
 });
 

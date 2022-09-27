@@ -8,6 +8,7 @@ import SignUpForm from './SignUpForm/SignUpForm';
 import TrackTags from './TrackTags/TrackTags';
 import UserTags from './UserTags/UserTags';
 import TrackRow from './TrackRow/TrackRow';
+import PlaylistController from './PlaylistController/PlaylistController';
 
 export {
   AddTag,
@@ -20,4 +21,5 @@ export {
   TrackTags,
   UserTags,
   TrackRow,
+  PlaylistController,
 };
