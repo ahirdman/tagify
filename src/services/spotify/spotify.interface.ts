@@ -131,7 +131,6 @@ export interface PlaylistBody {
 }
 
 export interface PlaylistResponse {
-  playlist: {
-    snapshot_id: string;
-  };
+  playlistId: string;
+  snapshotId: string;
 }

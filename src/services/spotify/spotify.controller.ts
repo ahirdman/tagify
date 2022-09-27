@@ -85,6 +85,8 @@ export const createNewPlaylistWithTracks = async (
   const response = await newPlaylist({ playlistName, token, userId, tracks: tracksUris });
 
   console.log('success!', response.data);
+
+  return response.data;
 };
 
 // Unconverted call

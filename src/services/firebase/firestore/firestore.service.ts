@@ -49,6 +49,8 @@ export const getUserDocument = async (uid: string): Promise<any> => {
   }
 };
 
+// TODO: Store tag model containing playlistId (null before exported), snapshotId (null before exported)
+
 export const createTag = async (
   user: string,
   tag: string,
@@ -61,6 +63,12 @@ export const createTag = async (
       name: tag,
       color: color,
       tracks: [track],
+      spotifySync: {
+        exported: false,
+        latestChange: new Date(),
+        playlistId: '',
+        snapshotId: ''
+      }
     },
     { merge: true }
   );

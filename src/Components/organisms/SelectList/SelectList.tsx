@@ -6,33 +6,43 @@ import './SelectList.scss';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import { onSnapshot } from 'firebase/firestore';
 import { CardNav } from '../../molecules';
-import { ITags } from '../../../common/common.interface';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { setSelectedList } from '../../../store/playlists/playlists.slice';
+import { setSelectedList, setTagLists } from '../../../store/playlists/playlists.slice';
+import { IFirestoreTagDocument } from '../../../services';
 
 const SelectList = () => {
-  const [lists, setLists] = React.useState([] as ITags[]);
+  const taglists = useAppSelector(state => state.playlist.tagLists);
+  const fireId = useAppSelector(state => state.user.fireId);
 
   const dispatch = useAppDispatch();
 
-  const fireId = useAppSelector(state => state.user.fireId);
-
   React.useEffect(() => {
     const unsubscribe = onSnapshot(Firestore.tagCol(fireId), collection => {
-      const tags: ITags[] = [];
+      const lists: IFirestoreTagDocument[] = [];
 
       collection.forEach(doc => {
         const data = doc.data();
-        tags.push({ name: data.name, color: data.color });
+
+        lists.push({
+          name: data.name,
+          color: data.color,
+          tracks: data.tracks,
+          spotifySync: {
+            exported: data.exported,
+            latestChange: data.latestChange,
+            playlistId: data.playlistId,
+            snapshotId: data.snapshotId,
+          },
+        });
       });
 
-      setLists(tags);
+      dispatch(setTagLists({ lists }));
     });
 
     return () => {
       unsubscribe();
     };
-  }, [fireId]);
+  }, [fireId, dispatch]);
 
   return (
     <div className="select-list">
@@ -45,19 +55,21 @@ const SelectList = () => {
         <p className="select-list__header--title">TAGS</p>
       </section>
       <ul className="select-list__list">
-        {lists.map((tag, index) => {
+        {taglists.map((list: IFirestoreTagDocument, index) => {
           return (
             <li
-              onClick={() => dispatch(setSelectedList({ selectedList: tag.name }))}
+              onClick={() => {
+                dispatch(setSelectedList({ selectedList: list }));
+              }}
               key={index}
               className="select-list__row"
             >
               <section className="select-list__details">
                 <div
                   className="select-list__details--circle"
-                  style={{ background: tag.color }}
+                  style={{ background: list.color }}
                 ></div>
-                <p className="select-list__details--title">{tag.name}</p>
+                <p className="select-list__details--title">{list.name}</p>
               </section>
               <section className="select-list__options">
                 <button className="select-list__edit" onClick={() => console.log('edit')}>
@@ -66,7 +78,7 @@ const SelectList = () => {
                 <button
                   className="select-list__delete"
                   onClick={() => {
-                    Firestore.deleteList(fireId, tag.name);
+                    Firestore.deleteList(fireId, list.name);
                   }}
                 >
                   <img src={Delete} alt="delete" className="select-list__delete--icon" />

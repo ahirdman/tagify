@@ -1,19 +1,22 @@
-import { SavedTracksData } from '../../services';
+import { IFirestoreTagDocument } from '../../services';
 
 export interface SelectListPayload {
-  selectedList: string | null;
+  selectedList: IFirestoreTagDocument | null;
+}
+
+export interface SelectedList extends IFirestoreTagDocument {
+  status: {
+    sync: 'SYNCED' | 'UNSYNCED'
+    exporting: boolean;
+    error: boolean;
+  }
 }
 
 export interface PlaylistState {
-  selectedList: string | null;
-  tracks: [] | SavedTracksData[];
-  sync: {
-    status: 'SYNCED' | 'UNSYNCED';
-    exporting: boolean;
-    error: boolean;
-  };
+  tagLists: IFirestoreTagDocument[]
+  selectedList: SelectedList | null;
 }
 
-export interface SetTracksPayload {
-  tracks: SavedTracksData[];
+export interface SetTagListsPayload {
+  lists: IFirestoreTagDocument[];
 }
