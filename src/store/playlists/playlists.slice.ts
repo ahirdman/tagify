@@ -2,7 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { IFirestoreTagDocument, Spotify } from '../../services';
-import { PlaylistState, SelectListPayload, SetTagListsPayload } from './playlists.interface';
+import {
+  PlaylistState,
+  SelectListPayload,
+  SetTagListsPayload,
+  UpdateSyncPayload,
+} from './playlists.interface';
 
 export const exportPlaylist = createAsyncThunk('playlists/exportPlaylist', async (_, thunkAPI) => {
   const state = thunkAPI.getState() as RootState;
@@ -43,23 +48,34 @@ export const playlistSlice = createSlice({
     setTagLists: (state, { payload }: PayloadAction<SetTagListsPayload>) => {
       state.tagLists = payload.lists;
     },
+    updateSync: (state, { payload }: PayloadAction<UpdateSyncPayload>) => {
+      state.selectedList.status.sync = payload.sync;
+    },
   },
   extraReducers: builder => {
     builder
       .addCase(exportPlaylist.pending, ({ selectedList }) => {
         selectedList.status.exporting = true;
+        selectedList.status.error = false;
       })
       .addCase(exportPlaylist.rejected, ({ selectedList }) => {
         selectedList.status.exporting = false;
         selectedList.status.error = true;
       })
-      .addCase(exportPlaylist.fulfilled, ({ selectedList }) => {
+      .addCase(exportPlaylist.fulfilled, ({ selectedList }, { payload }) => {
         selectedList.status.exporting = false;
+        selectedList.status.error = false;
         selectedList.status.sync = 'SYNCED';
+        selectedList.spotifySync = {
+          exported: true,
+          playlistId: payload.playlistId,
+          snapshotId: payload.snapshotId,
+        };
       });
   },
 });
 
-export const { setSelectedList, clearSelectedList, setTagLists } = playlistSlice.actions;
+export const { setSelectedList, clearSelectedList, setTagLists, updateSync } =
+  playlistSlice.actions;
 
 export default playlistSlice.reducer;

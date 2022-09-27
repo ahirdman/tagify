@@ -1,6 +1,7 @@
 import { cloudFunction, axiosInstance } from '../index';
 import { isAuthenticated } from '../common/common.error';
 import { NewPlaylistBody } from './playlist.interface';
+import * as Firestore from '../firestore/firestore.repository';
 
 const BASEURL = 'https://api.spotify.com/v1/';
 
@@ -27,6 +28,13 @@ export const createSpotifyPlaylist = cloudFunction.onCall(
     });
 
     const snapshotId = await fillPlaylistResponse.data.snapshot_id;
+
+    await Firestore.updateTagDocPlaylist(
+      context.auth!.uid,
+      data.playlistName,
+      snapshotId,
+      playlistId
+    );
 
     return {
       playlistId,

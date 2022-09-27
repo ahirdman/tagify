@@ -4,16 +4,20 @@ export interface SelectListPayload {
   selectedList: IFirestoreTagDocument | null;
 }
 
+export interface UpdateSyncPayload {
+  sync: 'SYNCED' | 'UNSYNCED';
+}
+
 export interface SelectedList extends IFirestoreTagDocument {
   status: {
-    sync: 'SYNCED' | 'UNSYNCED'
+    sync: 'SYNCED' | 'UNSYNCED';
     exporting: boolean;
     error: boolean;
-  }
+  };
 }
 
 export interface PlaylistState {
-  tagLists: IFirestoreTagDocument[]
+  tagLists: IFirestoreTagDocument[];
   selectedList: SelectedList | null;
 }
 

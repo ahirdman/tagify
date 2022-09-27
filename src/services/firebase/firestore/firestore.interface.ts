@@ -14,14 +14,13 @@ export interface IFirestoreUserDocument {
 }
 
 export interface IFirestoreTagDocument {
-  name: string,
-  color: string,
-  tracks: SavedTracksData[],
+  name: string;
+  color: string;
+  tracks: SavedTracksData[];
   spotifySync: {
-    exported: boolean,
-    latestChange: Date,
-    playlistId: string,
-    snapshotId: string
-  }
+    exported: boolean;
+    latestChange?: Date;
+    playlistId: string;
+    snapshotId: string;
+  };
 }
-
