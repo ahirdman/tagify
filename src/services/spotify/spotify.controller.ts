@@ -1,29 +1,26 @@
 import {
-  SavedTracksResponse,
-  NextTracksBody,
-  ProfileResponse,
-  TokenBody,
-  TokenResponse,
-  PlayTrackBody,
-  PlaylistBody,
-  PlaylistResponse,
-  SavedTracksData,
-} from './spotify.interface';
+  initialSavedTracks,
+  newPlaylist,
+  nextSavedTracks,
+  playback,
+  spotifyProfile,
+  spotifyToken,
+  validate,
+} from './spotify.functions';
+import { SavedTracksData } from './spotify.interface';
 import { extractUris, postWithCookie, savedDataExtractor } from './spotify.service';
-import { functions } from '../firebase/config';
-import { httpsCallable } from 'firebase/functions';
 
-export const getSpotifyToken = httpsCallable<void, TokenResponse>(functions, 'spotifyToken');
+export const getSpotifyToken = async () => {
+  const response = await spotifyToken();
 
-export const getSpotifyProfile = httpsCallable<TokenBody, ProfileResponse>(
-  functions,
-  'getSpotifyProfile'
-);
+  return response.data;
+};
 
-const initialSavedTracks = httpsCallable<TokenBody, SavedTracksResponse>(
-  functions,
-  'getInitialSavedTracks'
-);
+export const getSpotifyProfile = async (token: string) => {
+  const response = await spotifyProfile({ token });
+
+  return response.data;
+};
 
 export const getInitialSavedTracks = async (token: string) => {
   const response = await initialSavedTracks({ token });
@@ -37,11 +34,6 @@ export const getInitialSavedTracks = async (token: string) => {
   };
 };
 
-const nextSavedTracks = httpsCallable<NextTracksBody, SavedTracksResponse>(
-  functions,
-  'getNextSavedTracks'
-);
-
 export const getNextSavedTracks = async (token: string, nextUrl: string) => {
   const response = await nextSavedTracks({ token, url: nextUrl });
   const tracks = savedDataExtractor(response.data.items);
@@ -54,17 +46,10 @@ export const getNextSavedTracks = async (token: string, nextUrl: string) => {
   };
 };
 
-const playback = httpsCallable<PlayTrackBody, string>(functions, 'playSpotifyTrack');
-
 export const playTrack = async (deviceId: string, token: string, uri: string): Promise<void> => {
   const response = await playback({ uri, token, deviceId });
   console.log(response.data);
 };
-
-const newPlaylist = httpsCallable<PlaylistBody, PlaylistResponse>(
-  functions,
-  'createSpotifyPlaylist'
-);
 
 /**
  *
@@ -86,6 +71,11 @@ export const createNewPlaylistWithTracks = async (
 
   console.log('success!', response.data);
 
+  return response.data;
+};
+
+export const validateSnapshot = async (playlistId: string, snapshotId: string, token: string) => {
+  const response = await validate({ playlistId, snapshotId, token });
   return response.data;
 };
 

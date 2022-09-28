@@ -1,6 +1,10 @@
 import { cloudFunction, axiosInstance } from '../index';
 import { isAuthenticated } from '../common/common.error';
-import { NewPlaylistBody } from './playlist.interface';
+import {
+  NewPlaylistBody,
+  ValidatePlaylistBody,
+  ValidatePlaylistReponse,
+} from './playlist.interface';
 import * as Firestore from '../firestore/firestore.repository';
 
 const BASEURL = 'https://api.spotify.com/v1';
@@ -43,61 +47,18 @@ export const createSpotifyPlaylist = cloudFunction.onCall(
   }
 );
 
-interface ValidatePlaylistBody {
-  playlistId: string;
-}
-
-interface GetPlaylistResponse {
-  collaborative: boolean;
-  description: string;
-  external_urls: {
-    spotify: string;
-  };
-  followers: {
-    href: string;
-    total: number;
-  };
-  href: string;
-  id: string;
-  images: [
+export const validateSnapshot = cloudFunction.onCall(async (data: ValidatePlaylistBody, _) => {
+  const response = await axiosInstance(
+    `${BASEURL}/playlists/${data.playlistId}?fields=snapshot_id`,
     {
-      url: string;
-      height: number;
-      width: number;
+      method: 'GET',
+      headers: { Authorization: `Bearer ${data.token}` },
     }
-  ];
-  name: string;
-  owner: {
-    external_urls: {
-      spotify: string;
-    };
-    followers: {
-      href: string;
-      total: number;
-    };
-    href: string;
-    id: string;
-    type: string;
-    uri: string;
-    display_name: string;
-  };
-  public: boolean;
-  snapshot_id: string;
-  tracks: {
-    href: string;
-    items: [{}];
-    limit: number;
-    next: string;
-    offset: number;
-    previous: string;
-    total: number;
-  };
-  type: string;
-  uri: string;
-}
+  );
 
-export const validateSnapshot = cloudFunction.onCall(
-  async (data: ValidatePlaylistBody, context) => {
-    const response = await axiosInstance(`${BASEURL}/playlists/${data.playlistId}`);
-  }
-);
+  const result: ValidatePlaylistReponse = response.data;
+
+  return {
+    snapshotId: result.snapshot_id,
+  };
+});

@@ -32,8 +32,9 @@ const SelectList = () => {
             playlistId: data.playlistId,
             snapshotId: data.snapshotId,
           },
+          //TODO: Overwrites every time this view is opened
           status: {
-            sync: 'UNKNOWN',
+            sync: 'UNKNOWN', //TODO: List status could be valid and is now unknown
             exporting: false,
             error: false,
           },

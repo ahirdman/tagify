@@ -134,3 +134,12 @@ export interface PlaylistResponse {
   playlistId: string;
   snapshotId: string;
 }
+
+export interface ValidateBody {
+  playlistId: string;
+  snapshotId: string;
+  token: string;
+}
+export interface ValidateResponse {
+  snapshotId: string;
+}

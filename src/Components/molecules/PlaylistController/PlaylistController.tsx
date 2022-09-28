@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { Firestore, SavedTracksData } from '../../../services';
-import { updateSync } from '../../../store/playlists/playlists.slice';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { SavedTracksData } from '../../../services';
+import { useAppSelector } from '../../../store/hooks';
 import './PlaylistController.scss';
-import { onSnapshot } from 'firebase/firestore';
 import { ExportButton } from '../../atoms';
 
 const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
@@ -13,36 +11,10 @@ const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
 };
 
 const PlaylistData = () => {
-  const dispatch = useAppDispatch();
   const { sync } = useAppSelector(state => state.playlist.selectedList.status);
-  const { fireId } = useAppSelector(state => state.user);
-  const selected = useAppSelector(state => state.playlist.selectedList);
-  const { tracks, name } = selected;
-  const { snapshotId } = selected.spotifySync;
+  const tracks = useAppSelector(state => state.playlist.selectedList.tracks);
 
   const length = lengthOfPlaylist(tracks);
-
-  React.useLayoutEffect(() => {
-    const unsubscribe = onSnapshot(Firestore.tagDoc(fireId, name), doc => {
-      const tagDocument = doc.data();
-      console.log(1, tagDocument.spotifySync.snapshotId);
-      console.log(2, snapshotId);
-
-      if (tagDocument.spotifySync.snapshotId !== snapshotId) {
-        console.log('snapshotID is not identical');
-        dispatch(updateSync({ sync: 'UNSYNCED' }));
-      }
-
-      if (tagDocument.spotifySync.snapshotId === snapshotId) {
-        console.log('snapshotID is identical');
-        dispatch(updateSync({ sync: 'SYNCED' }));
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [fireId, name, dispatch, snapshotId]);
 
   return (
     <div className="playlist">

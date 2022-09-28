@@ -14,13 +14,9 @@ const EditList = () => {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    // snapshot Id will always be identical if no check with spotify, check spotify before comparison
-
     const unsubscribe = onSnapshot(Firestore.tagDoc(fireId, selected.name), doc => {
-      // Listen to changes in selected document
-      // status {} is local and not stored in firestore
-
       const tagDocument = doc.data();
+      // status {} is local and not stored in firestore
       // TODO: Conditional update: if the state playlist is the same as the firestore doc, dont dispatch
       dispatch(updateStateDoc({ doc: tagDocument as IFirestoreTagDocument }));
     });

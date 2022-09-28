@@ -5,6 +5,7 @@ import playbackReducer from './playback/playback.slice';
 import savedTracksReducer from './savedTracks/savedTracks.slice';
 import playlistsReducer from './playlists/playlists.slice';
 import { signIn, spotifyToken } from './user/user.listener';
+import { playlistSync } from './playlists/playlists.listener';
 
 export const store = configureStore({
   reducer: {
@@ -12,10 +13,14 @@ export const store = configureStore({
     ui: uiReducer,
     playback: playbackReducer,
     savedTracks: savedTracksReducer,
-    playlist: playlistsReducer
+    playlist: playlistsReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().prepend(signIn.middleware, spotifyToken.middleware),
+    getDefaultMiddleware().prepend(
+      signIn.middleware,
+      spotifyToken.middleware,
+      playlistSync.middleware
+    ),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
