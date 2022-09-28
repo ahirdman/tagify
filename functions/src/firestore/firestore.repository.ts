@@ -12,7 +12,6 @@ export const updateTagDocPlaylist = async (
   await tagDocRef(uid, tagName).update({
     spotifySync: {
       exported: true,
-      latestChange: new Date(),
       snapshotId,
       playlistId: playlistId ? playlistId : '',
     },

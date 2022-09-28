@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { IFirestoreTagDocument, Spotify } from '../../services';
+import { Spotify } from '../../services';
 import {
   PlaylistState,
+  SelectedList,
   SelectListPayload,
   SetTagListsPayload,
   UpdateSyncPayload,
@@ -21,7 +22,7 @@ export const exportPlaylist = createAsyncThunk('playlists/exportPlaylist', async
 });
 
 const initialState: PlaylistState = {
-  tagLists: [] as IFirestoreTagDocument[],
+  tagLists: [] as SelectedList[],
   selectedList: null,
 };
 
@@ -63,9 +64,11 @@ export const playlistSlice = createSlice({
         selectedList.status.error = true;
       })
       .addCase(exportPlaylist.fulfilled, ({ selectedList }, { payload }) => {
-        selectedList.status.exporting = false;
-        selectedList.status.error = false;
-        selectedList.status.sync = 'SYNCED';
+        selectedList.status = {
+          exporting: false,
+          error: false,
+          sync: 'SYNCED',
+        };
         selectedList.spotifySync = {
           exported: true,
           playlistId: payload.playlistId,

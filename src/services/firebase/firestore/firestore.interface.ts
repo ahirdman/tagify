@@ -19,7 +19,6 @@ export interface IFirestoreTagDocument {
   tracks: SavedTracksData[];
   spotifySync: {
     exported: boolean;
-    latestChange?: Date;
     playlistId: string;
     snapshotId: string;
   };

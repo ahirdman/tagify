@@ -8,7 +8,7 @@ import { onSnapshot } from 'firebase/firestore';
 import { CardNav } from '../../molecules';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setSelectedList, setTagLists } from '../../../store/playlists/playlists.slice';
-import { IFirestoreTagDocument } from '../../../services';
+import { SelectedList } from '../../../store/playlists/playlists.interface';
 
 const SelectList = () => {
   const taglists = useAppSelector(state => state.playlist.tagLists);
@@ -18,7 +18,7 @@ const SelectList = () => {
 
   React.useEffect(() => {
     const unsubscribe = onSnapshot(Firestore.tagCol(fireId), collection => {
-      const lists: IFirestoreTagDocument[] = [];
+      const lists: SelectedList[] = [];
 
       collection.forEach(doc => {
         const data = doc.data();
@@ -29,9 +29,13 @@ const SelectList = () => {
           tracks: data.tracks,
           spotifySync: {
             exported: data.exported,
-            latestChange: data.latestChange,
             playlistId: data.playlistId,
             snapshotId: data.snapshotId,
+          },
+          status: {
+            sync: 'UNKNOWN',
+            exporting: false,
+            error: false,
           },
         });
       });
@@ -55,7 +59,7 @@ const SelectList = () => {
         <p className="select-list__header--title">TAGS</p>
       </section>
       <ul className="select-list__list">
-        {taglists.map((list: IFirestoreTagDocument, index) => {
+        {taglists.map((list, index) => {
           return (
             <li
               onClick={() => {

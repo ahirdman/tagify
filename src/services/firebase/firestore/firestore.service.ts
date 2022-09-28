@@ -65,10 +65,9 @@ export const createTag = async (
       tracks: [track],
       spotifySync: {
         exported: false,
-        latestChange: new Date(),
         playlistId: '',
-        snapshotId: ''
-      }
+        snapshotId: '',
+      },
     },
     { merge: true }
   );
