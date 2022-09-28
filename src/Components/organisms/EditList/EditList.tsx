@@ -21,6 +21,7 @@ const EditList = () => {
       // status {} is local and not stored in firestore
 
       const tagDocument = doc.data();
+
       // TODO: Conditional update: if the state playlist is the same as the firestore doc, dont dispatch
       dispatch(updateStateDoc({ doc: tagDocument as IFirestoreTagDocument }));
     });

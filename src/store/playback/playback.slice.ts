@@ -3,6 +3,7 @@ import { RootState } from '../store';
 import { IAlbumImages, IArtists, IPlaybackState } from './playback.interface';
 import { Spotify } from '../../services';
 
+// TODO: Not used!
 export const playSpotifyTrack = createAsyncThunk(
   'playback/playSpotifyTrack',
   async (uri: string, thunkAPI) => {

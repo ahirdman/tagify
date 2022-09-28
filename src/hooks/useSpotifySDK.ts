@@ -32,10 +32,10 @@ const useSpotifySDK = () => {
         const token: any = await Spotify.getSpotifyToken();
         dispatch(
           setSpotifyToken({
-            token: token.data.accessToken,
+            token: token.accessToken,
           })
         );
-        cb(token.data.accessToken);
+        cb(token.accessToken);
       },
       volume: 0.5,
     });

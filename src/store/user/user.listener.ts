@@ -27,7 +27,7 @@ startSignInListening({
 
     listenerApi.dispatch(
       setSpotifyToken({
-        token: token.data.accessToken,
+        token: token.accessToken,
       })
     );
   },
@@ -40,9 +40,9 @@ startTokenListening({
     const state = listenerApi.getState();
 
     if (!state.user.spotify.profile.id) {
-      const results = await Spotify.getSpotifyProfile({ token });
+      const profileData = await Spotify.getSpotifyProfile(token);
 
-      listenerApi.dispatch(setSpotifyProfile(results.data));
+      listenerApi.dispatch(setSpotifyProfile(profileData));
     }
   },
 });
