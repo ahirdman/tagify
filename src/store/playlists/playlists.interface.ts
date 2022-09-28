@@ -35,6 +35,10 @@ export interface UpdateSyncPayload {
   sync: 'SYNCED' | 'UNSYNCED' | 'UNKNOWN';
 }
 
+export interface UpdateStateDockPayload {
+  doc: IFirestoreTagDocument;
+}
+
 export interface SetTagListsPayload {
   lists: SelectedList[];
 }

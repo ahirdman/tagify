@@ -7,6 +7,7 @@ import {
   SelectedList,
   SelectListPayload,
   SetTagListsPayload,
+  UpdateStateDockPayload,
   UpdateSyncPayload,
 } from './playlists.interface';
 
@@ -52,6 +53,12 @@ export const playlistSlice = createSlice({
     updateSync: (state, { payload }: PayloadAction<UpdateSyncPayload>) => {
       state.selectedList.status.sync = payload.sync;
     },
+    updateStateDoc: (state, { payload }: PayloadAction<UpdateStateDockPayload>) => {
+      state.selectedList.color = payload.doc.color;
+      state.selectedList.name = payload.doc.name;
+      state.selectedList.tracks = payload.doc.tracks;
+      state.selectedList.spotifySync = payload.doc.spotifySync;
+    },
   },
   extraReducers: builder => {
     builder
@@ -78,7 +85,7 @@ export const playlistSlice = createSlice({
   },
 });
 
-export const { setSelectedList, clearSelectedList, setTagLists, updateSync } =
+export const { setSelectedList, clearSelectedList, setTagLists, updateSync, updateStateDoc } =
   playlistSlice.actions;
 
 export default playlistSlice.reducer;

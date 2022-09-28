@@ -2,12 +2,10 @@ import * as React from 'react';
 import './EditList.scss';
 import { CardNav, PlaylistController } from '../../molecules';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { clearSelectedList, setSelectedList } from '../../../store/playlists/playlists.slice';
+import { clearSelectedList, updateStateDoc } from '../../../store/playlists/playlists.slice';
 import { TracksList } from '..';
 import { onSnapshot } from 'firebase/firestore';
-import { Firestore } from '../../../services';
-import { SelectedList } from '../../../store/playlists/playlists.interface';
-import * as assert from 'assert';
+import { Firestore, IFirestoreTagDocument } from '../../../services';
 
 const EditList = () => {
   const selected = useAppSelector(state => state.playlist.selectedList);
@@ -23,29 +21,14 @@ const EditList = () => {
       // status {} is local and not stored in firestore
 
       const tagDocument = doc.data();
-      // const newListState = selected
-
-      // if (selected.name !== tagDocument.name) {
-      //   newListState.name = tagDocument.name
-      // }
-      console.log(assert.deepStrictEqual(tagDocument, selected));
-
-      // lists.push({
-      //   name: data.name,
-      //   color: data.color,
-      //   tracks: data.tracks,
-      //   spotifySync: {
-      //     exported: data.exported,
-      //     playlistId: data.playlistId,
-      //     snapshotId: data.snapshotId,
-      //   },
-      // });
+      // TODO: Conditional update: if the state playlist is the same as the firestore doc, dont dispatch
+      dispatch(updateStateDoc({ doc: tagDocument as IFirestoreTagDocument }));
     });
 
     return () => {
       unsubscribe();
     };
-  }, [fireId, dispatch]);
+  }, [fireId, dispatch, selected.name]);
 
   return (
     <div className="edit-list">
