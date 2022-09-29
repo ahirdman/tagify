@@ -16,11 +16,7 @@ const EditList = () => {
   React.useEffect(() => {
     const unsubscribe = onSnapshot(Firestore.tagDoc(fireId, selected.name), doc => {
       const tagDocument = doc.data();
-<<<<<<< HEAD
       // status {} is local and not stored in firestore
-=======
-
->>>>>>> origin
       // TODO: Conditional update: if the state playlist is the same as the firestore doc, dont dispatch
       dispatch(updateStateDoc({ doc: tagDocument as IFirestoreTagDocument }));
     });
