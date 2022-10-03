@@ -3,6 +3,8 @@ import { SavedTracksData } from '../../../services';
 import { useAppSelector } from '../../../store/hooks';
 import './PlaylistController.scss';
 import { ExportButton } from '../../atoms';
+import { useSelector } from 'react-redux';
+import { selectActiveTagList } from '../../../store/playlists/playlists.slice';
 
 const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
   const ms = tracksArr.map(track => track.duration).reduce((acc, curr) => acc + curr, 0);
@@ -11,8 +13,12 @@ const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
 };
 
 const PlaylistData = () => {
-  const { sync } = useAppSelector(state => state.playlist.selectedList.status);
-  const tracks = useAppSelector(state => state.playlist.selectedList.tracks);
+  const selected = useSelector(selectActiveTagList);
+
+  const {
+    tracks,
+    status: { sync },
+  } = selected;
 
   const length = lengthOfPlaylist(tracks);
 

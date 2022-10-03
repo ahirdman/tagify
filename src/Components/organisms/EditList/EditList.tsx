@@ -2,13 +2,21 @@ import * as React from 'react';
 import './EditList.scss';
 import { CardNav, PlaylistController } from '../../molecules';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { clearSelectedList, updateStateDoc } from '../../../store/playlists/playlists.slice';
+import {
+  clearSelectedList,
+  selectActiveTagList,
+  updateStateDoc,
+} from '../../../store/playlists/playlists.slice';
 import { TracksList } from '..';
 import { onSnapshot } from 'firebase/firestore';
 import { Firestore, IFirestoreTagDocument } from '../../../services';
+import { useSelector } from 'react-redux';
 
 const EditList = () => {
-  const selected = useAppSelector(state => state.playlist.selectedList);
+  // const selected = useAppSelector(state => state.playlist.selectedList);
+
+  const selected = useSelector(selectActiveTagList);
+
   const fireId = useAppSelector(state => state.user.fireId);
 
   const dispatch = useAppDispatch();

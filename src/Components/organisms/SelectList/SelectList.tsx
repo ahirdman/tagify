@@ -8,7 +8,7 @@ import { onSnapshot } from 'firebase/firestore';
 import { CardNav } from '../../molecules';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setSelectedList, setTagLists } from '../../../store/playlists/playlists.slice';
-import { SelectedList } from '../../../store/playlists/playlists.interface';
+import { Playlist } from '../../../store/playlists/playlists.interface';
 
 const SelectList = () => {
   const taglists = useAppSelector(state => state.playlist.tagLists);
@@ -18,27 +18,33 @@ const SelectList = () => {
 
   React.useEffect(() => {
     const unsubscribe = onSnapshot(Firestore.tagCol(fireId), collection => {
-      const lists: SelectedList[] = [];
+      const lists: Playlist[] = [];
 
       collection.forEach(doc => {
         const data = doc.data();
+
+        const existingList = taglists.find(list => list.name === data.name);
 
         lists.push({
           name: data.name,
           color: data.color,
           tracks: data.tracks,
-          spotifySync: {
-            exported: data.exported,
-            playlistId: data.playlistId,
-            snapshotId: data.snapshotId,
-          },
-          //TODO: Overwrites every time this view is opened
+          exported: data.exported,
+          playlistId: data.playlistId,
+          snapshotId: data.snapshotId,
+          isActive: false,
           status: {
-            sync: 'UNKNOWN', //TODO: List status could be valid and is now unknown
+            sync: existingList ? existingList.status.sync : 'UNKNOWN',
             exporting: false,
             error: false,
           },
         });
+
+        // status: {
+        //   sync: 'UNKNOWN', //TODO: List status could be valid and is now unknown
+        //   exporting: false,
+        //   error: false,
+        // },
       });
 
       dispatch(setTagLists({ lists }));
@@ -64,7 +70,7 @@ const SelectList = () => {
           return (
             <li
               onClick={() => {
-                dispatch(setSelectedList({ selectedList: list }));
+                dispatch(setSelectedList({ selectedList: list.name }));
               }}
               key={index}
               className="select-list__row"

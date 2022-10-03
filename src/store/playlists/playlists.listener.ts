@@ -2,7 +2,7 @@ import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { Spotify } from '../../services/index';
 import type { TypedStartListening } from '@reduxjs/toolkit';
 import type { RootState, AppDispatch } from '../store';
-import { updateStateDoc, updateSync } from './playlists.slice';
+import { updateStateDoc, updateSyncStatus } from './playlists.slice';
 
 export type AppStartListening = TypedStartListening<RootState, AppDispatch>;
 
@@ -13,20 +13,22 @@ const startplaylistSyncListening = playlistSync.startListening as AppStartListen
 startplaylistSyncListening({
   actionCreator: updateStateDoc,
   effect: async (action, listenerApi) => {
-    const { playlistId, snapshotId } = action.payload.doc.spotifySync;
+    const { playlistId, snapshotId } = action.payload.doc;
     const state = listenerApi.getState();
-    const exported = state.playlist.selectedList.spotifySync.exported;
+    const selectedList = state.playlist.tagLists.find(list => list.isActive === true);
 
-    if (!exported) return;
+    if (!selectedList.exported) return;
 
     const token = state.user.spotify.token;
 
     const result = await Spotify.validateSnapshot(playlistId, snapshotId, token);
 
+    console.log(result);
+
     const status = snapshotId === result.snapshotId ? 'SYNCED' : 'UNSYNCED';
 
     listenerApi.dispatch(
-      updateSync({
+      updateSyncStatus({
         sync: status,
       })
     );

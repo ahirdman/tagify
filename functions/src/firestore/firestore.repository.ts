@@ -10,11 +10,9 @@ export const updateTagDocPlaylist = async (
   playlistId?: string
 ) => {
   await tagDocRef(uid, tagName).update({
-    spotifySync: {
-      exported: true,
-      snapshotId,
-      playlistId: playlistId ? playlistId : '',
-    },
+    exported: true,
+    snapshotId,
+    playlistId: playlistId ? playlistId : '',
   });
 };
 

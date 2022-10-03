@@ -1,20 +1,25 @@
-import { IFirestoreTagDocument } from '../../services';
+import { IFirestoreTagDocument, SavedTracksData } from '../../services';
 
 // name: string,
 // color: data.color,
 // tracks: SavedTracks[],
-// spotifySync: {
-//   exported: boolean,
-//   playlistId: string,
-//   snapshotId: string,
-// },
+// exported: boolean,
+// playlistId: string,
+// snapshotId: string,
 // status: {
 //   sync: 'SYNCED' | 'UNSYNCED';
 //   exporting: boolean;
 //   error: boolean;
 // }
 
-export interface SelectedList extends IFirestoreTagDocument {
+export interface Playlist {
+  name: string;
+  color: string;
+  tracks: SavedTracksData[];
+  exported: boolean;
+  playlistId: string;
+  snapshotId: string;
+  isActive: boolean;
   status: {
     sync: 'SYNCED' | 'UNSYNCED' | 'UNKNOWN';
     exporting: boolean;
@@ -23,12 +28,11 @@ export interface SelectedList extends IFirestoreTagDocument {
 }
 
 export interface PlaylistState {
-  tagLists: SelectedList[];
-  selectedList: SelectedList | null;
+  tagLists: Playlist[];
 }
 
 export interface SelectListPayload {
-  selectedList: SelectedList | null;
+  selectedList: string | undefined;
 }
 
 export interface UpdateSyncPayload {
@@ -40,5 +44,5 @@ export interface UpdateStateDockPayload {
 }
 
 export interface SetTagListsPayload {
-  lists: SelectedList[];
+  lists: Playlist[];
 }

@@ -63,11 +63,9 @@ export const createTag = async (
       name: tag,
       color: color,
       tracks: [track],
-      spotifySync: {
-        exported: false,
-        playlistId: '',
-        snapshotId: '',
-      },
+      exported: false,
+      playlistId: '',
+      snapshotId: '',
     },
     { merge: true }
   );

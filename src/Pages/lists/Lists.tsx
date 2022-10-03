@@ -3,9 +3,14 @@ import { SelectList, EditList, EmptyCard } from '../../Components/organisms';
 import List from '../../assets/list.svg';
 import useWindowSize, { Window } from '../../hooks/useWindowSize';
 import { useAppSelector } from '../../store/hooks';
+import { selectActiveTagList } from '../../store/playlists/playlists.slice';
+import { useSelector } from 'react-redux';
 
 const Lists = () => {
-  const { selectedList } = useAppSelector(state => state.playlist);
+  // const { selectedList } = useAppSelector(state => state.playlist);
+
+  const selectedList = useSelector(selectActiveTagList);
+  console.log(1, selectedList);
 
   const size: Window = useWindowSize();
 
