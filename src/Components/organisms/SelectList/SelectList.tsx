@@ -32,19 +32,13 @@ const SelectList = () => {
           exported: data.exported,
           playlistId: data.playlistId,
           snapshotId: data.snapshotId,
-          isActive: false,
+          isActive: existingList ? existingList.isActive : false,
           status: {
             sync: existingList ? existingList.status.sync : 'UNKNOWN',
-            exporting: false,
-            error: false,
+            exporting: existingList ? existingList.status.exporting : false,
+            error: existingList ? existingList.status.error : false,
           },
         });
-
-        // status: {
-        //   sync: 'UNKNOWN', //TODO: List status could be valid and is now unknown
-        //   exporting: false,
-        //   error: false,
-        // },
       });
 
       dispatch(setTagLists({ lists }));

@@ -32,15 +32,15 @@ export interface PlaylistState {
 }
 
 export interface SelectListPayload {
-  selectedList: string | undefined;
+  selectedList: string;
 }
 
 export interface UpdateSyncPayload {
   sync: 'SYNCED' | 'UNSYNCED' | 'UNKNOWN';
 }
 
-export interface UpdateStateDockPayload {
-  doc: IFirestoreTagDocument;
+export interface UpdatePlaylistData {
+  data: IFirestoreTagDocument;
 }
 
 export interface SetTagListsPayload {

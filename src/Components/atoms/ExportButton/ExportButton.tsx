@@ -1,25 +1,20 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { exportPlaylist, selectActiveTagList } from '../../../store/playlists/playlists.slice';
 
 const ExportButton = () => {
-  const selected = useSelector(selectActiveTagList);
+  const selected = useAppSelector(selectActiveTagList);
 
   const { error, exporting, sync } = selected.status;
   const dispatch = useAppDispatch();
 
-  // React.useEffect(() => {
-
-  // }, [])
-
   const buttonText = () => {
-    if (error) {
-      return 'Error';
-    }
-
     if (exporting) {
       return 'Exporting...';
+    }
+
+    if (error) {
+      return 'Error';
     }
 
     if (sync === 'SYNCED') {

@@ -13,7 +13,7 @@ const startplaylistSyncListening = playlistSync.startListening as AppStartListen
 startplaylistSyncListening({
   actionCreator: updateStateDoc,
   effect: async (action, listenerApi) => {
-    const { playlistId, snapshotId } = action.payload.doc;
+    const { playlistId, snapshotId } = action.payload.data;
     const state = listenerApi.getState();
     const selectedList = state.playlist.tagLists.find(list => list.isActive === true);
 

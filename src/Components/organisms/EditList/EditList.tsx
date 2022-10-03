@@ -10,12 +10,9 @@ import {
 import { TracksList } from '..';
 import { onSnapshot } from 'firebase/firestore';
 import { Firestore, IFirestoreTagDocument } from '../../../services';
-import { useSelector } from 'react-redux';
 
 const EditList = () => {
-  // const selected = useAppSelector(state => state.playlist.selectedList);
-
-  const selected = useSelector(selectActiveTagList);
+  const selected = useAppSelector(selectActiveTagList);
 
   const fireId = useAppSelector(state => state.user.fireId);
 
@@ -24,9 +21,9 @@ const EditList = () => {
   React.useEffect(() => {
     const unsubscribe = onSnapshot(Firestore.tagDoc(fireId, selected.name), doc => {
       const tagDocument = doc.data();
-      // status {} is local and not stored in firestore
       // TODO: Conditional update: if the state playlist is the same as the firestore doc, dont dispatch
-      dispatch(updateStateDoc({ doc: tagDocument as IFirestoreTagDocument }));
+
+      dispatch(updateStateDoc({ data: tagDocument as IFirestoreTagDocument }));
     });
 
     return () => {

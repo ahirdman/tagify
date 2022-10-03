@@ -7,7 +7,7 @@ import {
   Playlist,
   SelectListPayload,
   SetTagListsPayload,
-  UpdateStateDockPayload,
+  UpdatePlaylistData,
   UpdateSyncPayload,
 } from './playlists.interface';
 
@@ -36,31 +36,33 @@ export const playlistSlice = createSlice({
       state.tagLists = payload.lists;
     },
     setSelectedList: (state, { payload }: PayloadAction<SelectListPayload>) => {
-      const index = state.tagLists.findIndex(e => e.name === payload.selectedList);
+      const activeList = state.tagLists.find(list => list.name === payload.selectedList);
 
-      state.tagLists[index].isActive = true;
+      if (activeList) {
+        activeList.isActive = true;
+      }
     },
     clearSelectedList: state => {
       state.tagLists.map(list => (list.isActive = false));
     },
     updateSyncStatus: (state, { payload }: PayloadAction<UpdateSyncPayload>) => {
-      const index = state.tagLists.findIndex(e => e.isActive === true);
+      const activeList = state.tagLists.find(list => list.isActive === true);
 
-      state.tagLists[index].status.sync = payload.sync;
+      if (activeList) {
+        activeList.status.sync = payload.sync;
+      }
     },
-    updateStateDoc: (state, { payload }: PayloadAction<UpdateStateDockPayload>) => {
-      const index = state.tagLists.findIndex(e => e.name === payload.doc.name);
+    updateStateDoc: (state, { payload }: PayloadAction<UpdatePlaylistData>) => {
+      const activeList = state.tagLists.find(list => list.isActive === true);
 
-      state.tagLists[index] = {
-        name: payload.doc.name,
-        color: payload.doc.color,
-        tracks: payload.doc.tracks,
-        exported: payload.doc.exported,
-        playlistId: payload.doc.playlistId,
-        snapshotId: payload.doc.snapshotId,
-        isActive: state.tagLists[index].isActive,
-        status: state.tagLists[index].status,
-      };
+      if (activeList) {
+        Object.assign(activeList, { ...payload.data });
+      }
+      // state.tagLists[index] = {
+      //   ...payload.data,
+      //   isActive: state.tagLists[index].isActive,
+      //   status: state.tagLists[index].status,
+      // };
     },
   },
   extraReducers: builder => {
@@ -81,13 +83,10 @@ export const playlistSlice = createSlice({
         const index = state.tagLists.findIndex(e => e.isActive === true);
 
         state.tagLists[index] = {
-          color: state.tagLists[index].color,
-          name: state.tagLists[index].name,
-          tracks: state.tagLists[index].tracks,
+          ...state.tagLists[index],
           exported: true,
           playlistId: payload.playlistId,
           snapshotId: payload.snapshotId,
-          isActive: state.tagLists[index].isActive,
           status: {
             exporting: false,
             error: false,

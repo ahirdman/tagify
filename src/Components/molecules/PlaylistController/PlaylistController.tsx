@@ -3,7 +3,6 @@ import { SavedTracksData } from '../../../services';
 import { useAppSelector } from '../../../store/hooks';
 import './PlaylistController.scss';
 import { ExportButton } from '../../atoms';
-import { useSelector } from 'react-redux';
 import { selectActiveTagList } from '../../../store/playlists/playlists.slice';
 
 const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
@@ -13,7 +12,7 @@ const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
 };
 
 const PlaylistData = () => {
-  const selected = useSelector(selectActiveTagList);
+  const selected = useAppSelector(selectActiveTagList);
 
   const {
     tracks,
