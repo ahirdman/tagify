@@ -1,26 +1,26 @@
-import { db, fieldValue } from '../index';
+import {db, fieldValue} from "../index";
 
 const userDocRef = (uid: string) => db.doc(`users/${uid}`);
 const tagDocRef = (uid: string, tag: string) => db.doc(`users/${uid}/tags/${tag}`);
 
 export const updateTagDocPlaylist = async (
-  uid: string,
-  tagName: string,
-  snapshotId: string,
-  playlistId?: string
+    uid: string,
+    tagName: string,
+    snapshotId: string,
+    playlistId?: string
 ) => {
   await tagDocRef(uid, tagName).update({
     exported: true,
     snapshotId,
-    playlistId: playlistId ? playlistId : '',
+    playlistId: playlistId ? playlistId : "",
   });
 };
 
 export const setUserDoc = async (
-  uid: string,
-  accessToken: string,
-  expiresIn: number,
-  refreshToken: string
+    uid: string,
+    accessToken: string,
+    expiresIn: number,
+    refreshToken: string
 ) => {
   await userDocRef(uid).set({
     spotifyAuth: true,
@@ -47,6 +47,6 @@ export const getUserDoc = async (uid: string) => {
   if (document.exists) {
     return document.data();
   } else {
-    return 'Not Found';
+    return "Not Found";
   }
 };
