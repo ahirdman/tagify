@@ -1,23 +1,69 @@
+@use '../../styles';
+
 .account {
   height: 100%;
+  padding: 15px;
 
   &__settings {
-    height: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}
 
-    &--row {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
+.setting {
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid styles.$border;
+  border-radius: 3px;
+
+  padding: 10px;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  &__header {
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &--description {
+      color: styles.$component-grey;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 15px;
+      letter-spacing: 0.05em;
+    }
+
+    &--status {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 27px;
+      letter-spacing: 0.05em;
+    }
+
+    &--edit {
+      background: none;
+      border: none;
+      width: 30px;
+      height: 30px;
+
+      :hover {
+        cursor: pointer;
+      }
     }
   }
+}
 
-  &__avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-  }
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }

@@ -5,14 +5,16 @@ interface Props {
   title: string;
   backgroundColor: string;
   textColor?: string;
+  width?: string;
+  border?: string;
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const AuthButton = ({ title, backgroundColor, textColor, onClick }: Props) => {
+const AuthButton = ({ title, backgroundColor, textColor, width, border, onClick }: Props) => {
   return (
     <button
       className="authButton"
-      style={{ backgroundColor, color: textColor }}
+      style={{ backgroundColor, color: textColor, width, border }}
       onClick={onClick}
     >
       {title}
