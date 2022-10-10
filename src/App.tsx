@@ -2,14 +2,11 @@ import { Routes, Route } from 'react-router-dom';
 import * as React from 'react';
 import './App.scss';
 import Navbar from './Components/organisms/Navbar/Navbar';
-import Login from './Pages/login/Login';
-import Tracks from './Pages/tracks/Tracks';
-import Lists from './Pages/lists/Lists';
+import { Login, Tracks, Lists, Account } from './Pages';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './services/firebase/config';
 import { firebaseSignIn, firebaseSignOut } from './store/user/user.slice';
-import Account from './Pages/account/Account';
 
 const App = () => {
   const ready = useAppSelector(state => state.user.ready);

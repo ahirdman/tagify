@@ -1,4 +1,4 @@
-import { Playlist } from '../../../store/playlists/playlists.interface';
+import { MixedPlaylist, Playlist } from '../../../store/playlists/playlists.interface';
 import { createMatchLists } from './firestore.helper';
 
 describe('match lists', () => {
@@ -65,7 +65,7 @@ describe('match lists', () => {
     },
   };
 
-  const result: Playlist = {
+  const result: MixedPlaylist = {
     name: 'night cruising',
     color: 'random',
     tracks: [
@@ -80,6 +80,7 @@ describe('match lists', () => {
       },
     ],
     exported: false,
+    created: false,
     playlistId: '789',
     snapshotId: '789',
     isActive: false,

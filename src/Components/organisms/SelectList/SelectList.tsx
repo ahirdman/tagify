@@ -12,6 +12,7 @@ import { Playlist } from '../../../store/playlists/playlists.interface';
 
 const SelectList = () => {
   const taglists = useAppSelector(state => state.playlist.tagLists);
+  const mixedLists = useAppSelector(state => state.playlist.mixedLists);
   const fireId = useAppSelector(state => state.user.fireId);
 
   const dispatch = useAppDispatch();
@@ -97,7 +98,22 @@ const SelectList = () => {
         <p className="select-list__header--title">MATCH TAGS</p>
       </section>
       <ul>
-        <li>Hello</li>
+        {mixedLists.map((list, index) => {
+          return (
+            <li
+              onClick={() => {
+                dispatch(setSelectedList({ selectedList: list.name }));
+              }}
+              key={index}
+              className="select-list__row"
+            >
+              <section className="select-list__details">
+                <div className="select-list__details--circle" style={{ background: 'red' }}></div>
+                <p className="select-list__details--title">{list.name}</p>
+              </section>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

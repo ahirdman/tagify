@@ -81,9 +81,9 @@ const Account = () => {
   ];
 
   return (
-    <>
+    <div className="account">
       <CardNav title="Account" />
-      <div className="account">
+      <div className="account__body">
         <ul className="account__settings">
           <Setting header="Spotify" sections={spotify} />
           <Setting header="Moodify" sections={moodify}>
@@ -105,7 +105,7 @@ const Account = () => {
           onClick={() => FirebaseAuth.logOut()}
         />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Playlist } from '../../../store/playlists/playlists.interface';
+import { MixedPlaylist, Playlist } from '../../../store/playlists/playlists.interface';
 import { SavedTracksData } from '../../spotify/spotify.interface';
 
 // interface TagObj {
@@ -23,8 +23,8 @@ export const matchTag = (tagArr: any[], uri: string): any[] => {
   return matched;
 };
 
-export const createMatchLists = (tagLists: Playlist[]) => {
-  const matches: any = [];
+export const createMatchLists = (tagLists: Playlist[]): MixedPlaylist[] | void => {
+  const matches: MixedPlaylist[] = [];
 
   for (let playlist of tagLists) {
     const otherLists = tagLists.filter(otherList => otherList.name !== playlist.name);
@@ -35,7 +35,7 @@ export const createMatchLists = (tagLists: Playlist[]) => {
       const listTracks = list.tracks;
 
       listTracks.forEach(listTrack => {
-        currentTracks.filter(track => {
+        currentTracks.forEach(track => {
           if (track.uri === listTrack.uri) {
             const previousMatch = matches.find(
               (matchList: any) =>
@@ -57,6 +57,7 @@ export const createMatchLists = (tagLists: Playlist[]) => {
                 color: 'random',
                 tracks: [track],
                 exported: false,
+                created: false,
                 playlistId: '789',
                 snapshotId: '789',
                 isActive: false,
@@ -71,6 +72,7 @@ export const createMatchLists = (tagLists: Playlist[]) => {
         });
       });
     }
+    console.log(matches);
     return matches;
   }
 };

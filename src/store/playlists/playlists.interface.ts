@@ -27,8 +27,25 @@ export interface Playlist {
   };
 }
 
+export interface MixedPlaylist {
+  name: string;
+  color: string;
+  tracks: SavedTracksData[];
+  exported: boolean;
+  created: boolean;
+  playlistId: string;
+  snapshotId: string;
+  isActive: boolean;
+  status: {
+    sync: 'SYNCED' | 'UNSYNCED' | 'UNKNOWN';
+    exporting: boolean;
+    error: boolean;
+  };
+}
+
 export interface PlaylistState {
   tagLists: Playlist[];
+  mixedLists: MixedPlaylist[];
 }
 
 export interface SelectListPayload {
@@ -45,4 +62,7 @@ export interface UpdatePlaylistData {
 
 export interface SetTagListsPayload {
   lists: Playlist[];
+}
+export interface SetMixedListsPayload {
+  lists: MixedPlaylist[];
 }

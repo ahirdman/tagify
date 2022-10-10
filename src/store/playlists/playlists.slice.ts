@@ -9,6 +9,8 @@ import {
   SetTagListsPayload,
   UpdatePlaylistData,
   UpdateSyncPayload,
+  MixedPlaylist,
+  SetMixedListsPayload,
 } from './playlists.interface';
 
 export const exportPlaylist = createAsyncThunk('playlists/exportPlaylist', async (_, thunkAPI) => {
@@ -26,6 +28,7 @@ export const exportPlaylist = createAsyncThunk('playlists/exportPlaylist', async
 
 const initialState: PlaylistState = {
   tagLists: [] as Playlist[],
+  mixedLists: [] as MixedPlaylist[],
 };
 
 export const playlistSlice = createSlice({
@@ -35,11 +38,18 @@ export const playlistSlice = createSlice({
     setTagLists: (state, { payload }: PayloadAction<SetTagListsPayload>) => {
       state.tagLists = payload.lists;
     },
+    setMixedLists: (state, { payload }: PayloadAction<SetMixedListsPayload>) => {
+      state.mixedLists = payload.lists;
+    },
     setSelectedList: (state, { payload }: PayloadAction<SelectListPayload>) => {
       const activeList = state.tagLists.find(list => list.name === payload.selectedList);
+      const activeMixedList = state.mixedLists.find(list => list.name === payload.selectedList);
 
       if (activeList) {
         activeList.isActive = true;
+      }
+      if (activeMixedList) {
+        activeMixedList.isActive = true;
       }
     },
     clearSelectedList: state => {
@@ -97,8 +107,14 @@ export const playlistSlice = createSlice({
   },
 });
 
-export const { setSelectedList, clearSelectedList, setTagLists, updateSyncStatus, updateStateDoc } =
-  playlistSlice.actions;
+export const {
+  setSelectedList,
+  clearSelectedList,
+  setTagLists,
+  updateSyncStatus,
+  updateStateDoc,
+  setMixedLists,
+} = playlistSlice.actions;
 
 export default playlistSlice.reducer;
 
