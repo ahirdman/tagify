@@ -4,51 +4,20 @@ import Edit from '../../../assets/edit.svg';
 import Delete from '../../../assets/trashcan.svg';
 import './SelectList.scss';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
-import { onSnapshot } from 'firebase/firestore';
 import { CardNav } from '../../molecules';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { setSelectedList, setTagLists } from '../../../store/playlists/playlists.slice';
-import { Playlist } from '../../../store/playlists/playlists.interface';
+import {
+  setSelectedList,
+  selectMixedPlaylists,
+  selectTagPlaylists,
+} from '../../../store/playlists/playlists.slice';
 
 const SelectList = () => {
-  const taglists = useAppSelector(state => state.playlist.tagLists);
-  const mixedLists = useAppSelector(state => state.playlist.mixedLists);
+  const taglists = useAppSelector(selectTagPlaylists);
+  const mixedPlaylists = useAppSelector(selectMixedPlaylists);
   const fireId = useAppSelector(state => state.user.fireId);
 
   const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    const unsubscribe = onSnapshot(Firestore.tagCol(fireId), collection => {
-      const lists: Playlist[] = [];
-
-      collection.forEach(doc => {
-        const data = doc.data();
-
-        const existingList = taglists.find(list => list.name === data.name);
-
-        lists.push({
-          name: data.name,
-          color: data.color,
-          tracks: data.tracks,
-          exported: data.exported,
-          playlistId: data.playlistId,
-          snapshotId: data.snapshotId,
-          isActive: existingList ? existingList.isActive : false,
-          status: {
-            sync: existingList ? existingList.status.sync : 'UNKNOWN',
-            exporting: existingList ? existingList.status.exporting : false,
-            error: existingList ? existingList.status.error : false,
-          },
-        });
-      });
-
-      dispatch(setTagLists({ lists }));
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [fireId, dispatch]);
 
   return (
     <div className="select-list">
@@ -65,7 +34,7 @@ const SelectList = () => {
           return (
             <li
               onClick={() => {
-                dispatch(setSelectedList({ selectedList: list.name }));
+                dispatch(setSelectedList({ selectedList: list.id }));
               }}
               key={index}
               className="select-list__row"
@@ -98,17 +67,20 @@ const SelectList = () => {
         <p className="select-list__header--title">MATCH TAGS</p>
       </section>
       <ul>
-        {mixedLists.map((list, index) => {
+        {mixedPlaylists.map((list, index) => {
           return (
             <li
               onClick={() => {
-                dispatch(setSelectedList({ selectedList: list.name }));
+                dispatch(setSelectedList({ selectedList: list.id }));
               }}
               key={index}
               className="select-list__row"
             >
               <section className="select-list__details">
-                <div className="select-list__details--circle" style={{ background: 'red' }}></div>
+                <div
+                  className="select-list__details--circle"
+                  style={{ background: list.color }}
+                ></div>
                 <p className="select-list__details--title">{list.name}</p>
               </section>
             </li>

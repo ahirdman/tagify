@@ -1,9 +1,16 @@
-import { MixedPlaylist, Playlist } from '../../../store/playlists/playlists.interface';
+import { v4 as uuidv4 } from 'uuid';
+import { Playlist } from '../../../store/playlists/playlists.interface';
 import { SavedTracksData } from '../../spotify/spotify.interface';
 
 // interface TagObj {
 //   color: string,
 //   [string:] SavedTracksData[]
+// }
+
+// interface IMixedListMatch {
+//   id: string;
+//   name: string;
+//   color: string;
 // }
 
 export const matchTag = (tagArr: any[], uri: string): any[] => {
@@ -23,43 +30,45 @@ export const matchTag = (tagArr: any[], uri: string): any[] => {
   return matched;
 };
 
-export const createMatchLists = (tagLists: Playlist[]): MixedPlaylist[] | void => {
-  const matches: MixedPlaylist[] = [];
+export const findMatchLists = (playlists: Playlist[]) => {};
 
-  for (let playlist of tagLists) {
-    const otherLists = tagLists.filter(otherList => otherList.name !== playlist.name);
+export const createMatchLists = (playlists: Playlist[]): Playlist[] | [] => {
+  const matches: Playlist[] = [];
 
-    const currentTracks = playlist.tracks;
+  for (let currentPlaylist of playlists) {
+    const remainingPlaylist = playlists.filter(
+      otherList => otherList.name !== currentPlaylist.name
+    );
 
-    for (let list of otherLists) {
-      const listTracks = list.tracks;
-
-      listTracks.forEach(listTrack => {
-        currentTracks.forEach(track => {
-          if (track.uri === listTrack.uri) {
+    for (let iterationPlaylist of remainingPlaylist) {
+      iterationPlaylist.tracks.forEach(iterationTrack => {
+        currentPlaylist.tracks.forEach(currentTrack => {
+          if (currentTrack.uri === iterationTrack.uri) {
             const previousMatch = matches.find(
-              (matchList: any) =>
-                matchList.name === `${playlist.name} ${list.name}` ||
-                matchList.name === `${list.name} ${playlist.name}`
+              (matchList: Playlist) =>
+                matchList.name === `${currentPlaylist.name} ${iterationPlaylist.name}` ||
+                matchList.name === `${iterationPlaylist.name} ${currentPlaylist.name}`
             );
 
             if (previousMatch) {
               const index = matches.findIndex(
-                (matchList: any) =>
-                  matchList.name === `${playlist.name} ${list.name}` ||
-                  matchList.name === `${list.name} ${playlist.name}`
+                (matchList: Playlist) =>
+                  matchList.name === `${currentPlaylist.name} ${iterationPlaylist.name}` ||
+                  matchList.name === `${iterationPlaylist.name} ${currentPlaylist.name}`
               );
 
-              matches[index].tracks.push(track);
+              matches[index].tracks.push(currentTrack);
             } else {
               matches.push({
-                name: `${playlist.name} ${list.name}`,
-                color: 'random',
-                tracks: [track],
-                exported: false,
+                id: uuidv4(),
+                name: `${currentPlaylist.name} ${iterationPlaylist.name}`,
+                color: `linear-gradient(to bottom right, ${currentPlaylist.color}, ${iterationPlaylist.color})`,
+                type: 'MIXED',
                 created: false,
-                playlistId: '789',
-                snapshotId: '789',
+                tracks: [currentTrack],
+                exported: false,
+                playlistId: '',
+                snapshotId: '',
                 isActive: false,
                 status: {
                   sync: 'UNSYNCED',
@@ -72,9 +81,10 @@ export const createMatchLists = (tagLists: Playlist[]): MixedPlaylist[] | void =
         });
       });
     }
-    console.log(matches);
     return matches;
   }
+  console.log(matches);
+  return matches;
 };
 
 export const randomizeTagColor = (): string => {

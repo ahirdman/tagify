@@ -1,4 +1,4 @@
-import { MixedPlaylist, Playlist } from '../../../store/playlists/playlists.interface';
+import { Playlist } from '../../../store/playlists/playlists.interface';
 import { createMatchLists } from './firestore.helper';
 
 describe('match lists', () => {
@@ -36,8 +36,11 @@ describe('match lists', () => {
   ];
 
   const playlist1: Playlist = {
+    id: '1',
     name: 'night',
-    color: 'red',
+    color: 'rgb(245, 130, 63)',
+    type: 'TAG',
+    created: false,
     tracks: tracks1,
     exported: true,
     playlistId: '123',
@@ -51,8 +54,11 @@ describe('match lists', () => {
   };
 
   const playlist2: Playlist = {
+    id: '1',
     name: 'cruising',
-    color: 'red',
+    color: 'rgb(184, 67, 62)',
+    type: 'TAG',
+    created: false,
     tracks: tracks2,
     exported: true,
     playlistId: '123',
@@ -65,9 +71,30 @@ describe('match lists', () => {
     },
   };
 
-  const result: MixedPlaylist = {
+  const playlist3: Playlist = {
+    id: '1',
+    name: 'morning',
+    color: 'rgb(124, 27, 62)',
+    type: 'TAG',
+    created: false,
+    tracks: tracks2,
+    exported: true,
+    playlistId: '123',
+    snapshotId: '456',
+    isActive: false,
+    status: {
+      sync: 'SYNCED',
+      exporting: false,
+      error: false,
+    },
+  };
+
+  const result1: Playlist = {
+    id: '22',
     name: 'night cruising',
-    color: 'random',
+    color: 'linear-gradient(to bottom right, rgb(245, 130, 63), rgb(184, 67, 62))',
+    type: 'MIXED',
+    created: false,
     tracks: [
       {
         album: '2000',
@@ -80,9 +107,8 @@ describe('match lists', () => {
       },
     ],
     exported: false,
-    created: false,
-    playlistId: '789',
-    snapshotId: '789',
+    playlistId: '',
+    snapshotId: '',
     isActive: false,
     status: {
       sync: 'UNSYNCED',
@@ -91,8 +117,41 @@ describe('match lists', () => {
     },
   };
 
-  test('merge list', () => {
+  const result2: Playlist = {
+    id: 'ss',
+    name: 'cruising morning',
+    color: 'linear-gradient(to bottom right, rgb(245, 130, 63), rgb(124, 27, 62))',
+    type: 'MIXED',
+    created: false,
+    tracks: [
+      {
+        album: '2000',
+        artist: 'Joey Bada$$',
+        artworkMedium: 'https://i.scdn.co/image/ab67616d00001e02aacc3ddf3bfa01f4bd44cacc',
+        artworkSmall: 'https://i.scdn.co/image/ab67616d00004851aacc3ddf3bfa01f4bd44cacc',
+        duration: 244653,
+        title: 'Eulogy',
+        uri: 'spotify:track:18M1K6KD1OmgJZY4h4zEn4',
+      },
+    ],
+    exported: false,
+    playlistId: '',
+    snapshotId: '',
+    isActive: false,
+    status: {
+      sync: 'UNSYNCED',
+      exporting: false,
+      error: false,
+    },
+  };
+
+  test('Merge works for two playlists', () => {
     const merge = createMatchLists([playlist1, playlist2]);
-    expect(merge).toContainEqual(result);
+    expect(merge).toEqual([result1]);
+  });
+
+  test.only('Merge creates two mixed lists when multiple lists matches', () => {
+    const merge = createMatchLists([playlist1, playlist2, playlist3]);
+    expect(merge).toEqual([result1, result2]);
   });
 });
