@@ -3,8 +3,8 @@ import './Account.scss';
 import { AuthButton } from '../../Components/atoms';
 import { FirebaseAuth } from '../../services';
 import { useAppSelector } from '../../store/hooks';
-import { CardNav } from '../../Components/molecules';
 import Edit from '../../Components/svg/Edit';
+import Card from '../../Layout/Card/Card';
 
 interface ISettingRow {
   description: string;
@@ -81,22 +81,19 @@ const Account = () => {
   ];
 
   return (
-    <div className="account">
-      <CardNav title="Account" />
-      <div className="account__body">
-        <ul className="account__settings">
-          <Setting header="Spotify" sections={spotify} />
-          <Setting header="Moodify" sections={moodify}>
-            <AuthButton
-              width="100%"
-              title="Delete Account"
-              backgroundColor="#150000"
-              textColor="#cd3e3e"
-              border="1px solid #e43131"
-              onClick={() => console.log('no')}
-            />
-          </Setting>
-        </ul>
+    <Card title="Account">
+      <ul className="settings">
+        <Setting header="Spotify" sections={spotify} />
+        <Setting header="Moodify" sections={moodify}>
+          <AuthButton
+            width="100%"
+            title="Delete Account"
+            backgroundColor="#150000"
+            textColor="#cd3e3e"
+            border="1px solid #e43131"
+            onClick={() => console.log('no')}
+          />
+        </Setting>
         <AuthButton
           width="100%"
           title="Sign Out"
@@ -104,8 +101,8 @@ const Account = () => {
           backgroundColor="black"
           onClick={() => FirebaseAuth.logOut()}
         />
-      </div>
-    </div>
+      </ul>
+    </Card>
   );
 };
 

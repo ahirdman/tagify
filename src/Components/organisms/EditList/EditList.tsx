@@ -1,6 +1,5 @@
 import * as React from 'react';
-import './EditList.scss';
-import { CardNav, PlaylistController } from '../../molecules';
+import { PlaylistController } from '../../molecules';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   clearSelectedList,
@@ -10,6 +9,7 @@ import {
 import { TracksList } from '..';
 import { onSnapshot } from 'firebase/firestore';
 import { Firestore, IFirestoreTagDocument } from '../../../services';
+import Card from '../../../Layout/Card/Card';
 
 const EditList = () => {
   const selected = useAppSelector(selectActiveTagList);
@@ -32,12 +32,10 @@ const EditList = () => {
   }, [fireId, dispatch, selected.name]);
 
   return (
-    <div className="edit-list">
-      <CardNav title={selected.name} onClick={() => dispatch(clearSelectedList())} />
+    <Card title={selected.name} navClick={() => dispatch(clearSelectedList())}>
       <PlaylistController />
-      <div className="edit-list__header"></div>
       <TracksList tracks={selected.tracks} />
-    </div>
+    </Card>
   );
 };
 

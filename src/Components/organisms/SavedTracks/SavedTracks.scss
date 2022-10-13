@@ -1,9 +1,0 @@
-@use '../../../styles';
-
-.select {
-  @include styles.card;
-
-  &__header {
-    @include styles.header;
-  }
-}

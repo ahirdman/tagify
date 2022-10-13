@@ -3,8 +3,6 @@
 .row {
   display: flex;
   height: 40px;
-  margin-left: 30px;
-  margin-right: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
   overflow: hidden;
@@ -12,10 +10,6 @@
   white-space: nowrap;
 
   cursor: pointer;
-
-  @media screen and (max-width: styles.$breakpoint-phone) {
-    margin-left: 10px;
-  }
 
   &:hover {
     background-color: styles.$row-hover;

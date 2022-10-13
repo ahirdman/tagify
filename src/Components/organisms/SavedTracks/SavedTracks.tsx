@@ -1,7 +1,4 @@
 import * as React from 'react';
-import Magnifier from '../../../assets/magnifier.svg';
-import './SavedTracks.scss';
-import { CardNav, SearchBar } from '../..//molecules';
 import { Loader } from '../../atoms';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -10,6 +7,7 @@ import {
   filterTracks,
 } from '../../../store/savedTracks/savedTracks.slice';
 import TracksList from '../TracksList/TracksList';
+import Card from '../../../Layout/Card/Card';
 
 const SavedTracks = () => {
   const [query, setQuery] = React.useState('');
@@ -48,18 +46,13 @@ const SavedTracks = () => {
   }, [query, savedTracksState.savedTracks, dispatch]);
 
   return (
-    <div className="select">
-      <CardNav title="Saved Tracks" />
-      <SearchBar icon={Magnifier} setSearch={setQuery} />
-      <section className="select__header">
-        <p className="select__header--title">TITLE & ARTIST</p>
-      </section>
+    <Card title="Saved Tracks" filter={true} setFilter={setQuery}>
       <TracksList
         tracks={savedTracksState.filteredTracks}
         element={listEl}
         children={savedTracksState.loading && <Loader />}
       />
-    </div>
+    </Card>
   );
 };
 

@@ -1,7 +1,15 @@
 @use '../../../styles';
 
-.track-card {
-  @include styles.card;
+.track-section {
+  display: flex;
+
+  @include styles.cardMargins;
+
+  &__album {
+    height: 120px;
+    width: 120px;
+    border: 1px solid styles.$border;
+  }
 
   &__playback {
     width: 40px;
@@ -15,25 +23,10 @@
     }
   }
 
-  &__info {
-    display: flex;
-
-    @include styles.cardMargins;
-  }
-
-  &__album {
-    height: 120px;
-    width: 120px;
-    border: 1px solid styles.$border;
-  }
-
   &__text {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-
-    height: 100%;
-    width: 80%;
 
     overflow-x: hidden;
     white-space: nowrap;
@@ -51,9 +44,5 @@
       line-height: 18px;
       color: styles.$grey-1;
     }
-  }
-
-  &__empty {
-    @include styles.cardEmpty;
   }
 }

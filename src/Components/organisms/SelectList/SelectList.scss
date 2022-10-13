@@ -1,12 +1,6 @@
 @use '../../../styles';
 
 .select-list {
-  @include styles.card;
-
-  &__search {
-    @include styles.search;
-  }
-
   &__header {
     @include styles.header;
   }

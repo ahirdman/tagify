@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CardNav } from '../../molecules';
+import Card from '../../../Layout/Card/Card';
 import './EmptyCard.scss';
 
 interface Props {
@@ -9,13 +9,12 @@ interface Props {
 
 const EmptyCard = ({ icon, item }: Props) => {
   return (
-    <div className="empty-card">
-      <CardNav title="..." />
-      <section className="empty-card__empty">
-        <img src={icon} alt="cross" className="empty-card__empty--icon" />
-        <p className="empty-card__empty--text">select a {item}</p>
+    <Card title="...">
+      <section className="empty-card">
+        <img src={icon} alt="cross" />
+        <p className="empty-card__text">select a {item}</p>
       </section>
-    </div>
+    </Card>
   );
 };
 
