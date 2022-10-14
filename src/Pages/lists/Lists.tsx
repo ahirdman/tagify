@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SelectList, EditList, EmptyCard } from '../../Components/organisms';
+import { SelectList, EditList, EmptyCard } from '../../Components/templates';
 import List from '../../assets/list.svg';
 import useWindowSize, { Window } from '../../hooks/useWindowSize';
 import {

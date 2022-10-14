@@ -1,9 +1,8 @@
-import EditList from './EditList/EditList';
-import EmptyCard from './EmptyCard/EmptyCard';
+import MixedList from './MixedList/MixedList';
 import Navbar from './Navbar/Navbar';
-import SavedTracks from './SavedTracks/SavedTracks';
-import SelectedTrack from './SelectedTrack/SelectedTrack';
-import SelectList from './SelectList/SelectList';
+import TagList from './TagList/Taglist';
 import TracksList from './TracksList/TracksList';
+import SignInForm from './SignInForm/SignInForm';
+import SignUpForm from './SignUpForm/SignUpForm';
 
-export { EditList, EmptyCard, Navbar, SavedTracks, SelectedTrack, SelectList, TracksList };
+export { MixedList, Navbar, TagList, TracksList, SignInForm, SignUpForm };

@@ -6,7 +6,7 @@ import {
   fetchNextTracks,
   filterTracks,
 } from '../../../store/savedTracks/savedTracks.slice';
-import TracksList from '../TracksList/TracksList';
+import { TracksList } from '../../organisms';
 import Card from '../../../Layout/Card/Card';
 
 const SavedTracks = () => {

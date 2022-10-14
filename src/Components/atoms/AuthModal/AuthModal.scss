@@ -1,4 +1,4 @@
-@use '../../../styles';
+@use '../../../styles/colors';
 
 .modal {
   display: flex;
@@ -15,7 +15,7 @@
   padding-top: 30px;
   padding-bottom: 30px;
 
-  background-color: styles.$background;
-  border: 1px solid styles.$border;
+  background-color: colors.$background;
+  border: 1px solid colors.$border;
   border-radius: 10px;
 }

@@ -3,12 +3,13 @@ import CardNav from './CardNav/CardNav';
 import ConnectScreen from './ConnectScreen/ConnectScreen';
 import Player from './Player/Player';
 import SearchBar from './SearchBar/SearchBar';
-import SignInForm from './SignInForm/SignInForm';
-import SignUpForm from './SignUpForm/SignUpForm';
 import TrackTags from './TrackTags/TrackTags';
 import UserTags from './UserTags/UserTags';
 import TrackRow from './TrackRow/TrackRow';
 import PlaylistController from './PlaylistController/PlaylistController';
+import Divider from './Divider/Divider';
+import PlaylistRow from './PlaylistRow/PlaylistRow';
+import TrackSection from './TrackSection/TrackSection';
 
 export {
   AddTag,
@@ -16,10 +17,11 @@ export {
   ConnectScreen,
   Player,
   SearchBar,
-  SignInForm,
-  SignUpForm,
   TrackTags,
   UserTags,
   TrackRow,
   PlaylistController,
+  Divider,
+  PlaylistRow,
+  TrackSection,
 };

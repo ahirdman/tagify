@@ -3,7 +3,7 @@ import Note from '../../assets/music-note.svg';
 import useWindowSize, { Window } from '../../hooks/useWindowSize';
 import { useAppSelector } from '../../store/hooks';
 import { selectedTrackSelector } from '../../store/savedTracks/savedTracks.slice';
-import { SavedTracks, SelectedTrack, EmptyCard } from '../../Components/organisms';
+import { SavedTracks, SelectedTrack, EmptyCard } from '../../Components/templates';
 import './Tracks.scss';
 
 const Tracks = () => {

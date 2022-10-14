@@ -1,0 +1,21 @@
+@use '../../../styles/colors';
+@use '../../../styles/breakpoints';
+
+.divider {
+  border-bottom: 1px solid colors.$component-grey;
+  margin-left: 30px;
+  margin-right: 30px;
+
+  @media screen and (max-width: breakpoints.$phone) {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  &__title {
+    color: colors.$component-grey;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 0.05em;
+  }
+}

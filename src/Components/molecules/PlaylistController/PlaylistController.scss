@@ -1,4 +1,4 @@
-@use '../../../styles';
+@use '../../../styles/colors';
 
 .playlist {
   display: flex;
@@ -11,7 +11,7 @@
 
   &__data {
     &--text {
-      color: styles.$component-grey;
+      color: colors.$component-grey;
       font-weight: 600;
       font-size: 14px;
       line-height: 18px;
@@ -34,7 +34,7 @@
     line-height: 18px;
 
     &--edit {
-      border: 1.5px solid styles.$grey-1;
+      border: 1.5px solid colors.$grey-1;
     }
 
     &--export {

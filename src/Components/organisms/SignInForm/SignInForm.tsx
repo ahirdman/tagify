@@ -8,9 +8,7 @@ const SignInForm = () => {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState({} as IAuthError);
 
-  const handleInputChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ): void => {
+  const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const value = event.currentTarget.value;
     const name = event.currentTarget.name;
 
@@ -25,9 +23,7 @@ const SignInForm = () => {
 
   return (
     <>
-      <div className={error.display ? 'error' : 'error--hidden'}>
-        {error.message}
-      </div>
+      <div className={error.display ? 'error' : 'error--hidden'}>{error.message}</div>
       <h1>LOG IN</h1>
       <form className="sign-in" onSubmit={handleSubmit}>
         <input

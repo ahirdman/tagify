@@ -1,9 +1,37 @@
-@use '../../../styles';
+@use '../../../styles/colors';
+@use '../../../styles/breakpoints';
 
 .card-nav {
-  @include styles.cardHeader;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  background-color: colors.$background;
+  border: 1px solid colors.$border;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 5px;
+
+  @media screen and (max-width: breakpoints.$phone) {
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid colors.$border;
+  }
+
+  &__back {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+
+    @media screen and (min-width: breakpoints.$phone) {
+      display: none;
+    }
+  }
 
   &__title {
-    @include styles.cardTitleSelected;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: colors.$highlighted;
   }
 }

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { useAppSelector } from '../../../store/hooks';
 import { selectMixedPlaylists } from '../../../store/playlists/playlists.slice';
-import PlaylistRow from '../../molecules/PlaylistRow/PlaylistRow';
+import { PlaylistRow } from '../../molecules';
+import './MixedList.scss';
 
 const MixedList = () => {
   const mixedPlaylists = useAppSelector(selectMixedPlaylists);
 
   return (
-    <ul>
+    <ul className="mixedlist">
       {mixedPlaylists.map((list, index) => {
         return <PlaylistRow list={list} key={index} />;
       })}

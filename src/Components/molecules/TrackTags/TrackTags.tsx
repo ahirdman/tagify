@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import Cross from '../../..//assets/cross-circle.svg';
 import './TrackTags.scss';
-import Tag from '../../atoms/Tag/Tag';
+import { Tag } from '../../atoms';
 import { useAppSelector } from '../../../store/hooks';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
 

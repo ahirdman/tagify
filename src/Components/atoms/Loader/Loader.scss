@@ -1,4 +1,4 @@
-@use '../../../styles';
+@use '../../../styles/colors';
 
 .container {
   display: flex;
@@ -9,8 +9,8 @@
 }
 
 .loader {
-  border: 3px solid styles.$highlighted;
-  border-top: 3px solid styles.$component-grey;
+  border: 3px solid colors.$highlighted;
+  border-top: 3px solid colors.$component-grey;
   border-radius: 50%;
   width: 20px;
   height: 20px;

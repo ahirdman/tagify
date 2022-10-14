@@ -1,4 +1,5 @@
-@use '../../../styles';
+@use '../../../styles/colors';
+@use '../../../styles/breakpoints';
 
 .player {
   display: flex;
@@ -9,12 +10,12 @@
   &--inactive {
     visibility: hidden;
 
-    @media screen and (max-width: styles.$breakpoint-phone) {
+    @media screen and (max-width: breakpoints.$phone) {
       display: none;
     }
   }
 
-  @media screen and (max-width: styles.$breakpoint-phone) {
+  @media screen and (max-width: breakpoints.$phone) {
     background-color: black;
     box-shadow: 0px -5px 15px 0px #000000e6;
 
@@ -49,7 +50,7 @@
       white-space: nowrap;
       margin-bottom: 5px;
 
-      @media screen and (max-width: styles.$breakpoint-phone) {
+      @media screen and (max-width: breakpoints.$phone) {
         font-weight: 600;
         font-size: 14px;
       }
@@ -59,7 +60,7 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 18px;
-      color: styles.$grey-1;
+      color: colors.$grey-1;
     }
   }
 }

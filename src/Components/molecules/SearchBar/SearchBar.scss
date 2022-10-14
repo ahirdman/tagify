@@ -1,4 +1,4 @@
-@use '../../../styles';
+@use '../../../styles/colors';
 
 .search {
   display: flex;
@@ -10,7 +10,7 @@
   &--input {
     height: 40px;
     width: 100%;
-    border: 1px solid styles.$grey-1;
+    border: 1px solid colors.$grey-1;
     border-radius: 10px;
     background: none;
     padding-left: 45px;

@@ -3,7 +3,7 @@ import './Account.scss';
 import { AuthButton } from '../../Components/atoms';
 import { FirebaseAuth } from '../../services';
 import { useAppSelector } from '../../store/hooks';
-import Edit from '../../Components/svg/Edit';
+import Edit from '../../svg/Edit';
 import Card from '../../Layout/Card/Card';
 
 interface ISettingRow {

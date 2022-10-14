@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SavedTracksData } from '../../../services';
-import { TrackRow } from '../../molecules/index';
+import { TrackRow } from '../../molecules';
 import './TracksList.scss';
 
 interface Props {

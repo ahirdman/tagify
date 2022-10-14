@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AuthButton, AuthModal, Backdrop } from '../../Components/atoms';
-import { ConnectScreen, SignInForm, SignUpForm } from '../../Components/molecules';
+import { ConnectScreen } from '../../Components/molecules';
+import { SignInForm, SignUpForm } from '../../Components/organisms';
 import { toggleSignInModal, toggleSignUpModal } from '../../store/ui/ui.slice';
 import './Login.scss';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';

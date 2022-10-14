@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
-import { AddTag, TrackTags, UserTags } from '../../molecules';
+import { AddTag, TrackTags, UserTags, TrackSection } from '../../molecules';
 import { matchTag } from '../../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../../common/common.interface';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -10,7 +10,6 @@ import {
   setSelectedTrack,
 } from '../../../store/savedTracks/savedTracks.slice';
 import Card from '../../../Layout/Card/Card';
-import TrackSection from '../../molecules/TrackSection/TrackSection';
 
 const SelectedTrack = () => {
   const [trackTags, setTrackTags] = React.useState<string[]>([]);

@@ -6,7 +6,7 @@ import {
   selectActiveTagList,
   updateStateDoc,
 } from '../../../store/playlists/playlists.slice';
-import { TracksList } from '..';
+import { TracksList } from '../../organisms';
 import { onSnapshot } from 'firebase/firestore';
 import { Firestore, IFirestoreTagDocument } from '../../../services';
 import Card from '../../../Layout/Card/Card';
