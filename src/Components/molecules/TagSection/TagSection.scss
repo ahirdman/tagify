@@ -1,0 +1,39 @@
+@use '../../../styles/mixins';
+@use '../../../styles/breakpoints';
+@use '../../../styles/colors';
+
+.tag-section {
+  @include mixins.cardMargins;
+
+  &__title {
+    color: colors.$component-grey;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 0.05em;
+  }
+
+  &__container {
+    margin-top: 10px;
+    padding-top: 10px;
+    height: 10vh;
+
+    overflow-x: scroll;
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    background-color: colors.$background;
+    border-radius: 5px;
+
+    @media screen and (max-width: breakpoints.$phone) {
+      height: 15vh;
+    }
+
+    &--empty {
+      margin-top: 30px;
+      height: 34px;
+    }
+  }
+}

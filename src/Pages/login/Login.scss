@@ -1,4 +1,4 @@
-@use '../../styles';
+@use '../../styles/colors';
 
 .login {
   position: absolute;
@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: styles.$background;
+  background: colors.$background;
 
   &__logo,
   &__header {

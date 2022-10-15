@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
-import { AddTag, TrackTags, UserTags, TrackSection } from '../../molecules';
+import { AddTag, TrackSection, TagSection } from '../../molecules';
 import { matchTag } from '../../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../../common/common.interface';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -10,6 +10,8 @@ import {
   setSelectedTrack,
 } from '../../../store/savedTracks/savedTracks.slice';
 import Card from '../../../Layout/Card/Card';
+import Cross from '../../..//assets/cross-circle.svg';
+import Add from '../../..//assets/add-circle.svg';
 
 const SelectedTrack = () => {
   const [trackTags, setTrackTags] = React.useState<string[]>([]);
@@ -47,8 +49,8 @@ const SelectedTrack = () => {
     <Card title="Selected Track" navClick={() => dispatch(setSelectedTrack(undefined))}>
       <div style={{ overflowX: 'scroll' }}>
         <TrackSection />
-        <TrackTags trackTags={trackTags} />
-        <UserTags userTags={userTags} />
+        <TagSection title="TRACK TAGS" tags={trackTags} tagAction="DELETE" actionIcon={Cross} />
+        <TagSection title="MY TAGS" tags={userTags} tagAction="ADD" actionIcon={Add} />
         <AddTag />
       </div>
     </Card>

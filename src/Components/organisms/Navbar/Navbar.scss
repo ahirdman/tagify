@@ -1,23 +1,24 @@
-@use '../../../styles';
+@use '../../../styles/colors';
+@use '../../../styles/breakpoints';
 
 .navbar {
   width: 100vw;
   height: 8vh;
-  background-color: styles.$component-background;
+  background-color: colors.$component-background;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid styles.$border;
+  border-bottom: 1px solid colors.$border;
 
-  @media screen and (max-width: styles.$breakpoint-phone) {
+  @media screen and (max-width: breakpoints.$phone) {
     order: 1;
     border-bottom: none;
-    border-top: 1px solid styles.$border;
+    border-top: 1px solid colors.$border;
     justify-content: space-evenly;
     align-items: center;
   }
 
   &__profile {
-    @media screen and (min-width: styles.$breakpoint-phone) {
+    @media screen and (min-width: breakpoints.$phone) {
       width: 25vw;
       margin-left: 15px;
     }
@@ -44,7 +45,7 @@
       align-items: center;
       text-decoration: none;
 
-      @media screen and (min-width: styles.$breakpoint-phone) {
+      @media screen and (min-width: breakpoints.$phone) {
         margin: 10px;
       }
     }
@@ -53,7 +54,7 @@
       width: 30px;
       height: 30px;
 
-      @media screen and (min-width: styles.$breakpoint-phone) {
+      @media screen and (min-width: breakpoints.$phone) {
         width: 20px;
         height: 20px;
         margin-right: 10px;
@@ -66,35 +67,26 @@
       line-height: 27px;
 
       &:hover {
-        color: styles.$grey-1;
+        color: colors.$grey-1;
       }
     }
 
     &--desktop {
-      @media screen and (max-width: styles.$breakpoint-phone) {
+      @media screen and (max-width: breakpoints.$phone) {
         display: none;
       }
     }
 
     &--mobile {
-      @media screen and (min-width: styles.$breakpoint-phone) {
+      @media screen and (min-width: breakpoints.$phone) {
         display: none;
       }
     }
   }
-
-  // &__player {
-  //   @media screen and (max-width: styles.$breakpoint-phone) {
-  //     position: absolute;
-  //     bottom: 7.5vh;
-  //     width: 100vw;
-  //     height: 50px;
-  //   }
-  // }
 }
 
 .active {
-  @media screen and (min-width: styles.$breakpoint-phone) {
-    border-bottom: 1px solid styles.$grey-1;
+  @media screen and (min-width: breakpoints.$phone) {
+    border-bottom: 1px solid colors.$grey-1;
   }
 }

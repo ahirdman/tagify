@@ -1,12 +1,13 @@
-@use '../../../styles';
+@use '../../../styles/mixins';
+@use '../../../styles/colors';
 
 .add-tag {
-  @include styles.cardMargins;
+  @include mixins.cardMargins;
 
   z-index: 1;
 
   &__title {
-    color: styles.$component-grey;
+    color: colors.$component-grey;
     font-weight: 300;
     font-size: 18px;
     line-height: 27px;
@@ -25,7 +26,7 @@
     &--input {
       height: 40px;
       width: 70%;
-      border: 1px solid styles.$component-grey;
+      border: 1px solid colors.$component-grey;
       border-radius: 10px;
       background: none;
       padding-left: 45px;
@@ -34,7 +35,7 @@
       line-height: 24px;
 
       &:focus {
-        border: 1px solid styles.$grey-1;
+        border: 1px solid colors.$grey-1;
       }
     }
 

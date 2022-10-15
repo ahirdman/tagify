@@ -1,4 +1,4 @@
-@use '../../styles';
+@use '../../styles/colors';
 
 .settings {
   padding: 10px;
@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
 
-  border: 1px solid styles.$border;
+  border: 1px solid colors.$border;
   border-radius: 3px;
 
   padding: 10px;
@@ -33,7 +33,7 @@
     padding-bottom: 10px;
 
     &--description {
-      color: styles.$component-grey;
+      color: colors.$component-grey;
       font-weight: 300;
       font-size: 14px;
       line-height: 15px;

@@ -1,4 +1,4 @@
-@use 'styles';
+@use './styles/colors';
 
 .app {
   position: absolute;
@@ -9,9 +9,9 @@
   height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
-  background: styles.$background;
+  background: colors.$background;
 
   @media screen and (max-width: 600px) {
-    background: styles.$component-background;
+    background: colors.$component-background;
   }
 }
