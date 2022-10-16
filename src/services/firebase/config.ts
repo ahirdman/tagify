@@ -17,7 +17,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const functions = getFunctions(getApp());
-connectFunctionsEmulator(functions, 'localhost', 5001);
+
+if (window.location.hostname === 'localhost') {
+  connectFunctionsEmulator(functions, 'localhost', 5001);
+}
+
 export { functions };
 
 export const db = getFirestore(app);

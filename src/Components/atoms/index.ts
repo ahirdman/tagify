@@ -5,5 +5,6 @@ import Loader from './Loader/Loader';
 import Tag from './Tag/Tag';
 import PlaybackButton from './PlaybackButton/PlaybackButton';
 import ExportButton from './ExportButton/ExportButton';
+import Spacer from './Spacer/Spacer';
 
-export { AuthButton, AuthModal, Backdrop, Loader, Tag, PlaybackButton, ExportButton };
+export { AuthButton, AuthModal, Backdrop, Loader, Tag, PlaybackButton, ExportButton, Spacer };

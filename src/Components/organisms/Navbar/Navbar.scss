@@ -29,30 +29,28 @@
     align-items: center;
 
     &--avatar {
+      @media screen and (min-width: breakpoints.$phone) {
+        display: none;
+      }
+    }
+
+    &--profile-picture {
       width: 45px;
       height: 45px;
       border-radius: 50%;
-    }
-
-    &--username {
-      margin-left: 15px;
-    }
-
-    &--tracks,
-    &--list {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-decoration: none;
-
-      @media screen and (min-width: breakpoints.$phone) {
-        margin: 10px;
+      @media screen and (max-width: breakpoints.$phone) {
+        display: none;
       }
     }
 
     &--icon {
       width: 30px;
       height: 30px;
+
+      &:hover path,
+      &:hover circle {
+        stroke: colors.$grey-1;
+      }
 
       @media screen and (min-width: breakpoints.$phone) {
         width: 20px;
@@ -69,24 +67,22 @@
       &:hover {
         color: colors.$grey-1;
       }
-    }
 
-    &--desktop {
       @media screen and (max-width: breakpoints.$phone) {
         display: none;
       }
     }
 
-    &--mobile {
-      @media screen and (min-width: breakpoints.$phone) {
-        display: none;
+    &--active {
+      path,
+      circle {
+        stroke: colors.$orange;
+      }
+
+      &:hover path,
+      &:hover circle {
+        stroke: colors.$orange;
       }
     }
-  }
-}
-
-.active {
-  @media screen and (min-width: breakpoints.$phone) {
-    border-bottom: 1px solid colors.$grey-1;
   }
 }

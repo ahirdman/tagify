@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ISVGProps } from '../common/common.interface';
 
-const avatar = ({ className }: ISVGProps) => {
+const List = ({ className }: ISVGProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,11 +16,10 @@ const avatar = ({ className }: ISVGProps) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
-        d="M24.5 25.375v-1.75a3.5 3.5 0 0 0-3.5-3.5h-7a3.5 3.5 0 0 0-3.5 3.5v1.75m7-8.75a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+        d="M11.667 8.75h18.958M11.667 17.5h18.958m-18.958 8.75h18.958M4.375 8.75h.015m-.015 8.75h.015m-.015 8.75h.015"
       />
-      <circle cx="17.5" cy="17.5" r="16.5" stroke="white" strokeWidth="2" />
     </svg>
   );
 };
 
-export default avatar;
+export default List;

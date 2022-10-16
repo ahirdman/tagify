@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import Add from '../../../assets/add.svg';
-import Tag from '../../../assets/tag.svg';
 import './AddTag.scss';
 import { randomizeTagColor } from '../../../services/firebase/firestore/firestore.helper';
 import { useAppSelector } from '../../../store/hooks';
 import { fireIdSelector } from '../../../store/user/user.slice';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
+import Tag from '../../../svg/Tag';
 
 const AddTag = () => {
   const [tagInput, setTagInput] = React.useState('');
@@ -23,7 +23,7 @@ const AddTag = () => {
           value={tagInput}
           onChange={e => setTagInput(e.target.value)}
         />
-        <img src={Tag} alt="tag" className="add-tag__search--tag" />
+        <Tag className="add-tag__search--tag" />
         <button
           className="add-tag__search--button"
           onClick={e => {
