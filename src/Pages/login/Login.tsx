@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AuthButton, AuthModal, Backdrop } from '../../Components/atoms';
+import { Button, AuthModal, Backdrop } from '../../Components/atoms';
 import { ConnectScreen } from '../../Components/molecules';
 import { SignInForm, SignUpForm } from '../../Components/organisms';
 import { toggleSignInModal, toggleSignUpModal } from '../../store/ui/ui.slice';
@@ -16,13 +16,13 @@ const Login = () => {
       <div className="login__logo">TAGIFY</div>
       <div className="login__header"></div>
       <div className="login__buttons">
-        <AuthButton
+        <Button
           title="SIGN UP"
           backgroundColor="#1bd760"
           textColor="black"
           onClick={() => dispatch(toggleSignUpModal())}
         />
-        <AuthButton
+        <Button
           title="LOG IN"
           backgroundColor="white"
           onClick={() => dispatch(toggleSignInModal())}
@@ -36,6 +36,13 @@ const Login = () => {
       {signInModal && (
         <Backdrop onClick={() => dispatch(toggleSignInModal())}>
           <AuthModal>{loggedIn ? <ConnectScreen autoConnect={false} /> : <SignInForm />}</AuthModal>
+        </Backdrop>
+      )}
+      {loggedIn && (
+        <Backdrop>
+          <AuthModal>
+            <ConnectScreen autoConnect={false} />
+          </AuthModal>
         </Backdrop>
       )}
     </main>

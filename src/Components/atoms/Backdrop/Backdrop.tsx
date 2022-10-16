@@ -3,7 +3,7 @@ import './Backdrop.scss';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
-  onClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const Backdrop = ({ children, onClick }: Props) => {

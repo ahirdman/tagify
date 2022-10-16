@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './Account.scss';
-import { AuthButton } from '../../Components/atoms';
+import { Button } from '../../Components/atoms';
 import { FirebaseAuth } from '../../services';
 import { useAppSelector } from '../../store/hooks';
 import Edit from '../../svg/Edit';
@@ -85,7 +85,7 @@ const Account = () => {
       <ul className="settings">
         <Setting header="Spotify" sections={spotify} />
         <Setting header="Moodify" sections={moodify}>
-          <AuthButton
+          <Button
             width="100%"
             title="Delete Account"
             backgroundColor="#150000"
@@ -94,7 +94,7 @@ const Account = () => {
             onClick={() => console.log('no')}
           />
         </Setting>
-        <AuthButton
+        <Button
           width="100%"
           title="Sign Out"
           textColor="white"

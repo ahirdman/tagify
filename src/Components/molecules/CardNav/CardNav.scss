@@ -26,6 +26,10 @@
     @media screen and (min-width: breakpoints.$phone) {
       display: none;
     }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__title {

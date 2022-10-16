@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from './store/hooks';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './services/firebase/config';
 import { firebaseSignIn, firebaseSignOut } from './store/user/user.slice';
+import Home from './Pages/home/Home';
 
 const App = () => {
   const ready = useAppSelector(state => state.user.ready);
@@ -31,9 +32,10 @@ const App = () => {
       <main className="app">
         <Navbar />
         <Routes>
-          <Route path="/account" element={<Account />} />
-          <Route path="/" element={<Tracks />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/tracks" element={<Tracks />} />
           <Route path="/lists" element={<Lists />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
       </main>
     );

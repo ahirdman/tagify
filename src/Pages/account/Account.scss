@@ -53,6 +53,9 @@
 
       :hover {
         cursor: pointer;
+        path {
+          stroke: colors.$grey-1;
+        }
       }
     }
   }

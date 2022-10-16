@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './AuthButton.scss';
+import './Button.scss';
 
 interface Props {
   title: string;
@@ -10,10 +10,10 @@ interface Props {
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const AuthButton = ({ title, backgroundColor, textColor, width, border, onClick }: Props) => {
+const Button = ({ title, backgroundColor, textColor, width, border, onClick }: Props) => {
   return (
     <button
-      className="authButton"
+      className="button"
       style={{ backgroundColor, color: textColor, width, border }}
       onClick={onClick}
     >
@@ -22,4 +22,4 @@ const AuthButton = ({ title, backgroundColor, textColor, width, border, onClick 
   );
 };
 
-export default AuthButton;
+export default Button;

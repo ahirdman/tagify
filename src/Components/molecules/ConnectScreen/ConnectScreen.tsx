@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AuthButton, Loader } from '../../atoms';
+import { Button, Loader } from '../../atoms';
 
 interface Props {
   autoConnect: boolean;
@@ -15,7 +15,7 @@ const ConnectScreen = ({ autoConnect }: Props) => {
   if (autoConnect) {
     return (
       <div>
-        <AuthButton
+        <Button
           title="CONNECT TO SPOTIFY"
           onClick={() => console.log('removed redirect')}
           backgroundColor="#1bd760"

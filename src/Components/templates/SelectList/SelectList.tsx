@@ -8,7 +8,7 @@ const SelectList = () => {
     <Card title="Lists">
       <Divider title="TAGS" />
       <TagList />
-      <Divider title="MATCH TAGS" />
+      <Divider title="MIXED TAGS" />
       <MixedList />
     </Card>
   );
