@@ -5,7 +5,7 @@ import { Divider } from '../../molecules';
 
 const SelectList = () => {
   return (
-    <Card title="Lists">
+    <Card title="Tags">
       <Divider title="TAGS" />
       <TagList />
       <Divider title="MIXED TAGS" />

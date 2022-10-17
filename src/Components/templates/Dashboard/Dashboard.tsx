@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '../../../Layout/Card/Card';
 import WelcomeHeader from '../../molecules/WelcomeHeader/WelcomeHeader';
 
-const HomeScreen = () => {
+const Dashboard = () => {
   return (
     <Card title="Home">
       <WelcomeHeader />
@@ -10,4 +10,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Dashboard;

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import HomeScreen from '../../Components/templates/HomeScreen/HomeScreen';
+import { Dashboard } from '../../Components/templates';
 
 const Home = () => {
-  return <HomeScreen />;
+  return <Dashboard />;
 };
 
 export default Home;
