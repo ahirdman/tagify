@@ -3,10 +3,10 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { Player } from '../../molecules';
 import './Navbar.scss';
 import { useAppSelector } from '../../../store/hooks';
-import Tag from '../../../svg/Tag';
-import Avatar from '../../../svg/Avatar';
-import Library from '../../../svg/Library';
-import Home from '../../../svg/Home';
+import { Tag } from '../../../svg';
+import { Avatar } from '../../../svg';
+import { Library } from '../../../svg';
+import { Home } from '../../../svg';
 
 const Navbar = () => {
   const profile = useAppSelector(state => state.user.spotify.profile);
