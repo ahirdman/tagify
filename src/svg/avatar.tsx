@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ISVGProps } from '../common/common.interface';
 
-const avatar = ({ className }: ISVGProps) => {
+const Avatar = ({ className }: ISVGProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,4 +23,4 @@ const avatar = ({ className }: ISVGProps) => {
   );
 };
 
-export default avatar;
+export default Avatar;
