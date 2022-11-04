@@ -4,7 +4,7 @@ import { Player } from '../../molecules';
 import './Navbar.scss';
 import { useAppSelector } from '../../../store/hooks';
 import { Tag } from '../../../svg';
-import { Avatar } from '../../../svg';
+import { Settings } from '../../../svg';
 import { Library } from '../../../svg';
 import { Home } from '../../../svg';
 
@@ -33,7 +33,7 @@ const Navbar = () => {
       </NavLink>
 
       <NavLink to="/account" className="navbar__item">
-        <Avatar className={isActiveLink('/account')} />
+        <Settings className={isActiveLink('/account')} />
         <img src={profile.image} alt="profile" className="navbar__item--profile-picture" />
         <p className="navbar__item--text">{profile.name}</p>
       </NavLink>
