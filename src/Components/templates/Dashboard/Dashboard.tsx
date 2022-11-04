@@ -7,9 +7,22 @@ import { RecentTags } from '../../organisms';
 const Dashboard = () => {
   return (
     <Card title="Home">
-      <WelcomeHeader />
-      <RecentTags />
-      <Button title="Create new tag" backgroundColor="black" textColor="white" />
+      <div
+        style={{
+          padding: '10px',
+        }}
+      >
+        <WelcomeHeader />
+        <RecentTags />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Button title="Create new tag" backgroundColor="black" textColor="white" />
+        </div>
+      </div>
     </Card>
   );
 };

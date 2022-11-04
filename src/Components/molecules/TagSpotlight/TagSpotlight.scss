@@ -1,7 +1,16 @@
+@use '../../../styles/text';
+
+.p {
+  @include text.p-grey;
+}
+
+.h2 {
+  @include text.h2-bold;
+}
+
 .tag-spotlight {
   height: 80px;
-
-  border-radius: 10px;
+  border-radius: 15px;
   margin-bottom: 20px;
   padding-left: 10px;
   padding-right: 15px;
@@ -10,6 +19,10 @@
 
   display: flex;
   align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   &__circle {
     border-radius: 50%;

@@ -26,7 +26,7 @@ startplaylistSyncListening({
 
     const result = await Spotify.validateSnapshot(playlistId, snapshotId, token);
 
-    console.log(result);
+    // console.log(result);
 
     const status = snapshotId === result.snapshotId ? 'SYNCED' : 'UNSYNCED';
 
@@ -43,10 +43,10 @@ startMixedListsListening({
   effect: async (action, listenerApi) => {
     const taglists = action.payload.lists;
 
-    console.log(1, taglists);
+    // console.log(1, taglists);
     const mixes = createMatchLists(taglists);
 
-    console.log(2, mixes);
+    // console.log(2, mixes);
 
     if (mixes.length < 1) return;
 

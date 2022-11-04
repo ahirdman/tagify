@@ -1,0 +1,26 @@
+@use './colors';
+
+@mixin h1-bold {
+  font-style: bold;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+@mixin h2-bold {
+  font-style: bold;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+@mixin h3-bold {
+  font-style: bold;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+@mixin p-grey {
+  font-style: normal;
+  font-size: 12px;
+  line-height: 18px;
+  color: colors.$grey-1;
+}

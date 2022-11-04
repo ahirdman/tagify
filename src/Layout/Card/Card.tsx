@@ -13,13 +13,13 @@ interface IProps {
 }
 
 const Card = ({ title, navClick, filter, setFilter, children }: IProps) => {
-  const isActive = useAppSelector(state => state.playback.isActive);
+  const playback = useAppSelector(state => state.playback.isActive);
   return (
     <div className="card">
       <CardNav title={title} onClick={navClick} />
       {filter && <SearchBar setSearch={setFilter} />}
       {children}
-      {isActive && <Spacer />}
+      {playback && <Spacer />}
     </div>
   );
 };
