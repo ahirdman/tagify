@@ -56,16 +56,16 @@ const Lists = () => {
     };
   }, [fireId, dispatch]);
 
-  if (size.width >= 900) {
-    return (
-      <div className="tracks-view">
-        <SelectList />
-        {selectedList ? <EditList /> : <EmptyCard icon={List} item="list" />}
-      </div>
-    );
-  }
+  // if (size.width >= 900) {
+  //   return (
+  //     <div className="tracks-view">
+  //       <SelectList />
+  //       {selectedList ? <EditList /> : <EmptyCard icon={List} item="list" />}
+  //     </div>
+  //   );
+  // }
 
-  return <>{selectedList ? <EditList /> : <SelectList />}</>;
+  return <SelectList />;
 };
 
 export default Lists;

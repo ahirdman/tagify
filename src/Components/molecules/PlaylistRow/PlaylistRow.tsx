@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useAppDispatch } from '../../../store/hooks';
+import { Link } from 'react-router-dom';
 import { Playlist } from '../../../store/playlists/playlists.interface';
-import { setSelectedList } from '../../../store/playlists/playlists.slice';
 import './PLaylistRow.scss';
 
 interface IProps {
@@ -9,19 +8,12 @@ interface IProps {
 }
 
 const PlaylistRow = ({ list }: IProps) => {
-  const dispatch = useAppDispatch();
-
   return (
-    <li
-      onClick={() => {
-        dispatch(setSelectedList({ selectedList: list.id }));
-      }}
-      className="playlist-row"
-    >
-      <section className="playlist-row__details">
+    <li className="playlist-row">
+      <Link to={list.id} className="playlist-row__details">
         <div className="playlist-row__details--circle" style={{ background: list.color }}></div>
         <p className="playlist-row__details--title">{list.name}</p>
-      </section>
+      </Link>
     </li>
   );
 };

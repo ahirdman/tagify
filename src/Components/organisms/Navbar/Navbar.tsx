@@ -18,8 +18,8 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <NavLink to="/" className="navbar__item">
-        <Home className={isActiveLink('/')} />
+      <NavLink to="/home" className="navbar__item">
+        <Home className={isActiveLink('/home')} />
       </NavLink>
 
       <NavLink to="/tracks" className="navbar__item">

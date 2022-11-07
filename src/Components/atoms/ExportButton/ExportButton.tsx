@@ -1,30 +1,32 @@
 import * as React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { exportPlaylist, selectActiveTagList } from '../../../store/playlists/playlists.slice';
+import { useAppDispatch } from '../../../store/hooks';
+import { IPlaylistStatus } from '../../../store/playlists/playlists.interface';
+import { exportPlaylist } from '../../../store/playlists/playlists.slice';
 
-const ExportButton = () => {
-  const selected = useAppSelector(selectActiveTagList);
+interface IProps {
+  status: IPlaylistStatus;
+}
 
-  const { error, exporting, sync } = selected.status;
+const ExportButton = ({ status }: IProps) => {
   const dispatch = useAppDispatch();
 
   const buttonText = () => {
-    if (exporting) {
+    if (status.exporting) {
       return 'Exporting...';
     }
 
-    if (error) {
+    if (status.error) {
       return 'Error';
     }
 
-    if (sync === 'SYNCED') {
+    if (status.sync === 'SYNCED') {
       return 'Nominal';
     }
 
     return 'Export';
   };
 
-  const status = buttonText();
+  const statusText = buttonText();
 
   return (
     <button
@@ -33,9 +35,9 @@ const ExportButton = () => {
         e.preventDefault();
         dispatch(exportPlaylist());
       }}
-      style={{ border: error && '1px solid red' }}
+      style={{ border: status.error && '1px solid red' }}
     >
-      {status}
+      {statusText}
     </button>
   );
 };

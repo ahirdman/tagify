@@ -18,6 +18,12 @@ export interface Playlist {
   };
 }
 
+export interface IPlaylistStatus {
+  sync: 'SYNCED' | 'UNSYNCED' | 'UNKNOWN';
+  exporting: boolean;
+  error: boolean;
+}
+
 export interface PlaylistState {
   playlists: Playlist[];
 }

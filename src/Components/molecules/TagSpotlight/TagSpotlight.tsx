@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../store/hooks';
 import { Playlist } from '../../../store/playlists/playlists.interface';
-import { setSelectedList } from '../../../store/playlists/playlists.slice';
 import './TagSpotlight.scss';
 
 interface IProps {
@@ -10,15 +8,13 @@ interface IProps {
 }
 
 const TagSpotlight = ({ list }: IProps) => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   return (
     <li
       className="tag-spotlight"
       onClick={() => {
-        dispatch(setSelectedList({ selectedList: list.id }));
-        navigate('/lists');
+        navigate(`/lists/${list.id}`);
       }}
     >
       <div className="tag-spotlight__circle" style={{ background: list.color }}></div>
