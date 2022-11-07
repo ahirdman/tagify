@@ -79,6 +79,7 @@ export interface IUserSavedObject {
 }
 
 export interface SavedTracksData {
+  id: string;
   title: string;
   artist: string;
   album: string;

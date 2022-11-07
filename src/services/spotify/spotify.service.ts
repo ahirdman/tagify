@@ -18,6 +18,7 @@ export const extractUris = (arr: SavedTracksData[]): string[] =>
 
 export const savedDataExtractor = (data: IUserSavedObject[]): SavedTracksData[] =>
   data.map(({ track }) => ({
+    id: track.id,
     title: track.name,
     artist: track.artists[0].name,
     album: track.album.name,

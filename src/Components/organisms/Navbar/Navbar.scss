@@ -72,17 +72,17 @@
         display: none;
       }
     }
+  }
+}
 
-    &--active {
-      path,
-      circle {
-        stroke: colors.$orange;
-      }
+.active {
+  path,
+  circle {
+    stroke: colors.$orange;
+  }
 
-      &:hover path,
-      &:hover circle {
-        stroke: colors.$orange;
-      }
-    }
+  &:hover path,
+  &:hover circle {
+    stroke: colors.$orange;
   }
 }

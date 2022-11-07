@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tag } from '../../atoms';
+import { TagButton } from '../../atoms';
 import './TagSection.scss';
 import { ITags } from '../../../common/common.interface';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
@@ -10,10 +10,9 @@ interface Props {
   title: string;
   tags?: any[];
   tagAction: 'ADD' | 'DELETE';
-  actionIcon: any;
 }
 
-const TagSection = ({ title, tags, tagAction, actionIcon }: Props) => {
+const TagSection = ({ title, tags, tagAction }: Props) => {
   const selectedTrack = useAppSelector(selectedTrackSelector);
   const fireId = useAppSelector(state => state.user.fireId);
 
@@ -24,7 +23,7 @@ const TagSection = ({ title, tags, tagAction, actionIcon }: Props) => {
         {tags.length > 0 ? (
           tags.map((tag: ITags, index: number) => {
             return (
-              <Tag
+              <TagButton
                 key={index}
                 onClick={
                   tagAction === 'ADD'
@@ -33,7 +32,7 @@ const TagSection = ({ title, tags, tagAction, actionIcon }: Props) => {
                 }
                 color={tag.color}
                 name={tag.name}
-                actionIcon={actionIcon}
+                tagAction={tagAction}
               />
             );
           })

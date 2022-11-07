@@ -2,14 +2,14 @@ import * as React from 'react';
 import { Button, AuthModal, Backdrop } from '../../Components/atoms';
 import { ConnectScreen } from '../../Components/molecules';
 import { SignInForm, SignUpForm } from '../../Components/organisms';
-import { toggleSignInModal, toggleSignUpModal } from '../../store/ui/ui.slice';
 import './Login.scss';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 
 const Login = () => {
-  const { signInModal, signUpModal } = useAppSelector(state => state.ui);
   const { loggedIn } = useAppSelector(state => state.user);
-  const dispatch = useAppDispatch();
+
+  const [signInModal, setSignInModal] = React.useState(false);
+  const [signUpModal, setSignUpModal] = React.useState(false);
 
   return (
     <main className="login">
@@ -20,21 +20,17 @@ const Login = () => {
           title="SIGN UP"
           backgroundColor="#1bd760"
           textColor="black"
-          onClick={() => dispatch(toggleSignUpModal())}
+          onClick={() => setSignUpModal(true)}
         />
-        <Button
-          title="LOG IN"
-          backgroundColor="white"
-          onClick={() => dispatch(toggleSignInModal())}
-        />
+        <Button title="LOG IN" backgroundColor="white" onClick={() => setSignInModal(true)} />
       </div>
       {signUpModal && (
-        <Backdrop onClick={() => dispatch(toggleSignUpModal())}>
+        <Backdrop onClick={() => setSignUpModal(false)}>
           <AuthModal>{loggedIn ? <ConnectScreen autoConnect={false} /> : <SignUpForm />}</AuthModal>
         </Backdrop>
       )}
       {signInModal && (
-        <Backdrop onClick={() => dispatch(toggleSignInModal())}>
+        <Backdrop onClick={() => setSignInModal(false)}>
           <AuthModal>{loggedIn ? <ConnectScreen autoConnect={false} /> : <SignInForm />}</AuthModal>
         </Backdrop>
       )}

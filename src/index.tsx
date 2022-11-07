@@ -6,7 +6,7 @@ import './styles/_base.scss';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Account, ErrorPage, Home, Lists, Tracks } from './Pages';
 import App from './App';
-import { EditList } from './Components/templates';
+import { EditList, SelectedTrack } from './Pages';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -24,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/tracks',
         element: <Tracks />,
+      },
+      {
+        path: '/tracks/:trackId',
+        element: <SelectedTrack />,
       },
       {
         path: '/lists',

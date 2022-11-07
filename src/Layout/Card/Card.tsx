@@ -6,17 +6,17 @@ import './Card.scss';
 
 interface IProps {
   title: string;
-  navClick?: any;
+  navigate: boolean;
   filter?: boolean;
   setFilter?: any;
   children: JSX.Element | JSX.Element[];
 }
 
-const Card = ({ title, navClick, filter, setFilter, children }: IProps) => {
+const Card = ({ title, navigate, filter, setFilter, children }: IProps) => {
   const playback = useAppSelector(state => state.playback.isActive);
   return (
     <div className="card">
-      <CardNav title={title} onClick={navClick} />
+      <CardNav title={title} navigate={navigate} />
       {filter && <SearchBar setSearch={setFilter} />}
       {children}
       {playback && <Spacer />}

@@ -1,13 +1,6 @@
 @use '../../../styles/colors';
 
-.playback-button {
-  width: 100px;
-
-  svg {
-    width: 30px;
-    height: 30px;
-  }
-
+.back-button {
   &:hover {
     path {
       stroke: colors.$grey-1;

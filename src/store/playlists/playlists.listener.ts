@@ -18,7 +18,6 @@ startplaylistSyncListening({
   effect: async (action, listenerApi) => {
     const { playlistId, snapshotId } = action.payload.data;
     const state = listenerApi.getState();
-    console.log(666, playlistId);
     const selectedList = state.playlist.playlists.find(list => list.playlistId === playlistId);
 
     if (!selectedList.exported) return;

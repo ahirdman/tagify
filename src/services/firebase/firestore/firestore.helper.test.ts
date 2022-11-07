@@ -4,6 +4,7 @@ import { createMatchLists } from './firestore.helper';
 describe('match lists', () => {
   const tracks1 = [
     {
+      id: '111',
       album: '2000',
       artist: 'Joey Bada$$',
       artworkMedium: 'https://i.scdn.co/image/ab67616d00001e02aacc3ddf3bfa01f4bd44cacc',
@@ -13,6 +14,7 @@ describe('match lists', () => {
       uri: 'spotify:track:18M1K6KD1OmgJZY4h4zEn4',
     },
     {
+      id: '111',
       album: 'Extinction Level Event 2: The Wrath of God',
       artist: 'Busta Rhymes',
       artworkMedium: 'https://i.scdn.co/image/ab67616d00001e0229b216de65b23e754b9dcc98',
@@ -25,6 +27,7 @@ describe('match lists', () => {
 
   const tracks2 = [
     {
+      id: '111',
       album: '2000',
       artist: 'Joey Bada$$',
       artworkMedium: 'https://i.scdn.co/image/ab67616d00001e02aacc3ddf3bfa01f4bd44cacc',
@@ -97,6 +100,7 @@ describe('match lists', () => {
     created: false,
     tracks: [
       {
+        id: '111',
         album: '2000',
         artist: 'Joey Bada$$',
         artworkMedium: 'https://i.scdn.co/image/ab67616d00001e02aacc3ddf3bfa01f4bd44cacc',
@@ -125,6 +129,7 @@ describe('match lists', () => {
     created: false,
     tracks: [
       {
+        id: '123',
         album: '2000',
         artist: 'Joey Bada$$',
         artworkMedium: 'https://i.scdn.co/image/ab67616d00001e02aacc3ddf3bfa01f4bd44cacc',

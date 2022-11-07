@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { SelectList, EditList, EmptyCard } from '../../Components/templates';
-import List from '../../assets/list.svg';
 import useWindowSize, { Window } from '../../hooks/useWindowSize';
 import {
   setPlaylists,
@@ -12,6 +10,7 @@ import { Playlist } from '../../store/playlists/playlists.interface';
 import { onSnapshot } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import * as Firestore from '../../services/firebase/firestore/firestore.service';
+import SelectList from './SelectList';
 
 const Lists = () => {
   const dispatch = useAppDispatch();

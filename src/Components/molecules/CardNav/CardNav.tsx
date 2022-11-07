@@ -1,24 +1,20 @@
 import * as React from 'react';
-import Back from '../../../assets/back.svg';
+import { BackButton } from '../../atoms';
 import './CardNav.scss';
 
 interface Props {
   title: string;
-  onClick?: any;
+  navigate: boolean;
 }
 
-const CardNav = ({ title, onClick }: Props) => {
+const CardNav = ({ title, navigate }: Props) => {
   return (
     <div className="card-nav">
-      {typeof onClick !== 'undefined' ? (
-        <img
-          src={Back}
-          alt="back"
-          onClick={onClick}
-          className="card-nav__back"
-        />
-      ) : null}
-      <h2 className="card-nav__title">{title}</h2>
+      <div className="card-nav__left">{navigate && <BackButton />}</div>
+      <div className="card-nav__middle">
+        <h2 className="card-nav__middle--title">{title}</h2>
+      </div>
+      <div className="card-nav__right"></div>
     </div>
   );
 };
