@@ -44,9 +44,6 @@
     padding-left: 10px;
 
     &--name {
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 18px;
       white-space: nowrap;
       margin-bottom: 5px;
 
@@ -54,13 +51,6 @@
         font-weight: 600;
         font-size: 14px;
       }
-    }
-
-    &--artist {
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 18px;
-      color: colors.$grey-1;
     }
   }
 }

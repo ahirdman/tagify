@@ -1,10 +1,11 @@
 import * as React from 'react';
 import './WelcomeHeader.scss';
+import { Header } from '../../atoms';
 
 const WelcomeHeader = () => {
   return (
     <section className="header">
-      <h1 className="h1">Current Top Artists</h1>
+      <Header size="LARGE">Current Top Artists</Header>
     </section>
   );
 };

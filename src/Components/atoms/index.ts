@@ -1,12 +1,9 @@
-import Button from './Button/Button';
+import { Button, BackButton, ExportButton, TagButton, PlaybackButton } from './Buttons/Buttons';
+import { Header, Body } from './Text/Text';
 import AuthModal from './AuthModal/AuthModal';
 import Backdrop from './Backdrop/Backdrop';
 import Loader from './Loader/Loader';
-import TagButton from './TagButton/TagButton';
-import PlaybackButton from './PlaybackButton/PlaybackButton';
-import ExportButton from './ExportButton/ExportButton';
 import Spacer from './Spacer/Spacer';
-import BackButton from './BackButton/BackButton';
 
 export {
   Button,
@@ -18,4 +15,6 @@ export {
   ExportButton,
   Spacer,
   BackButton,
+  Header,
+  Body,
 };

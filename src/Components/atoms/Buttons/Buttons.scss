@@ -1,3 +1,23 @@
+@use '../../../styles/colors';
+
+.button {
+  width: 80vw;
+  height: 50px;
+
+  border-radius: 5px;
+  border: 1px solid colors.$border;
+
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 27px;
+  letter-spacing: 0.1em;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .tag {
   display: flex;
 
@@ -35,5 +55,28 @@
     width: 24px;
     height: 24px;
     padding-right: 5px;
+  }
+}
+
+.playback-button {
+  width: 100px;
+
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  &:hover {
+    path {
+      stroke: colors.$grey-1;
+    }
+  }
+}
+
+.back-button {
+  &:hover {
+    path {
+      stroke: colors.$grey-1;
+    }
   }
 }

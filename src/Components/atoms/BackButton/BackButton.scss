@@ -1,9 +1,0 @@
-@use '../../../styles/colors';
-
-.back-button {
-  &:hover {
-    path {
-      stroke: colors.$grey-1;
-    }
-  }
-}

@@ -4,9 +4,16 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import './styles/_base.scss';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Account, ErrorPage, Home, Lists, Tracks } from './Pages';
+import {
+  Account,
+  Dashboard,
+  EditList,
+  EditTrack,
+  ErrorPage,
+  SelectList,
+  SelectTrack,
+} from './Pages';
 import App from './App';
-import { EditList, SelectedTrack } from './Pages';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -19,19 +26,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/home',
-        element: <Home />,
+        element: <Dashboard />,
       },
       {
         path: '/tracks',
-        element: <Tracks />,
+        element: <SelectTrack />,
       },
       {
         path: '/tracks/:trackId',
-        element: <SelectedTrack />,
+        element: <EditTrack />,
       },
       {
         path: '/lists',
-        element: <Lists />,
+        element: <SelectList />,
       },
       {
         path: '/lists/:listId',

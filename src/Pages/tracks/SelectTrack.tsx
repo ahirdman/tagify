@@ -9,7 +9,7 @@ import {
 import { TracksList } from '../../Components/organisms';
 import Card from '../../Layout/Card/Card';
 
-const SavedTracks = () => {
+const SelectTracks = () => {
   const [query, setQuery] = React.useState('');
   const listEl = React.useRef<HTMLUListElement>(null);
   const savedTracksState = useAppSelector(state => state.savedTracks);
@@ -56,4 +56,4 @@ const SavedTracks = () => {
   );
 };
 
-export default SavedTracks;
+export default SelectTracks;

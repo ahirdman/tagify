@@ -1,10 +1,13 @@
 import Login from './login/Login';
-import Lists from './lists/Lists';
 import Account from './account/Account';
-import Tracks from './tracks/Tracks';
-import Home from './home/Home';
-import ErrorPage from './error/ErrorPage';
-import EditList from './lists/EditList';
-import SelectedTrack from './tracks/SelectedTrack';
+import Dashboard from './home/Dashboard';
 
-export { Login, Lists, Account, Tracks, Home, ErrorPage, EditList, SelectedTrack };
+import SelectList from './lists/SelectList';
+import EditList from './lists/EditList';
+
+import SelectTrack from './tracks/SelectTrack';
+import EditTrack from './tracks/EditTrack';
+
+import ErrorPage from './error/ErrorPage';
+
+export { Login, Dashboard, SelectList, Account, SelectTrack, ErrorPage, EditList, EditTrack };

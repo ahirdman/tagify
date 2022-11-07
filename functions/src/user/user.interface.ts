@@ -27,6 +27,16 @@ export interface UserResponse {
   uri: string;
 }
 
+export interface ITopResponse {
+  href: string;
+  items: any[];
+  limit: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
+}
+
 export interface NextTracksBody {
   token: string;
   url: string;

@@ -1,0 +1,26 @@
+@use '../../../styles/colors';
+
+.h1 {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.h2 {
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.h3 {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.p3 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+
+  &--grey {
+    color: colors.$grey-1;
+  }
+}

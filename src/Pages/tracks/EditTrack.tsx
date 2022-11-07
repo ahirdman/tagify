@@ -7,10 +7,8 @@ import { ITags } from '../../common/common.interface';
 import { useAppSelector } from '../../store/hooks';
 import { selectedTrackSelector } from '../../store/savedTracks/savedTracks.slice';
 import Card from '../../Layout/Card/Card';
-import Cross from '../../assets/cross-circle.svg';
-import Add from '../../assets/add-circle.svg';
 
-const SelectedTrack = () => {
+const EditTrack = () => {
   const [trackTags, setTrackTags] = React.useState<string[]>([]);
   const [userTags, setUserTags] = React.useState([]);
 
@@ -53,4 +51,4 @@ const SelectedTrack = () => {
   );
 };
 
-export default SelectedTrack;
+export default EditTrack;
