@@ -5,6 +5,7 @@ import {
   playback,
   spotifyProfile,
   spotifyToken,
+  topItems,
   validate,
 } from './spotify.functions';
 import { SavedTracksData } from './spotify.interface';
@@ -18,6 +19,12 @@ export const getSpotifyToken = async () => {
 
 export const getSpotifyProfile = async (token: string) => {
   const response = await spotifyProfile({ token });
+
+  return response.data;
+};
+
+export const getSpotifyTopItems = async (token: string) => {
+  const response = await topItems({ token });
 
   return response.data;
 };

@@ -103,6 +103,15 @@ export interface TokenResponse {
   accessToken: string;
 }
 
+interface TopItem {
+  artwork: string;
+  aritst: string;
+}
+
+export interface TopItemsResponse {
+  items: TopItem[];
+}
+
 export interface ProfileResponse {
   image: string;
   name: string;

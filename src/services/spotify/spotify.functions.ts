@@ -9,6 +9,7 @@ import {
   TokenResponse,
   ValidateBody,
   ValidateResponse,
+  TopItemsResponse,
 } from './spotify.interface';
 import { functions } from '../firebase/config';
 import { httpsCallable } from 'firebase/functions';
@@ -19,6 +20,8 @@ export const spotifyProfile = httpsCallable<TokenBody, ProfileResponse>(
   functions,
   'getSpotifyProfile'
 );
+
+export const topItems = httpsCallable<TokenBody, TopItemsResponse>(functions, 'getTopItems');
 
 export const initialSavedTracks = httpsCallable<TokenBody, SavedTracksResponse>(
   functions,

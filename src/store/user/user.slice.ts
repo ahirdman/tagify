@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import {
@@ -7,6 +7,19 @@ import {
   TokenPayload,
   IUser,
 } from './user.interface';
+import { Spotify } from '../../services';
+
+export const fetchTopItems = createAsyncThunk('user/getTopItems', async (_, thunkAPI) => {
+  const {
+    user: {
+      spotify: { token },
+    },
+  } = thunkAPI.getState() as RootState;
+
+  const data = await Spotify.getSpotifyTopItems(token);
+
+  return data;
+});
 
 const initialState: IUser = {
   mail: '',
@@ -20,6 +33,11 @@ const initialState: IUser = {
       image: '',
       name: '',
       id: '',
+    },
+    topItems: {
+      items: [],
+      loading: false,
+      error: false,
     },
   },
 };
@@ -49,6 +67,22 @@ export const userSlice = createSlice({
       state.ready = true;
     },
   },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchTopItems.fulfilled, (state, action) => {
+        state.spotify.topItems.error = false;
+        state.spotify.topItems.loading = false;
+        state.spotify.topItems.items = action.payload.items;
+      })
+      .addCase(fetchTopItems.pending, state => {
+        state.spotify.topItems.error = false;
+        state.spotify.topItems.loading = true;
+      })
+      .addCase(fetchTopItems.rejected, state => {
+        state.spotify.topItems.loading = false;
+        state.spotify.topItems.error = true;
+      });
+  },
 });
 
 export const { firebaseSignIn, firebaseSignOut, setSpotifyToken, setSpotifyProfile } =
@@ -57,3 +91,5 @@ export const { firebaseSignIn, firebaseSignOut, setSpotifyToken, setSpotifyProfi
 export default userSlice.reducer;
 
 export const fireIdSelector = (state: RootState) => state.user.fireId;
+
+export const topItemsSelector = (state: RootState) => state.user.spotify.topItems;

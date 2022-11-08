@@ -11,17 +11,21 @@ export interface IUser {
       name: string;
       id: string;
     };
+    topItems: {
+      items: ITopItem[];
+      loading: boolean;
+      error: boolean;
+    };
   };
+}
+
+export interface ITopItem {
+  artwork: string;
+  aritst: string;
 }
 
 export type IFirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
 
-export type TokenPayload = Pick<
-  IUser['spotify'],
-  'token'
->;
+export type TokenPayload = Pick<IUser['spotify'], 'token'>;
 
-export type ISpotifyProfilePayload = Pick<
-  IUser['spotify']['profile'],
-  'image' | 'name' | 'id'
->;
+export type ISpotifyProfilePayload = Pick<IUser['spotify']['profile'], 'image' | 'name' | 'id'>;
