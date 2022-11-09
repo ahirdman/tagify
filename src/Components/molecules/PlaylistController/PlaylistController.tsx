@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { SavedTracksData } from '../../../services';
-import { useAppSelector } from '../../../store/hooks';
 import './PlaylistController.scss';
 import { ExportButton } from '../../atoms';
-import { selectActiveTagList } from '../../../store/playlists/playlists.slice';
 import { IPlaylistStatus } from '../../../store/playlists/playlists.interface';
 
 const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {

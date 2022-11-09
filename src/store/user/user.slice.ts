@@ -8,6 +8,7 @@ import {
   IUser,
 } from './user.interface';
 import { Spotify } from '../../services';
+import { ITopItem } from '../../common/common.interface';
 
 export const fetchTopItems = createAsyncThunk('user/getTopItems', async (_, thunkAPI) => {
   const {
@@ -18,7 +19,7 @@ export const fetchTopItems = createAsyncThunk('user/getTopItems', async (_, thun
 
   const data = await Spotify.getSpotifyTopItems(token);
 
-  return data;
+  return data.items;
 });
 
 const initialState: IUser = {
@@ -35,7 +36,7 @@ const initialState: IUser = {
       id: '',
     },
     topItems: {
-      items: [],
+      items: [] as ITopItem[],
       loading: false,
       error: false,
     },
@@ -72,7 +73,7 @@ export const userSlice = createSlice({
       .addCase(fetchTopItems.fulfilled, (state, action) => {
         state.spotify.topItems.error = false;
         state.spotify.topItems.loading = false;
-        state.spotify.topItems.items = action.payload.items;
+        state.spotify.topItems.items = action.payload;
       })
       .addCase(fetchTopItems.pending, state => {
         state.spotify.topItems.error = false;

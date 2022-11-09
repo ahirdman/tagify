@@ -10,3 +10,8 @@ export interface ISVGProps {
   height?: string;
   strokeWidth?: string;
 }
+
+export interface ITopItem {
+  albumArtwork: string;
+  artist: string;
+}

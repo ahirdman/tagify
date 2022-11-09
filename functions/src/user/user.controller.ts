@@ -33,7 +33,7 @@ export const getTopItems = cloudFunction.onCall(async (data: TokenBody, context)
   const topItems: ITopResponse = results.data;
 
   const itemToResponse = topItems.items.map((item) => ({
-    artowrk: item.images[1].url,
+    albumArtwork: item.images[1].url,
     artist: item.name,
   }));
 

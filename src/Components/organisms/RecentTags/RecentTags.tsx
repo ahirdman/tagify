@@ -6,11 +6,12 @@ import { TagSpotlight } from '../../molecules';
 
 const RecentTags = () => {
   const taglists = useAppSelector(selectTagPlaylists);
+
   return (
     <div className="recent-tags">
       <h2 className="recent-tags__header">Recent Tags</h2>
       <ul>
-        {taglists.map((list, index) => {
+        {taglists.slice(0, 3).map((list, index) => {
           return <TagSpotlight key={index} list={list} />;
         })}
       </ul>

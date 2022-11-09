@@ -1,3 +1,5 @@
+import { ITopItem } from '../../common/common.interface';
+
 export interface IUser {
   mail: string;
   fireId: string;
@@ -17,11 +19,6 @@ export interface IUser {
       error: boolean;
     };
   };
-}
-
-export interface ITopItem {
-  artwork: string;
-  aritst: string;
 }
 
 export type IFirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
