@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Spotify } from '../../services';
+import { Firestore, Spotify } from '../../services';
 import {
   PlaylistState,
   Playlist,
@@ -11,6 +11,7 @@ import {
   UpdateSyncPayload,
   AddPlaylistsPayload,
 } from './playlists.interface';
+import { randomizeTagColor } from '../../services/firebase/firestore/firestore.helper';
 
 export const exportPlaylist = createAsyncThunk('playlists/exportPlaylist', async (_, thunkAPI) => {
   const state = thunkAPI.getState() as RootState;
@@ -24,6 +25,20 @@ export const exportPlaylist = createAsyncThunk('playlists/exportPlaylist', async
 
   return data;
 });
+
+export const createTag = createAsyncThunk(
+  'playlists/createTag',
+  async (playlist: Playlist, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const { fireId } = state.user;
+
+    thunkAPI.dispatch(addPlaylists({ lists: [playlist] }));
+
+    await Firestore.createTag(fireId, playlist.id, playlist.name, randomizeTagColor());
+
+    return playlist.id;
+  }
+);
 
 const initialState: PlaylistState = {
   playlists: [] as Playlist[],
@@ -63,6 +78,19 @@ export const playlistSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      .addCase(createTag.pending, (state, action) => {
+        console.log('pending, payload:', action.payload);
+      })
+      .addCase(createTag.fulfilled, (state, action) => {
+        console.log('fullfiled, payload;', action.payload);
+        console.log(
+          'fullfiled, state;',
+          state.playlists.map(list => list.id)
+        );
+      })
+      .addCase(createTag.rejected, (state, action) => {
+        console.log('rejected, payload;', action.payload);
+      })
       .addCase(exportPlaylist.pending, state => {
         const index = state.playlists.findIndex(e => e.isActive === true);
 

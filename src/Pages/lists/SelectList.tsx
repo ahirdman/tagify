@@ -24,7 +24,7 @@ const SelectList = () => {
         const existingList = taglists.find(list => list.name === data.name);
 
         lists.push({
-          id: uuidv4(),
+          id: data.id,
           name: data.name,
           color: data.color,
           type: 'TAG',

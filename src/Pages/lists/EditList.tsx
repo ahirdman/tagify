@@ -19,7 +19,8 @@ const EditList = () => {
 
   const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
+  React.useEffect((): any => {
+    if (!playlist) return;
     const unsubscribe = onSnapshot(Firestore.tagDoc(fireId, playlist.name), doc => {
       const tagDocument = doc.data();
       // TODO: Conditional update: if the state playlist is the same as the firestore doc, dont dispatch
@@ -30,7 +31,7 @@ const EditList = () => {
     return () => {
       unsubscribe();
     };
-  }, [fireId, dispatch, playlist.name]);
+  }, [fireId, dispatch, playlist]);
 
   return (
     <Card title={playlist.name} navigate={true}>

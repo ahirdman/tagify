@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore';
 import { SavedTracksData } from '../../spotify/spotify.interface';
 import { db } from '../config';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Firebase References
@@ -53,16 +54,18 @@ export const getUserDocument = async (uid: string): Promise<any> => {
 
 export const createTag = async (
   user: string,
-  tag: string,
+  tagId: string,
+  tagName: string,
   color: string,
-  track: SavedTracksData
+  track?: SavedTracksData
 ) => {
   await setDoc(
-    userTagDocRef(user, tag),
+    userTagDocRef(user, tagName),
     {
-      name: tag,
+      id: tagId,
+      name: tagName,
       color: color,
-      tracks: [track],
+      tracks: track ? [track] : [],
       exported: false,
       playlistId: '',
       snapshotId: '',

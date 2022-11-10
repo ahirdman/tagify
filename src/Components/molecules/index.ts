@@ -10,6 +10,7 @@ import PlaylistRow from './PlaylistRow/PlaylistRow';
 import TrackSection from './TrackSection/TrackSection';
 import TagSection from './TagSection/TagSection';
 import TagSpotlight from './TagSpotlight/TagSpotlight';
+import CreateTag from './CreateTag/CreateTag';
 
 export {
   AddTag,
@@ -23,5 +24,6 @@ export {
   PlaylistRow,
   TrackSection,
   TagSection,
-  TagSpotlight
+  TagSpotlight,
+  CreateTag,
 };

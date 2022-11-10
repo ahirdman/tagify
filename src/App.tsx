@@ -9,7 +9,7 @@ import { Login } from './Pages';
 import RootLayout from './Layout/RootLayout/RootLayout';
 
 const App = () => {
-  const ready = useAppSelector(state => state.user.ready);
+  const loggedIn = useAppSelector(state => state.user.loggedIn);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const App = () => {
     return () => unsubscribe();
   }, [dispatch]);
 
-  if (ready) {
+  if (loggedIn) {
     return <RootLayout />;
   } else {
     return <Login />;

@@ -1,11 +1,11 @@
 import * as React from 'react';
-import './AuthModal.scss';
+import './Modal.scss';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-const AuthModal = ({ children }: Props) => {
+const Modal = ({ children }: Props) => {
   return (
     <div className="modal" onClick={e => e.stopPropagation()}>
       {children}
@@ -13,4 +13,4 @@ const AuthModal = ({ children }: Props) => {
   );
 };
 
-export default AuthModal;
+export default Modal;

@@ -9,8 +9,11 @@ import { onSnapshot } from 'firebase/firestore';
 import { Firestore } from '../../services';
 import { Playlist } from '../../store/playlists/playlists.interface';
 import { v4 as uuidv4 } from 'uuid';
+import { CreateTag } from '../../Components/molecules';
 
 const Dashboard = () => {
+  const [createTagModal, setCreateTagModal] = React.useState(false);
+
   const dispatch = useAppDispatch();
   const taglists = useAppSelector(selectTaglists);
   const fireId = useAppSelector(state => state.user.fireId);
@@ -53,7 +56,7 @@ const Dashboard = () => {
     <Card title="Home" navigate={false}>
       <div
         style={{
-          padding: '10px',
+          padding: '15px',
         }}
       >
         <WelcomeHeader />
@@ -64,9 +67,15 @@ const Dashboard = () => {
             justifyContent: 'center',
           }}
         >
-          <Button title="Create new tag" backgroundColor="black" textColor="white" />
+          <Button
+            title="Create new tag"
+            backgroundColor="black"
+            textColor="white"
+            onClick={() => setCreateTagModal(true)}
+          />
         </div>
       </div>
+      {createTagModal && <CreateTag onClick={() => setCreateTagModal(false)} />}
     </Card>
   );
 };

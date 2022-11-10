@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, AuthModal, Backdrop } from '../../Components/atoms';
+import { Button, Modal, Backdrop } from '../../Components/atoms';
 import { ConnectScreen } from '../../Components/molecules';
 import { SignInForm, SignUpForm } from '../../Components/organisms';
 import './Login.scss';
@@ -26,19 +26,19 @@ const Login = () => {
       </div>
       {signUpModal && (
         <Backdrop onClick={() => setSignUpModal(false)}>
-          <AuthModal>{loggedIn ? <ConnectScreen autoConnect={false} /> : <SignUpForm />}</AuthModal>
+          <Modal>{loggedIn ? <ConnectScreen autoConnect={false} /> : <SignUpForm />}</Modal>
         </Backdrop>
       )}
       {signInModal && (
         <Backdrop onClick={() => setSignInModal(false)}>
-          <AuthModal>{loggedIn ? <ConnectScreen autoConnect={false} /> : <SignInForm />}</AuthModal>
+          <Modal>{loggedIn ? <ConnectScreen autoConnect={false} /> : <SignInForm />}</Modal>
         </Backdrop>
       )}
       {loggedIn && (
         <Backdrop>
-          <AuthModal>
+          <Modal>
             <ConnectScreen autoConnect={false} />
-          </AuthModal>
+          </Modal>
         </Backdrop>
       )}
     </main>
