@@ -27,7 +27,7 @@ const TagSection = ({ title, tags, tagAction }: Props) => {
                 key={index}
                 onClick={
                   tagAction === 'ADD'
-                    ? () => Firestore.tagTrack(fireId, tag.name, selectedTrack)
+                    ? () => Firestore.addTagToTrack(fireId, tag.name, selectedTrack)
                     : () => Firestore.clearTrackFromTag(fireId, tag.name, selectedTrack)
                 }
                 color={tag.color}

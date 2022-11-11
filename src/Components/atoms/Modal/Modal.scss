@@ -19,3 +19,13 @@
   border: 1px solid colors.$border;
   border-radius: 10px;
 }
+
+.modal-large {
+  width: 100vw;
+  height: 90vh;
+
+  border: 1px solid colors.$border;
+  background-color: colors.$background;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './Account.scss';
+import './Settings.scss';
 import { Button } from '../../Components/atoms';
 import { FirebaseAuth } from '../../services';
 import { useAppSelector } from '../../store/hooks';
@@ -43,7 +43,7 @@ export const Setting = ({ header, sections, children }: IProps) => {
   );
 };
 
-const Account = () => {
+const Settings = () => {
   const user = useAppSelector(state => state.user);
 
   const moodify: ISettingRow[] = [
@@ -81,7 +81,7 @@ const Account = () => {
   ];
 
   return (
-    <Card title="Account" navigate={false}>
+    <Card title="Settings" navigate={false}>
       <ul className="settings">
         <Setting header="Spotify" sections={spotify} />
         <Setting header="Moodify" sections={moodify}>
@@ -106,4 +106,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Settings;

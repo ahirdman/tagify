@@ -4,11 +4,16 @@ import './Backdrop.scss';
 interface Props {
   children: JSX.Element | JSX.Element[];
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
+  modalPosition?: 'CENTER' | 'BOTTOM';
 }
 
-const Backdrop = ({ children, onClick }: Props) => {
+const Backdrop = ({ children, onClick, modalPosition }: Props) => {
   return (
-    <div className="backdrop" onClick={onClick}>
+    <div
+      className="backdrop"
+      style={modalPosition === 'BOTTOM' && { alignItems: 'flex-end' }}
+      onClick={onClick}
+    >
       {children}
     </div>
   );

@@ -40,6 +40,15 @@ export const createTag = createAsyncThunk(
   }
 );
 
+export const getAllTags = createAsyncThunk('playlists/getAllTags', async (_, thunkAPI) => {
+  const state = thunkAPI.getState() as RootState;
+  const { fireId } = state.user;
+
+  const tags = await Firestore.getAllTags(fireId);
+
+  return tags;
+});
+
 const initialState: PlaylistState = {
   playlists: [] as Playlist[],
 };
@@ -78,18 +87,11 @@ export const playlistSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(createTag.pending, (state, action) => {
-        console.log('pending, payload:', action.payload);
-      })
-      .addCase(createTag.fulfilled, (state, action) => {
-        console.log('fullfiled, payload;', action.payload);
-        console.log(
-          'fullfiled, state;',
-          state.playlists.map(list => list.id)
-        );
-      })
-      .addCase(createTag.rejected, (state, action) => {
-        console.log('rejected, payload;', action.payload);
+      .addCase(getAllTags.fulfilled, (state, { payload }) => {
+        const stateListIds = state.playlists.map(list => list.id);
+        const newPayloadList = payload.filter(payloadTag => !stateListIds.includes(payloadTag.id));
+
+        state.playlists.push(...newPayloadList);
       })
       .addCase(exportPlaylist.pending, state => {
         const index = state.playlists.findIndex(e => e.isActive === true);

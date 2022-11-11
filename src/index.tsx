@@ -5,7 +5,7 @@ import { store } from './store/store';
 import './styles/_base.scss';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
-  Account,
+  Settings,
   Dashboard,
   EditList,
   EditTrack,
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/account',
-        element: <Account />,
+        element: <Settings />,
       },
     ],
   },

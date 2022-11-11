@@ -3,7 +3,6 @@ import { Backdrop, Form, Modal } from '../../atoms';
 import { useAppDispatch } from '../../../store/hooks';
 import { createTag } from '../../../store/playlists/playlists.slice';
 import { useNavigate } from 'react-router';
-import { unwrapResult } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { randomizeTagColor } from '../../../services/firebase/firestore/firestore.helper';
 import { Playlist } from '../../../store/playlists/playlists.interface';
@@ -35,9 +34,8 @@ const CreateTag = ({ onClick }: IProps) => {
     };
 
     try {
-      const resultAction = await dispatch(createTag(newTag));
-      const newTagId = unwrapResult(resultAction);
-      navigate(`/lists/${newTagId}`);
+      await dispatch(createTag(newTag));
+      navigate(`/lists/${newTag.id}`);
     } catch (rejectedValueOrSerializedError) {
       console.log(rejectedValueOrSerializedError);
     }

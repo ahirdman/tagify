@@ -1,4 +1,5 @@
 @use '../../../styles/text';
+@use '../../../styles/colors';
 
 .p {
   @include text.p-grey;
@@ -15,13 +16,14 @@
   padding-left: 10px;
   padding-right: 15px;
 
-  background-color: #1b1b1b;
+  background-color: colors.$greyblack;
 
   display: flex;
   align-items: center;
 
   &:hover {
     cursor: pointer;
+    background-color: colors.$dark-grey;
   }
 
   &__circle {

@@ -3,11 +3,14 @@ import './Modal.scss';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
+  size?: 'SMALL' | 'MEDIUM' | 'LARGE';
 }
 
-const Modal = ({ children }: Props) => {
+const Modal = ({ children, size }: Props) => {
+  const className = size === 'LARGE' ? 'modal-large' : 'modal';
+
   return (
-    <div className="modal" onClick={e => e.stopPropagation()}>
+    <div className={className} onClick={e => e.stopPropagation()}>
       {children}
     </div>
   );

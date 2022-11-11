@@ -1,57 +1,21 @@
 import * as React from 'react';
 import { Loader } from '../../Components/atoms';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  fetchInitialTracks,
-  fetchNextTracks,
-  filterTracks,
-} from '../../store/savedTracks/savedTracks.slice';
+import { useAppSelector } from '../../store/hooks';
 import { TracksList } from '../../Components/organisms';
 import Card from '../../Layout/Card/Card';
+import useScroll from '../../hooks/useScroll';
 
 const SelectTracks = () => {
-  const [query, setQuery] = React.useState('');
+  const [filter, setFilter] = React.useState('');
   const listEl = React.useRef<HTMLUListElement>(null);
-  const savedTracksState = useAppSelector(state => state.savedTracks);
-  const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
-    const handleScroll = (): void => {
-      if (listEl.current.scrollTop + listEl.current.clientHeight >= listEl.current.scrollHeight) {
-        dispatch(fetchNextTracks());
-      }
-    };
+  const { filteredTracks, loading } = useAppSelector(state => state.savedTracks);
 
-    const currentEl = listEl.current;
-
-    if (currentEl) {
-      currentEl.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      currentEl.removeEventListener('scroll', handleScroll);
-    };
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    if (savedTracksState.savedTracks.length !== 0) return;
-
-    dispatch(fetchInitialTracks());
-  }, [savedTracksState.savedTracks.length, dispatch]);
-
-  React.useEffect(() => {
-    if (query.length > 0) {
-      dispatch(filterTracks(query));
-    }
-  }, [query, savedTracksState.savedTracks, dispatch]);
+  useScroll(listEl, filter);
 
   return (
-    <Card title="Saved Tracks" filter={true} setFilter={setQuery} navigate={false}>
-      <TracksList
-        tracks={savedTracksState.filteredTracks}
-        element={listEl}
-        children={savedTracksState.loading && <Loader />}
-      />
+    <Card title="Saved Tracks" filter={true} setFilter={setFilter} navigate={false}>
+      <TracksList tracks={filteredTracks} element={listEl} children={loading && <Loader />} />
     </Card>
   );
 };

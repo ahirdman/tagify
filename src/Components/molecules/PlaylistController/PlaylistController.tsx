@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { SavedTracksData } from '../../../services';
 import './PlaylistController.scss';
-import { ExportButton } from '../../atoms';
+import { Button, ExportButton } from '../../atoms';
 import { IPlaylistStatus } from '../../../store/playlists/playlists.interface';
+import Box from '../../atoms/Box/Box';
 
 const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
   const ms = tracksArr.map(track => track.duration).reduce((acc, curr) => acc + curr, 0);
@@ -13,9 +14,10 @@ const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
 interface IProps {
   tracks: SavedTracksData[];
   status: IPlaylistStatus;
+  addTracks: () => void;
 }
 
-const PlaylistData = ({ tracks, status }: IProps) => {
+const PlaylistData = ({ tracks, status, addTracks }: IProps) => {
   const length = lengthOfPlaylist(tracks);
 
   return (
@@ -39,6 +41,9 @@ const PlaylistData = ({ tracks, status }: IProps) => {
         </button>
         <ExportButton status={status} />
       </section>
+      <Box>
+        <Button title="Add Tracks" backgroundColor="black" textColor="white" onClick={addTracks} />
+      </Box>
     </div>
   );
 };

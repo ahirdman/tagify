@@ -19,7 +19,12 @@ const Button = ({ title, backgroundColor, textColor, width, border, onClick }: I
   return (
     <button
       className="button"
-      style={{ backgroundColor, color: textColor, width, border }}
+      style={{
+        backgroundColor,
+        color: textColor,
+        width,
+        border,
+      }}
       onClick={onClick}
     >
       {title}

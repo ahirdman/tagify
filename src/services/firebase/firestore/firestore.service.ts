@@ -8,10 +8,11 @@ import {
   deleteDoc,
   serverTimestamp,
   getDoc,
+  getDocs,
 } from 'firebase/firestore';
+import { Playlist } from '../../../store/playlists/playlists.interface';
 import { SavedTracksData } from '../../spotify/spotify.interface';
 import { db } from '../config';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Firebase References
@@ -50,7 +51,33 @@ export const getUserDocument = async (uid: string): Promise<any> => {
   }
 };
 
-// TODO: Store tag model containing playlistId (null before exported), snapshotId (null before exported)
+export const getAllTags = async (user: string) => {
+  const querySnapshot = await getDocs(userTagCollectionRef(user));
+  const tags: Playlist[] = [];
+
+  querySnapshot.forEach(doc => {
+    const data = doc.data();
+
+    tags.push({
+      id: data.id,
+      name: data.name,
+      color: data.color,
+      type: 'TAG',
+      tracks: data.tracks,
+      exported: data.exported,
+      playlistId: data.playlistId,
+      snapshotId: data.snapshotId,
+      isActive: false,
+      status: {
+        sync: 'UNKNOWN',
+        exporting: false,
+        error: false,
+      },
+    });
+  });
+
+  return tags;
+};
 
 export const createTag = async (
   user: string,
@@ -74,7 +101,7 @@ export const createTag = async (
   );
 };
 
-export const tagTrack = async (user: string, tag: string, track: SavedTracksData) => {
+export const addTagToTrack = async (user: string, tag: string, track: SavedTracksData) => {
   await updateDoc(userTagDocRef(user, tag), {
     tracks: arrayUnion(track),
   });
