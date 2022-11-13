@@ -10,7 +10,7 @@ const WelcomeHeader = () => {
 
   return (
     <section className="header">
-      <Header size="LARGE">Current Top Artists</Header>
+      <Header size="FULL">Current Top Artists</Header>
       <TopArtists items={topItems.items} />
       {topItems.error && <div>ERROR</div>}
       {topItems.loading && <Loader />}

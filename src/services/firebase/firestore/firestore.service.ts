@@ -101,9 +101,9 @@ export const createTag = async (
   );
 };
 
-export const addTagToTrack = async (user: string, tag: string, track: SavedTracksData) => {
+export const addTagsToTrack = async (user: string, tag: string, tracks: SavedTracksData[]) => {
   await updateDoc(userTagDocRef(user, tag), {
-    tracks: arrayUnion(track),
+    tracks: arrayUnion(...tracks),
   });
 };
 

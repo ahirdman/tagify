@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         element: <EditList />,
       },
       {
-        path: '/account',
+        path: '/settings',
         element: <Settings />,
       },
     ],

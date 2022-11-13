@@ -1,13 +1,13 @@
 import * as React from 'react';
 import './Modal.scss';
 
-interface Props {
+interface IModalProps {
   children: JSX.Element | JSX.Element[];
-  size?: 'SMALL' | 'MEDIUM' | 'LARGE';
+  type?: 'CENTERED' | 'FULL';
 }
 
-const Modal = ({ children, size }: Props) => {
-  const className = size === 'LARGE' ? 'modal-large' : 'modal';
+const Modal = ({ children, type }: IModalProps) => {
+  const className = type === 'FULL' ? 'modal-full' : 'modal';
 
   return (
     <div className={className} onClick={e => e.stopPropagation()}>
@@ -16,4 +16,8 @@ const Modal = ({ children, size }: Props) => {
   );
 };
 
-export default Modal;
+const Confirm = ({ children }: IModalProps) => {
+  return <div className="confirm">{children}</div>;
+};
+
+export { Modal, Confirm };

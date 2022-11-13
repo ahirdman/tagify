@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Delete } from '../Buttons/Buttons.svg';
 import './Backdrop.scss';
 
 interface Props {
@@ -11,9 +12,10 @@ const Backdrop = ({ children, onClick, modalPosition }: Props) => {
   return (
     <div
       className="backdrop"
-      style={modalPosition === 'BOTTOM' && { alignItems: 'flex-end' }}
+      style={{ alignItems: modalPosition === 'BOTTOM' ? 'flex-end' : 'center' }}
       onClick={onClick}
     >
+      <Delete className="backdrop__close" />
       {children}
     </div>
   );

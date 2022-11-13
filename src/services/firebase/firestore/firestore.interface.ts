@@ -14,6 +14,7 @@ export interface IFirestoreUserDocument {
 }
 
 export interface IFirestoreTagDocument {
+  id: string;
   name: string;
   color: string;
   tracks: SavedTracksData[];

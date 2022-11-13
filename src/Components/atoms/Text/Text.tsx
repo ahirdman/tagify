@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Text.scss';
 
 interface IHeaderProps {
-  size: 'SMALL' | 'MEDIUM' | 'LARGE';
+  size: 'SMALL' | 'CENTERED' | 'FULL';
   children: string;
   bold?: boolean;
   color?: string;
@@ -10,7 +10,7 @@ interface IHeaderProps {
 
 const Header = ({ size, children, bold, color }: IHeaderProps) => {
   switch (size) {
-    case 'LARGE':
+    case 'FULL':
       return (
         <h1
           className="h1"
@@ -22,7 +22,7 @@ const Header = ({ size, children, bold, color }: IHeaderProps) => {
           {children}
         </h1>
       );
-    case 'MEDIUM':
+    case 'CENTERED':
       return (
         <h1
           className="h2"

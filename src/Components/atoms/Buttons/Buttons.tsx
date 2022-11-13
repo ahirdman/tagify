@@ -64,7 +64,11 @@ const ExportButton = ({ status }: IProps) => {
         e.preventDefault();
         dispatch(exportPlaylist());
       }}
-      style={{ border: status.error && '1px solid red' }}
+      style={{
+        backgroundColor: status.error ? '#150000' : '#150c00',
+        border: status.error ? '1px solid #e43131' : '1px solid #f6a943',
+        color: status.error ? '#cd3e3e' : '#d79d51',
+      }}
     >
       {statusText}
     </button>

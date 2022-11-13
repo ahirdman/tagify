@@ -73,7 +73,7 @@ export const playlistSlice = createSlice({
       state.playlists.find(list => list.isActive === true).status.sync = payload.sync;
     },
     updateStateDoc: (state, { payload }: PayloadAction<UpdatePlaylistData>) => {
-      const activeList = state.playlists.find(list => list.isActive === true);
+      const activeList = state.playlists.find(list => list.id === payload.data.id);
 
       if (activeList) {
         Object.assign(activeList, { ...payload.data });

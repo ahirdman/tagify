@@ -9,12 +9,14 @@ interface IProps {
 
 const PlaylistRow = ({ list }: IProps) => {
   return (
-    <li className="playlist-row">
-      <Link to={list.id} className="playlist-row__details">
-        <div className="playlist-row__details--circle" style={{ background: list.color }}></div>
-        <p className="playlist-row__details--title">{list.name}</p>
-      </Link>
-    </li>
+    <Link to={list.id}>
+      <li className="playlist-row">
+        <div className="playlist-row__details">
+          <div className="playlist-row__details--circle" style={{ background: list.color }}></div>
+          <p className="playlist-row__details--title">{list.name}</p>
+        </div>
+      </li>
+    </Link>
   );
 };
 

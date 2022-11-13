@@ -20,7 +20,7 @@
   border-radius: 10px;
 }
 
-.modal-large {
+.modal-full {
   width: 100vw;
   height: 90vh;
 
@@ -28,4 +28,9 @@
   background-color: colors.$background;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+}
+
+.confirm {
+  width: 80vw;
+  padding: 15px;
 }

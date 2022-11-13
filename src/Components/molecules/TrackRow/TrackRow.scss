@@ -23,18 +23,23 @@
     margin-right: 10px;
   }
 
-  &__details {
+  &__inner {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__details {
+    width: calc(80vw - 30px);
 
     &--title {
       font-weight: 400;
       font-size: 14px;
       line-height: 21px;
-
       // white-space: nowrap;
       // overflow: hidden;
       // text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     &--artist {

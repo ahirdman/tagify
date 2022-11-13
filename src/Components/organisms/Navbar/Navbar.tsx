@@ -24,7 +24,7 @@ const Navbar = () => {
         <h1 className="navbar__item--text">My Mood Lists</h1>
       </NavLink>
 
-      <NavLink to="/account" className="navbar__item">
+      <NavLink to="/settings" className="navbar__item">
         <Settings className="navbar__item--icon" />
         <img src={profile.image} alt="profile" className="navbar__item--profile-picture" />
         <p className="navbar__item--text">{profile.name}</p>

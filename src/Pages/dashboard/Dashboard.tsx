@@ -6,6 +6,7 @@ import { RecentTags } from '../../Components/organisms';
 import { getAllTags } from '../../store/playlists/playlists.slice';
 import { useAppDispatch } from '../../store/hooks';
 import { CreateTag } from '../../Components/molecules';
+import './Dashboard.scss';
 
 const Dashboard = () => {
   const [createTagModal, setCreateTagModal] = React.useState(false);
@@ -18,19 +19,10 @@ const Dashboard = () => {
 
   return (
     <Card title="Home" navigate={false}>
-      <div
-        style={{
-          padding: '15px',
-        }}
-      >
+      <div className="dashboard">
         <WelcomeHeader />
         <RecentTags />
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
+        <div className="dashboard__button">
           <Button
             title="Create new tag"
             backgroundColor="black"
@@ -38,8 +30,8 @@ const Dashboard = () => {
             onClick={() => setCreateTagModal(true)}
           />
         </div>
+        {createTagModal && <CreateTag onClick={() => setCreateTagModal(false)} />}
       </div>
-      {createTagModal && <CreateTag onClick={() => setCreateTagModal(false)} />}
     </Card>
   );
 };
