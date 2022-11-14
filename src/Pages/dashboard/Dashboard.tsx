@@ -22,14 +22,12 @@ const Dashboard = () => {
       <div className="dashboard">
         <WelcomeHeader />
         <RecentTags />
-        <div className="dashboard__button">
-          <Button
-            title="Create new tag"
-            backgroundColor="black"
-            textColor="white"
-            onClick={() => setCreateTagModal(true)}
-          />
-        </div>
+        <Button
+          title="Create new tag"
+          backgroundColor="black"
+          textColor="white"
+          onClick={() => setCreateTagModal(true)}
+        />
         {createTagModal && <CreateTag onClick={() => setCreateTagModal(false)} />}
       </div>
     </Card>

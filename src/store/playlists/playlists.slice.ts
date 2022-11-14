@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Firestore, Spotify } from '../../services';
+import { Firestore, SavedTracksData, Spotify } from '../../services';
 import {
   PlaylistState,
   Playlist,
@@ -37,6 +37,23 @@ export const createTag = createAsyncThunk(
     await Firestore.createTag(fireId, playlist.id, playlist.name, randomizeTagColor());
 
     return playlist.id;
+  }
+);
+
+interface ITagTrackArgs {
+  playlistName: string;
+  tracks: SavedTracksData[];
+}
+
+export const tagTrack = createAsyncThunk(
+  'playlists/tagTrack',
+  async ({ playlistName, tracks }: ITagTrackArgs, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const { fireId } = state.user;
+
+    const result = await Firestore.addTagsToTrack(fireId, playlistName, tracks);
+
+    return result;
   }
 );
 

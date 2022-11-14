@@ -1,8 +1,8 @@
 import * as React from 'react';
 import useScroll from '../../../hooks/useScroll';
-import { Firestore, SavedTracksData } from '../../../services';
-import { useAppSelector } from '../../../store/hooks';
-import { fireIdSelector } from '../../../store/user/user.slice';
+import { SavedTracksData } from '../../../services';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { tagTrack } from '../../../store/playlists/playlists.slice';
 import { Backdrop, Button, Modal } from '../../atoms';
 import { TracksList } from '../../organisms';
 import './AddTracksModal.scss';
@@ -38,7 +38,12 @@ const AddTracksModal = ({ onClick, listName }: IProps) => {
   return (
     <Backdrop onClick={onClick} modalPosition="BOTTOM">
       <Modal type="FULL">
-        <ModalSelect selectedTracks={selected} onClick={onClick} listName={listName} />
+        <ModalSelect
+          selectedTracks={selected}
+          setSelectedTracks={setSelected}
+          onClick={onClick}
+          playlistName={listName}
+        />
         <TracksList tracks={tracks} element={listEl} onSelect={selectTrack} />
       </Modal>
     </Backdrop>
@@ -49,22 +54,23 @@ export default AddTracksModal;
 
 interface IProp {
   selectedTracks: SavedTracksData[];
+  setSelectedTracks: (tracks: SavedTracksData[]) => void;
   onClick: () => void;
-  listName: string;
+  playlistName: string;
 }
 
-const ModalSelect = ({ selectedTracks, onClick, listName }: IProp) => {
-  const user = useAppSelector(fireIdSelector);
+const ModalSelect = ({ selectedTracks, onClick, playlistName }: IProp) => {
+  const dispatch = useAppDispatch();
 
   const addTracks = (e: React.MouseEvent<HTMLElement, MouseEvent>, tracks: SavedTracksData[]) => {
     e.preventDefault();
-    Firestore.addTagsToTrack(user, listName, tracks);
+    dispatch(tagTrack({ playlistName, tracks }));
     onClick();
   };
 
   return (
     <div className="modal-select">
-      <Button title="Cancel" backgroundColor="red" />
+      <Button title="Clear" backgroundColor="red" onClick={() => console.log('object')} />
       <div className="modal-select__selection">
         <p>{selectedTracks.length} tracks</p>
       </div>
