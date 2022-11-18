@@ -14,10 +14,11 @@ export interface IFirestoreUserDocument {
 }
 
 export interface IFirestoreTagDocument {
+  id: string;
   name: string;
   color: string;
   tracks: SavedTracksData[];
   exported: boolean;
-  playlistId: string;
+  spotifyId: string;
   snapshotId: string;
 }

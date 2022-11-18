@@ -1,3 +1,5 @@
+import { ITopItem } from '../../common/common.interface';
+
 export interface IUserSavedObject {
   added_at: string;
   track: {
@@ -79,6 +81,7 @@ export interface IUserSavedObject {
 }
 
 export interface SavedTracksData {
+  id: string;
   title: string;
   artist: string;
   album: string;
@@ -100,6 +103,10 @@ export interface SavedTracksResponse {
 
 export interface TokenResponse {
   accessToken: string;
+}
+
+export interface TopItemsResponse {
+  items: ITopItem[];
 }
 
 export interface ProfileResponse {

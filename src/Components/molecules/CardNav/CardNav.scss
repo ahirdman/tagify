@@ -4,7 +4,8 @@
 .card-nav {
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 
   background-color: colors.$background;
   border: 1px solid colors.$border;
@@ -18,24 +19,23 @@
     border-bottom: 2px solid colors.$border;
   }
 
-  &__back {
-    position: absolute;
-    left: 10px;
-    top: 10px;
+  &__left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 40px;
+  }
 
-    @media screen and (min-width: breakpoints.$phone) {
-      display: none;
-    }
-
-    &:hover {
-      cursor: pointer;
+  &__middle {
+    &--title {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 36px;
+      color: colors.$highlighted;
     }
   }
 
-  &__title {
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 36px;
-    color: colors.$highlighted;
+  &__right {
+    min-width: 40px;
   }
 }

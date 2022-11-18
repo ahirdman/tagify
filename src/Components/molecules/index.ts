@@ -10,6 +10,10 @@ import PlaylistRow from './PlaylistRow/PlaylistRow';
 import TrackSection from './TrackSection/TrackSection';
 import TagSection from './TagSection/TagSection';
 import TagSpotlight from './TagSpotlight/TagSpotlight';
+import CreateTag from './CreateTag/CreateTag';
+import Box from '../atoms/Box/Box';
+import AddTracksModal from './AddTracksModal/AddTracksModal';
+import StatsOverview from './WelcomeHeader/StatsOverview';
 
 export {
   AddTag,
@@ -23,5 +27,9 @@ export {
   PlaylistRow,
   TrackSection,
   TagSection,
-  TagSpotlight
+  TagSpotlight,
+  CreateTag,
+  Box,
+  AddTracksModal,
+  StatsOverview,
 };

@@ -1,0 +1,13 @@
+.modal-select {
+  display: flex;
+  padding: 10px;
+
+  &__selection {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+    height: inherit;
+    text-align: center;
+    line-height: 50px;
+  }
+}

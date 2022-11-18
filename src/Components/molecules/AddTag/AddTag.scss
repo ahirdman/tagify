@@ -39,13 +39,6 @@
       }
     }
 
-    &--tag {
-      position: absolute;
-      width: 24px;
-      height: auto;
-      left: 15px;
-    }
-
     &--button {
       background: none;
       border: none;
@@ -53,14 +46,6 @@
       align-items: center;
       &:hover {
         cursor: pointer;
-      }
-    }
-
-    &--check {
-      opacity: 0.75;
-
-      &:hover {
-        opacity: 1;
       }
     }
   }

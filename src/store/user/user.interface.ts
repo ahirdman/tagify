@@ -1,3 +1,5 @@
+import { ITopItem } from '../../common/common.interface';
+
 export interface IUser {
   mail: string;
   fireId: string;
@@ -11,17 +13,16 @@ export interface IUser {
       name: string;
       id: string;
     };
+    topItems: {
+      items: ITopItem[];
+      loading: boolean;
+      error: boolean;
+    };
   };
 }
 
-export type IFirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
+export type FirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
 
-export type TokenPayload = Pick<
-  IUser['spotify'],
-  'token'
->;
+export type TokenPayload = Pick<IUser['spotify'], 'token'>;
 
-export type ISpotifyProfilePayload = Pick<
-  IUser['spotify']['profile'],
-  'image' | 'name' | 'id'
->;
+export type SpotifyProfilePayload = Pick<IUser['spotify']['profile'], 'image' | 'name' | 'id'>;

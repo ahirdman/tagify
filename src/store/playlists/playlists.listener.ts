@@ -2,8 +2,8 @@ import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { Spotify } from '../../services/index';
 import type { TypedStartListening } from '@reduxjs/toolkit';
 import type { RootState, AppDispatch } from '../store';
-import { addPlaylists, setPlaylists, updateStateDoc, updateSyncStatus } from './playlists.slice';
-import { createMatchLists } from '../../services/firebase/firestore/firestore.helper';
+import { getAllTags, setSuggestions, updateStateDoc, updateSyncStatus } from './playlists.slice';
+import { findMixMatches } from '../../utils/mixLists/mixLists';
 
 export type AppStartListening = TypedStartListening<RootState, AppDispatch>;
 
@@ -16,22 +16,21 @@ const startMixedListsListening = createMixedSuggestions.startListening as AppSta
 startplaylistSyncListening({
   actionCreator: updateStateDoc,
   effect: async (action, listenerApi) => {
-    const { playlistId, snapshotId } = action.payload.data;
+    const { spotifyId, snapshotId, id } = action.payload.data;
     const state = listenerApi.getState();
-    const selectedList = state.playlist.playlists.find(list => list.isActive === true);
+    const selectedList = state.playlist.playlists.find(list => list.spotifyId === spotifyId);
 
     if (!selectedList.exported) return;
 
     const token = state.user.spotify.token;
 
-    const result = await Spotify.validateSnapshot(playlistId, snapshotId, token);
-
-    // console.log(result);
+    const result = await Spotify.validateSnapshot(spotifyId, snapshotId, token);
 
     const status = snapshotId === result.snapshotId ? 'SYNCED' : 'UNSYNCED';
 
     listenerApi.dispatch(
       updateSyncStatus({
+        id,
         sync: status,
       })
     );
@@ -39,17 +38,15 @@ startplaylistSyncListening({
 });
 
 startMixedListsListening({
-  actionCreator: setPlaylists,
+  actionCreator: getAllTags.fulfilled,
   effect: async (action, listenerApi) => {
-    const taglists = action.payload.lists;
+    const taglists = action.payload.filter(list => list.type === 'TAG');
+    const state = listenerApi.getState();
 
-    // console.log(1, taglists);
-    const mixes = createMatchLists(taglists);
+    const createdMixedLists = state.playlist.playlists.filter(list => list.type === 'MIXED');
 
-    // console.log(2, mixes);
+    const potentialMixes = findMixMatches(taglists, createdMixedLists);
 
-    if (mixes.length < 1) return;
-
-    listenerApi.dispatch(addPlaylists({ lists: mixes }));
+    listenerApi.dispatch(setSuggestions({ matches: potentialMixes }));
   },
 });

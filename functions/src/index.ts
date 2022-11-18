@@ -34,6 +34,7 @@ export const api = functions.https.onRequest(app);
 export {spotifyToken} from "./auth/auth.controller";
 export {
   getSpotifyProfile,
+  getTopItems,
   getInitialSavedTracks,
   getNextSavedTracks,
 } from "./user/user.controller";

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { SavedTracksData } from '../../../services';
-import { useAppSelector } from '../../../store/hooks';
 import './PlaylistController.scss';
-import { ExportButton } from '../../atoms';
-import { selectActiveTagList } from '../../../store/playlists/playlists.slice';
+import { Button, ExportButton } from '../../atoms';
+import { IPlaylistStatus } from '../../../store/playlists/playlists.interface';
+import Box from '../../atoms/Box/Box';
 
 const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
   const ms = tracksArr.map(track => track.duration).reduce((acc, curr) => acc + curr, 0);
@@ -11,14 +11,13 @@ const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
   return (ms / 1000 / 60).toFixed(1);
 };
 
-const PlaylistData = () => {
-  const selected = useAppSelector(selectActiveTagList);
+interface IProps {
+  tracks: SavedTracksData[];
+  status: IPlaylistStatus;
+  addTracks: () => void;
+}
 
-  const {
-    tracks,
-    status: { sync },
-  } = selected;
-
+const PlaylistData = ({ tracks, status, addTracks }: IProps) => {
   const length = lengthOfPlaylist(tracks);
 
   return (
@@ -27,7 +26,7 @@ const PlaylistData = () => {
         <p className="playlist__data--text">{tracks.length} tracks</p>
         <p className="playlist__data--text">{length} minutes</p>
         <p className="playlist__data--text">
-          Playlist is{sync !== 'SYNCED' ? ' not ' : ' '}synced!
+          Playlist is{status.sync !== 'SYNCED' ? ' not ' : ' '}synced!
         </p>
       </section>
       <section className="playlist__control">
@@ -40,8 +39,11 @@ const PlaylistData = () => {
         >
           Edit
         </button>
-        <ExportButton />
+        <ExportButton status={status} />
       </section>
+      <Box>
+        <Button title="Add Tracks" backgroundColor="black" textColor="white" onClick={addTracks} />
+      </Box>
     </div>
   );
 };

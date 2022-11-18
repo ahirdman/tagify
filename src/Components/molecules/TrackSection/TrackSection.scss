@@ -10,6 +10,11 @@
     height: 120px;
     width: 120px;
     border: 1px solid colors.$border;
+    margin-right: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__playback {

@@ -1,6 +1,6 @@
 import * as React from 'react';
+import Magnifier from './SearchBar.svg';
 import './SearchBar.scss';
-import Magnifier from '../../../assets/magnifier.svg';
 
 interface Props {
   setSearch?: any;
@@ -20,7 +20,7 @@ const SearchBar = ({ setSearch }: Props) => {
   return (
     <form className="search" onSubmit={e => e.preventDefault()}>
       <input type="text" className="search--input" value={searchString} onChange={handleOnChange} />
-      <img src={Magnifier} alt="search" className="search--icon" />
+      <Magnifier className="search--icon" />
     </form>
   );
 };

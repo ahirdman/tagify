@@ -1,39 +1,31 @@
 import * as React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Player } from '../../molecules';
-import './Navbar.scss';
 import { useAppSelector } from '../../../store/hooks';
-import { Tag } from '../../../svg';
-import { Settings } from '../../../svg';
-import { Library } from '../../../svg';
-import { Home } from '../../../svg';
+import { Tag, Settings, Library, Home } from './Navbar.svg';
+import './Navbar.scss';
 
 const Navbar = () => {
   const profile = useAppSelector(state => state.user.spotify.profile);
 
-  const location = useLocation().pathname;
-
-  const isActiveLink = (path: string) =>
-    location === path ? 'navbar__item--icon navbar__item--active' : 'navbar__item--icon';
-
   return (
     <nav className="navbar">
-      <NavLink to="/" className="navbar__item">
-        <Home className={isActiveLink('/')} />
+      <NavLink to="/home" className="navbar__item">
+        <Home className="navbar__item--icon" />
       </NavLink>
 
       <NavLink to="/tracks" className="navbar__item">
-        <Library className={isActiveLink('/tracks')} />
+        <Library className="navbar__item--icon" />
         <h1 className="navbar__item--text">Tag Tracks</h1>
       </NavLink>
 
       <NavLink to="/lists" className="navbar__item-">
-        <Tag className={isActiveLink('/lists')} />
+        <Tag className="navbar__item--icon" />
         <h1 className="navbar__item--text">My Mood Lists</h1>
       </NavLink>
 
-      <NavLink to="/account" className="navbar__item">
-        <Settings className={isActiveLink('/account')} />
+      <NavLink to="/settings" className="navbar__item">
+        <Settings className="navbar__item--icon" />
         <img src={profile.image} alt="profile" className="navbar__item--profile-picture" />
         <p className="navbar__item--text">{profile.name}</p>
       </NavLink>

@@ -1,5 +1,5 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
-import { firebaseSignIn, setSpotifyProfile, setSpotifyToken } from './user.slice';
+import { fetchTopItems, firebaseSignIn, setSpotifyProfile, setSpotifyToken } from './user.slice';
 import { Spotify, Firestore } from '../../services/index';
 import type { TypedStartListening } from '@reduxjs/toolkit';
 import type { RootState, AppDispatch } from '../store';
@@ -44,5 +44,7 @@ startTokenListening({
 
       listenerApi.dispatch(setSpotifyProfile(profileData));
     }
+
+    listenerApi.dispatch(fetchTopItems());
   },
 });

@@ -12,9 +12,9 @@
   cursor: pointer;
 
   &:hover {
-    background-color: colors.$row-hover;
+    background-color: colors.$greyblack;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 0px 5px 5px 0px;
+    // border-radius: 0px 5px 5px 0px;
   }
 
   &__album {
@@ -23,18 +23,23 @@
     margin-right: 10px;
   }
 
-  &__details {
+  &__inner {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__details {
+    width: calc(80vw - 30px);
 
     &--title {
       font-weight: 400;
       font-size: 14px;
       line-height: 21px;
-
       // white-space: nowrap;
       // overflow: hidden;
       // text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     &--artist {

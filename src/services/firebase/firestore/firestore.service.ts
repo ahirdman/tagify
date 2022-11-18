@@ -8,7 +8,9 @@ import {
   deleteDoc,
   serverTimestamp,
   getDoc,
+  getDocs,
 } from 'firebase/firestore';
+import { IPlaylist } from '../../../store/playlists/playlists.interface';
 import { SavedTracksData } from '../../spotify/spotify.interface';
 import { db } from '../config';
 
@@ -49,31 +51,61 @@ export const getUserDocument = async (uid: string): Promise<any> => {
   }
 };
 
-// TODO: Store tag model containing playlistId (null before exported), snapshotId (null before exported)
+export const getAllTags = async (user: string) => {
+  const querySnapshot = await getDocs(userTagCollectionRef(user));
+  const tags: IPlaylist[] = [];
 
-export const createTag = async (
-  user: string,
-  tag: string,
-  color: string,
-  track: SavedTracksData
-) => {
-  await setDoc(
-    userTagDocRef(user, tag),
-    {
-      name: tag,
-      color: color,
-      tracks: [track],
-      exported: false,
-      playlistId: '',
-      snapshotId: '',
-    },
-    { merge: true }
-  );
+  querySnapshot.forEach(doc => {
+    const data = doc.data();
+
+    tags.push({
+      id: data.id,
+      createdAt: data.createdAt,
+      favourite: data.favourite,
+      name: data.name,
+      color: data.color,
+      type: data.type,
+      tracks: data.tracks,
+      exported: data.exported,
+      spotifyId: data.playlistId,
+      snapshotId: data.snapshotId,
+      status: {
+        sync: 'UNKNOWN',
+        exporting: false,
+        error: false,
+      },
+    });
+  });
+
+  return tags;
 };
 
-export const tagTrack = async (user: string, tag: string, track: SavedTracksData) => {
+export const createList = async (
+  user: string,
+  tagId: string,
+  tagName: string,
+  color: string,
+  type: 'TAG' | 'MIXED',
+  track?: SavedTracksData[]
+) => {
+  const newList: IPlaylist = {
+    id: tagId,
+    createdAt: new Date().toISOString(),
+    favourite: false,
+    name: tagName,
+    color: color,
+    type,
+    tracks: track ? track : [],
+    exported: false,
+    spotifyId: '',
+    snapshotId: '',
+  };
+  await setDoc(userTagDocRef(user, tagName), newList, { merge: true });
+};
+
+export const addTagsToTrack = async (user: string, tag: string, tracks: SavedTracksData[]) => {
   await updateDoc(userTagDocRef(user, tag), {
-    tracks: arrayUnion(track),
+    tracks: arrayUnion(...tracks),
   });
 };
 
