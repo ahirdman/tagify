@@ -19,6 +19,6 @@ export interface IFirestoreTagDocument {
   color: string;
   tracks: SavedTracksData[];
   exported: boolean;
-  playlistId: string;
+  spotifyId: string;
   snapshotId: string;
 }

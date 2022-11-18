@@ -1,4 +1,11 @@
-import { Button, BackButton, ExportButton, TagButton, PlaybackButton } from './Buttons/Buttons';
+import {
+  Button,
+  TextButton,
+  BackButton,
+  ExportButton,
+  TagButton,
+  PlaybackButton,
+} from './Buttons/Buttons';
 import { Header, Body } from './Text/Text';
 import { Modal, Confirm } from './Modal/Modal';
 import Backdrop from './Backdrop/Backdrop';
@@ -20,4 +27,5 @@ export {
   Body,
   Form,
   Confirm,
+  TextButton,
 };

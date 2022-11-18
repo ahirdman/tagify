@@ -21,8 +21,8 @@ export interface IUser {
   };
 }
 
-export type IFirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
+export type FirebaseSignInPayload = Pick<IUser, 'mail' | 'fireId'>;
 
 export type TokenPayload = Pick<IUser['spotify'], 'token'>;
 
-export type ISpotifyProfilePayload = Pick<IUser['spotify']['profile'], 'image' | 'name' | 'id'>;
+export type SpotifyProfilePayload = Pick<IUser['spotify']['profile'], 'image' | 'name' | 'id'>;

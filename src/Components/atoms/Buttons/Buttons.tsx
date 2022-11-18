@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { IPlaylistStatus } from '../../../store/playlists/playlists.interface';
 import { exportPlaylist } from '../../../store/playlists/playlists.slice';
@@ -15,7 +15,14 @@ interface IButtonsProps {
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Button = ({ title, backgroundColor, textColor, width, border, onClick }: IButtonsProps) => {
+export const Button = ({
+  title,
+  backgroundColor,
+  textColor,
+  width,
+  border,
+  onClick,
+}: IButtonsProps) => {
   return (
     <button
       className="button"
@@ -32,12 +39,27 @@ const Button = ({ title, backgroundColor, textColor, width, border, onClick }: I
   );
 };
 
-interface IProps {
+interface ITextButtonProps {
+  title: string;
+  active?: boolean;
+  onClick?: () => void;
+}
+
+export const TextButton = ({ title, active, onClick }: ITextButtonProps) => {
+  return (
+    <button className="text-button" onClick={onClick}>
+      <h2 className={active ? 'text-button__text--active' : 'text-button__text'}>{title}</h2>
+    </button>
+  );
+};
+
+interface IExportButtonProps {
   status: IPlaylistStatus;
 }
 
-const ExportButton = ({ status }: IProps) => {
+export const ExportButton = ({ status }: IExportButtonProps) => {
   const dispatch = useAppDispatch();
+  const { playlistId } = useParams();
 
   const buttonText = () => {
     if (status.exporting) {
@@ -62,7 +84,7 @@ const ExportButton = ({ status }: IProps) => {
       className="playlist__button playlist__button--export"
       onClick={e => {
         e.preventDefault();
-        dispatch(exportPlaylist());
+        dispatch(exportPlaylist(playlistId));
       }}
       style={{
         backgroundColor: status.error ? '#150000' : '#150c00',
@@ -75,7 +97,7 @@ const ExportButton = ({ status }: IProps) => {
   );
 };
 
-const BackButton = () => {
+export const BackButton = () => {
   const navigate = useNavigate();
   return (
     <button
@@ -97,7 +119,7 @@ interface ITagButtonProps {
   tagAction: 'ADD' | 'DELETE';
 }
 
-const TagButton = ({ onClick, color, name, tagAction }: ITagButtonProps) => {
+export const TagButton = ({ onClick, color, name, tagAction }: ITagButtonProps) => {
   return (
     <button onClick={onClick} className="tag" style={{ background: color }}>
       {name}
@@ -110,7 +132,7 @@ interface IPlaybackButtonProps {
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const PlaybackButton = ({ onClick }: IPlaybackButtonProps) => {
+export const PlaybackButton = ({ onClick }: IPlaybackButtonProps) => {
   const isPaused = useAppSelector(state => state.playback.isPaused);
 
   return (
@@ -119,5 +141,3 @@ const PlaybackButton = ({ onClick }: IPlaybackButtonProps) => {
     </button>
   );
 };
-
-export { Button, BackButton, ExportButton, TagButton, PlaybackButton };

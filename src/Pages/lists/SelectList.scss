@@ -1,0 +1,19 @@
+@use '../../styles/text';
+@use '../../styles/colors';
+
+.select-list {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+  }
+
+  &__suggestions {
+    margin: 15px;
+    padding: 10px;
+    height: 30vh;
+
+    border: 1px solid colors.$border;
+    border-radius: 3px;
+  }
+}

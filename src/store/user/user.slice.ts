@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import {
-  IFirebaseSignInPayload,
-  ISpotifyProfilePayload,
+  FirebaseSignInPayload,
+  SpotifyProfilePayload,
   TokenPayload,
   IUser,
 } from './user.interface';
@@ -47,7 +47,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    firebaseSignIn: (state, action: PayloadAction<IFirebaseSignInPayload>) => {
+    firebaseSignIn: (state, action: PayloadAction<FirebaseSignInPayload>) => {
       const { mail, fireId } = action.payload;
       state.mail = mail;
       state.fireId = fireId;
@@ -62,7 +62,7 @@ export const userSlice = createSlice({
       state.spotify.connected = true;
     },
 
-    setSpotifyProfile: (state, action: PayloadAction<ISpotifyProfilePayload>) => {
+    setSpotifyProfile: (state, action: PayloadAction<SpotifyProfilePayload>) => {
       state.spotify.profile = action.payload;
       state.spotify.connected = true;
       state.ready = true;

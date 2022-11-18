@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import './AddTag.scss';
-import { randomizeTagColor } from '../../../services/firebase/firestore/firestore.helper';
 import { useAppSelector } from '../../../store/hooks';
 import { fireIdSelector } from '../../../store/user/user.slice';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
 import { v4 as uuidv4 } from 'uuid';
+import { randomizeTagColor } from '../../../styles/style';
 
 const AddTag = () => {
   const [tagInput, setTagInput] = React.useState('');
@@ -26,7 +26,9 @@ const AddTag = () => {
           className="add-tag__search--button"
           onClick={e => {
             e.preventDefault();
-            Firestore.createTag(fireId, uuidv4(), tagInput, randomizeTagColor(), selectedTrack);
+            Firestore.createList(fireId, uuidv4(), tagInput, randomizeTagColor(), 'TAG', [
+              selectedTrack,
+            ]);
             setTagInput('');
           }}
         ></button>

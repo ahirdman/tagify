@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Playlist } from '../../../store/playlists/playlists.interface';
+import { IPlaylist } from '../../../store/playlists/playlists.interface';
 import './TagSpotlight.scss';
 
 interface IProps {
-  list: Playlist;
+  list: IPlaylist;
 }
 
 const TagSpotlight = ({ list }: IProps) => {

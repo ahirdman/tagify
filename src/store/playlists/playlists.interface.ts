@@ -1,17 +1,18 @@
 import { IFirestoreTagDocument, SavedTracksData } from '../../services';
+import { IMixMatch } from '../../utils/mixLists/mixLists';
 
-export interface Playlist {
+export interface IPlaylist {
   id: string;
+  createdAt: string;
+  favourite: boolean;
   name: string;
   color: string;
   type: 'TAG' | 'MIXED';
-  created?: boolean;
   tracks: SavedTracksData[];
   exported: boolean;
-  playlistId: string;
+  spotifyId: string;
   snapshotId: string;
-  isActive: boolean;
-  status: {
+  status?: {
     sync: 'SYNCED' | 'UNSYNCED' | 'UNKNOWN';
     exporting: boolean;
     error: boolean;
@@ -24,25 +25,29 @@ export interface IPlaylistStatus {
   error: boolean;
 }
 
-export interface PlaylistState {
-  playlists: Playlist[];
+export interface IPlaylistState {
+  playlists: IPlaylist[];
+  mixSuggestions: IMixMatch[];
 }
 
-export interface SelectListPayload {
-  selectedList: string;
-}
-
-export interface UpdateSyncPayload {
+export interface IUpdateSyncPayload {
+  id: string;
   sync: 'SYNCED' | 'UNSYNCED' | 'UNKNOWN';
 }
 
-export interface UpdatePlaylistData {
+export interface IUpdatePlaylistData {
   data: IFirestoreTagDocument;
 }
 
-export interface SetPlaylistsPayload {
-  lists: Playlist[];
+export interface IPlaylistsPayload {
+  lists: IPlaylist[];
 }
-export interface AddPlaylistsPayload {
-  lists: Playlist[];
+
+export interface IMixedMatchesPayload {
+  matches: IMixMatch[];
+}
+
+export interface ITagTrackThunkArgs {
+  playlistName: string;
+  tracks: SavedTracksData[];
 }

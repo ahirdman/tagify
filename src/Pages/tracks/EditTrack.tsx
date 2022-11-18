@@ -2,11 +2,12 @@ import * as React from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import * as Firestore from '../../services/firebase/firestore/firestore.service';
 import { AddTag, TrackSection, TagSection } from '../../Components/molecules';
-import { matchTag } from '../../services/firebase/firestore/firestore.helper';
 import { ITags } from '../../common/common.interface';
 import { useAppSelector } from '../../store/hooks';
 import { selectedTrackSelector } from '../../store/savedTracks/savedTracks.slice';
 import Card from '../../Layout/Card/Card';
+import { IPlaylist } from '../../store/playlists/playlists.interface';
+import { matchTag } from '../../utils/matchTags/matchTags';
 
 const EditTrack = () => {
   const [trackTags, setTrackTags] = React.useState<string[]>([]);
@@ -21,12 +22,15 @@ const EditTrack = () => {
       const tagObject: any[] = [];
 
       collection.forEach(doc => {
-        const data = doc.data();
-        tags.push({ name: data.name, color: data.color });
-        tagObject.push({
-          color: data.color,
-          [data.name]: [...data.tracks],
-        });
+        const data = doc.data() as IPlaylist;
+
+        if (data.type !== 'MIXED') {
+          tags.push({ name: data.name, color: data.color });
+          tagObject.push({
+            color: data.color,
+            [data.name]: [...data.tracks],
+          });
+        }
       });
 
       setUserTags(tags);

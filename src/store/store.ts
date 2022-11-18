@@ -3,6 +3,7 @@ import userReducer from './user/user.slice';
 import playbackReducer from './playback/playback.slice';
 import savedTracksReducer from './savedTracks/savedTracks.slice';
 import playlistsReducer from './playlists/playlists.slice';
+import statsSliceReducer from './stats/stats.slice';
 import { signIn, spotifyToken } from './user/user.listener';
 import { playlistSync, createMixedSuggestions } from './playlists/playlists.listener';
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     playback: playbackReducer,
     savedTracks: savedTracksReducer,
     playlist: playlistsReducer,
+    statistics: statsSliceReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().prepend(

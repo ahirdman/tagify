@@ -13,6 +13,7 @@ import TagSpotlight from './TagSpotlight/TagSpotlight';
 import CreateTag from './CreateTag/CreateTag';
 import Box from '../atoms/Box/Box';
 import AddTracksModal from './AddTracksModal/AddTracksModal';
+import StatsOverview from './WelcomeHeader/StatsOverview';
 
 export {
   AddTag,
@@ -30,4 +31,5 @@ export {
   CreateTag,
   Box,
   AddTracksModal,
+  StatsOverview,
 };

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Card from '../../Layout/Card/Card';
 import { Button } from '../../Components/atoms';
-import WelcomeHeader from '../../Components/molecules/WelcomeHeader/WelcomeHeader';
 import { RecentTags } from '../../Components/organisms';
 import { getAllTags } from '../../store/playlists/playlists.slice';
 import { useAppDispatch } from '../../store/hooks';
-import { CreateTag } from '../../Components/molecules';
+import { CreateTag, StatsOverview } from '../../Components/molecules';
 import './Dashboard.scss';
 
 const Dashboard = () => {
@@ -20,7 +19,7 @@ const Dashboard = () => {
   return (
     <Card title="Home" navigate={false}>
       <div className="dashboard">
-        <WelcomeHeader />
+        <StatsOverview />
         <RecentTags />
         <Button
           title="Create new tag"

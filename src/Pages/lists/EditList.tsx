@@ -8,7 +8,7 @@ import { Firestore } from '../../services';
 import Card from '../../Layout/Card/Card';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fireIdSelector } from '../../store/user/user.slice';
-import { Playlist } from '../../store/playlists/playlists.interface';
+import { IPlaylist } from '../../store/playlists/playlists.interface';
 
 const EditList = () => {
   const [addTracksModal, setAddTracksModal] = React.useState(false);
@@ -23,7 +23,7 @@ const EditList = () => {
 
   React.useEffect((): any => {
     const unsubscribe = onSnapshot(Firestore.tagDoc(fireId, playlist.name), doc => {
-      const tagDocument = doc.data() as Playlist;
+      const tagDocument = doc.data() as IPlaylist;
       // TODO: Conditional update: if the state playlist is the same as the firestore doc, dont dispatch
 
       dispatch(updateStateDoc({ data: tagDocument }));

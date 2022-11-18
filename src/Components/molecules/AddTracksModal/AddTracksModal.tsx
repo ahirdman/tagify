@@ -59,7 +59,7 @@ interface IProp {
   playlistName: string;
 }
 
-const ModalSelect = ({ selectedTracks, onClick, playlistName }: IProp) => {
+const ModalSelect = ({ selectedTracks, setSelectedTracks, onClick, playlistName }: IProp) => {
   const dispatch = useAppDispatch();
 
   const addTracks = (e: React.MouseEvent<HTMLElement, MouseEvent>, tracks: SavedTracksData[]) => {
@@ -70,7 +70,7 @@ const ModalSelect = ({ selectedTracks, onClick, playlistName }: IProp) => {
 
   return (
     <div className="modal-select">
-      <Button title="Clear" backgroundColor="red" onClick={() => console.log('object')} />
+      <Button title="Clear" backgroundColor="red" onClick={() => setSelectedTracks([])} />
       <div className="modal-select__selection">
         <p>{selectedTracks.length} tracks</p>
       </div>

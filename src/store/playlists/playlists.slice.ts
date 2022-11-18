@@ -1,53 +1,58 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Firestore, SavedTracksData, Spotify } from '../../services';
+import { Firestore, Spotify } from '../../services';
 import {
-  PlaylistState,
-  Playlist,
-  SelectListPayload,
-  SetPlaylistsPayload,
-  UpdatePlaylistData,
-  UpdateSyncPayload,
-  AddPlaylistsPayload,
+  IPlaylistState,
+  IPlaylist,
+  IUpdatePlaylistData,
+  IUpdateSyncPayload,
+  IPlaylistsPayload,
+  ITagTrackThunkArgs,
+  IMixedMatchesPayload,
 } from './playlists.interface';
-import { randomizeTagColor } from '../../services/firebase/firestore/firestore.helper';
+import { IMixMatch } from '../../utils/mixLists/mixLists';
 
-export const exportPlaylist = createAsyncThunk('playlists/exportPlaylist', async (_, thunkAPI) => {
-  const state = thunkAPI.getState() as RootState;
-  const { token } = state.user.spotify;
-  const { id } = state.user.spotify.profile;
+export const exportPlaylist = createAsyncThunk(
+  'playlists/exportPlaylist',
+  async (playlistId: string, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const { token } = state.user.spotify;
+    const { id } = state.user.spotify.profile;
 
-  const selectedList = state.playlist.playlists.find(list => list.isActive === true);
-  const { name, tracks } = selectedList;
+    const selectedList = state.playlist.playlists.find(list => list.id === playlistId);
+    const { name, tracks } = selectedList;
 
-  const data = await Spotify.createNewPlaylistWithTracks(name, token, id, tracks);
+    const data = await Spotify.createNewPlaylistWithTracks(name, token, id, tracks);
 
-  return data;
-});
+    return data;
+  }
+);
 
 export const createTag = createAsyncThunk(
   'playlists/createTag',
-  async (playlist: Playlist, thunkAPI) => {
+  async (playlist: IPlaylist, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const { fireId } = state.user;
 
     thunkAPI.dispatch(addPlaylists({ lists: [playlist] }));
 
-    await Firestore.createTag(fireId, playlist.id, playlist.name, randomizeTagColor());
+    await Firestore.createList(
+      fireId,
+      playlist.id,
+      playlist.name,
+      playlist.color,
+      playlist.type,
+      playlist.tracks
+    );
 
     return playlist.id;
   }
 );
 
-interface ITagTrackArgs {
-  playlistName: string;
-  tracks: SavedTracksData[];
-}
-
 export const tagTrack = createAsyncThunk(
   'playlists/tagTrack',
-  async ({ playlistName, tracks }: ITagTrackArgs, thunkAPI) => {
+  async ({ playlistName, tracks }: ITagTrackThunkArgs, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const { fireId } = state.user;
 
@@ -66,40 +71,35 @@ export const getAllTags = createAsyncThunk('playlists/getAllTags', async (_, thu
   return tags;
 });
 
-const initialState: PlaylistState = {
-  playlists: [] as Playlist[],
+const initialState: IPlaylistState = {
+  playlists: [] as IPlaylist[],
+  mixSuggestions: [] as IMixMatch[],
 };
 
 export const playlistSlice = createSlice({
   name: 'playlists',
   initialState,
   reducers: {
-    setPlaylists: (state, { payload }: PayloadAction<SetPlaylistsPayload>) => {
+    setPlaylists: (state, { payload }: PayloadAction<IPlaylistsPayload>) => {
       state.playlists = payload.lists;
     },
-    addPlaylists: (state, { payload }: PayloadAction<AddPlaylistsPayload>) => {
+    setSuggestions: (state, { payload }: PayloadAction<IMixedMatchesPayload>) => {
+      state.mixSuggestions = payload.matches;
+    },
+    addPlaylists: (state, { payload }: PayloadAction<IPlaylistsPayload>) => {
       state.playlists = [...state.playlists, ...payload.lists];
     },
-    setSelectedList: (state, { payload }: PayloadAction<SelectListPayload>) => {
-      state.playlists.find(list => list.id === payload.selectedList).isActive = true;
+    updateSyncStatus: (state, { payload }: PayloadAction<IUpdateSyncPayload>) => {
+      const playlist = state.playlists.find(list => list.id === payload.id);
+
+      playlist.status.sync = payload.sync;
     },
-    clearSelectedList: state => {
-      state.playlists.map(list => (list.isActive = false));
-    },
-    updateSyncStatus: (state, { payload }: PayloadAction<UpdateSyncPayload>) => {
-      state.playlists.find(list => list.isActive === true).status.sync = payload.sync;
-    },
-    updateStateDoc: (state, { payload }: PayloadAction<UpdatePlaylistData>) => {
+    updateStateDoc: (state, { payload }: PayloadAction<IUpdatePlaylistData>) => {
       const activeList = state.playlists.find(list => list.id === payload.data.id);
 
       if (activeList) {
         Object.assign(activeList, { ...payload.data });
       }
-      // state.tagLists[index] = {
-      //   ...payload.data,
-      //   isActive: state.tagLists[index].isActive,
-      //   status: state.tagLists[index].status,
-      // };
     },
   },
   extraReducers: builder => {
@@ -110,26 +110,26 @@ export const playlistSlice = createSlice({
 
         state.playlists.push(...newPayloadList);
       })
-      .addCase(exportPlaylist.pending, state => {
-        const index = state.playlists.findIndex(e => e.isActive === true);
+      .addCase(exportPlaylist.pending, (state, action) => {
+        const index = state.playlists.findIndex(e => e.id === action.meta.arg);
 
         state.playlists[index].status.exporting = true;
         state.playlists[index].status.error = false;
       })
-      .addCase(exportPlaylist.rejected, state => {
-        const index = state.playlists.findIndex(e => e.isActive === true);
+      .addCase(exportPlaylist.rejected, (state, action) => {
+        const index = state.playlists.findIndex(e => e.id === action.meta.arg);
 
         state.playlists[index].status.exporting = false;
         state.playlists[index].status.error = true;
       })
-      .addCase(exportPlaylist.fulfilled, (state, { payload }) => {
-        const index = state.playlists.findIndex(e => e.isActive === true);
+      .addCase(exportPlaylist.fulfilled, (state, action) => {
+        const index = state.playlists.findIndex(e => e.id === action.meta.arg);
 
         state.playlists[index] = {
           ...state.playlists[index],
           exported: true,
-          playlistId: payload.playlistId,
-          snapshotId: payload.snapshotId,
+          spotifyId: action.payload.playlistId,
+          snapshotId: action.payload.snapshotId,
           status: {
             exporting: false,
             error: false,
@@ -140,22 +140,12 @@ export const playlistSlice = createSlice({
   },
 });
 
-export const {
-  setSelectedList,
-  addPlaylists,
-  clearSelectedList,
-  setPlaylists,
-  updateSyncStatus,
-  updateStateDoc,
-} = playlistSlice.actions;
+export const { setSuggestions, addPlaylists, setPlaylists, updateSyncStatus, updateStateDoc } =
+  playlistSlice.actions;
 
 export default playlistSlice.reducer;
 
-export const selectTaglists = (state: RootState) => state.playlist.playlists;
-
-export const selectActiveTagList = createSelector([selectTaglists], taglists =>
-  taglists.find(list => list.isActive === true)
-);
+const selectTaglists = (state: RootState) => state.playlist.playlists;
 
 export const selectMixedPlaylists = createSelector([selectTaglists], taglists =>
   taglists.filter(list => list.type === 'MIXED')
@@ -163,8 +153,4 @@ export const selectMixedPlaylists = createSelector([selectTaglists], taglists =>
 
 export const selectTagPlaylists = createSelector([selectTaglists], taglists =>
   taglists.filter(list => list.type === 'TAG')
-);
-
-export const selectCreatedMixedPlaylists = createSelector([selectTaglists], taglists =>
-  taglists.filter(list => list.type === 'MIXED' && list.created === true)
 );

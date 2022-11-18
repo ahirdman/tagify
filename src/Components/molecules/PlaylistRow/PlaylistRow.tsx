@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Playlist } from '../../../store/playlists/playlists.interface';
+import { IPlaylist } from '../../../store/playlists/playlists.interface';
 import './PLaylistRow.scss';
 
 interface IProps {
-  list: Playlist;
+  list: IPlaylist;
 }
 
 const PlaylistRow = ({ list }: IProps) => {
