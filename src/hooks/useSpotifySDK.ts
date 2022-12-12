@@ -45,13 +45,13 @@ const useSpotifySDK = () => {
     const iFrame =
       document.querySelector('iframe[src="https://sdk.scdn.co/embedded/index.html"]') || null;
 
-    spotifySDK.addListener('ready', ({ device_id }: { device_id: string }) => {
+    spotifySDK.addListener('ready', ({ device_id }) => {
       dispatch(setDeviceID(device_id));
     });
 
     spotifySDK.connect();
 
-    spotifySDK.addListener('player_state_changed', (state: any) => {
+    spotifySDK.addListener('player_state_changed', state => {
       if (!state) return;
 
       const stateTrack = state.track_window.current_track;
@@ -74,7 +74,7 @@ const useSpotifySDK = () => {
         pausedRef.current = state.paused;
       }
 
-      spotifySDK.getCurrentState().then((state: any) => {
+      spotifySDK.getCurrentState().then(state => {
         if (!state) {
           dispatch(setActive(false));
         }

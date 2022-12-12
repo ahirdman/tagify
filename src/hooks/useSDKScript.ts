@@ -6,7 +6,7 @@ const useSDKScript = () => {
   useEffect(() => {
     const script = document.createElement('script');
     script.setAttribute('id', 'spotPlayer');
-    script.src = process.env.REACT_APP_SDKURL as string;
+    script.src = import.meta.env.VITE_SDKURL as string;
     script.async = true;
 
     document.body.appendChild(script);
