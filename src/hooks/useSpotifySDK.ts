@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ICurrentTrack } from '../store/playback/playback.interface';
 import { useAppDispatch } from './../store/hooks';
 import {
@@ -11,24 +10,25 @@ import {
 import useSDKScript from './useSDKScript';
 import { Spotify } from '../services/index';
 import { setSpotifyToken } from '../store/user/user.slice';
+import { useEffect, useRef, useState } from 'react';
 
 const useSpotifySDK = () => {
-  const [player, setPlayer] = React.useState(undefined);
+  const [player, setPlayer] = useState(undefined);
 
   const SDKReady = useSDKScript();
   const dispatch = useAppDispatch();
 
-  const currentTrackRef = React.useRef<ICurrentTrack | null>(null);
-  const firstTrackRef = React.useRef<ICurrentTrack | null>(null);
-  const activeSessionRef = React.useRef<boolean | null>(null);
-  const pausedRef = React.useRef<boolean | null>(null);
+  const currentTrackRef = useRef<ICurrentTrack | null>(null);
+  const firstTrackRef = useRef<ICurrentTrack | null>(null);
+  const activeSessionRef = useRef<boolean | null>(null);
+  const pausedRef = useRef<boolean | null>(null);
 
-  React.useEffect((): any => {
+  useEffect((): any => {
     if (!SDKReady) return;
     const spotifySDK = new window.Spotify.Player({
       name: 'Moodify',
 
-      getOAuthToken: async cb => {
+      getOAuthToken: async (cb: any) => {
         const token: any = await Spotify.getSpotifyToken();
         dispatch(
           setSpotifyToken({
@@ -45,13 +45,13 @@ const useSpotifySDK = () => {
     const iFrame =
       document.querySelector('iframe[src="https://sdk.scdn.co/embedded/index.html"]') || null;
 
-    spotifySDK.addListener('ready', ({ device_id }) => {
+    spotifySDK.addListener('ready', ({ device_id }: { device_id: string }) => {
       dispatch(setDeviceID(device_id));
     });
 
     spotifySDK.connect();
 
-    spotifySDK.addListener('player_state_changed', state => {
+    spotifySDK.addListener('player_state_changed', (state: any) => {
       if (!state) return;
 
       const stateTrack = state.track_window.current_track;
@@ -74,7 +74,7 @@ const useSpotifySDK = () => {
         pausedRef.current = state.paused;
       }
 
-      spotifySDK.getCurrentState().then(state => {
+      spotifySDK.getCurrentState().then((state: any) => {
         if (!state) {
           dispatch(setActive(false));
         }

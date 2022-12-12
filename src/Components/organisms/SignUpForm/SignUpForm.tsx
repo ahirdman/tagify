@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { FirebaseAuth } from '../../../services';
 import './SignUpForm.scss';
 
@@ -8,14 +8,12 @@ export interface IAuthError {
 }
 
 const SignUpForm = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [confirm, setConfirm] = React.useState('');
-  const [error, setError] = React.useState({} as IAuthError);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [error, setError] = useState({} as IAuthError);
 
-  const handleInputChange = (
-    event: React.FormEvent<HTMLInputElement>
-  ): void => {
+  const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const value = event.currentTarget.value;
     const name = event.currentTarget.name;
 
@@ -41,9 +39,7 @@ const SignUpForm = () => {
 
   return (
     <>
-      <div className={error.display ? 'error' : 'error--hidden'}>
-        {error.message}
-      </div>
+      <div className={error.display ? 'error' : 'error--hidden'}>{error.message}</div>
       <h1>SIGN UP</h1>
       <form className="sign-up" onSubmit={handleSubmit}>
         <input

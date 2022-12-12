@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { memo } from 'react';
 import { BackButton } from '../../atoms';
 import './CardNav.scss';
 
@@ -19,4 +19,4 @@ const CardNav = ({ title, navigate }: Props) => {
   );
 };
 
-export default React.memo(CardNav);
+export default memo(CardNav);

@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IPlaylist } from '../../../store/playlists/playlists.interface';
+import { lengthOfPlaylist } from '../PlaylistController/PlaylistController';
 import './TagSpotlight.scss';
 
 interface IProps {
@@ -9,6 +9,8 @@ interface IProps {
 
 const TagSpotlight = ({ list }: IProps) => {
   const navigate = useNavigate();
+
+  const listLength = lengthOfPlaylist(list.tracks);
 
   return (
     <li
@@ -24,8 +26,8 @@ const TagSpotlight = ({ list }: IProps) => {
           <p className="p">Status: {list.status.sync}</p>
         </div>
         <div className="tag-spotlight__info--right">
-          <p className="p">tracks: 42</p>
-          <p className="p">length: 6:43</p>
+          <p className="p">tracks: {list.tracks.length}</p>
+          <p className="p">length: {listLength} m</p>
         </div>
       </div>
     </li>

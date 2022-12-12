@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
@@ -14,6 +13,7 @@ import {
   SelectTrack,
 } from './Pages';
 import App from './App';
+import { StrictMode } from 'react';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -53,9 +53,9 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-  </React.StrictMode>
+  </StrictMode>
 );

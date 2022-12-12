@@ -154,3 +154,8 @@ export const selectMixedPlaylists = createSelector([selectTaglists], taglists =>
 export const selectTagPlaylists = createSelector([selectTaglists], taglists =>
   taglists.filter(list => list.type === 'TAG')
 );
+
+export const selectNumberOfTaggedTracks = createSelector(
+  [selectTaglists],
+  taglists => taglists.filter(list => list.type === 'MIXED').length // NOT IMPLEMENTED
+);

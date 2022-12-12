@@ -1,14 +1,14 @@
-import * as React from 'react';
 import { Loader } from '../../Components/atoms';
 import { useAppSelector } from '../../store/hooks';
 import { TracksList } from '../../Components/organisms';
 import Card from '../../Layout/Card/Card';
 import useScroll from '../../hooks/useScroll';
 import { useNavigate } from 'react-router';
+import { useRef, useState } from 'react';
 
 const SelectTracks = () => {
-  const [filter, setFilter] = React.useState('');
-  const listEl = React.useRef<HTMLUListElement>(null);
+  const [filter, setFilter] = useState('');
+  const listEl = useRef<HTMLUListElement>(null);
 
   const { filteredTracks, loading } = useAppSelector(state => state.savedTracks);
 

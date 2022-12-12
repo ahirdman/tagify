@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { IPlaylistStatus } from '../../../store/playlists/playlists.interface';

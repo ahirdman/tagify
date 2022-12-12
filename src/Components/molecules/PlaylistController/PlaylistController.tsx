@@ -1,11 +1,10 @@
-import * as React from 'react';
 import { SavedTracksData } from '../../../services';
 import './PlaylistController.scss';
 import { Button, ExportButton } from '../../atoms';
 import { IPlaylistStatus } from '../../../store/playlists/playlists.interface';
 import Box from '../../atoms/Box/Box';
 
-const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
+export const lengthOfPlaylist = (tracksArr: SavedTracksData[]) => {
   const ms = tracksArr.map(track => track.duration).reduce((acc, curr) => acc + curr, 0);
 
   return (ms / 1000 / 60).toFixed(1);

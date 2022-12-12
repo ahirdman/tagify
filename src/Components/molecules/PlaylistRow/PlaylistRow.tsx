@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { IPlaylist } from '../../../store/playlists/playlists.interface';
 import './PLaylistRow.scss';

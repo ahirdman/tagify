@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { createTag, getAllTags, selectTagPlaylists } from '../../store/playlists/playlists.slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { MixedList, TagList } from '../../Components/organisms';
@@ -7,6 +6,7 @@ import Card from '../../Layout/Card/Card';
 import './SelectList.scss';
 import { TagButton, TextButton } from '../../Components/atoms';
 import { createListFromMatches, IMixMatch } from '../../utils/mixLists/mixLists';
+import { useEffect, useState } from 'react';
 
 interface IListType {
   type: 'SINGLE' | 'MIXED';
@@ -17,9 +17,9 @@ const SelectList = () => {
   const mixSuggestions = useAppSelector(state => state.playlist.mixSuggestions);
   const playlists = useAppSelector(selectTagPlaylists);
 
-  const [activeListType, setActiveListType] = React.useState<IListType>({ type: 'SINGLE' });
+  const [activeListType, setActiveListType] = useState<IListType>({ type: 'SINGLE' });
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(getAllTags());
   }, [dispatch]);
 

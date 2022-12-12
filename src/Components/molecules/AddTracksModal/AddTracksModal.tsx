@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useState } from 'react';
 import useScroll from '../../../hooks/useScroll';
 import { SavedTracksData } from '../../../services';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -13,12 +13,12 @@ interface IProps {
 }
 
 const AddTracksModal = ({ onClick, listName }: IProps) => {
-  const listEl = React.useRef<HTMLUListElement>(null);
+  const listEl = useRef<HTMLUListElement>(null);
   const filter = '';
 
   const tracks = useAppSelector(state => state.savedTracks.savedTracks);
 
-  const [selected, setSelected] = React.useState([] as SavedTracksData[]);
+  const [selected, setSelected] = useState([] as SavedTracksData[]);
   useScroll(listEl, filter);
 
   const selectTrack = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, track: SavedTracksData) => {

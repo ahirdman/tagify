@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { AddTracksModal, PlaylistController } from '../../Components/molecules';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateStateDoc } from '../../store/playlists/playlists.slice';
@@ -9,9 +8,10 @@ import Card from '../../Layout/Card/Card';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fireIdSelector } from '../../store/user/user.slice';
 import { IPlaylist } from '../../store/playlists/playlists.interface';
+import { useEffect, useState } from 'react';
 
 const EditList = () => {
-  const [addTracksModal, setAddTracksModal] = React.useState(false);
+  const [addTracksModal, setAddTracksModal] = useState(false);
   const navigate = useNavigate();
 
   const { listId } = useParams();
@@ -21,7 +21,7 @@ const EditList = () => {
     state.playlist.playlists.find(list => list.id === listId)
   );
 
-  React.useEffect((): any => {
+  useEffect((): any => {
     const unsubscribe = onSnapshot(Firestore.tagDoc(fireId, playlist.name), doc => {
       const tagDocument = doc.data() as IPlaylist;
       // TODO: Conditional update: if the state playlist is the same as the firestore doc, dont dispatch

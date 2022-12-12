@@ -28,4 +28,18 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  &__progress-bar {
+    height: 20px;
+    width: 80%;
+    border: 1px solid colors.$border;
+    border-radius: 20px;
+
+    &--progress {
+      height: 100%;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      background-color: colors.$orange;
+    }
+  }
 }

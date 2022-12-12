@@ -1,4 +1,3 @@
-import * as React from 'react';
 import './Settings.scss';
 import { Button } from '../../Components/atoms';
 import { FirebaseAuth } from '../../services';

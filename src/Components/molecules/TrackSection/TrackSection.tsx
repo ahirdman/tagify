@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Spotify } from '../../../services';
 import { useAppSelector } from '../../../store/hooks';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';

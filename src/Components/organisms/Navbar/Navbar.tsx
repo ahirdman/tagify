@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Player } from '../../molecules';
 import { useAppSelector } from '../../../store/hooks';

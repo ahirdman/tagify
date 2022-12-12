@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 const useSDKScript = () => {
-  const [ready, setReady] = React.useState(false);
+  const [ready, setReady] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const script = document.createElement('script');
     script.setAttribute('id', 'spotPlayer');
     script.src = process.env.REACT_APP_SDKURL as string;

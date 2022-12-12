@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useAppSelector } from '../../../store/hooks';
 import { selectMixedPlaylists } from '../../../store/playlists/playlists.slice';
 import { PlaylistRow } from '../../molecules';
