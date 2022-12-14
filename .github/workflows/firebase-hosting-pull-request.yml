@@ -8,16 +8,16 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     env:
-      REACT_APP_FIREBASE_API_KEY: '${{ secrets.FIREBASE_API_KEY }}'
-      REACT_APP_FIREBASE_AUTH_DOMAIN: '${{ secrets.FIREBASE_AUTH_DOMAIN }}'
-      REACT_APP_FIREBASE_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'
-      REACT_APP_FIREBASE_BUCKET: '${{ secrets.FIREBASE_BUCKET }}'
-      REACT_APP_FIREBASE_MESSAGING: '${{ secrets.FIREBASE_MESSAGING }}'
-      REACT_APP_FIREBASE_APP_ID: '${{ secrets.FIREBASE_APP_ID }}'
-      REACT_APP_FIREBASE_MEASURMENT_ID: '${{ secrets.FIREBASE_MEASURMENT_ID }}'
-      REACT_APP_LOCAL_SERVER: http://localhost:5001/moodify-92f8f/us-central1
-      REACT_APP_CLOUD_SERVER: https://us-central1-moodify-92f8f.cloudfunctions.net
-      REACT_APP_SDKURL: https://sdk.scdn.co/spotify-player.js
+      VITE_FIREBASE_API_KEY: '${{ secrets.FIREBASE_API_KEY }}'
+      VITE_FIREBASE_AUTH_DOMAIN: '${{ secrets.FIREBASE_AUTH_DOMAIN }}'
+      VITE_FIREBASE_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'
+      VITE_FIREBASE_BUCKET: '${{ secrets.FIREBASE_BUCKET }}'
+      VITE_FIREBASE_MESSAGING: '${{ secrets.FIREBASE_MESSAGING }}'
+      VITE_FIREBASE_APP_ID: '${{ secrets.FIREBASE_APP_ID }}'
+      VITE_FIREBASE_MEASURMENT_ID: '${{ secrets.FIREBASE_MEASURMENT_ID }}'
+      VITE_LOCAL_SERVER: http://localhost:5001/moodify-92f8f/us-central1
+      VITE_CLOUD_SERVER: https://us-central1-moodify-92f8f.cloudfunctions.net
+      VITE_SDKURL: https://sdk.scdn.co/spotify-player.js
     steps:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
