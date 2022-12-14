@@ -1,4 +1,3 @@
-import * as React from 'react';
 import './RecentTags.scss';
 import { useAppSelector } from '../../../store/hooks';
 import { selectTagPlaylists } from '../../../store/playlists/playlists.slice';

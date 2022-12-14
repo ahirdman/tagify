@@ -1,13 +1,13 @@
-import * as React from 'react';
 import Magnifier from './SearchBar.svg';
 import './SearchBar.scss';
+import { memo, useState } from 'react';
 
 interface Props {
   setSearch?: any;
 }
 
 const SearchBar = ({ setSearch }: Props) => {
-  const [searchString, setSearchString] = React.useState('');
+  const [searchString, setSearchString] = useState('');
 
   const handleOnChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const query = event.currentTarget.value;
@@ -25,4 +25,4 @@ const SearchBar = ({ setSearch }: Props) => {
   );
 };
 
-export default React.memo(SearchBar);
+export default memo(SearchBar);

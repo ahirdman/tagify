@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Backdrop, Form, Modal } from '../../atoms';
 import { useAppDispatch } from '../../../store/hooks';
 import { createTag } from '../../../store/playlists/playlists.slice';

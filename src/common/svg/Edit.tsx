@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ISVGProps } from '../common.interface';
 
 const Edit = ({ className }: ISVGProps) => {

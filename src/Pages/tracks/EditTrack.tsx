@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import * as Firestore from '../../services/firebase/firestore/firestore.service';
 import { AddTag, TrackSection, TagSection } from '../../Components/molecules';
@@ -8,15 +7,16 @@ import { selectedTrackSelector } from '../../store/savedTracks/savedTracks.slice
 import Card from '../../Layout/Card/Card';
 import { IPlaylist } from '../../store/playlists/playlists.interface';
 import { matchTag } from '../../utils/matchTags/matchTags';
+import { useLayoutEffect, useState } from 'react';
 
 const EditTrack = () => {
-  const [trackTags, setTrackTags] = React.useState<string[]>([]);
-  const [userTags, setUserTags] = React.useState([]);
+  const [trackTags, setTrackTags] = useState<string[]>([]);
+  const [userTags, setUserTags] = useState([]);
 
   const fireId = useAppSelector(state => state.user.fireId);
   const selectedTrack = useAppSelector(selectedTrackSelector);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     const unsubscribe = onSnapshot(Firestore.tagCol(fireId), collection => {
       const tags: ITags[] = [];
       const tagObject: any[] = [];

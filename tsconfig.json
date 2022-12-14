@@ -1,27 +1,23 @@
 {
   "compilerOptions": {
-    "module": "ES6",
-    "target": "es6",
-    "lib": ["es6", "dom"],
+    "target": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "sourceMap": true,
-    "allowJs": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "rootDir": "src",
+    "allowJs": false,
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "module": "ESNext",
+    // "strict": true,
+    "moduleResolution": "Node",
     "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "outDir": "build",
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "isolatedModules": true
   },
-  // "include": ["src/**/*", "./**/*.ts", "./**/*.tsx"],
-  "exclude": [
-    "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts",
-    "functions"
-  ],
-  "types": ["typePatches"]
+  "include": ["src/**/*", "./**/*.ts", "./**/*.tsx"],
+  "exclude": ["node_modules", "build", "src/setupTests.ts", "functions", "./**/*.test.ts"]
 }

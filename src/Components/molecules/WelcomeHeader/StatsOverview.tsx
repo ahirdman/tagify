@@ -1,6 +1,9 @@
-import * as React from 'react';
 import { useAppSelector } from '../../../store/hooks';
-import { selectMixedPlaylists, selectTagPlaylists } from '../../../store/playlists/playlists.slice';
+import {
+  selectMixedPlaylists,
+  selectNumberOfTaggedTracks,
+  selectTagPlaylists,
+} from '../../../store/playlists/playlists.slice';
 import './StatsOverview.scss';
 
 const StatsOverview = () => {
@@ -14,17 +17,29 @@ const StatsOverview = () => {
 export default StatsOverview;
 
 const Stats = () => {
-  const taggedTracks = useAppSelector(state => state.statistics.taggedTracks);
   const totalSavedTracks = useAppSelector(state => state.savedTracks.total);
   const totalMixes = useAppSelector(selectMixedPlaylists);
   const totalTags = useAppSelector(selectTagPlaylists);
+  const taggedTracks = useAppSelector(selectNumberOfTaggedTracks);
+
+  const percentageOfTracksTagged = (tagged: number, total: number) => (tagged / total) * 100;
 
   return (
-    <ul className="header__items">
-      <li className="header__item">Tagged Tracks: {taggedTracks}</li>
-      <li className="header__item">Total Saved Tracks: {totalSavedTracks}</li>
-      <li className="header__item">Total Mixes: {totalMixes.length}</li>
-      <li className="header__item">Total Tags: {totalTags.length}</li>
-    </ul>
+    <>
+      <div className="header__progress-bar">
+        <div
+          className="header__progress-bar--progress"
+          style={{ width: `${percentageOfTracksTagged(taggedTracks, totalSavedTracks)}%` }}
+        ></div>
+      </div>
+      <p>{`${percentageOfTracksTagged(taggedTracks, totalSavedTracks).toFixed(1)}%`}</p>
+      <ul className="header__items">
+        <li className="header__item">
+          {taggedTracks} tracks tagged out of {totalSavedTracks}
+        </li>
+        <li className="header__item">Mixes: {totalMixes.length}</li>
+        <li className="header__item">Tags: {totalTags.length}</li>
+      </ul>
+    </>
   );
 };

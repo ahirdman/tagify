@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { TagButton } from '../../atoms';
 import './TagSection.scss';
 import { ITags } from '../../../common/common.interface';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Card from '../../Layout/Card/Card';
 import { Button } from '../../Components/atoms';
 import { RecentTags } from '../../Components/organisms';
@@ -6,13 +5,14 @@ import { getAllTags } from '../../store/playlists/playlists.slice';
 import { useAppDispatch } from '../../store/hooks';
 import { CreateTag, StatsOverview } from '../../Components/molecules';
 import './Dashboard.scss';
+import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
-  const [createTagModal, setCreateTagModal] = React.useState(false);
+  const [createTagModal, setCreateTagModal] = useState(false);
 
   const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(getAllTags());
   }, [dispatch]);
 

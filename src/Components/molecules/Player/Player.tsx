@@ -1,5 +1,4 @@
 import './Player.scss';
-import * as React from 'react';
 import { useAppSelector } from '../../../store/hooks';
 import useSpotifySDK from '../../../hooks/useSpotifySDK';
 import { Body, PlaybackButton } from '../../atoms';

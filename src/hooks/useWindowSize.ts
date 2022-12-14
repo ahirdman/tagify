@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useDebugValue, useEffect, useState } from 'react';
 
 export interface Window {
   width: undefined | number;
@@ -6,12 +6,12 @@ export interface Window {
 }
 
 const useWindowSize = () => {
-  const [windowSize, setWindowSize] = React.useState<Window>({
+  const [windowSize, setWindowSize] = useState<Window>({
     width: undefined,
     height: undefined,
   });
 
-  React.useEffect((): any => {
+  useEffect((): any => {
     if (typeof window !== 'undefined') {
       const handleResize = () => {
         setWindowSize({
@@ -28,7 +28,7 @@ const useWindowSize = () => {
     }
   }, []);
 
-  React.useDebugValue('Window Size');
+  useDebugValue('Window Size');
 
   return windowSize;
 };

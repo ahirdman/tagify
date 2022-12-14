@@ -1,12 +1,12 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { FirebaseAuth } from '../../../services';
 import { IAuthError } from '../SignUpForm/SignUpForm';
 import './SignInForm.scss';
 
 const SignInForm = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [error, setError] = React.useState({} as IAuthError);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState({} as IAuthError);
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const value = event.currentTarget.value;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { Button, Loader } from '../../atoms';
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
 }
 
 const ConnectScreen = ({ autoConnect }: Props) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (autoConnect) {
       console.log('removed redirect');
     }

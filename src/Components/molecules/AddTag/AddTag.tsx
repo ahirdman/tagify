@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as Firestore from '../../../services/firebase/firestore/firestore.service';
 import './AddTag.scss';
 import { useAppSelector } from '../../../store/hooks';
@@ -6,9 +5,10 @@ import { fireIdSelector } from '../../../store/user/user.slice';
 import { selectedTrackSelector } from '../../../store/savedTracks/savedTracks.slice';
 import { v4 as uuidv4 } from 'uuid';
 import { randomizeTagColor } from '../../../styles/style';
+import { useState } from 'react';
 
 const AddTag = () => {
-  const [tagInput, setTagInput] = React.useState('');
+  const [tagInput, setTagInput] = useState('');
   const selectedTrack = useAppSelector(selectedTrackSelector);
   const fireId = useAppSelector(fireIdSelector);
 

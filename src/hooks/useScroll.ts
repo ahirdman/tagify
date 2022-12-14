@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   fetchInitialTracks,
@@ -10,7 +10,7 @@ const useScroll = (listEl: React.MutableRefObject<HTMLUListElement>, filter: str
   const savedTracksState = useAppSelector(state => state.savedTracks.savedTracks);
   const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = (): void => {
       if (listEl.current.scrollTop + listEl.current.clientHeight >= listEl.current.scrollHeight) {
         dispatch(fetchNextTracks());
@@ -28,13 +28,13 @@ const useScroll = (listEl: React.MutableRefObject<HTMLUListElement>, filter: str
     };
   }, [dispatch]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (savedTracksState.length !== 0) return;
 
     dispatch(fetchInitialTracks());
   }, [savedTracksState.length, dispatch]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (filter.length > 0) {
       dispatch(filterTracks(filter));
     }

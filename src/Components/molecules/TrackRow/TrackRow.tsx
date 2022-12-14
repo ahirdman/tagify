@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { SavedTracksData } from '../../../services';
 import { useAppDispatch } from '../../../store/hooks';
 import { setSelectedTrack } from '../../../store/savedTracks/savedTracks.slice';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const TrackRow = ({ track, onSelect, onNavigate }: Props) => {
-  const [active, setActive] = React.useState(false);
+  const [active, setActive] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleClick = (e: any) => {

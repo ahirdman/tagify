@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ISVGProps } from '../../../common/common.interface';
 
 const Add = ({ className }: ISVGProps) => {

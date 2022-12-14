@@ -1,15 +1,15 @@
-import * as React from 'react';
 import { Button, Modal, Backdrop } from '../../Components/atoms';
 import { ConnectScreen } from '../../Components/molecules';
 import { SignInForm, SignUpForm } from '../../Components/organisms';
 import './Login.scss';
 import { useAppSelector } from '../../store/hooks';
+import { useState } from 'react';
 
 const Login = () => {
   const { loggedIn } = useAppSelector(state => state.user);
 
-  const [signInModal, setSignInModal] = React.useState(false);
-  const [signUpModal, setSignUpModal] = React.useState(false);
+  const [signInModal, setSignInModal] = useState(false);
+  const [signUpModal, setSignUpModal] = useState(false);
 
   return (
     <main className="login">

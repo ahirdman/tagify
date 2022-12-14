@@ -1,4 +1,3 @@
-import * as React from 'react';
 import './App.scss';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { onAuthStateChanged } from '@firebase/auth';
@@ -7,13 +6,14 @@ import { firebaseSignIn, firebaseSignOut } from './store/user/user.slice';
 import { useNavigate } from 'react-router-dom';
 import { Login } from './Pages';
 import RootLayout from './Layout/RootLayout/RootLayout';
+import { useEffect } from 'react';
 
 const App = () => {
   const loggedIn = useAppSelector(state => state.user.loggedIn);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, fireUser => {
       if (fireUser) {
         const { email, uid } = fireUser;

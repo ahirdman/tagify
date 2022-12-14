@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Card from '../../../Layout/Card/Card';
 import './EmptyCard.scss';
 

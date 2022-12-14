@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Spacer } from '../../Components/atoms';
 import { CardNav, SearchBar } from '../../Components/molecules';
 import { useAppSelector } from '../../store/hooks';
