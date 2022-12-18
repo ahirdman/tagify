@@ -48,11 +48,11 @@ jobs:
         env:
           CYPRESS_USERMAIL: '${{ secrets.CYPRESS_USERMAIL }}'
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
+          DEBUG: '@cypress/github-action'
         with:
           browser: chrome
           build: npm run build
-          run: |
+          start: |
             firebase emulators:start --project moodify-92f8f --only functions
             npm run start:test
-          start: npm run cypress
-          wait-on: 'http://127.0.0.1:3000'
+          wait-on: 'http://127.0.0.1:5001, http://127.0.0.1:3000'
