@@ -1,6 +1,6 @@
 describe('The Login Page', () => {
   beforeEach(() => {
-    cy.viewport('iphone-8');
+    cy.viewport(380, 844);
   });
 
   it('user can sign in, navigate to settings and sign out', () => {

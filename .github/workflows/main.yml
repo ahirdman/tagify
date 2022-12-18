@@ -1,4 +1,4 @@
-name: Cypress Tests using Cypress Docker Image
+name: Cypress Tests
 
 on: [push]
 
@@ -6,17 +6,18 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     container: cypress/included:9.5.4
-    env:
-      CYPRESS_USERMAIL: '${{ secrets.CYPRESS_USERMAIL }}'
-      CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
 
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4 # use the explicit version number
+      - name: Cypress 🧪
+        uses: cypress-io/github-action@v5
+        env:
+          CYPRESS_USERMAIL: ${{ secrets.CYPRESS_USERMAIL }}
+          CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
         with:
-          # Specify Browser since container image is compile with Firefox
           browser: firefox
+          start: |
+            npm run start:test
+            npm run emulators:functions
+          wait-on: 'http://localhost:3080, http://localhost:5001'

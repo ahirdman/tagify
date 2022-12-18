@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "vite --host",
+    "start": "export NODE_ENV=DEV && vite --host",
+    "start:test": "export NODE_ENV=TEST && vite --host --open false",
     "build": "tsc && vite build",
     "preview": "vite preview --host",
     "test": "vitest run --reporter default",
@@ -11,7 +12,7 @@
     "emulators:all": "npm run build && firebase emulators:start",
     "emulators:functions": "firebase emulators:start --only functions",
     "deploy": "npm run build && firebase deploy --only hosting",
-    "cypress:open": "NODE_ENV=TEST cypress open"
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
