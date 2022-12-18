@@ -28,6 +28,7 @@ jobs:
           CYPRESS_USERMAIL: ${{ secrets.CYPRESS_USERMAIL }}
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
           FIREBASE_TOKEN: '${{secrets.FIREBASE_TOKEN}}'
+        run: echot $FIREBASE_TOKEN
         with:
           browser: chrome
           start: firebase emulators:exec --token $FIREBASE_TOKEN --project moodify-92f8f 'npm run cypress'
