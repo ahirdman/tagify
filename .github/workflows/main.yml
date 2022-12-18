@@ -29,7 +29,7 @@ jobs:
           key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('~/.cache/firebase/emulators/**') }}
 
       - name: Install Firebase Emulator Suite 🔥
-        run: npm install --silent --location=global firebase-tools
+        run: npm install --location=global firebase-tools
 
       - name: Install Java ☕️
         uses: actions/setup-java@v2
