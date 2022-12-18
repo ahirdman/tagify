@@ -8,7 +8,7 @@ jobs:
     container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Install Firebase Emulator Suite 🔥
         run: npm install --silent --location=global firebase-tools
@@ -17,7 +17,7 @@ jobs:
         run: npm ci && npm run build
 
       - name: Cypress 🧪
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v2
         env:
           CYPRESS_USERMAIL: ${{ secrets.CYPRESS_USERMAIL }}
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
