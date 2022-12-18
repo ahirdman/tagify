@@ -51,7 +51,8 @@ jobs:
         with:
           browser: chrome
           build: npm run build
-          start: |
-            firebase emulators:start --project moodify-92f8f
+          run: |
+            firebase emulators:start --project moodify-92f8f --only functions
             npm run start:test
+          start: npm run cypress
           wait-on: 'http://127.0.0.1:3000'
