@@ -20,6 +20,4 @@ jobs:
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
         with:
           browser: chrome
-          start: |
-            npm run start:test
-            firebase emulators:start --project moodify-92f8f --only functions
+          start: npm run cypress:ci
