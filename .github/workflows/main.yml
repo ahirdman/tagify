@@ -21,7 +21,8 @@ jobs:
         env:
           CYPRESS_USERMAIL: ${{ secrets.CYPRESS_USERMAIL }}
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
+          FIREBASE_TOKEN: '${{secrets.FIREBASE_TOKEN}}'
         with:
           browser: chrome
-          start: firebase emulators:exec --project moodify-92f8f 'npm run cypress'
+          start: firebase emulators:exec --token $FIREBASE_TOKEN --project moodify-92f8f 'npm run cypress'
           wait-on: 'http://localhost:3000'
