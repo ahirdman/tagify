@@ -55,4 +55,4 @@ jobs:
           start: |
             firebase emulators:start --project moodify-92f8f --only functions
             npm run start:test
-          wait-on: 'http://127.0.0.1:5001, http://127.0.0.1:3000'
+          wait-on: 'http://127.0.0.1:3000, http://127.0.0.1:5001/moodify-92f8f/us-central1/api'
