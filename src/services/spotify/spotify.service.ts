@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SERVER } from '../../config/server';
+import { SERVER } from '../../config/applicatioon';
 import { IUserSavedObject, SavedTracksData } from './spotify.interface';
 
 axios.defaults.baseURL = SERVER;

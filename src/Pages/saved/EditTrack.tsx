@@ -44,7 +44,7 @@ const EditTrack = () => {
   }, [selectedTrack, fireId]);
 
   return (
-    <Card title="Selected Track" navigate={true}>
+    <Card navigate={true}>
       <div style={{ overflowX: 'scroll' }}>
         <TrackSection />
         <TagSection title="TRACK TAGS" tags={trackTags} tagAction="DELETE" />

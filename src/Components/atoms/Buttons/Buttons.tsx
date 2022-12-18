@@ -12,6 +12,7 @@ interface IButtonsProps {
   width?: string;
   border?: string;
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
+  name?: string;
 }
 
 export const Button = ({
@@ -21,6 +22,7 @@ export const Button = ({
   width,
   border,
   onClick,
+  name,
 }: IButtonsProps) => {
   return (
     <button
@@ -32,6 +34,7 @@ export const Button = ({
         border,
       }}
       onClick={onClick}
+      name={name}
     >
       {title}
     </button>

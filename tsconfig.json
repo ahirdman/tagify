@@ -16,7 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "isolatedModules": true
+    "isolatedModules": false
   },
   "include": ["src/**/*", "./**/*.ts", "./**/*.tsx"],
   "exclude": ["node_modules", "build", "src/setupTests.ts", "functions", "./**/*.test.ts"]

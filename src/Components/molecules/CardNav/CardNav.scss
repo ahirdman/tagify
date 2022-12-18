@@ -7,16 +7,17 @@
   justify-content: space-between;
   align-items: center;
 
-  background-color: colors.$background;
-  border: 1px solid colors.$border;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  // background-color: colors.$background;
+  // border: 1px solid colors.$border;
+  // border-top-left-radius: 15px;
+  // border-top-right-radius: 15px;
   padding: 5px;
+  min-height: 40px;
 
   @media screen and (max-width: breakpoints.$phone) {
     border-radius: 0;
     border: none;
-    border-bottom: 2px solid colors.$border;
+    // border-bottom: 2px solid colors.$border;
   }
 
   &__left {
@@ -27,6 +28,7 @@
   }
 
   &__middle {
+    min-width: 40px;
     &--title {
       font-weight: 700;
       font-size: 24px;
@@ -37,5 +39,21 @@
 
   &__right {
     min-width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
+  &__profile {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+  }
+}
+
+.filter {
+  background-color: colors.$dark-grey;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
 }

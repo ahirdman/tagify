@@ -1,4 +1,3 @@
-import Magnifier from './SearchBar.svg';
 import './SearchBar.scss';
 import { memo, useState } from 'react';
 
@@ -19,8 +18,13 @@ const SearchBar = ({ setSearch }: Props) => {
 
   return (
     <form className="search" onSubmit={e => e.preventDefault()}>
-      <input type="text" className="search--input" value={searchString} onChange={handleOnChange} />
-      <Magnifier className="search--icon" />
+      <input
+        type="text"
+        className="search--input"
+        value={searchString}
+        onChange={handleOnChange}
+        placeholder="Search..."
+      />
     </form>
   );
 };

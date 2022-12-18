@@ -17,7 +17,7 @@ const SelectTracks = () => {
   const navigate = useNavigate();
 
   return (
-    <Card title="Saved Tracks" filter={true} setFilter={setFilter} navigate={false}>
+    <Card filter={true} setFilter={setFilter} navigate={false} filterBtn={true}>
       <TracksList
         tracks={filteredTracks}
         element={listEl}

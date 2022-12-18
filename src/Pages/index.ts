@@ -5,8 +5,8 @@ import Dashboard from './dashboard/Dashboard';
 import SelectList from './lists/SelectList';
 import EditList from './lists/EditList';
 
-import SelectTrack from './tracks/SelectTrack';
-import EditTrack from './tracks/EditTrack';
+import SelectTrack from './saved/SelectTrack';
+import EditTrack from './saved/EditTrack';
 
 import ErrorPage from './error/ErrorPage';
 

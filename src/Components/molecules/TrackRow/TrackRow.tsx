@@ -9,9 +9,14 @@ interface Props {
   track: SavedTracksData;
   onSelect?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>, track: SavedTracksData) => void;
   onNavigate?: (path: string) => void;
+  tagged: boolean;
 }
 
-const TrackRow = ({ track, onSelect, onNavigate }: Props) => {
+const TaggedTrack = () => {
+  return <div className="tagged-track"></div>;
+};
+
+const TrackRow = ({ track, onSelect, onNavigate, tagged }: Props) => {
   const [active, setActive] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -37,6 +42,7 @@ const TrackRow = ({ track, onSelect, onNavigate }: Props) => {
           <p className="row__details--title">{track.title}</p>
           <p className="row__details--artist">{track.artist}</p>
         </div>
+        {tagged && <TaggedTrack />}
         {active && <Check />}
       </div>
     </li>

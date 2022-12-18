@@ -13,7 +13,7 @@ const Navbar = () => {
         <Home className="navbar__item--icon" />
       </NavLink>
 
-      <NavLink to="/tracks" className="navbar__item">
+      <NavLink to="/saved" className="navbar__item">
         <Library className="navbar__item--icon" />
         <h1 className="navbar__item--text">Tag Tracks</h1>
       </NavLink>

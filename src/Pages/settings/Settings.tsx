@@ -80,11 +80,12 @@ const Settings = () => {
   ];
 
   return (
-    <Card title="Settings" navigate={false}>
+    <Card navigate={false}>
       <ul className="settings">
         <Setting header="Spotify" sections={spotify} />
         <Setting header="Moodify" sections={moodify}>
           <Button
+            name="delete-account"
             width="100%"
             title="Delete Account"
             backgroundColor="#150000"
@@ -94,6 +95,7 @@ const Settings = () => {
           />
         </Setting>
         <Button
+          name="sign-out"
           width="100%"
           title="Sign Out"
           textColor="white"

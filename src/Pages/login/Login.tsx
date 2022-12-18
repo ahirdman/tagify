@@ -17,12 +17,18 @@ const Login = () => {
       <div className="login__header"></div>
       <div className="login__buttons">
         <Button
+          name="sign up"
           title="SIGN UP"
           backgroundColor="#1bd760"
           textColor="black"
           onClick={() => setSignUpModal(true)}
         />
-        <Button title="LOG IN" backgroundColor="white" onClick={() => setSignInModal(true)} />
+        <Button
+          name="log in"
+          title="LOG IN"
+          backgroundColor="white"
+          onClick={() => setSignInModal(true)}
+        />
       </div>
       {signUpModal && (
         <Backdrop onClick={() => setSignUpModal(false)}>

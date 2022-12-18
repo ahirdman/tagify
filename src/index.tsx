@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: '/tracks',
+        path: '/saved',
         element: <SelectTrack />,
       },
       {

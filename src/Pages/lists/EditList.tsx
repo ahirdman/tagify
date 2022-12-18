@@ -35,7 +35,7 @@ const EditList = () => {
   }, [fireId, dispatch, playlist.name]);
 
   return (
-    <Card title={playlist.name} navigate={true}>
+    <Card navigate={true}>
       <PlaylistController
         addTracks={() => setAddTracksModal(true)}
         tracks={playlist.tracks}

@@ -17,7 +17,7 @@ const Dashboard = () => {
   }, [dispatch]);
 
   return (
-    <Card title="Home" navigate={false}>
+    <Card navigate={false}>
       <div className="dashboard">
         <StatsOverview />
         <RecentTags />

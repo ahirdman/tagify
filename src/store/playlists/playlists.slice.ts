@@ -159,3 +159,7 @@ export const selectNumberOfTaggedTracks = createSelector(
   [selectTaglists],
   taglists => taglists.filter(list => list.type === 'MIXED').length // NOT IMPLEMENTED
 );
+
+export const selectTaggedTracks = createSelector([selectTaglists], tagList =>
+  tagList.flatMap(list => list.tracks).map(track => track.id)
+);

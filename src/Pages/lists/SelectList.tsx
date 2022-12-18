@@ -36,7 +36,7 @@ const SelectList = () => {
   };
 
   return (
-    <Card title="Tags" navigate={false}>
+    <Card navigate={false}>
       <div className="select-list__header">
         <TextButton
           title="Single"

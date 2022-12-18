@@ -2,7 +2,8 @@ import { initializeApp, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 
-import { getAuth } from 'firebase/auth';
+import { getAuth, inMemoryPersistence, setPersistence } from 'firebase/auth';
+import { APP_ENV } from 'config/applicatioon';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -15,14 +16,16 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const functions = getFunctions(getApp());
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-if (window.location.hostname === 'localhost') {
+if (process.env.NODE_ENV === APP_ENV.TEST) {
+  setPersistence(auth, inMemoryPersistence);
+}
+
+if (process.env.NODE_ENV === APP_ENV.TEST || process.env.NODE_ENV === APP_ENV.DEVELOPMENT) {
   connectFunctionsEmulator(functions, 'localhost', 5001);
 }
 
-export { functions };
-
-export const db = getFirestore(app);
-export const auth = getAuth(app);
+export { functions, auth, db };

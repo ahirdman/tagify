@@ -8,7 +8,7 @@ interface Props {
 
 const EmptyCard = ({ icon, item }: Props) => {
   return (
-    <Card title="..." navigate={false}>
+    <Card navigate={false}>
       <section className="empty-card">
         <img src={icon} alt="cross" />
         <p className="empty-card__text">select a {item}</p>
