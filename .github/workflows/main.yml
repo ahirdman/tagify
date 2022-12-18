@@ -11,7 +11,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Firebase Emulator Suite 🔥
-        run: npm install --location=global firebase-tools
+        run: npm install --silent --location=global firebase-tools
+
+      - name: Build For Hosting Emulator 🔨
+        run: npm run build
 
       - name: Cypress 🧪
         uses: cypress-io/github-action@v5
@@ -20,7 +23,5 @@ jobs:
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
         with:
           browser: chrome
-          start: |
-            npm run build
-            npm run cypress:ci
+          start: export NODE_ENV=TEST && firebase emulators:exec 'npm run cypress' --project moodify-92f8f
           wait-on: 'http://localhost:3000'
