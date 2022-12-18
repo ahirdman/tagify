@@ -17,7 +17,7 @@ jobs:
     name: Cypress E2E Tests
     needs: [build]
     runs-on: ubuntu-latest
-    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    container: cypress/included:8.7.0
     env:
       FIREBASE_TOKEN: '${{secrets.FIREBASE_TOKEN}}'
     steps:
