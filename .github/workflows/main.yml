@@ -52,4 +52,4 @@ jobs:
           browser: chrome
           build: npm run build
           start: firebase emulators:exec --token $FIREBASE_TOKEN --project moodify-92f8f 'npm run cypress'
-          wait-on: 'http://localhost:3000'
+          wait-on: 'http://127.0.0.1:3000'
