@@ -22,5 +22,5 @@ jobs:
           browser: firefox
           start: |
             npm run start:test
-            firebase emulators:exec --project moodify-92f8f --only functions
+            firebase emulators:start --project moodify-92f8f --only functions
           wait-on: 'http://localhost:3080, http://localhost:5001'
