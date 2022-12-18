@@ -14,7 +14,9 @@ jobs:
         run: npm install --silent --location=global firebase-tools
 
       - name: Build For Hosting Emulator 🔨
-        run: npm run build
+        run: |
+          npm install -g tsc
+          npm run build
 
       - name: Cypress 🧪
         uses: cypress-io/github-action@v5
