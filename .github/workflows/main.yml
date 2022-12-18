@@ -10,8 +10,8 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      # - name: Install Firebase Emulator Suite 🔥
-      # run: npm install -g firebase-tools
+      - name: Install Firebase Emulator Suite 🔥
+        run: npm install -g firebase-tools
 
       - name: Cypress 🧪
         uses: cypress-io/github-action@v5
@@ -22,6 +22,4 @@ jobs:
           browser: chrome
           start: |
             npm run start:test
-          # firebase emulators:start --project moodify-92f8f --only functions
-          # wait-on: 'http://localhost:3080'
-          # http://127.0.0.1:5001
+            firebase emulators:start --project moodify-92f8f --only functions
