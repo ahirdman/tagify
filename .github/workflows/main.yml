@@ -23,5 +23,5 @@ jobs:
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
         with:
           browser: chrome
-          start: firebase emulators:exec 'npm run cypress' --project moodify-92f8f
+          start: firebase emulators:exec --project moodify-92f8f 'npm run cypress'
           wait-on: 'http://localhost:3000'
