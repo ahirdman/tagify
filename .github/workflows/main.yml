@@ -43,6 +43,9 @@ jobs:
           npm run build
         working-directory: ./functions
 
+      - name: Start Emulator
+        run: firebase emulators:start --project moodify-92f8f --only functions
+
       - name: Cypress 🧪
         uses: cypress-io/github-action@v5
         env:
@@ -52,7 +55,5 @@ jobs:
         with:
           browser: chrome
           build: npm run build
-          start: |
-            firebase emulators:start --project moodify-92f8f --only functions
-            npm run start:test
+          start: npm run start:test
           wait-on: 'http://127.0.0.1:3000, http://127.0.0.1:5001/moodify-92f8f/us-central1/spotifyToken'
