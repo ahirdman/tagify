@@ -23,5 +23,5 @@ jobs:
           start: |
             npm run start:test
           # firebase emulators:start --project moodify-92f8f --only functions
-          wait-on: 'http://localhost:3080'
+          # wait-on: 'http://localhost:3080'
           # http://127.0.0.1:5001
