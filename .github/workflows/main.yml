@@ -10,6 +10,9 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
+      - name: Install Firebase Emulator Suite 🔥
+        run: npm install -g firebase-tools
+
       - name: Cypress 🧪
         uses: cypress-io/github-action@v5
         env:
