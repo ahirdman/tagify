@@ -3,23 +3,32 @@ name: Cypress Tests
 on: [push]
 
 jobs:
-  cypress-run:
+  build:
+    name: Build and unit test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+
+  cypress:
+    name: Cypress E2E Tests
+    needs: [build]
     runs-on: ubuntu-latest
     container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     env:
       FIREBASE_TOKEN: '${{secrets.FIREBASE_TOKEN}}'
     steps:
-      - name: Chechk
-        run: echo $FIREBASE_TOKEN
-
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Cache firebase emulators
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/firebase/emulators
+          key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('~/.cache/firebase/emulators/**') }}
 
       - name: Install Firebase Emulator Suite 🔥
         run: npm install --silent --location=global firebase-tools
-
-      - name: Build For Hosting Emulator 🔨
-        run: npm ci && npm run build
 
       - name: Install Java ☕️
         uses: actions/setup-java@v2
@@ -28,11 +37,12 @@ jobs:
           java-version: '11'
 
       - name: Cypress 🧪
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           CYPRESS_USERMAIL: '${{ secrets.CYPRESS_USERMAIL }}'
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
         with:
           browser: chrome
+          build: npm run build
           start: firebase emulators:exec --token $FIREBASE_TOKEN --project moodify-92f8f 'npm run cypress'
           wait-on: 'http://localhost:3000'
