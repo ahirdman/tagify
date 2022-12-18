@@ -44,7 +44,7 @@ jobs:
         working-directory: ./functions
 
       - name: Cypress 🧪
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         env:
           CYPRESS_USERMAIL: '${{ secrets.CYPRESS_USERMAIL }}'
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
