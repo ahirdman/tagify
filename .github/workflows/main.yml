@@ -15,17 +15,17 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Cache Firebase Emulators
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/firebase/emulators
-          key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('~/.cache/firebase/emulators/**') }}
-
       - name: Install Firebase Emulator Suite 🔥
         run: npm install --silent --location=global firebase-tools
 
       - name: Build For Hosting Emulator 🔨
         run: npm ci && npm run build
+
+      - name: Install Java ☕️
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
 
       - name: Cypress 🧪
         uses: cypress-io/github-action@v2
