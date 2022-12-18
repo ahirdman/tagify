@@ -6,7 +6,12 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    env:
+      FIREBASE_TOKEN: '${{secrets.FIREBASE_TOKEN}}'
     steps:
+      - name: Chechk
+        run: echo $FIREBASE_TOKEN
+
       - name: Checkout 🛎️
         uses: actions/checkout@v2
 
@@ -25,10 +30,8 @@ jobs:
       - name: Cypress 🧪
         uses: cypress-io/github-action@v2
         env:
-          CYPRESS_USERMAIL: ${{ secrets.CYPRESS_USERMAIL }}
+          CYPRESS_USERMAIL: '${{ secrets.CYPRESS_USERMAIL }}'
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
-          FIREBASE_TOKEN: '${{secrets.FIREBASE_TOKEN}}'
-        run: echot $FIREBASE_TOKEN
         with:
           browser: chrome
           start: firebase emulators:exec --token $FIREBASE_TOKEN --project moodify-92f8f 'npm run cypress'
