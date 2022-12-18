@@ -19,7 +19,7 @@ jobs:
           CYPRESS_USERMAIL: ${{ secrets.CYPRESS_USERMAIL }}
           CYPRESS_PASSWORD: '${{ secrets.CYPRESS_PASSWORD }}'
         with:
-          browser: firefox
+          browser: chrome
           start: |
             npm run start:test
           # firebase emulators:start --project moodify-92f8f --only functions
