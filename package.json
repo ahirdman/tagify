@@ -14,7 +14,8 @@
     "deploy": "npm run build && firebase deploy --only hosting",
     "cypress": "cypress run",
     "cypress:open": "cypress open",
-    "cypress:ci": "npm run build && export NODE_ENV=TEST && firebase emulators:exec 'npm run cypress'"
+    "cypress:emulators": "npm run build && export NODE_ENV=TEST && frebase emulators:exec 'npm run cypress'",
+    "cypress:ci": "export NODE_ENV=TEST && firebase emulators:exec 'npm run cypress'"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
