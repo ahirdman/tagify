@@ -10,9 +10,6 @@
     "deploy": "npm run lint -- --fix && firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
-  "engines": {
-    "node": "14"
-  },
   "main": "lib/index.js",
   "dependencies": {
     "axios": "^0.27.2",

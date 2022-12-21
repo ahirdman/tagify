@@ -6,6 +6,10 @@ import express, {Request, Response} from "express";
 
 const router = express.Router();
 
+router.get("/health", (req: Request, res: Response) => {
+  res.json("true");
+});
+
 router.post("/getAuthUrl", (req: Request, res: Response) => {
   if (!req.body.data) {
     res.json({error: "no body"});

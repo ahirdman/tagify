@@ -34,7 +34,7 @@ export const createSpotifyPlaylist = cloudFunction.onCall(
       const snapshotId = await fillPlaylistResponse.data.snapshot_id;
 
       await Firestore.updateTagDocPlaylist(
-      context.auth!.uid,
+      context.auth === undefined ? "" : context.auth.uid,
       data.playlistName,
       snapshotId,
       playlistId
@@ -47,7 +47,7 @@ export const createSpotifyPlaylist = cloudFunction.onCall(
     }
 );
 
-export const validateSnapshot = cloudFunction.onCall(async (data: ValidatePlaylistBody, _) => {
+export const validateSnapshot = cloudFunction.onCall(async (data: ValidatePlaylistBody) => {
   const response = await axiosInstance(
       `${BASEURL}/playlists/${data.playlistId}?fields=snapshot_id`,
       {
