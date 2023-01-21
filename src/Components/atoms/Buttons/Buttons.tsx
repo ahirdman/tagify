@@ -15,6 +15,12 @@ interface IButtonsProps {
   name?: string;
 }
 
+// export const Test = () => {
+//   return (
+//     <h1 className='' >hello</h1>
+//   )
+// }
+
 export const Button = ({
   title,
   backgroundColor,
